@@ -10,7 +10,7 @@ function App() {
 			<Community />
 			app
 			<br />
-			<button onClick={onClickHandler}>testBtn</button>
+			<button onClick={onClickHandler}>testBTN</button>
 		</div>
 	);
 }
