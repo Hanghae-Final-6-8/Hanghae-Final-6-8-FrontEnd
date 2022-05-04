@@ -37,7 +37,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Deploy to S3
-        run: aws s3 sync build/ s3://${{ secrets.BUCKET_NAME }} --delete
+        run: aws s3 sync build/ s3://${{ secrets.BUCKET_NAME }} --delete --acl public-read
 
       # - name: Upload binary to S3 bucket
       #   uses: jakejarvis/s3-sync-action@master
