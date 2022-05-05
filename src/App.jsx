@@ -5,7 +5,7 @@ function App() {
 	return (
 		<div>
 			<Community />
-			app
+			appw
 		</div>
 	);
 }
