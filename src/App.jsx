@@ -1,4 +1,4 @@
-import 'tailwindcss/tailwind.css';
+//import 'tailwindcss/tailwind.css';
 import { Routes, Route } from 'react-router-dom';
 import Main from './pages/Main';
 import Community from './pages/Community';
