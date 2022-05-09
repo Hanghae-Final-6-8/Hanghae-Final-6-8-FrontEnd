@@ -1,15 +1,41 @@
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/configureStore';
+
 const CommunityDetail = () => {
+  // postsId는 App.tsx에서 라우팅 할때 정한 파라미터명이다.
+  const postsId = useParams().postsId;
+
+  const postList = useSelector((store: RootState) => store.community.list);
+
+  const post = postList.find((post) => {
+    // url 파라미터는 string으로 넘어와서 형변환 해줘야한다.
+    return post.postsId === Number(postsId);
+  });
+
   return (
     <div>
-      <img src='https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg' />
-      <span>username</span>
-      <span>2022-01-01 07:30</span>
-      <span>일상</span>
-      <p>커피 향이 좋네요.</p>
-      <div>커피 이미지</div>
+      <span>{post?.nickname}</span>
+      <span>{post?.createdAt}</span>
+      {post?.tagName.length !== 0 ? (
+        post?.tagName.map((tag, idx) => {
+          return (
+            <span
+              className='inline-block bg-lime-800 text-white mr-1 rounded-md text-sm font-bold p-1'
+              key={idx}
+            >
+              {tag}
+            </span>
+          );
+        })
+      ) : (
+        <></>
+      )}
+      <p>{post?.title}</p>
+      <img src={post?.postsImage} />
       <span>좋아요</span>
       <span>25 개</span>
-      <p>산미도 적당하고 단맛도 있는거같아서 좋네요.</p>
+      <p>{post?.content}</p>
       <hr />
       <input type='text' placeholder='댓글 내용을 입력해주세요' />
       <button>등록</button>

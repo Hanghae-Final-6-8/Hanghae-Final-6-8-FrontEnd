@@ -14,7 +14,7 @@ function App() {
       <Route path='/' element={<Main />} />
       <Route path='/login' element={<Login />} />
       <Route path='/community' element={<Community />} />
-      <Route path='/community/:communityId' element={<CommunityDetail />} />
+      <Route path='/community/:postsId' element={<CommunityDetail />} />
       <Route path='/community/write' element={<AddCommunity />} />
     </Routes>
   );

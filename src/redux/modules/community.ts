@@ -25,17 +25,17 @@ interface AddPosts {
 
 const INITIAL_STATE: CommunityState = {
   list: [
-    {
-      postsId: 1,
-      nickname: 'test',
-      postsImage:
-        'https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg',
-      title: '망원동 카페',
-      content: '커피마시기 좋은 날',
-      createdAt: '2022-01-01 17:30',
-      modifiedAt: '',
-      tagName: ['일상'],
-    },
+    // {
+    //   postsId: 1,
+    //   nickname: 'test',
+    //   postsImage:
+    //     'https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg',
+    //   title: '망원동 카페',
+    //   content: '커피마시기 좋은 날',
+    //   createdAt: '2022-01-01 17:30',
+    //   modifiedAt: '',
+    //   tagName: ['일상'],
+    // },
   ],
 };
 
@@ -45,7 +45,15 @@ export const communitySlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     addCommunity: (state, action: PayloadAction<AddPosts>) => {
-      console.log(action);
+      // 날짜 생성함수. 임시로 작성. 삭제예정. moment가 편리하구나..
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = ('0' + (today.getMonth() + 1)).slice(-2);
+      const day = ('0' + today.getDate()).slice(-2);
+      const hours = ('0' + today.getHours()).slice(-2);
+      const minutes = ('0' + today.getMinutes()).slice(-2);
+      const dataString = `${year}-${month}-${day} ${hours}:${minutes}`;
+
       const new_communityList = [
         ...state.list,
         {
@@ -54,7 +62,7 @@ export const communitySlice = createSlice({
           postsImage: action.payload.postsImage,
           title: action.payload.title,
           content: action.payload.content,
-          createdAt: '2022-01-01 17:30',
+          createdAt: dataString,
           modifiedAt: '',
           tagName: action.payload.tagName,
         },

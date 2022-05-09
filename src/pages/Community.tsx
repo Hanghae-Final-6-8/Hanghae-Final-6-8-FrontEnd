@@ -11,8 +11,8 @@ const Community = () => {
     navigate('/community/write');
   };
 
-  const handleMoveToDetailPage = () => {
-    navigate(`/community/test123`);
+  const handleMoveToDetailPage = (postsId: number) => {
+    navigate(`/community/${postsId}`);
   };
 
   return (
@@ -50,7 +50,9 @@ const Community = () => {
               <img
                 src={post.postsImage}
                 className='h-40 w-40 rounded-md mr-2'
-                onClick={handleMoveToDetailPage}
+                onClick={() => {
+                  handleMoveToDetailPage(post.postsId);
+                }}
               />
             </div>
           );
