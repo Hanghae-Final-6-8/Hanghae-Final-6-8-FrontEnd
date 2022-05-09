@@ -6,7 +6,7 @@ const Community = () => {
   const navigate = useNavigate();
 
   // 리덕스에서 커뮤니티 리스트 가져옴
-  const communityList = useSelector((store: RootState) => store.community.list);
+  const postList = useSelector((store: RootState) => store.community.list);
   const handleMoveToWritePage = () => {
     navigate('/community/write');
   };
@@ -24,21 +24,34 @@ const Community = () => {
           flexWrap: 'wrap',
         }}
       >
-        {communityList.map((commu, idx) => {
+        {postList.map((post, idx) => {
           return (
             <div key={idx}>
               <img
-                className='h-14 w-14'
+                className='h-14 w-14 rounded-full'
                 src='https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg'
               />
-              <span>{commu.userId}</span>
-              <span>{commu.tag}</span>
-              <div
-                className='h-40 w-40 bg-gradient-to-r from-cyan-500 to-indigo-500'
+              <span>{post.nickname}</span>
+              {/* <span>{post.tagName}</span> */}
+              {post.tagName.length !== 0 ? (
+                post.tagName.map((tag, index) => {
+                  return (
+                    <span
+                      className='inline-block bg-lime-800 text-white mr-1 rounded-md text-sm font-bold p-1'
+                      key={index}
+                    >
+                      {tag}
+                    </span>
+                  );
+                })
+              ) : (
+                <></>
+              )}
+              <img
+                src={post.postsImage}
+                className='h-40 w-40 rounded-md mr-2'
                 onClick={handleMoveToDetailPage}
-              >
-                이미지
-              </div>
+              />
             </div>
           );
         })}
