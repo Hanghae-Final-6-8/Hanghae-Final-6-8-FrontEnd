@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import community from '../redux/modules/community';
-import { propTypes } from 'prop-types';
 
 const AddCommunity = () => {
   const dispatch = useDispatch();
