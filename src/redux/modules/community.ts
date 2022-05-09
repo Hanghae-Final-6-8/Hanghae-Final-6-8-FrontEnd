@@ -1,6 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const INITIAL_STATE = {
+export interface CommunityItemDataParams {
+  communityId: string;
+  userId: string;
+  userImg: string;
+  tag: string;
+  bgImg: string;
+}
+
+export interface CommunityState {
+  list: Array<CommunityItemDataParams>;
+}
+
+interface AddState {
+  commuTitle: string;
+  commuTag: string;
+}
+
+const INITIAL_STATE: CommunityState = {
   list: [
     {
       communityId: '',
@@ -37,16 +54,15 @@ export const communitySlice = createSlice({
   name: 'communityReducer',
   initialState: INITIAL_STATE,
   reducers: {
-    addCommunity: (state, action) => {
+    addCommunity: (state, action: PayloadAction<AddState>) => {
       const new_communityList = [
         ...state.list,
         {
-          // 커뮤니티 아이디는 백단에서 생성할 예정
           communityId: '',
           userId: 'test1',
           userImg:
             'https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg',
-          tag: action.payload.commuTag,
+          tag: '',
           bgImg: '',
         },
       ];

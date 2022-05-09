@@ -1,26 +1,27 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import community from '../redux/modules/community';
+import { useAppDispatch } from '../redux/configureStore';
 
 const AddCommunity = () => {
   const dispatch = useDispatch();
 
+  const appDispatch = useAppDispatch();
   const [commuTitle, setCommuTitle] = useState('');
   const [commuTag, setCommuTag] = useState('');
 
   // 커뮤니티 타이틀
-  const inputTitle = (e) => {
+  const inputTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCommuTitle(e.target.value);
   };
   // 커뮤니티 태그
-  const inputTag = (e) => {
+  const inputTag = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCommuTag(e.target.value);
   };
   // 커뮤니티 등록
   const handleAddCommunity = () => {
-    dispatch(community.actions.addCommunity({ commuTitle, commuTag }));
+    appDispatch(community.actions.addCommunity({ commuTitle, commuTag }));
   };
-
   return (
     <div style={{ border: '1px solid #111' }}>
       <h1>게시글 작성</h1>

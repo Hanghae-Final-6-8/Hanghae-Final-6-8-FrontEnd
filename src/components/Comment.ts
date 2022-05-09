@@ -1,5 +1,5 @@
 const Comment = () => {
-  return <></>;
+  return null;
 };
 
 export default Comment;

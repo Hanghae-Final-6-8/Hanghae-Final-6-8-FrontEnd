@@ -1,12 +1,12 @@
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { RootState } from '../redux/configureStore';
 
 const Community = () => {
   const navigate = useNavigate();
 
   // 리덕스에서 커뮤니티 리스트 가져옴
-  const communityList = useSelector((store) => store.community.list);
-
+  const communityList = useSelector((store: RootState) => store.community.list);
   const handleMoveToWritePage = () => {
     navigate('/community/write');
   };
