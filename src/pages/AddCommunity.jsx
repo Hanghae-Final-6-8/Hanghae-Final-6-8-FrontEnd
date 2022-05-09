@@ -8,14 +8,16 @@ const AddCommunity = () => {
   const [commuTitle, setCommuTitle] = useState('');
   const [commuTag, setCommuTag] = useState('');
 
+  // 커뮤니티 타이틀
   const inputTitle = (e) => {
     setCommuTitle(e.target.value);
   };
+  // 커뮤니티 태그
   const inputTag = (e) => {
     setCommuTag(e.target.value);
   };
-
-  const addCommu = () => {
+  // 커뮤니티 등록
+  const handleAddCommunity = () => {
     dispatch(community.actions.addCommunity({ commuTitle, commuTag }));
   };
 
@@ -38,7 +40,7 @@ const AddCommunity = () => {
       />
       <button
         className='bg-gradient-to-r from-cyan-500 to-indigo-500'
-        onClick={addCommu}
+        onClick={handleAddCommunity}
       >
         등록하기
       </button>
