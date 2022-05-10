@@ -11,7 +11,7 @@ import AddCommunity from './pages/AddCommunity';
 
 function App() {
   return (
-    <>
+    <div className='relative h-full w-full'>
       <Routes>
         <Route path='/' element={<Main />} />
         <Route path='/login' element={<Login />} />
@@ -20,7 +20,7 @@ function App() {
         <Route path='/community/write' element={<AddCommunity />} />
       </Routes>
       <BottomNav />
-    </>
+    </div>
   );
 }
 
