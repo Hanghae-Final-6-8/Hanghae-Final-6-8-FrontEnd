@@ -1,17 +1,34 @@
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/configureStore';
+import Comment from '../components/molecules/Comment';
+import { useState } from 'react';
+import { useAppDispatch } from '../redux/configureStore';
+import commentSlice from '../redux/modules/comment';
 
 const CommunityDetail = () => {
+  const appDispatch = useAppDispatch();
   // postsId는 App.tsx에서 라우팅 할때 정한 파라미터명이다.
   const postsId = useParams().postsId;
-
+  // 리덕스에서 커뮤니티 리스트 가져옴
   const postList = useSelector((store: RootState) => store.community.list);
-
+  // 커뮤니티 리스트중에서 url 파라미터와 같은 커뮤니티 담음
   const post = postList.find((post) => {
     // url 파라미터는 string으로 넘어와서 형변환 해줘야한다.
     return post.postsId === Number(postsId);
   });
+
+  // 코멘트 state
+  const [comment, setComment] = useState<string>('');
+  // 코멘트 state에 값넣기
+  const getInputCommentFrom = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setComment(e.target.value);
+  };
+  // 코멘트 추가
+  const handleAddComment = (postsId: number) => {
+    console.log(postsId);
+    appDispatch(commentSlice.actions.addComment({ postsId, comment }));
+  };
 
   return (
     <div>
@@ -37,8 +54,19 @@ const CommunityDetail = () => {
       <span>25 개</span>
       <p>{post?.content}</p>
       <hr />
-      <input type='text' placeholder='댓글 내용을 입력해주세요' />
-      <button>등록</button>
+      <input
+        type='text'
+        placeholder='댓글 내용을 입력해주세요'
+        onChange={getInputCommentFrom}
+      />
+      <button
+        onClick={() => {
+          handleAddComment(Number(postsId));
+        }}
+      >
+        등록
+      </button>
+      <Comment postsId={Number(postsId)} />
     </div>
   );
 };

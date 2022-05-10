@@ -1,14 +1,33 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const INITIAL_STATE = {
+export interface CommentItemDataParams {
+  postsId: number;
+  commentsId: number;
+  nickname: string;
+  content: string;
+  createdAt: string;
+  modifiedAt: string;
+}
+
+export interface CommentState {
+  list: Array<CommentItemDataParams>;
+}
+
+interface AddCommentType {
+  postsId: number;
+  comment: string;
+}
+
+const INITIAL_STATE: CommentState = {
   list: [
-    {
-      communityId: 1,
-      commentId: '',
-      userId: 'user1',
-      comment: '맛있어보이네요!',
-      createAt: '2022-01-01 10:30',
-    },
+    // {
+    //   postsId: 1,
+    //   commentsId: 1,
+    //   nickname: 'user1',
+    //   content: '맛있어보이네요!',
+    //   createdAt: '2022-01-01 10:30',
+    //   modifiedAt: '',
+    // },
   ],
 };
 
@@ -17,18 +36,23 @@ export const commentSlice = createSlice({
   name: 'commentReducer',
   initialState: INITIAL_STATE,
   reducers: {
-    addComment: (state, action) => {
+    addComment: (state, action: PayloadAction<AddCommentType>) => {
       const new_commentList = [
         ...state.list,
         {
-          communityId: 1,
-          commentId: '',
-          userId: 'user1',
-          comment: '카페가고싶다ㅠ',
-          createAt: '2022-01-01 20:30',
+          postsId: action.payload.postsId,
+          commentsId: Math.random(),
+          nickname: 'user1',
+          content: action.payload.comment,
+          createdAt: '2022-01-01 20:30',
+          modifiedAt: '',
         },
       ];
       return { list: new_commentList };
     },
   },
 });
+
+export const { addComment } = commentSlice.actions;
+
+export default commentSlice;
