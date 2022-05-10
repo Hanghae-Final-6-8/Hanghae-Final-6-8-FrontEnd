@@ -1,17 +1,19 @@
+// eslint-disable-next-line
+const defaultTheme = require('tailwindcss/defaultTheme');
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx,html}'],
   theme: {
     extend: {
       fontFamily: {
-        notoB: ['NotoSansKR-Bold', 'NotoSansKR-Bold'],
-        notoM: ['NotoSansKR-Medium', 'NotoSansKR-Medium'],
-        notoR: ['NotoSansKR-Regular', 'NotoSansKR-Regular'],
-        robotoB: ['Roboto-Bold', 'Roboto-Bold'],
-        robotoM: ['Roboto-Medium', 'Roboto-Medium'],
-        robotoR: ['Roboto-Regular', 'Roboto-Regular'],
-        test1: ['test1'],
-        test2: ['test2'],
+        sans: ['Roboto', 'NotoSansKR', ...defaultTheme.fontFamily.sans],
       },
+    },
+    fontSize: {
+      head: ['22px', '26px'],
+      sub: ['20px', '24px'],
+      sub2: ['18px', '22px'],
+      body: ['14px', '18px'],
+      caption: ['12px', '16px'],
     },
   },
   plugins: [],

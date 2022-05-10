@@ -7,17 +7,26 @@ const Main = () => {
         <div className='absolute right-0'>
           <img src={Bookmark} />
         </div>
-        <div className='border-2 text-d22 font-bold'>Copick</div>
+        <div className='border-2 text-head font-robotoM'>Copick</div>
+        <div className='border-2 text-head '>Test 테스트입니다</div>
+        <div className='border-2 text-head  font-medium'>Test 테스트입니다</div>
+        <div className='border-2 text-head  font-bold'>Test 테스트입니다</div>
+
+        <div className='border-2 font-test1 font-regular'>
+          Test 테스트입니다
+        </div>
+        <div className='border-2 font-test1 font-medium'>Test 테스트입니다</div>
+        <div className='border-2  font-bold'>Test 테스트입니다</div>
+        <hr />
+        <p className=' font-regular'>Hello World! 헬로우 월드!</p>
+        <p className=' font-medium'>Hello World! 헬로우 월드!</p>
+        <p className=' font-bold'>Hello World! 헬로우 월드!</p>
+        <p className=' font-regular'>Hello World! 헬로우 월드!</p>
+        <p className=' font-medium'>Hello World! 헬로우 월드!</p>
+        <p className=' font-bold'>Hello World! 헬로우 월드!</p>
+        <p className=''>Hello World! 헬로우 월드!</p>
+        <div className='border-2 text-head font-notoR'>Test 테스트입니다</div>
       </div>
-      <div className='grid border-2 grid-cols-7'>
-        <div className='border-2'>hi</div>
-        <div>hi</div>
-        <div className='border-2 border-slate-700'>hi</div>
-      </div>
-      <div className='border-2 grid-cols-2'>Copick</div>
-      <div className='border-2'>Copick</div>
-      <div className='border-2'>Copick</div>
-      <div className='border-2'>Copick</div>
     </div>
   );
 };
