@@ -3,12 +3,32 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx,html}'],
   theme: {
-    borderRadius: {
-      40: '40px',
+    fontWeight: {
+      400: 400,
+      500: 500,
+      700: 700,
     },
     extend: {
       fontFamily: {
         sans: ['Roboto', 'NotoSansKR', ...defaultTheme.fontFamily.sans],
+      },
+      spacing: {
+        0.5: '0.125rem',
+        0.75: '0.1875rem',
+        1.5: '0.375rem',
+        2.5: '0.625rem',
+        5.5: '1.375rem',
+        '7px': '0.4375rem',
+        34: '2.125rem',
+      },
+      borderRadius: {
+        40: '40px',
+      },
+      width: {
+        30: '1.875rem',
+      },
+      height: {
+        84: '5.25rem',
       },
     },
     fontSize: {
@@ -19,5 +39,5 @@ module.exports = {
       caption: ['12px', '16px'],
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/line-clamp')],
 };

@@ -59,4 +59,5 @@ body {
   overflow: scroll;
   overflow-x: hidden;
   background-color: #fff;
+  position: relative;
 }
