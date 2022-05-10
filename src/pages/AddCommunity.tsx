@@ -1,11 +1,10 @@
+import React from 'react';
 import { useState } from 'react';
-// import { useDispatch } from 'react-redux';
 import community from '../redux/modules/community';
 import { useAppDispatch } from '../redux/configureStore';
-import React from 'react';
+import { axiosAddCommunity } from '../redux/modules/community';
 
 const AddCommunity = () => {
-  // const dispatch = useDispatch();
   // configureStore.ts 에서 타입 정의한 dispatch
   const appDispatch = useAppDispatch();
   // 커뮤니티 타이틀
@@ -49,6 +48,14 @@ const AddCommunity = () => {
           'https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg',
       })
     );
+    // API연결할때 주석 해제
+    // appDispatch(axiosAddCommunity({
+    //   title,
+    //   content,
+    //   tagName,
+    //   postsImage:
+    //     'https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg',
+    // }));
   };
   return (
     <div style={{ border: '1px solid #111' }}>

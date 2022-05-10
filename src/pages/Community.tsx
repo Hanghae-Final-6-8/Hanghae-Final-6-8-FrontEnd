@@ -1,16 +1,24 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../redux/configureStore';
+import { axiosGetCommunityList } from '../redux/modules/community';
+import { useAppDispatch } from '../redux/configureStore';
 
 const Community = () => {
   const navigate = useNavigate();
-
+  const appDispatch = useAppDispatch();
   // 리덕스에서 커뮤니티 리스트 가져옴
   const postList = useSelector((store: RootState) => store.community.list);
+  // api로 db에서 커뮤니티 리스트 가져오기
+  useEffect(() => {
+    appDispatch(axiosGetCommunityList());
+  }, []);
+  // 커뮤니티 작성페이지로 이동
   const handleMoveToWritePage = () => {
     navigate('/community/write');
   };
-
+  // 커뮤니티 상세페이지로 이동
   const handleMoveToDetailPage = (postsId: number) => {
     navigate(`/community/${postsId}`);
   };

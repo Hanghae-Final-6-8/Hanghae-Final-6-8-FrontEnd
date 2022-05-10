@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 export interface CommunityItemDataParams {
   postsId: number;
@@ -15,8 +16,7 @@ export interface CommunityState {
   list: Array<CommunityItemDataParams>;
 }
 
-//변경해서 나중에 삭제해야..
-interface AddPosts {
+interface AddPostsType {
   title: string;
   content: string;
   tagName: string[];
@@ -39,13 +39,46 @@ const INITIAL_STATE: CommunityState = {
   ],
 };
 
+// 커뮤니티 리스트 불러오기
+export const axiosGetCommunityList = createAsyncThunk(
+  'communityReducer/axiosGetCommunityList',
+  async () => {
+    return axios
+      .get('URL')
+      .then((res) => {
+        return res.data;
+      })
+      .catch((error) => console.log(error));
+  }
+);
+
+// 커뮤니티 추가하기
+export const axiosAddCommunity = createAsyncThunk(
+  'communityReducer/axiosAddCommunity',
+  async (data: AddPostsType, thunkAPI) => {
+    return axios
+      .post('URL', {
+        title: data.title,
+        content: data.content,
+        tag_name: data.tagName,
+        posts_image: data.postsImage,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          console.log('커뮤니티글 등록성공');
+        }
+        thunkAPI.dispatch(addCommunity(data));
+      });
+  }
+);
+
 export const communitySlice = createSlice({
   // 액션명
   name: 'communityReducer',
   initialState: INITIAL_STATE,
   reducers: {
-    addCommunity: (state, action: PayloadAction<AddPosts>) => {
-      // 날짜 생성 임시로 작성. 삭제예정. moment가 편리하구나..
+    addCommunity: (state, action: PayloadAction<AddPostsType>) => {
+      // 날짜 생성 임시로 작성. API연결 후 삭제예정. moment가 편리하구나..
       const today = new Date();
       const year = today.getFullYear();
       const month = ('0' + (today.getMonth() + 1)).slice(-2);
@@ -73,6 +106,14 @@ export const communitySlice = createSlice({
     // loadCommunity:(state,action) => {
     //     return state.list;
     // }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(
+      axiosGetCommunityList.fulfilled,
+      (state: CommunityState, action) => {
+        return { list: [...action.payload] };
+      }
+    );
   },
 });
 
