@@ -3,6 +3,9 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx,html}'],
   theme: {
+    borderRadius: {
+      40: '40px',
+    },
     extend: {
       fontFamily: {
         sans: ['Roboto', 'NotoSansKR', ...defaultTheme.fontFamily.sans],
