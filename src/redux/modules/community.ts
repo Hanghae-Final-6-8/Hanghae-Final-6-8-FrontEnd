@@ -45,7 +45,7 @@ export const communitySlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     addCommunity: (state, action: PayloadAction<AddPosts>) => {
-      // 날짜 생성함수. 임시로 작성. 삭제예정. moment가 편리하구나..
+      // 날짜 생성 임시로 작성. 삭제예정. moment가 편리하구나..
       const today = new Date();
       const year = today.getFullYear();
       const month = ('0' + (today.getMonth() + 1)).slice(-2);
