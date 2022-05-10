@@ -12,6 +12,7 @@
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.3",
     "@types/redux-logger": "^3.0.9",
+    "@types/tailwindcss": "^3.0.10",
     "axios": "^0.27.2",
     "prop-types": "^15.8.1",
     "react": "^18.1.0",
