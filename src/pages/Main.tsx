@@ -31,6 +31,28 @@ const Main = () => {
             <img src={down} />
           </button>
         </article>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
+        <div>text</div>
       </div>
     </main>
   );
