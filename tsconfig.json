@@ -9,5 +9,5 @@
     "skipLibCheck": true,
     "jsx": "react-jsx"
   },
-  "include": ["src"]
+  "include": ["src", "src/custom.d.ts"]
 }

@@ -1,12 +1,14 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 // import { createLogger } from 'redux-logger';
-import communitySlice from './modules/community';
+import postsSlice from './modules/posts';
+import commentSlice from './modules/comment';
 import { useDispatch } from 'react-redux';
 
 // const logger = createLogger();
 
 const rootReducer = combineReducers({
-  community: communitySlice.reducer,
+  posts: postsSlice.reducer,
+  comment: commentSlice.reducer,
 });
 
 export const store = configureStore({
