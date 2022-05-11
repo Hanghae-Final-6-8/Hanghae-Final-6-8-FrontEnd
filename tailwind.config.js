@@ -31,6 +31,9 @@ module.exports = {
       height: {
         84: '5.25rem',
       },
+      dropShadow: {
+        main: '0 -4px 20 rgba(11,11,11,0.02)',
+      },
     },
     fontSize: {
       head: ['22px', '26px'],
