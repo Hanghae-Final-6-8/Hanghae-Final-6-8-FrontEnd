@@ -42,17 +42,54 @@
   unicode-range: U+0041-005A, U+0061-007A;
 }
 
+html,
 body {
-  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  overscroll-behavior-y: contain;
+  height: -webkit-fill-available;
+  /*width: 100%;
   height: 100vh;
   background-color: #ccc;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+-ms-overflow-style: none;
+  scrollbar-width: none;*/
 }
-::-webkit-scrollbar {
+html {
+  width: 100vw;
+  height: 100vh;
+}
+body {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  -ms-overflow-style: none;
+}
+body::-webkit-scrollbar {
+  display: none; /* Chrome , Safari , Opera */
+  width: 0 !important;
+}
+#root {
+  height: 100%;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/*
+::-webkit-scrollbar {
+  display: none;
+}
+*/
+
+/* 
 #root {
   width: 375px;
   height: 812px;
@@ -61,3 +98,4 @@ body {
   background-color: #fff;
   position: relative;
 }
+*/
