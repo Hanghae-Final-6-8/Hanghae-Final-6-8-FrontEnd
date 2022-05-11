@@ -8,15 +8,13 @@ import AddPosts from './pages/AddPosts';
 
 function App() {
   return (
-    <div className='relative h-full w-full'>
-      <Routes>
-        <Route path='/' element={<Main />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/posts' element={<Posts />} />
-        <Route path='/posts/:postsId' element={<PostsDetail />} />
-        <Route path='/posts/write' element={<AddPosts />} />
-      </Routes>
-    </div>
+    <Routes>
+      <Route path='/' element={<Main />} />
+      <Route path='/login' element={<Login />} />
+      <Route path='/posts' element={<Posts />} />
+      <Route path='/posts/:postsId' element={<PostsDetail />} />
+      <Route path='/posts/write' element={<AddPosts />} />
+    </Routes>
   );
 }
 
