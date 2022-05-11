@@ -1,5 +1,7 @@
+import { Fragment } from 'react';
+
 const Login = () => {
-  return <>로그인 페이지 입니다.</>;
+  return <Fragment>로그인 페이지 입니다.</Fragment>;
 };
 
 export default Login;

@@ -4,6 +4,7 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/configureStore';
+import DeviceDetect from './lib/DeviceDetect';
 
 // import reportWebVitals from './reportWebVitals';
 import './index.css';
@@ -14,7 +15,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <BrowserRouter>
     <Provider store={store}>
-      <App />
+      <DeviceDetect>
+        <App />
+      </DeviceDetect>
     </Provider>
   </BrowserRouter>
 );
