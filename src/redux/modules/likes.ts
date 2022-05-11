@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
+// import axios from 'axios';
 
 export interface LikesItemDataParams {
   postsId: number;

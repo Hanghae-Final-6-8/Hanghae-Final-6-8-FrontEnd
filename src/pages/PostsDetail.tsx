@@ -7,8 +7,6 @@ import { useAppDispatch } from '../redux/configureStore';
 import commentSlice from '../redux/modules/comment';
 import Likes from '../components/atoms/Likes';
 
-// import {PostsItemDataParams} from '../redux/modules/posts';
-
 const PostsDetail = () => {
   const appDispatch = useAppDispatch();
   // postsId는 App.tsx에서 라우팅 할때 정한 파라미터명이다.
