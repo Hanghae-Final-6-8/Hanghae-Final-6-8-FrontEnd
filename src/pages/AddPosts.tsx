@@ -1,10 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
-import community from '../redux/modules/community';
+import posts from '../redux/modules/posts';
 import { useAppDispatch } from '../redux/configureStore';
-import { axiosAddCommunity } from '../redux/modules/community';
+// import { axiosAddPosts } from '../redux/modules/posts';
 
-const AddCommunity = () => {
+const AddPosts = () => {
   // configureStore.ts 에서 타입 정의한 dispatch
   const appDispatch = useAppDispatch();
   // 커뮤니티 타이틀
@@ -32,15 +32,15 @@ const AddCommunity = () => {
   const deleteTag = (tag: string) => {
     setTagName(tagName.filter((t) => t !== tag));
   };
-  // 커뮤티치 내용 set
+  // 커뮤니티 내용 set
   const getInputContentFrom = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
 
   // 커뮤니티 등록
-  const handleAddCommunity = () => {
+  const handleAddPosts = () => {
     appDispatch(
-      community.actions.addCommunity({
+      posts.actions.addPosts({
         title,
         content,
         tagName,
@@ -49,7 +49,7 @@ const AddCommunity = () => {
       })
     );
     // API연결할때 주석 해제
-    // appDispatch(axiosAddCommunity({
+    // appDispatch(axiosAddPosts({
     //   title,
     //   content,
     //   tagName,
@@ -99,7 +99,7 @@ const AddCommunity = () => {
       />
       <button
         className='bg-gradient-to-r from-cyan-500 to-indigo-500'
-        onClick={handleAddCommunity}
+        onClick={handleAddPosts}
       >
         등록하기
       </button>
@@ -107,4 +107,4 @@ const AddCommunity = () => {
   );
 };
 
-export default AddCommunity;
+export default AddPosts;

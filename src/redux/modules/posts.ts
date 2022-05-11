@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export interface CommunityItemDataParams {
+export interface PostsItemDataParams {
   postsId: number;
   nickname: string;
   postsImage: string;
@@ -12,8 +12,8 @@ export interface CommunityItemDataParams {
   tagName: Array<string>;
 }
 
-export interface CommunityState {
-  list: Array<CommunityItemDataParams>;
+export interface PostsState {
+  list: Array<PostsItemDataParams>;
 }
 
 interface AddPostsType {
@@ -23,7 +23,7 @@ interface AddPostsType {
   postsImage: string;
 }
 
-const INITIAL_STATE: CommunityState = {
+const INITIAL_STATE: PostsState = {
   list: [
     // {
     //   postsId: 1,
@@ -40,8 +40,8 @@ const INITIAL_STATE: CommunityState = {
 };
 
 // 커뮤니티 리스트 불러오기
-export const axiosGetCommunityList = createAsyncThunk(
-  'communityReducer/axiosGetCommunityList',
+export const axiosGetPostsList = createAsyncThunk(
+  'postsReducer/axiosGetPostsList',
   async () => {
     return axios
       .get('URL')
@@ -53,8 +53,8 @@ export const axiosGetCommunityList = createAsyncThunk(
 );
 
 // 커뮤니티 추가하기
-export const axiosAddCommunity = createAsyncThunk(
-  'communityReducer/axiosAddCommunity',
+export const axiosAddPosts = createAsyncThunk(
+  'postsReducer/axiosAddPosts',
   async (data: AddPostsType, thunkAPI) => {
     return axios
       .post('URL', {
@@ -67,17 +67,17 @@ export const axiosAddCommunity = createAsyncThunk(
         if (res.status === 200) {
           console.log('커뮤니티글 등록성공');
         }
-        thunkAPI.dispatch(addCommunity(data));
+        thunkAPI.dispatch(addPosts(data));
       });
   }
 );
 
-export const communitySlice = createSlice({
+export const postsSlice = createSlice({
   // 액션명
-  name: 'communityReducer',
+  name: 'postsReducer',
   initialState: INITIAL_STATE,
   reducers: {
-    addCommunity: (state, action: PayloadAction<AddPostsType>) => {
+    addPosts: (state, action: PayloadAction<AddPostsType>) => {
       // 날짜 생성 임시로 작성. API연결 후 삭제예정. moment가 편리하구나..
       const today = new Date();
       const year = today.getFullYear();
@@ -87,7 +87,7 @@ export const communitySlice = createSlice({
       const minutes = ('0' + today.getMinutes()).slice(-2);
       const dataString = `${year}-${month}-${day} ${hours}:${minutes}`;
 
-      const new_communityList = [
+      const new_postsList = [
         ...state.list,
         {
           postsId: Math.random(),
@@ -101,22 +101,22 @@ export const communitySlice = createSlice({
         },
       ];
       // state.list는 아예 에러나고, state:new_arr도 안먹힘. list:new_arr 하니까 됨.. 왜 작동하는지는 의문
-      return { list: new_communityList };
+      return { list: new_postsList };
     },
-    // loadCommunity:(state,action) => {
+    // loadPosts:(state,action) => {
     //     return state.list;
     // }
   },
   extraReducers: (builder) => {
     builder.addCase(
-      axiosGetCommunityList.fulfilled,
-      (state: CommunityState, action) => {
+      axiosGetPostsList.fulfilled,
+      (state: PostsState, action) => {
         return { list: [...action.payload] };
       }
     );
   },
 });
 
-export const { addCommunity } = communitySlice.actions;
+export const { addPosts } = postsSlice.actions;
 
-export default communitySlice;
+export default postsSlice;

@@ -7,8 +7,6 @@ interface postsIdProps {
 }
 
 const Comment = (props: postsIdProps) => {
-  console.log(props.postsId);
-  console.log(typeof props.postsId);
   // 커뮤니티(포스트) 아이디를 props로 받아옴
   const postsId = props.postsId;
 

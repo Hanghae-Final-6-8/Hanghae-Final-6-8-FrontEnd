@@ -5,13 +5,14 @@ import Comment from '../components/molecules/Comment';
 import { useState } from 'react';
 import { useAppDispatch } from '../redux/configureStore';
 import commentSlice from '../redux/modules/comment';
+import Likes from '../components/atoms/Likes';
 
-const CommunityDetail = () => {
+const PostsDetail = () => {
   const appDispatch = useAppDispatch();
   // postsId는 App.tsx에서 라우팅 할때 정한 파라미터명이다.
   const postsId = useParams().postsId;
   // 리덕스에서 커뮤니티 리스트 가져옴
-  const postList = useSelector((store: RootState) => store.community.list);
+  const postList = useSelector((store: RootState) => store.posts.list);
   // 커뮤니티 리스트중에서 url 파라미터와 같은 커뮤니티 담음
   const post = postList.find((post) => {
     // url 파라미터는 string으로 넘어와서 형변환 해줘야한다.
@@ -26,7 +27,6 @@ const CommunityDetail = () => {
   };
   // 코멘트 추가
   const handleAddComment = (postsId: number) => {
-    console.log(postsId);
     appDispatch(commentSlice.actions.addComment({ postsId, comment }));
   };
 
@@ -50,8 +50,7 @@ const CommunityDetail = () => {
       )}
       <p>{post?.title}</p>
       <img src={post?.postsImage} />
-      <span>좋아요</span>
-      <span>25 개</span>
+      <Likes />
       <p>{post?.content}</p>
       <hr />
       <input
@@ -71,4 +70,4 @@ const CommunityDetail = () => {
   );
 };
 
-export default CommunityDetail;
+export default PostsDetail;
