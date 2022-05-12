@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { kakao, naver, google } from '../assets/icons/index';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -18,13 +19,13 @@ const Login = () => {
         <hr className='mx-auto mt-9px' style={{ width: '100px' }} />
         <div className='mt-2.5'>
           <button className='w-50px h-50px mr-7 rounded-full bg-white shadow-loginBtn'>
-            카
+            <img className='mx-auto' src={kakao} />
           </button>
           <button className='w-50px h-50px  mr-7 rounded-full bg-white shadow-loginBtn'>
-            네
+            <img className='mx-auto' src={naver} />
           </button>
           <button className='w-50px h-50px rounded-full bg-white shadow-loginBtn'>
-            구
+            <img className='mx-auto' src={google} />
           </button>
         </div>
         <button
