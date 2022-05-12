@@ -17,6 +17,7 @@ export interface PostsState {
 }
 
 interface AddPostsType {
+  postsId: number | undefined;
   title: string;
   content: string;
   tagName: string[];
@@ -41,8 +42,8 @@ const INITIAL_STATE: PostsState = {
 };
 
 // 커뮤니티 리스트 불러오기
-export const axiosGetPostsList = createAsyncThunk(
-  'postsReducer/axiosGetPostsList',
+export const axiosGetPostList = createAsyncThunk(
+  'postsReducer/axiosGetPostList',
   async () => {
     return axios
       .get('URL')
@@ -54,8 +55,8 @@ export const axiosGetPostsList = createAsyncThunk(
 );
 
 // 커뮤니티 추가하기
-export const axiosAddPosts = createAsyncThunk(
-  'postsReducer/axiosAddPosts',
+export const axiosAddPost = createAsyncThunk(
+  'postsReducer/axiosAddPost',
   async (data: AddPostsType, thunkAPI) => {
     return axios
       .post('URL', {
@@ -68,7 +69,7 @@ export const axiosAddPosts = createAsyncThunk(
         if (res.status === 200) {
           console.log('커뮤니티글 등록성공');
         }
-        thunkAPI.dispatch(addPosts(data));
+        thunkAPI.dispatch(addPost(data));
       });
   }
 );
@@ -78,8 +79,8 @@ export const postsSlice = createSlice({
   name: 'postsReducer',
   initialState: INITIAL_STATE,
   reducers: {
-    addPosts: (state, action: PayloadAction<AddPostsType>) => {
-      // 날짜 생성 임시로 작성. API연결 후 삭제예정. moment가 편리하구나..
+    addPost: (state, action: PayloadAction<AddPostsType>) => {
+      // 임시
       const today = new Date();
       const year = today.getFullYear();
       const month = ('0' + (today.getMonth() + 1)).slice(-2);
@@ -101,25 +102,58 @@ export const postsSlice = createSlice({
           tagName: action.payload.tagName,
         },
       ];
-      // 라우팅처리
+
       action.payload.navi('/posts');
-      // state.list는 아예 에러나고, state:new_arr도 안먹힘. list:new_arr 하니까 됨.. 왜 작동하는지는 의문 아마 return하는곳 자체가 state 일지도..
       return { list: new_postsList };
     },
-    // loadPosts:(state,action) => {
-    //     return state.list;
-    // }
+    editPost: (state, action: PayloadAction<AddPostsType>) => {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = ('0' + (today.getMonth() + 1)).slice(-2);
+      const day = ('0' + today.getDate()).slice(-2);
+      const hours = ('0' + today.getHours()).slice(-2);
+      const minutes = ('0' + today.getMinutes()).slice(-2);
+      const dataString = `${year}-${month}-${day} ${hours}:${minutes}`;
+
+      const prev_post = state.list.filter((post) => {
+        return post.postsId === action.payload.postsId;
+      });
+
+      const new_list = state.list.filter((post) => {
+        return post.postsId !== action.payload.postsId;
+      });
+
+      const post_edited = {
+        postsId: prev_post[0].postsId,
+        nickname: prev_post[0].nickname,
+        postsImage: action.payload.postsImage,
+        title: action.payload.title,
+        content: action.payload.content,
+        createdAt: prev_post[0].createdAt,
+        modifiedAt: dataString,
+        tagName: action.payload.tagName,
+      };
+
+      // 라우팅처리
+      action.payload.navi('/posts');
+
+      // return { list: [...state.list, { ...state.list[idx], ...post_edited }] };
+      return { list: [post_edited, ...new_list] };
+    },
+    deletePost: (state, action: PayloadAction<number>) => {
+      const new_list = state.list.filter((post) => {
+        return post.postsId !== action.payload;
+      });
+      return { list: new_list };
+    },
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      axiosGetPostsList.fulfilled,
-      (state: PostsState, action) => {
-        return { list: [...action.payload] };
-      }
-    );
+    builder.addCase(axiosGetPostList.fulfilled, (state: PostsState, action) => {
+      return { list: [...action.payload] };
+    });
   },
 });
 
-export const { addPosts } = postsSlice.actions;
+export const { addPost } = postsSlice.actions;
 
 export default postsSlice;

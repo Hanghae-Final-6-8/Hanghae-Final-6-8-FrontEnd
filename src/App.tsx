@@ -17,6 +17,7 @@ function App() {
       <Route path='/posts' element={<PostList />} />
       <Route path='/posts/:postsId' element={<PostDetail />} />
       <Route path='/posts/write' element={<AddEditPost />} />
+      <Route path='/posts/write/:postsId' element={<AddEditPost />} />
       <Route path='/mypage' element={<Mypage />} />
       <Route path='/survey' element={<TasteSurvey />} />
       <Route path='/beans' element={<BeansList />} />

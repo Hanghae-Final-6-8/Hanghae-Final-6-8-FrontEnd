@@ -2,29 +2,28 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../redux/configureStore';
-import { axiosGetPostsList } from '../../redux/modules/posts';
+import { axiosGetPostList } from '../../redux/modules/posts';
 import { useAppDispatch } from '../../redux/configureStore';
+import postsSlice from '../../redux/modules/posts';
 
 const PostList = () => {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
   // 토스트팝업 토글용 state
   const [toastStatus, setToastStatus] = useState(false);
+  // ...클릭시 해당 게시물의 postsId 저장용 state
+  const [clickedPostId, setClickedPostId] = useState(0);
   // 리덕스에서 커뮤니티 리스트 가져옴
   const postList = useSelector((store: RootState) => store.posts.list);
   // api로 db에서 커뮤니티 리스트 가져오기
   useEffect(() => {
-    appDispatch(axiosGetPostsList());
+    appDispatch(axiosGetPostList());
   }, []);
 
-  useEffect(() => {
-    if (toastStatus) {
-      setTimeout(() => setToastStatus(false), 1000);
-    }
-  }, [toastStatus]);
-
-  const getSetToastFrom = () => {
-    setToastStatus(true);
+  // 토스트팝업 띄우기
+  const getSetToastFrom = (postsId: number) => {
+    setToastStatus(!toastStatus);
+    setClickedPostId(postsId);
   };
 
   // 커뮤니티 작성페이지로 이동
@@ -35,10 +34,18 @@ const PostList = () => {
   const handleMoveToDetailPage = (postsId: number) => {
     navigate(`/posts/${postsId}`);
   };
+  // 커뮤니티 수정페이지로 이동
+  const handleMoveToEditPage = (postsId: number) => {
+    navigate(`/posts/write/${postsId}`);
+  };
+  // 커뮤니티 글 삭제
+  const handleDeletePost = (postsId: number) => {
+    appDispatch(postsSlice.actions.deletePost(postsId));
+  };
 
   return (
     <div>
-      <div>커뮤니티</div>
+      <div className='m-5'>커뮤니티</div>
       <div
         style={{
           display: 'flex',
@@ -56,7 +63,13 @@ const PostList = () => {
                   />
                   <span>{post.nickname}</span>
                 </div>
-                <button>...</button>
+                <button
+                  onClick={() => {
+                    getSetToastFrom(post.postsId);
+                  }}
+                >
+                  ···
+                </button>
               </div>
 
               {/* <span>{post.tagName}</span> */}
@@ -81,6 +94,26 @@ const PostList = () => {
                   handleMoveToDetailPage(post.postsId);
                 }}
               />
+              {toastStatus && (
+                <div>
+                  <div className=' w-80 h-80 bg-gray-300 absolute flex flex-col justify-around'>
+                    <button
+                      onClick={() => {
+                        handleMoveToEditPage(clickedPostId);
+                      }}
+                    >
+                      수정 하시겠습니까?
+                    </button>
+                    <button
+                      onClick={() => {
+                        handleDeletePost(clickedPostId);
+                      }}
+                    >
+                      삭제 하시겠습니까?
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           );
         })}
@@ -88,14 +121,17 @@ const PostList = () => {
 
       <button
         style={{
-          fontSize: '5rem',
+          fontSize: '3rem',
           backgroundColor: 'pink',
-          height: '5rem',
-          width: '5rem',
-          lineHeight: '5rem',
+          height: '3rem',
+          width: '3rem',
+          lineHeight: '3rem',
           borderRadius: '100%',
           textAlign: 'center',
           boxSizing: 'border-box',
+          position: 'fixed',
+          top: 5,
+          right: 5,
         }}
         onClick={handleMoveToWritePage}
       >

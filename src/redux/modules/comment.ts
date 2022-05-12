@@ -42,13 +42,20 @@ export const commentSlice = createSlice({
         {
           postsId: action.payload.postsId,
           commentsId: Math.random(),
-          nickname: 'user1',
+          nickname: 'test1',
           content: action.payload.comment,
           createdAt: '2022-01-01 20:30',
           modifiedAt: '',
         },
       ];
       return { list: new_commentList };
+    },
+    deleteComment: (state, action: PayloadAction<number>) => {
+      const new_list = state.list.filter((comment) => {
+        return comment.commentsId !== action.payload;
+      });
+
+      return { list: new_list };
     },
   },
 });
