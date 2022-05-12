@@ -1,11 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
-import posts from '../redux/modules/posts';
+import posts from '../../redux/modules/posts';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../redux/configureStore';
+import { useAppDispatch } from '../../redux/configureStore';
 // import { axiosAddPosts } from '../redux/modules/posts';
 
-const AddPosts = () => {
+const AddEditPost = () => {
   const navigate = useNavigate();
   // configureStore.ts 에서 타입 정의한 dispatch
   const appDispatch = useAppDispatch();
@@ -51,6 +51,9 @@ const AddPosts = () => {
         navi: navigate,
       })
     );
+    console.log(navigate);
+    console.log(navigate.prototype);
+
     // API연결할때 주석 해제
     // appDispatch(axiosAddPosts({
     //   title,
@@ -60,6 +63,7 @@ const AddPosts = () => {
     //     'https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg',
     // }));
   };
+
   return (
     <div style={{ border: '1px solid #111' }}>
       <h1>게시글 작성</h1>
@@ -100,6 +104,7 @@ const AddPosts = () => {
         style={{ border: '1px solid #111', resize: 'none' }}
         onChange={getInputContentFrom}
       />
+
       <button
         className='bg-gradient-to-r from-cyan-500 to-indigo-500'
         onClick={handleAddPosts}
@@ -110,4 +115,4 @@ const AddPosts = () => {
   );
 };
 
-export default AddPosts;
+export default AddEditPost;

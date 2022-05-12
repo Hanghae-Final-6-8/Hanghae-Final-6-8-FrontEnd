@@ -1,19 +1,32 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { RootState } from '../redux/configureStore';
-import { axiosGetPostsList } from '../redux/modules/posts';
-import { useAppDispatch } from '../redux/configureStore';
+import { RootState } from '../../redux/configureStore';
+import { axiosGetPostsList } from '../../redux/modules/posts';
+import { useAppDispatch } from '../../redux/configureStore';
 
-const Posts = () => {
+const PostList = () => {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
+  // 토스트팝업 토글용 state
+  const [toastStatus, setToastStatus] = useState(false);
   // 리덕스에서 커뮤니티 리스트 가져옴
   const postList = useSelector((store: RootState) => store.posts.list);
   // api로 db에서 커뮤니티 리스트 가져오기
   useEffect(() => {
     appDispatch(axiosGetPostsList());
   }, []);
+
+  useEffect(() => {
+    if (toastStatus) {
+      setTimeout(() => setToastStatus(false), 1000);
+    }
+  }, [toastStatus]);
+
+  const getSetToastFrom = () => {
+    setToastStatus(true);
+  };
+
   // 커뮤니티 작성페이지로 이동
   const handleMoveToWritePage = () => {
     navigate('/posts/write');
@@ -35,11 +48,17 @@ const Posts = () => {
         {postList.map((post, idx) => {
           return (
             <div key={idx}>
-              <img
-                className='h-14 w-14 rounded-full'
-                src='https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg'
-              />
-              <span>{post.nickname}</span>
+              <div className='flex justify-between p-1'>
+                <div className='flex items-center'>
+                  <img
+                    className='h-14 w-14 mr-2 rounded-full'
+                    src='https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg'
+                  />
+                  <span>{post.nickname}</span>
+                </div>
+                <button>...</button>
+              </div>
+
               {/* <span>{post.tagName}</span> */}
               {post.tagName.length !== 0 ? (
                 post.tagName.map((tag, index) => {
@@ -57,7 +76,7 @@ const Posts = () => {
               )}
               <img
                 src={post.postsImage}
-                className='h-40 w-40 rounded-md mr-2'
+                className='rounded-md mr-2'
                 onClick={() => {
                   handleMoveToDetailPage(post.postsId);
                 }}
@@ -86,4 +105,4 @@ const Posts = () => {
   );
 };
 
-export default Posts;
+export default PostList;

@@ -1,13 +1,13 @@
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from '../redux/configureStore';
-import Comment from '../components/molecules/Comment';
+import { RootState } from '../../redux/configureStore';
+import Comment from '../../components/molecules/Comment';
 import { useState } from 'react';
-import { useAppDispatch } from '../redux/configureStore';
-import commentSlice from '../redux/modules/comment';
-import Likes from '../components/atoms/Likes';
+import { useAppDispatch } from '../../redux/configureStore';
+import commentSlice from '../../redux/modules/comment';
+import Likes from '../../components/atoms/Likes';
 
-const PostsDetail = () => {
+const PostDetail = () => {
   const appDispatch = useAppDispatch();
   // postsId는 App.tsx에서 라우팅 할때 정한 파라미터명이다.
   const postsId = useParams().postsId;
@@ -70,4 +70,4 @@ const PostsDetail = () => {
   );
 };
 
-export default PostsDetail;
+export default PostDetail;

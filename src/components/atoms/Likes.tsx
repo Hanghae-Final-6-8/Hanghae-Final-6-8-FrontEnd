@@ -31,7 +31,7 @@ const Likes = (props: likesProps) => {
       return like.nickname === userNickname;
     });
   }
-  console.log(userLiked);
+
   // let userObj: LikesItemDataParams | undefined = undefined;
   // if (userLiked) {
   //   userObj = postLikesList.find((like) => {
