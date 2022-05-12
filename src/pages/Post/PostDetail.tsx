@@ -1,13 +1,15 @@
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from '../redux/configureStore';
-import Comment from '../components/molecules/Comment';
+import { RootState } from '../../redux/configureStore';
+import Comment from '../../components/molecules/Comment';
 import { useState } from 'react';
-import { useAppDispatch } from '../redux/configureStore';
-import commentSlice from '../redux/modules/comment';
-import Likes from '../components/atoms/Likes';
+import { useAppDispatch } from '../../redux/configureStore';
+import commentSlice from '../../redux/modules/comment';
+import Likes from '../../components/atoms/Likes';
+import { useNavigate } from 'react-router-dom';
 
-const PostsDetail = () => {
+const PostDetail = () => {
+  const navigate = useNavigate();
   const appDispatch = useAppDispatch();
   // postsId는 App.tsx에서 라우팅 할때 정한 파라미터명이다.
   const postsId = useParams().postsId;
@@ -30,8 +32,15 @@ const PostsDetail = () => {
     appDispatch(commentSlice.actions.addComment({ postsId, comment }));
   };
 
+  const handleBacktoPrev = () => {
+    navigate(-1);
+  };
+
   return (
     <div>
+      <button className='m-2 block' onClick={handleBacktoPrev}>
+        ◀
+      </button>
       <span>{post?.nickname}</span>
       <span>{post?.createdAt}</span>
       {post?.tagName.length !== 0 ? (
@@ -50,7 +59,7 @@ const PostsDetail = () => {
       )}
       <p>{post?.title}</p>
       <img src={post?.postsImage} />
-      <Likes />
+      <Likes postsId={Number(postsId)} />
       <p>{post?.content}</p>
       <hr />
       <input
@@ -70,4 +79,4 @@ const PostsDetail = () => {
   );
 };
 
-export default PostsDetail;
+export default PostDetail;

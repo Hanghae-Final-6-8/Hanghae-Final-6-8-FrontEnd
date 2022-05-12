@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/configureStore';
+import commentSlice from '../../redux/modules/comment';
+import { useAppDispatch } from '../../redux/configureStore';
 
 // 부모 컴포넌트로부터 받아오는 props의 타입 지정
 interface postsIdProps {
@@ -7,6 +9,7 @@ interface postsIdProps {
 }
 
 const Comment = (props: postsIdProps) => {
+  const appDispatch = useAppDispatch();
   // 커뮤니티(포스트) 아이디를 props로 받아옴
   const postsId = props.postsId;
 
@@ -16,6 +19,13 @@ const Comment = (props: postsIdProps) => {
     return comment.postsId === Number(postsId);
   });
 
+  //임시. 로그인 구현시 삭제
+  const nickname = 'test1';
+
+  // 댓글 삭제
+  const handleDeleteComment = (commentsId: number) => {
+    appDispatch(commentSlice.actions.deleteComment(commentsId));
+  };
   return (
     <div className='flex flex-col'>
       {postComentList.map((comment, index) => {
@@ -28,6 +38,15 @@ const Comment = (props: postsIdProps) => {
             <span>{comment.nickname}</span>
             <p>{comment.content}</p>
             <span>01-02 13:24</span>
+            {comment.nickname === nickname && (
+              <button
+                onClick={() => {
+                  handleDeleteComment(comment.commentsId);
+                }}
+              >
+                삭제
+              </button>
+            )}
           </div>
         );
       })}

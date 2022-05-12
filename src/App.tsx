@@ -1,24 +1,27 @@
 //import 'tailwindcss/tailwind.css';
 import { Routes, Route } from 'react-router-dom';
 import Main from './pages/Main';
-import Posts from './pages/Posts';
-import PostsDetail from './pages/PostsDetail';
+import PostList from './pages/Post/PostList';
+import PostDetail from './pages/Post/PostDetail';
 import Login from './pages/Login';
-import BottomNav from './components/BottomNav';
-import AddPosts from './pages/AddPosts';
+import AddEditPost from './pages/Post/AddEditPost';
+import BeansList from './pages/BeansList/BeansList';
+import TasteSurvey from './pages/TasteSurvey/TasteSurvey';
+import Mypage from './pages/MyPage/Mypage';
 
 function App() {
   return (
-    <div className='relative h-full w-full'>
-      <Routes>
-        <Route path='/' element={<Main />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/posts' element={<Posts />} />
-        <Route path='/posts/:postsId' element={<PostsDetail />} />
-        <Route path='/posts/write' element={<AddPosts />} />
-      </Routes>
-      <BottomNav />
-    </div>
+    <Routes>
+      <Route path='/' element={<Main />} />
+      <Route path='/login' element={<Login />} />
+      <Route path='/posts' element={<PostList />} />
+      <Route path='/posts/:postsId' element={<PostDetail />} />
+      <Route path='/posts/write' element={<AddEditPost />} />
+      <Route path='/posts/write/:postsId' element={<AddEditPost />} />
+      <Route path='/mypage' element={<Mypage />} />
+      <Route path='/survey' element={<TasteSurvey />} />
+      <Route path='/beans' element={<BeansList />} />
+    </Routes>
   );
 }
 

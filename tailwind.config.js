@@ -18,21 +18,30 @@ module.exports = {
         1.5: '0.375rem',
         2.5: '0.625rem',
         5.5: '1.375rem',
+        // 375x812 기준
+        // px: 'rem변환 수치'
         '7px': '0.4375rem',
-        34: '2.125rem',
-        104: '6.5rem',
+        '9px': '0.5625rem',
+        '34px': '2.125rem',
+        '50px': '3.125rem',
+        '60px': '3.75rem',
+        '104px': '6.5rem',
+        '120px': '7.5rem',
+        '289px': '18.0625rem',
       },
       borderRadius: {
-        40: '40px',
+        '40px': '2.5rem',
+        btn: '0.875rem',
       },
       width: {
-        30: '1.875rem',
+        '30px': '1.875rem',
       },
       height: {
-        84: '5.25rem',
+        '84px': '5.25rem',
       },
-      dropShadow: {
-        main: '0 -4px 20 rgba(11,11,11,0.02)',
+      boxShadow: {
+        main: '0 -4px 20px rgba(11, 11, 11, 0.02)',
+        loginBtn: '0px 10px 30px rgba(11, 11, 11, 0.04)',
       },
     },
     fontSize: {
