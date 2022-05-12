@@ -9,7 +9,7 @@ const Main = () => {
           <img className='w-full' src={bookmark} />
         </button>
       </header>
-      <div className='absolute px-6 pb-12 left-0 top-48 rounded-t-40px bg-white w-full drop-shadow-main'>
+      <div className='absolute px-6 pb-12 left-0 top-48 rounded-t-40px bg-white w-full shadow-main'>
         <article className='relative -top-14'>
           <figure className='relative'>
             <img
