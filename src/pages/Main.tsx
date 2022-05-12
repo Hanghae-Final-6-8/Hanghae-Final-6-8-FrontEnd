@@ -1,4 +1,4 @@
-import { bookmark, down } from '../assets/icons/index';
+import { bookmark, down, share } from '../assets/icons/index';
 
 const Main = () => {
   return (
@@ -54,6 +54,16 @@ const Main = () => {
         <div>text</div>
         <div>text</div>
       </div>
+      <button className='fixed w-12 h-12 rounded-full z-10 bg-slate-400 bottom-104 right-6'>
+        <img
+          className='mx-auto '
+          src={share}
+          style={{
+            filter:
+              'invert(95%) sepia(0%) saturate(21%) hue-rotate(357deg) brightness(104%) contrast(108%)',
+          }}
+        />
+      </button>
     </main>
   );
 };
