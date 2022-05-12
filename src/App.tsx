@@ -5,6 +5,9 @@ import PostList from './pages/Post/PostList';
 import PostDetail from './pages/Post/PostDetail';
 import Login from './pages/Login';
 import AddEditPost from './pages/Post/AddEditPost';
+import BeansList from './pages/BeansList/BeansList';
+import TasteSurvey from './pages/TasteSurvey/TasteSurvey';
+import Mypage from './pages/MyPage/Mypage';
 
 function App() {
   return (
@@ -14,6 +17,9 @@ function App() {
       <Route path='/posts' element={<PostList />} />
       <Route path='/posts/:postsId' element={<PostDetail />} />
       <Route path='/posts/write' element={<AddEditPost />} />
+      <Route path='/mypage' element={<Mypage />} />
+      <Route path='/survey' element={<TasteSurvey />} />
+      <Route path='/beans' element={<BeansList />} />
     </Routes>
   );
 }
