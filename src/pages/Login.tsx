@@ -1,4 +1,12 @@
+import { useNavigate } from 'react-router-dom';
+
 const Login = () => {
+  const navigate = useNavigate();
+
+  const handleToMain = () => {
+    navigate('../');
+  };
+
   return (
     <>
       <div className='flex flex-col px-6 py-12 text-center'>
@@ -19,7 +27,10 @@ const Login = () => {
             구
           </button>
         </div>
-        <button className='w-full mt-60px mt bg-stone-400 text-white rounded-btn font-500 text-sub2 py-2.5'>
+        <button
+          className='w-full mt-60px mt bg-stone-400 text-white rounded-btn font-500 text-sub2 py-2.5'
+          onClick={handleToMain}
+        >
           둘러보기
         </button>
       </div>
