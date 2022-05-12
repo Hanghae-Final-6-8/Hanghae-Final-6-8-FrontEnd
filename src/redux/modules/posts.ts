@@ -21,6 +21,7 @@ interface AddPostsType {
   content: string;
   tagName: string[];
   postsImage: string;
+  navi: any;
 }
 
 const INITIAL_STATE: PostsState = {
@@ -100,7 +101,9 @@ export const postsSlice = createSlice({
           tagName: action.payload.tagName,
         },
       ];
-      // state.list는 아예 에러나고, state:new_arr도 안먹힘. list:new_arr 하니까 됨.. 왜 작동하는지는 의문
+      // 라우팅처리
+      action.payload.navi('/posts');
+      // state.list는 아예 에러나고, state:new_arr도 안먹힘. list:new_arr 하니까 됨.. 왜 작동하는지는 의문 아마 return하는곳 자체가 state 일지도..
       return { list: new_postsList };
     },
     // loadPosts:(state,action) => {

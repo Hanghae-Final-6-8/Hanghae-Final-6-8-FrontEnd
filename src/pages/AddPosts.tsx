@@ -1,10 +1,12 @@
 import React from 'react';
 import { useState } from 'react';
 import posts from '../redux/modules/posts';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../redux/configureStore';
 // import { axiosAddPosts } from '../redux/modules/posts';
 
 const AddPosts = () => {
+  const navigate = useNavigate();
   // configureStore.ts 에서 타입 정의한 dispatch
   const appDispatch = useAppDispatch();
   // 커뮤니티 타이틀
@@ -46,6 +48,7 @@ const AddPosts = () => {
         tagName,
         postsImage:
           'https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg',
+        navi: navigate,
       })
     );
     // API연결할때 주석 해제
