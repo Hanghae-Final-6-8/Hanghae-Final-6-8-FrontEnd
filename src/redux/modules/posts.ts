@@ -22,7 +22,7 @@ interface AddPostsType {
   content: string;
   tagName: string[];
   postsImage: string;
-  navi: any;
+  navi: (to: string) => void;
 }
 
 const INITIAL_STATE: PostsState = {

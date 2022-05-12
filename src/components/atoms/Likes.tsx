@@ -48,7 +48,9 @@ const Likes = (props: likesProps) => {
   };
   // 좋아요 삭제
   const handleDeleteLikes = () => {
-    appDispatch(likesSlice.actions.deleteLikes(userLiked!.likesId));
+    appDispatch(
+      likesSlice.actions.deleteLikes(userLiked ? userLiked.likesId : 0)
+    );
   };
   return (
     <div>

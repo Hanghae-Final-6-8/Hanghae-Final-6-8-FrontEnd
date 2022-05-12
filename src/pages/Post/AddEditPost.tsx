@@ -46,9 +46,9 @@ const AddEditPost = () => {
   }
 
   useEffect(() => {
-    setTitle(post!.title);
-    setContent(post!.content);
-    setTagName(post!.tagName);
+    setTitle(post ? post.title : '');
+    setContent(post ? post.content : '');
+    setTagName(post ? post.tagName : []);
   }, []);
 
   // 커뮤니티 타이틀 set
@@ -99,7 +99,7 @@ const AddEditPost = () => {
   const handleEditpost = () => {
     appDispatch(
       postsSlice.actions.editPost({
-        postsId: post!.postsId,
+        postsId: post ? post.postsId : undefined,
         title,
         content,
         tagName,

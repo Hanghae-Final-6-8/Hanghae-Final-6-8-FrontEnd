@@ -42,6 +42,9 @@ export const likesSlice = createSlice({
       return { list: new_likesList };
     },
     deleteLikes: (state: LikesState, action: PayloadAction<number>) => {
+      if (action.payload === 0) {
+        return;
+      }
       const new_likesList = state.list.filter((like) => {
         return like.likesId !== action.payload;
       });
