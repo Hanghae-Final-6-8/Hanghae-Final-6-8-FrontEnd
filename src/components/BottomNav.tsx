@@ -22,7 +22,10 @@ const BottomNav = () => {
   const handleToPostList = () => {
     navigate('./posts');
   };
-
+  // 특정 페이지에서 navibar 안보이게 하는 기능, 추후 refactoring 필요
+  if (window.location.pathname === '/login') {
+    return null;
+  }
   return (
     <>
       <nav className='fixed flex bottom-0 bg-slate-50 w-full h-84'>
