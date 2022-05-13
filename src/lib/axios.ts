@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { getCookie, setCookie } from '../utils/cookie';
 
 // 임시로 구현하였습니다.
@@ -10,10 +10,12 @@ const instance = axios.create({
 });
 
 const setHeaderAuthorization = (token: string) => {
-  instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  instance.defaults.headers.common['ACCESS_TOKEN'] = `Bearer ${token}`;
 };
 
-instance.interceptors.request.use((config: any) => {
+// const checkToken = (config: AxiosRequestConfig) => {};
+
+instance.interceptors.request.use((config: AxiosRequestConfig) => {
   const token = getCookie();
   token && setHeaderAuthorization(token);
   return config;
