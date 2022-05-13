@@ -1,11 +1,20 @@
 import { useNavigate } from 'react-router-dom';
-import { kakao, naver, google } from '../assets/icons/index';
+import { naver, google } from '../assets/icons/index';
+import KakaoLoginBtn from '../components/molecules/KakaoLoginBtn';
+
+import { useAppDispatch } from '../redux/configureStore';
+import { loginKakao } from '../redux/modules/user';
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const handleToMain = () => {
     navigate('../');
+  };
+
+  const handleLoginKakao = () => {
+    alert('hi');
   };
 
   return (
@@ -18,9 +27,7 @@ const Login = () => {
         <p className='text-body mt-289px text-gray-400'>간편 회원가입/로그인</p>
         <hr className='mx-auto mt-9px' style={{ width: '100px' }} />
         <div className='mt-2.5'>
-          <button className='w-50px h-50px mr-7 rounded-full bg-white shadow-loginBtn'>
-            <img className='mx-auto' src={kakao} />
-          </button>
+          <KakaoLoginBtn onClick={handleLoginKakao} />
           <button className='w-50px h-50px  mr-7 rounded-full bg-white shadow-loginBtn'>
             <img className='mx-auto' src={naver} />
           </button>
