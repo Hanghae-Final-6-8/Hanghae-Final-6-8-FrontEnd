@@ -34,7 +34,7 @@ jobs:
           
         env:
           REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
-          REACT_APP_SOCKET_BASE_URL: ${{ secrets.REACT_APP_SOCKET_BASE_URL }}
+          REACT_REACT_APP_KAKAO_MAP_KEY: ${{ secrets.REACT_APP_KAKAO_MAP_KEY }}
 
 
       - name: Install Dependencies
