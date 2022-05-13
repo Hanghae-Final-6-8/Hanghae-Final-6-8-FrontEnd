@@ -147,11 +147,11 @@ export const postsSlice = createSlice({
       return { list: new_list };
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(axiosGetPostList.fulfilled, (state: PostsState, action) => {
-      return { list: [...action.payload] };
-    });
-  },
+  // extraReducers: (builder) => {
+  //   builder.addCase(axiosGetPostList.fulfilled, (state: PostsState, action) => {
+  //     return { list: [...action.payload] };
+  //   });
+  // },
 });
 
 export const { addPost } = postsSlice.actions;

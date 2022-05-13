@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import postsSlice from '../../redux/modules/posts';
 // import imageSlice from '../../redux/modules/image';
+import ImageUploading, { ImageListType } from 'react-images-uploading';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/configureStore';
 import { useParams } from 'react-router-dom';
@@ -25,6 +26,17 @@ const AddEditPost = () => {
   const [tagName, setTagName] = useState<Array<string>>([]);
 
   const [content, setContent] = useState<string>('');
+  // 이미지
+  const [images, setImages] = useState([]);
+  const maxNumber = 69;
+
+  const onChange = (
+    imageList: ImageListType,
+    addUpdateIndex: number[] | undefined
+  ) => {
+    console.log(imageList, addUpdateIndex);
+    setImages(imageList as never[]);
+  };
 
   // 수정하기위한 포스트를 담아두기 위해.
   const postList: PostsState = { list: [] };
@@ -152,13 +164,49 @@ const AddEditPost = () => {
       ) : (
         <></>
       )}
-      <input type='file' />
-      {/* <img
-        src={preview ? preview : 'http://via.placeholder.com/400x300'}
-        className='h-52 w-52 bg-gradient-to-r from-cyan-500 to-indigo-500'
-      /> */}
+
+      <ImageUploading value={images} onChange={onChange} maxNumber={maxNumber}>
+        {({
+          imageList,
+          onImageUpload,
+          onImageUpdate,
+          onImageRemove,
+          isDragging,
+          dragProps,
+        }) => (
+          // write your building UI
+          <div className='upload__image-wrapper '>
+            <button
+              style={isDragging ? { color: 'red' } : undefined}
+              onClick={onImageUpload}
+              {...dragProps}
+            >
+              이미지선택
+            </button>
+            &nbsp;
+            {imageList.map((image, index) => (
+              <div key={index} className='image-item'>
+                <img
+                  src={image.dataURL}
+                  alt=''
+                  width='100'
+                  className='h-52 w-full'
+                />
+                <div className='image-item__btn-wrapper'>
+                  <button className='mr-1' onClick={() => onImageUpdate(index)}>
+                    이미지바꾸기
+                  </button>
+                  <button className='mr-1' onClick={() => onImageRemove(index)}>
+                    이미지삭제
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </ImageUploading>
       <textarea
-        className='h-52 w-52'
+        className='h-52 w-full'
         style={{ border: '1px solid #111', resize: 'none' }}
         onChange={getInputContentFrom}
         value={content}
@@ -167,10 +215,7 @@ const AddEditPost = () => {
       {postsIdparams.postsId ? (
         <button onClick={handleEditpost}>수정하기</button>
       ) : (
-        <button
-          className='bg-gradient-to-r from-cyan-500 to-indigo-500'
-          onClick={handleAddPosts}
-        >
+        <button className='border-2' onClick={handleAddPosts}>
           등록하기
         </button>
       )}
