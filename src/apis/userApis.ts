@@ -6,6 +6,12 @@ export const userApis = {
   loginKakao: () => instance.get('/api/user/login/kakao'),
   loginNaver: () => instance.get('/api/user/login/naver'),
   loginGoogle: () => instance.get('/api/user/login/google'),
+  auth: (token: string) =>
+    instance.get('/api/user/auth', {
+      headers: {
+        ACCESS_TOKEN: `Bearer ${token}`,
+      },
+    }),
   logout: (token: string) =>
     instance.post('/api/user/logout', {
       headers: {
