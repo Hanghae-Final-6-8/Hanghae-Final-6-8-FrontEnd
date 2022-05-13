@@ -3,18 +3,22 @@ import { naver, google } from '../assets/icons/index';
 import KakaoLoginBtn from '../components/molecules/KakaoLoginBtn';
 
 import { useAppDispatch } from '../redux/configureStore';
-import { loginKakao } from '../redux/modules/user';
+import { loginKakao, auth } from '../redux/modules/user';
 
 const Login = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  const appDispatch = useAppDispatch();
 
   const handleToMain = () => {
-    navigate('../');
+    navigate('../main');
   };
 
   const handleLoginKakao = () => {
-    alert('hi');
+    alert('클릭');
+    appDispatch(auth);
+    //console.log(process.env.REACT_APP_BASE_URL);
+    // console.log(dispatch(loginKakao));
+    // console.log(loginKakao);
   };
 
   return (
@@ -28,7 +32,10 @@ const Login = () => {
         <hr className='mx-auto mt-9px' style={{ width: '100px' }} />
         <div className='mt-2.5'>
           <KakaoLoginBtn onClick={handleLoginKakao} />
-          <button className='w-50px h-50px  mr-7 rounded-full bg-white shadow-loginBtn'>
+          <button
+            className='w-50px h-50px  mr-7 rounded-full bg-white shadow-loginBtn'
+            onClick={handleLoginKakao}
+          >
             <img className='mx-auto' src={naver} />
           </button>
           <button className='w-50px h-50px rounded-full bg-white shadow-loginBtn'>

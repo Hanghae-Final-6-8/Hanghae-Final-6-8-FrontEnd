@@ -12,8 +12,8 @@ import Mypage from './pages/MyPage/Mypage';
 function App() {
   return (
     <Routes>
-      <Route path='/' element={<Main />} />
-      <Route path='/login' element={<Login />} />
+      <Route path='/' element={<Login />} />
+      <Route path='/main' element={<Main />} />
       <Route path='/posts' element={<PostList />} />
       <Route path='/posts/:postsId' element={<PostDetail />} />
       <Route path='/posts/write' element={<AddEditPost />} />
