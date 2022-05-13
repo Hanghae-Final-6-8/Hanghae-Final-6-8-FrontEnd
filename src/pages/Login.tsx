@@ -4,6 +4,7 @@ import KakaoLoginBtn from '../components/molecules/KakaoLoginBtn';
 
 import { useAppDispatch } from '../redux/configureStore';
 import { loginKakao, auth } from '../redux/modules/user';
+import { Button } from '../components/atoms';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -42,12 +43,7 @@ const Login = () => {
             <img className='mx-auto' src={google} />
           </button>
         </div>
-        <button
-          className='w-full mt-60px mt bg-stone-400 text-white rounded-btn font-500 text-sub2 py-2.5'
-          onClick={handleToMain}
-        >
-          둘러보기
-        </button>
+        <Button onClick={handleToMain}>둘러보기</Button>
       </div>
     </>
   );
