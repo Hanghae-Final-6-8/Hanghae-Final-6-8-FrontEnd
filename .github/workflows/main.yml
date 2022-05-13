@@ -1,4 +1,4 @@
-name: final-8
+name: COPICK
 on:
   push:
     branches: [main]
