@@ -1,8 +1,9 @@
 name: final-8
 on:
+  push:
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,12 +15,34 @@ jobs:
     steps:
       - name: Checkout source code.
         uses: actions/checkout@v2
+        
+      - name: Cache node modules
+        id: node-cache
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+            
+      - name: Generate Environment Variables File for Production
+        run: |
+          echo "REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL" >> .env.production
+          echo "REACT_APP_KAKAO_MAP_KEY=$REACT_APP_KAKAO_MAP_KEY" >> .env.production
+          
+        env:
+          REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
+          REACT_APP_SOCKET_BASE_URL: ${{ secrets.REACT_APP_SOCKET_BASE_URL }}
+
 
       - name: Install Dependencies
+        if: steps.node-cache.outputs.cache-hit != 'true'
         run: npm install
 
       - name: Build
-        run: npm run build
+        run: CI=false npm run build
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -32,4 +55,8 @@ jobs:
         run: aws s3 sync build/ s3://${{ secrets.BUCKET_NAME }} --delete --acl public-read
 
       - name: Invalidate CloudFront Cache
-        run: aws cloudfront create-invalidation --distribution-id ${{secrets.DISTRIBUTION_ID}} --paths "/*"
+        uses: chetan/invalidate-cloudfront-action@master
+        env:
+          DISTRIBUTION: ${{ secrets.DISTRIBUTION_ID }}
+          PATHS: '/*'
+        continue-on-error: true
