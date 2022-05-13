@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import postsSlice from '../../redux/modules/posts';
+// import imageSlice from '../../redux/modules/image';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/configureStore';
 import { useParams } from 'react-router-dom';
@@ -67,6 +68,7 @@ const AddEditPost = () => {
   const deleteTag = (tag: string) => {
     setTagName(tagName.filter((t) => t !== tag));
   };
+
   // 커뮤니티 내용 set
   const getInputContentFrom = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
@@ -151,9 +153,10 @@ const AddEditPost = () => {
         <></>
       )}
       <input type='file' />
-      <div className='h-52 w-52 bg-gradient-to-r from-cyan-500 to-indigo-500'>
-        이미지 미리보기
-      </div>
+      {/* <img
+        src={preview ? preview : 'http://via.placeholder.com/400x300'}
+        className='h-52 w-52 bg-gradient-to-r from-cyan-500 to-indigo-500'
+      /> */}
       <textarea
         className='h-52 w-52'
         style={{ border: '1px solid #111', resize: 'none' }}
