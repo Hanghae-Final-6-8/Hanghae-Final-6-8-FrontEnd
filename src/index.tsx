@@ -9,6 +9,12 @@ import DeviceDetect from './lib/DeviceDetect';
 // import reportWebVitals from './reportWebVitals';
 import './index.css';
 
+declare global {
+  interface Window {
+    kakao: any;
+  }
+}
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
