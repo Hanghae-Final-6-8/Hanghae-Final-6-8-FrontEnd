@@ -2,14 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export interface ImageState {
   image_url: string;
-  uploading: boolean;
-  preview: ArrayBuffer;
 }
 
 const INITIAL_STATE: ImageState = {
   image_url: '',
-  uploading: false,
-  preview: new Uint8Array(),
 };
 
 export const imageSlice = createSlice({

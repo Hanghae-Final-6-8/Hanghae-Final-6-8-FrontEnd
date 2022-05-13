@@ -42,17 +42,17 @@ const INITIAL_STATE: PostsState = {
 };
 
 // 커뮤니티 리스트 불러오기
-export const axiosGetPostList = createAsyncThunk(
-  'postsReducer/axiosGetPostList',
-  async () => {
-    return axios
-      .get('URL')
-      .then((res) => {
-        return res.data;
-      })
-      .catch((error) => console.log(error));
-  }
-);
+// export const axiosGetPostList = createAsyncThunk(
+//   'postsReducer/axiosGetPostList',
+//   async () => {
+//     return axios
+//       .get('URL')
+//       .then((res) => {
+//         return res.data;
+//       })
+//       .catch((error) => console.log(error));
+//   }
+// );
 
 // 커뮤니티 추가하기
 export const axiosAddPost = createAsyncThunk(

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../redux/configureStore';
-import { axiosGetPostList } from '../../redux/modules/posts';
+// import { axiosGetPostList } from '../../redux/modules/posts';
 import { useAppDispatch } from '../../redux/configureStore';
 import postsSlice from '../../redux/modules/posts';
 
@@ -16,9 +16,9 @@ const PostList = () => {
   // 리덕스에서 커뮤니티 리스트 가져옴
   const postList = useSelector((store: RootState) => store.posts.list);
   // api로 db에서 커뮤니티 리스트 가져오기
-  useEffect(() => {
-    appDispatch(axiosGetPostList());
-  }, []);
+  // useEffect(() => {
+  //   appDispatch(axiosGetPostList());
+  // }, []);
 
   // 토스트팝업 띄우기
   const getSetToastFrom = (postsId: number) => {
