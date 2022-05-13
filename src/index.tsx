@@ -11,6 +11,7 @@ import './index.css';
 
 declare global {
   interface Window {
+    // eslint-disable-next-line
     kakao: any;
   }
 }
