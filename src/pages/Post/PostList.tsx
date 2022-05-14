@@ -71,8 +71,6 @@ const PostList = () => {
                   ···
                 </button>
               </div>
-
-              {/* <span>{post.tagName}</span> */}
               {post.tagName?.length !== 0 ? (
                 post.tagName.map((tag, index) => {
                   return (

@@ -22,9 +22,11 @@ module.exports = {
         // px: 'rem변환 수치'
         '7px': '0.4375rem',
         '9px': '0.5625rem',
+        '30px': '1.875rem',
         '34px': '2.125rem',
         '50px': '3.125rem',
         '60px': '3.75rem',
+        '84px': '5.25rem',
         '104px': '6.5rem',
         '120px': '7.5rem',
         '289px': '18.0625rem',
@@ -33,15 +35,13 @@ module.exports = {
         '40px': '2.5rem',
         btn: '0.875rem',
       },
-      width: {
-        '30px': '1.875rem',
-      },
-      height: {
-        '84px': '5.25rem',
-      },
       boxShadow: {
         main: '0 -4px 20px rgba(11, 11, 11, 0.02)',
         loginBtn: '0px 10px 30px rgba(11, 11, 11, 0.04)',
+        toolbar: '0px -4px 30px rgba(11, 11, 11, 0.06)',
+        contents: '0px 10px 20px rgba(11, 11, 11, 0.04)',
+        contentsCoffee: '0px 5px 40px rgba(11, 11, 11, 0.12)',
+        contentsStore: '0px 6px 20px rgba(11, 11, 11, 0.08)',
       },
     },
     fontSize: {

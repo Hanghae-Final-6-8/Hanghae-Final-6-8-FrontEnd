@@ -1,10 +1,25 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { naver, google } from '../assets/icons/index';
+import KakaoLoginBtn from '../components/molecules/KakaoLoginBtn';
+
+import { useAppDispatch } from '../redux/configureStore';
+import { loginKakao } from '../redux/modules/user';
+import { Button } from '../components/atoms';
 
 const Login = () => {
   const navigate = useNavigate();
+  const appDispatch = useAppDispatch();
 
   const handleToMain = () => {
-    navigate('../');
+    navigate('../main');
+  };
+
+  const handleLoginKakao = () => {
+    appDispatch(loginKakao());
+    //console.log(process.env.REACT_APP_BASE_URL);
+    // console.log(dispatch(loginKakao));
+    // console.log(loginKakao);
   };
 
   return (
@@ -17,22 +32,18 @@ const Login = () => {
         <p className='text-body mt-289px text-gray-400'>간편 회원가입/로그인</p>
         <hr className='mx-auto mt-9px' style={{ width: '100px' }} />
         <div className='mt-2.5'>
-          <button className='w-50px h-50px mr-7 rounded-full bg-white shadow-loginBtn'>
-            카
-          </button>
-          <button className='w-50px h-50px  mr-7 rounded-full bg-white shadow-loginBtn'>
-            네
+          <KakaoLoginBtn onClick={handleLoginKakao} />
+          <button
+            className='w-50px h-50px  mr-7 rounded-full bg-white shadow-loginBtn'
+            onClick={handleLoginKakao}
+          >
+            <img className='mx-auto' src={naver} />
           </button>
           <button className='w-50px h-50px rounded-full bg-white shadow-loginBtn'>
-            구
+            <img className='mx-auto' src={google} />
           </button>
         </div>
-        <button
-          className='w-full mt-60px mt bg-stone-400 text-white rounded-btn font-500 text-sub2 py-2.5'
-          onClick={handleToMain}
-        >
-          둘러보기
-        </button>
+        <Button onClick={handleToMain}>둘러보기</Button>
       </div>
     </>
   );
