@@ -94,8 +94,7 @@ const AddEditPost = () => {
         title,
         content,
         tagName,
-        postsImage:
-          'https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg',
+        postsImage: images[0],
         navi: navigate,
       })
     );
