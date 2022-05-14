@@ -1,13 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { setCookie, getCookie, removeCookie } from './../../utils/cookie';
 import { userApis } from '../../apis';
+import axios from 'axios';
 
 const initialState = {};
 
 export const loginKakao = createAsyncThunk('user/login/kakao', async () => {
   try {
     await userApis.loginKakao().then((response) => {
-      console.log(response);
+      return;
     });
   } catch (err) {
     console.log(err);
@@ -15,6 +16,28 @@ export const loginKakao = createAsyncThunk('user/login/kakao', async () => {
   }
 });
 
+export const auth = createAsyncThunk('user/auth', async () => {
+  try {
+    await userApis.auth('data').then((response) => {
+      return;
+    });
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+});
+
+export const axiosGetPost = createAsyncThunk('test', async () => {
+  return axios
+    .get(
+      'http://ec2-3-38-78-198.ap-northeast-2.compute.amazonaws.com/user/login/kakao'
+    )
+    .then((res) => {
+      console.log(res);
+      return res.data;
+    })
+    .catch((error) => console.log(error));
+});
 // const user = createSlice({
 //   name: 'user',
 //   reducers: {

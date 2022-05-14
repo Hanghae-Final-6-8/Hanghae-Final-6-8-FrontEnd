@@ -1,9 +1,10 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { naver, google } from '../assets/icons/index';
 import KakaoLoginBtn from '../components/molecules/KakaoLoginBtn';
 
 import { useAppDispatch } from '../redux/configureStore';
-import { loginKakao, auth } from '../redux/modules/user';
+import { loginKakao } from '../redux/modules/user';
 import { Button } from '../components/atoms';
 
 const Login = () => {
@@ -15,8 +16,7 @@ const Login = () => {
   };
 
   const handleLoginKakao = () => {
-    alert('클릭');
-    appDispatch(auth);
+    appDispatch(loginKakao());
     //console.log(process.env.REACT_APP_BASE_URL);
     // console.log(dispatch(loginKakao));
     // console.log(loginKakao);
