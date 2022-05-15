@@ -24,7 +24,19 @@ const BottomNav = () => {
     navigate('./posts');
   };
   // 특정 페이지에서 navibar 안보이게 하는 기능, 추후 refactoring 필요
-  if (location.pathname === '/' || location.pathname === '/map') {
+  if (
+    location.pathname === '/' ||
+    location.pathname === '/map' ||
+    location.pathname === '/survey/main' ||
+    location.pathname === '/survey/01' ||
+    location.pathname === '/survey/02' ||
+    location.pathname === '/survey/03' ||
+    location.pathname === '/survey/04' ||
+    location.pathname === '/survey/05' ||
+    location.pathname === '/survey/06' ||
+    location.pathname === '/survey/needlogin' ||
+    location.pathname === '/survey/loading'
+  ) {
     return null;
   }
   return (
