@@ -1,4 +1,3 @@
-//import 'tailwindcss/tailwind.css';
 import { Routes, Route } from 'react-router-dom';
 import Main from './pages/Main';
 import PostList from './pages/Post/PostList';
@@ -13,24 +12,32 @@ import {
   TasteSurveyMain,
   TasteSurvey01,
 } from './pages/TasteSurvey';
+import NotFound from './pages/NotFound';
+import { RootLayout } from './components/templates';
 
 function App() {
   return (
-    <Routes>
-      <Route path='/' element={<Login />} />
-      <Route path='/main' element={<Main />} />
-      <Route path='/posts' element={<PostList />} />
-      <Route path='/posts/:postsId' element={<PostDetail />} />
-      <Route path='/posts/write' element={<AddEditPost />} />
-      <Route path='/posts/write/:postsId' element={<AddEditPost />} />
-      <Route path='/map' element={<StoreLocation />} />
-      <Route path='/mypage' element={<Mypage />} />
-      <Route path='/survey' element={<TasteSurvey />}>
-        <Route path='main' element={<TasteSurveyMain />} />
-        <Route path='01' element={<TasteSurvey01 />} />
-      </Route>
-      <Route path='/beans' element={<BeansList />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path='/main' element={<Main />} />
+        <Route path='/' element={<Login />} />
+        <Route element={<RootLayout />}>
+          <Route path='/posts' element={<PostList />} />
+          <Route path='/posts/:postsId' element={<PostDetail />} />
+          <Route path='/posts/write' element={<AddEditPost />} />
+          <Route path='/posts/write/:postsId' element={<AddEditPost />} />
+          <Route path='/map' element={<StoreLocation />} />
+          <Route path='/mypage' element={<Mypage />} />
+          <Route path='/survey' element={<TasteSurvey />}>
+            <Route path='main' element={<TasteSurveyMain />} />
+            <Route path='01' element={<TasteSurvey01 />} />
+          </Route>
+          <Route path='/beans' element={<BeansList />} />
+        </Route>
+
+        <Route path='*' element={<NotFound />} />
+      </Routes>
+    </>
   );
 }
 
