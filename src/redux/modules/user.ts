@@ -7,6 +7,8 @@ const initialState = {};
 export const loginKakao = createAsyncThunk('user/login/kakao', async () => {
   try {
     await userApis.loginKakao().then((response) => {
+      const url: string = response.data;
+      location.href = url;
       return;
     });
   } catch (err) {
