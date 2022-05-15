@@ -6,9 +6,13 @@ import PostDetail from './pages/Post/PostDetail';
 import Login from './pages/Login';
 import AddEditPost from './pages/Post/AddEditPost';
 import BeansList from './pages/BeansList/BeansList';
-import TasteSurvey from './pages/TasteSurvey/TasteSurvey';
 import Mypage from './pages/MyPage/Mypage';
 import StoreLocation from './pages/Map/StoreLocation';
+import {
+  TasteSurvey,
+  TasteSurveyMain,
+  TasteSurvey01,
+} from './pages/TasteSurvey';
 
 function App() {
   return (
@@ -21,7 +25,10 @@ function App() {
       <Route path='/posts/write/:postsId' element={<AddEditPost />} />
       <Route path='/map' element={<StoreLocation />} />
       <Route path='/mypage' element={<Mypage />} />
-      <Route path='/survey' element={<TasteSurvey />} />
+      <Route path='/survey' element={<TasteSurvey />}>
+        <Route path='main' element={<TasteSurveyMain />} />
+        <Route path='01' element={<TasteSurvey01 />} />
+      </Route>
       <Route path='/beans' element={<BeansList />} />
     </Routes>
   );

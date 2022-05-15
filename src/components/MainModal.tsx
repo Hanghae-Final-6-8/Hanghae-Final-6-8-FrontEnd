@@ -6,7 +6,7 @@ import { Button } from './atoms';
 const MainModal = () => {
   const navigate = useNavigate();
   const handleToTasteSurvey = () => {
-    navigate('../survey');
+    navigate('../survey/main');
   };
 
   const [isActivePopup, setIsActivePopup] = useState(true);
