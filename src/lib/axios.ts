@@ -9,21 +9,25 @@ const instance = axios.create({
   baseURL: baseURL,
 });
 
-const setHeaderAuthorization = (token: string) => {
+const setHeaderAccessToken = (token: string) => {
   instance.defaults.headers.common['ACCESS_TOKEN'] = `Bearer ${token}`;
+};
+
+const setHeaderRefreshToken = (token: string) => {
+  instance.defaults.headers.common['REFRESH_TOKEN'] = `Bearer ${token}`;
 };
 
 // const checkToken = (config: AxiosRequestConfig) => {};
 
 instance.interceptors.request.use((config: AxiosRequestConfig) => {
-  const token = getAccessTokenFromCookie();
-  token && setHeaderAuthorization(token);
+  const accessToken = getAccessTokenFromCookie();
+  accessToken && setHeaderAccessToken(accessToken);
   return config;
 });
 
 instance.interceptors.response.use(
   (response: AxiosResponse) => {
-    console.log(response);
+    console.log(response); 
     return response;
   },
   (error) => {
