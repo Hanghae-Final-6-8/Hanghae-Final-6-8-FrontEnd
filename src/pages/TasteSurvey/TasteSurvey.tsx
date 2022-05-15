@@ -10,7 +10,7 @@ const TasteSurvey = () => {
 
   return (
     <>
-      <div className='relative mx-6 my-12'>
+      <div className='relative'>
         <button className='absolute top-3.5 right-0' onClick={handleToMain}>
           <img className='w-8' src={cross} />
         </button>

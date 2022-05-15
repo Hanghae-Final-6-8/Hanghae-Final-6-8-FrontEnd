@@ -11,6 +11,13 @@ import {
   TasteSurvey,
   TasteSurveyMain,
   TasteSurvey01,
+  TasteSurvey02,
+  TasteSurvey03,
+  TasteSurvey04,
+  TasteSurvey05,
+  TasteSurvey06,
+  TasteSurveyLoading,
+  TasteSurveyNeedLogin,
 } from './pages/TasteSurvey';
 import NotFound from './pages/NotFound';
 import { RootLayout } from './components/templates';
@@ -31,6 +38,13 @@ function App() {
           <Route path='/survey' element={<TasteSurvey />}>
             <Route path='main' element={<TasteSurveyMain />} />
             <Route path='01' element={<TasteSurvey01 />} />
+            <Route path='02' element={<TasteSurvey02 />} />
+            <Route path='03' element={<TasteSurvey03 />} />
+            <Route path='04' element={<TasteSurvey04 />} />
+            <Route path='05' element={<TasteSurvey05 />} />
+            <Route path='06' element={<TasteSurvey06 />} />
+            <Route path='loading' element={<TasteSurveyLoading />} />
+            <Route path='needlogin' element={<TasteSurveyNeedLogin />} />
           </Route>
           <Route path='/beans' element={<BeansList />} />
         </Route>
