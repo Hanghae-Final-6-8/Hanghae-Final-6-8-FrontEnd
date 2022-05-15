@@ -32,6 +32,7 @@ module.exports = {
         '289px': '18.0625rem',
       },
       borderRadius: {
+        '36px': '2.25rem',
         '40px': '2.5rem',
         btn: '0.875rem',
       },
