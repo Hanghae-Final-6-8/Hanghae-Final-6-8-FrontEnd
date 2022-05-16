@@ -18,9 +18,12 @@ const Login = () => {
   const handleLoginKakao = async () => {
     await appDispatch(getKakaoURL());
     navigate('/api/user/login/kakao/callback', { replace: true });
-    //console.log(process.env.REACT_APP_BASE_URL);
-    // console.log(dispatch(loginKakao));
-    // console.log(loginKakao);
+  };
+
+  const handleNotReadyToLogin = () => {
+    alert(
+      '네이버, 구글 로그인은 구현 중 입니다.\n(사이트 완성 후 검수를 받아야 합니다)'
+    );
   };
 
   return (
@@ -36,11 +39,14 @@ const Login = () => {
           <KakaoLoginBtn onClick={handleLoginKakao} />
           <button
             className='w-50px h-50px  mr-7 rounded-full bg-white shadow-loginBtn'
-            onClick={handleLoginKakao}
+            onClick={handleNotReadyToLogin}
           >
             <img className='mx-auto' src={naver} />
           </button>
-          <button className='w-50px h-50px rounded-full bg-white shadow-loginBtn'>
+          <button
+            className='w-50px h-50px rounded-full bg-white shadow-loginBtn'
+            onClick={handleNotReadyToLogin}
+          >
             <img className='mx-auto' src={google} />
           </button>
         </div>
