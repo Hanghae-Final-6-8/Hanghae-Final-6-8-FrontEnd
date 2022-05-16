@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import Main from './pages/Main';
 import PostList from './pages/Post/PostList';
 import PostDetail from './pages/Post/PostDetail';
-import Login from './pages/Login';
+import { Login, RedirectKakao } from './pages/LoginPage';
 import AddEditPost from './pages/Post/AddEditPost';
 import BeansList from './pages/BeansList/BeansList';
 import Mypage from './pages/MyPage/Mypage';
@@ -28,6 +28,8 @@ function App() {
       <Routes>
         <Route path='/main' element={<Main />} />
         <Route path='/' element={<Login />} />
+        <Route path='/user/login/kakao/callback' element={<RedirectKakao />} />
+
         <Route element={<RootLayout />}>
           <Route path='/posts' element={<PostList />} />
           <Route path='/posts/:postsId' element={<PostDetail />} />
