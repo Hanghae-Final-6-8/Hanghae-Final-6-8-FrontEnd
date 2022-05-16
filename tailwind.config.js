@@ -8,6 +8,28 @@ module.exports = {
       500: 500,
       700: 700,
     },
+    fontSize: {
+      head: ['22px', '26px'],
+      subH33: ['20px', '33px'],
+      sub: ['20px', '24px'],
+      sub2: ['18px', '22px'],
+      body: ['14px', '18px'],
+      caption: ['12px', '16px'],
+    },
+    colors: {
+      gray90: '#111111',
+      gray80: '#676767',
+      gray60: '#a1a1a1',
+      gray30: '#dbdbdb',
+      gray20: '#f6f6f6',
+      red60: '#d5331f',
+      brownS02: '#6d4937',
+      brownS03: '#f5e9df',
+    },
+    backgroundImage: {
+      brownP: "url('/src/assets/backgrounds/brownP.svg')",
+      brownS01: "url('/src/assets/backgrounds/brownS01.svg')",
+    },
     extend: {
       fontFamily: {
         sans: ['Roboto', 'NotoSansKR', ...defaultTheme.fontFamily.sans],
@@ -45,13 +67,6 @@ module.exports = {
         contentsCoffee: '0px 5px 40px rgba(11, 11, 11, 0.12)',
         contentsStore: '0px 6px 20px rgba(11, 11, 11, 0.08)',
       },
-    },
-    fontSize: {
-      head: ['22px', '26px'],
-      sub: ['20px', '24px'],
-      sub2: ['18px', '22px'],
-      body: ['14px', '18px'],
-      caption: ['12px', '16px'],
     },
   },
   plugins: [require('@tailwindcss/line-clamp')],
