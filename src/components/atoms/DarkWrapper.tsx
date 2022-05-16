@@ -12,7 +12,7 @@ const DarkWrapper = (props: Wrapper) => {
   return (
     <div
       className={classnames(
-        'fixed z-10 touch-none top-0 left-0 w-full h-full bg-[rgba(11,11,11,0.45)]',
+        'fixed z-10 touch-none top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.3)]',
         { 'px-6': mainModal }
       )}
       onClick={props.onClick}
