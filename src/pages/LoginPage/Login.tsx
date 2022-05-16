@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { naver, google } from '../../assets/icons';
 import KakaoLoginBtn from '../../components/molecules/KakaoLoginBtn';
 
 import { useAppDispatch } from '../../redux/configureStore';
-import { getKakaoURL, loginKakao } from '../../redux/modules/user';
+import { getKakaoURL } from '../../redux/modules/user';
 import { Button } from '../../components/atoms';
+import { logoCopick, pickYourCoffee } from '../../assets/logo';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -28,12 +28,14 @@ const Login = () => {
 
   return (
     <>
-      <div className='flex flex-col px-6 py-12 text-center'>
-        <header className='mt-120px'>
-          <strong className='text-[44px] font-500'>copick</strong>
-          <p className='font-400 text-body mt-2'>나만의 원두로 시작하는 일상</p>
+      <div className='flex flex-col  px-6 text-center bg-brownS01bg bg-cover h-full'>
+        <header className='mt-227px mx-auto'>
+          <img src={logoCopick} />
         </header>
-        <p className='text-body mt-289px text-gray-400'>간편 회원가입/로그인</p>
+        <div className='pt-200px mx-auto w-172px'>
+          <img src={pickYourCoffee} />
+        </div>
+        <p className='text-body pt-3 text-gray60'>간편 회원가입/로그인</p>
         <hr className='mx-auto mt-9px' style={{ width: '100px' }} />
         <div className='mt-2.5'>
           <KakaoLoginBtn onClick={handleLoginKakao} />
@@ -50,7 +52,9 @@ const Login = () => {
             <img className='mx-auto' src={google} />
           </button>
         </div>
-        <Button onClick={handleToMain}>둘러보기</Button>
+        <Button mt='60px' fc='white' fw='500' fs='sub2' onClick={handleToMain}>
+          둘러보기
+        </Button>
       </div>
     </>
   );
