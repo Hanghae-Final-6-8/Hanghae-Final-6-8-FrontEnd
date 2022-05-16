@@ -1,29 +1,62 @@
-//import 'tailwindcss/tailwind.css';
 import { Routes, Route } from 'react-router-dom';
 import Main from './pages/Main';
 import PostList from './pages/Post/PostList';
 import PostDetail from './pages/Post/PostDetail';
-import Login from './pages/Login';
+import { Login, RedirectKakao } from './pages/LoginPage';
 import AddEditPost from './pages/Post/AddEditPost';
 import BeansList from './pages/BeansList/BeansList';
-import TasteSurvey from './pages/TasteSurvey/TasteSurvey';
 import Mypage from './pages/MyPage/Mypage';
 import StoreLocation from './pages/Map/StoreLocation';
+import {
+  TasteSurvey,
+  TasteSurveyMain,
+  TasteSurvey01,
+  TasteSurvey02,
+  TasteSurvey03,
+  TasteSurvey04,
+  TasteSurvey05,
+  TasteSurvey06,
+  TasteSurveyLoading,
+  TasteSurveyNeedLogin,
+} from './pages/TasteSurvey';
+import NotFound from './pages/NotFound';
+import { RootLayout } from './components/templates';
 
 function App() {
   return (
-    <Routes>
-      <Route path='/' element={<Login />} />
-      <Route path='/main' element={<Main />} />
-      <Route path='/posts' element={<PostList />} />
-      <Route path='/posts/:postsId' element={<PostDetail />} />
-      <Route path='/posts/write' element={<AddEditPost />} />
-      <Route path='/posts/write/:postsId' element={<AddEditPost />} />
-      <Route path='/map' element={<StoreLocation />} />
-      <Route path='/mypage' element={<Mypage />} />
-      <Route path='/survey' element={<TasteSurvey />} />
-      <Route path='/beans' element={<BeansList />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path='/main' element={<Main />} />
+        <Route path='/' element={<Login />} />
+        <Route
+          path='/api/user/login/kakao/callback/*'
+          element={<RedirectKakao />}
+        />
+
+        <Route element={<RootLayout />}>
+          <Route path='/posts' element={<PostList />} />
+          <Route path='/posts/:postsId' element={<PostDetail />} />
+          <Route path='/posts/write' element={<AddEditPost />} />
+          <Route path='/posts/write/:postsId' element={<AddEditPost />} />
+          <Route path='/map' element={<StoreLocation />} />
+          <Route path='/mypage' element={<Mypage />} />
+          <Route path='/survey' element={<TasteSurvey />}>
+            <Route path='main' element={<TasteSurveyMain />} />
+            <Route path='01' element={<TasteSurvey01 />} />
+            <Route path='02' element={<TasteSurvey02 />} />
+            <Route path='03' element={<TasteSurvey03 />} />
+            <Route path='04' element={<TasteSurvey04 />} />
+            <Route path='05' element={<TasteSurvey05 />} />
+            <Route path='06' element={<TasteSurvey06 />} />
+            <Route path='loading' element={<TasteSurveyLoading />} />
+            <Route path='needlogin' element={<TasteSurveyNeedLogin />} />
+          </Route>
+          <Route path='/beans' element={<BeansList />} />
+        </Route>
+
+        <Route path='*' element={<NotFound />} />
+      </Routes>
+    </>
   );
 }
 
