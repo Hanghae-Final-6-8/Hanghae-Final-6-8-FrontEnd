@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { getCookie, setCookie } from '../utils/cookie';
+import { getAccessTokenFromCookie } from '../utils/cookie';
 
 // 임시로 구현하였습니다.
 
@@ -7,20 +7,25 @@ const baseURL = process.env.REACT_APP_BASE_URL;
 
 const instance = axios.create({
   baseURL: baseURL,
-  // headers: {
-  //   ACCESS_TOKEN: ``,
-  // },
+  // withCredentials: true,
+  headers: {
+    withCredentials: true,
+  },
 });
 
-const setHeaderAuthorization = (token: string) => {
+const setHeaderAccessToken = (token: string) => {
   instance.defaults.headers.common['ACCESS_TOKEN'] = `Bearer ${token}`;
+};
+
+const setHeaderRefreshToken = (token: string) => {
+  instance.defaults.headers.common['REFRESH_TOKEN'] = `Bearer ${token}`;
 };
 
 // const checkToken = (config: AxiosRequestConfig) => {};
 
 instance.interceptors.request.use((config: AxiosRequestConfig) => {
-  const token = getCookie();
-  token && setHeaderAuthorization(token);
+  const accessToken = getAccessTokenFromCookie();
+  accessToken && setHeaderAccessToken(accessToken);
   return config;
 });
 

@@ -26,9 +26,8 @@ const ToastPopup = () => {
         toastPopup testBtn
       </div>
       {isActivePopup ? (
-        <>
-          <DarkWrapper onClick={handleClosePopup} />
-          <div className='absolute z-20 w-full bottom-0 bg-white pb-84px px-30px rounded-t-40px pt-34px'>
+        <DarkWrapper onClick={handleClosePopup}>
+          <div className='fixed z-20 w-full bottom-0 bg-white pb-84px px-30px rounded-t-40px pt-34px'>
             <div>
               <p>잠깐, 로그인 완료 후</p>
               <p>Copick을 이용해 주세요!</p>
@@ -39,7 +38,7 @@ const ToastPopup = () => {
             </div>
             <Button onClick={handleToLogin}>로그인하기</Button>
           </div>
-        </>
+        </DarkWrapper>
       ) : null}
     </>
   );

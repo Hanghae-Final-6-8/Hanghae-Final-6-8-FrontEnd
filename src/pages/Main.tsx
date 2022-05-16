@@ -1,4 +1,5 @@
 import { bookmark, down, share } from '../assets/icons/index';
+import MainModal from '../components/MainModal';
 
 const Main = () => {
   return (
@@ -66,6 +67,7 @@ const Main = () => {
           />
         </button>
       </main>
+      <MainModal />
     </>
   );
 };
