@@ -16,20 +16,7 @@ module.exports = {
       body: ['14px', '18px'],
       caption: ['12px', '16px'],
     },
-    colors: {
-      gray90: '#111111',
-      gray80: '#676767',
-      gray60: '#a1a1a1',
-      gray30: '#dbdbdb',
-      gray20: '#f6f6f6',
-      red60: '#d5331f',
-      brownS02: '#6d4937',
-      brownS03: '#f5e9df',
-    },
-    backgroundImage: {
-      brownP: "url('/src/assets/backgrounds/brownP.svg')",
-      brownS01: "url('/src/assets/backgrounds/brownS01.svg')",
-    },
+
     extend: {
       fontFamily: {
         sans: ['Roboto', 'NotoSansKR', ...defaultTheme.fontFamily.sans],
@@ -66,6 +53,20 @@ module.exports = {
         contents: '0px 10px 20px rgba(11, 11, 11, 0.04)',
         contentsCoffee: '0px 5px 40px rgba(11, 11, 11, 0.12)',
         contentsStore: '0px 6px 20px rgba(11, 11, 11, 0.08)',
+      },
+      colors: {
+        gray90: '#111111',
+        gray80: '#676767',
+        gray60: '#a1a1a1',
+        gray30: '#dbdbdb',
+        gray20: '#f6f6f6',
+        red60: '#d5331f',
+        brownS02: '#6d4937',
+        brownS03: '#f5e9df',
+      },
+      backgroundImage: {
+        brownP: "url('/src/assets/backgrounds/brownP.svg')",
+        brownS01: "url('/src/assets/backgrounds/brownS01.svg')",
       },
     },
   },
