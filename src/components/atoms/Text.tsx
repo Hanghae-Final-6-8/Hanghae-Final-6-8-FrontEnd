@@ -6,7 +6,6 @@ interface Text {
   fw?: string;
   fs?: string;
   fc?: string;
-  data?: string;
   type?: string;
   mt?: string;
 }
@@ -34,12 +33,15 @@ const Text = (props: Text) => {
   const fcWhite = props.fc === 'white';
 
   const mt8px = props.mt === '8px';
+  const mt84px = props.mt === '84px';
+
+  const tasteNumber = props.type === 'tasteNumber';
 
   return (
     <p
       className={classnames(
         '',
-        { 'text-gray90': props.fc === undefined },
+        { 'text-gray90': props.fc || props.type === undefined },
         { 'font-400': fw400 },
         { 'font-500': fw500 },
         { 'font-700': fw700 },
@@ -58,7 +60,9 @@ const Text = (props: Text) => {
         { 'text-brownS02': fcBrownS02 },
         { 'text-brownS03': fcBrownS03 },
         { 'text-white': fcWhite },
-        { 'mt-2': mt8px }
+        { 'mt-2': mt8px },
+        { 'mt-84px': mt84px },
+        { 'mt-84px font-700 text-sub text-gray60': tasteNumber }
       )}
     >
       {props.children}
