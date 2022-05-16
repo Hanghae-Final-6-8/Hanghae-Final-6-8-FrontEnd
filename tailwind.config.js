@@ -69,6 +69,7 @@ module.exports = {
         brownP: "url('/src/assets/backgrounds/brownP.svg')",
         brownS01: "url('/src/assets/backgrounds/brownS01.svg')",
         brownS01bg: "url('/src/assets/backgrounds/brownS01bg.svg')",
+        basicBg: "url('/src/assets/backgrounds/basicBg.svg')",
       },
     },
   },
