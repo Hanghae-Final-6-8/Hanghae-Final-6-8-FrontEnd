@@ -3,8 +3,12 @@ import instance from '../lib/axios';
 // 임시로 등록하였습니다.
 // header에 ACCESS_TOKEN 보내는 부분은 수정이 무조건적으로 필요합니다!
 export const userApis = {
-  loginKakao: () => instance.get('/api/user/login/kakao'),
-  loginKakaoPost: (data: string) => instance.post('/api/user/login/kakao'),
+  getKakaoURL: () => instance.get('/api/user/login/kakao'),
+  loginKakao: (code: string) => {
+    return instance.get('/api/user/login/kakao', {
+      params: { code },
+    });
+  },
   loginNaver: () => instance.get('/api/user/login/naver'),
   loginGoogle: () => instance.get('/api/user/login/google'),
   auth: (token: string) =>

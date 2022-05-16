@@ -1,21 +1,54 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { userApis } from '../../apis';
-import axios from 'axios';
+import instance from '../../lib/axios';
 
 const initialState = {};
 
-export const loginKakao = createAsyncThunk('user/login/kakao', async () => {
-  try {
-    await userApis.loginKakao().then((response) => {
-      const url: string = response.data;
-      location.href = url;
+export const getKakaoURL = createAsyncThunk(
+  'user/login/kakao/url',
+  async () => {
+    try {
+      await userApis.getKakaoURL().then((response) => {
+        const url: string = response.data;
+        console.log(url);
+        location.href = url;
+        return;
+      });
+    } catch (err) {
+      console.log(err);
       return;
-    });
-  } catch (err) {
-    console.log(err);
-    return;
+    }
   }
-});
+);
+export const loginKakao = createAsyncThunk(
+  'user/login/kakao',
+  async (code: string) => {
+    try {
+      await instance
+        .get('/api/user/login/kakao/callback', {
+          params: { code },
+        })
+        .then((response) => {
+          console.log(response);
+        });
+    } catch (err) {
+      console.log(err);
+      return;
+    }
+  }
+);
+
+// export const loginKakao = createAsyncThunk('user/login/kakao', async (code) => {
+//   try{
+//     await userApis.loginKakao(code).then((response) => {
+//       console.log(response)
+//       return
+//     })
+//   } catch (err) {
+//     console.log(err)
+//     return
+//   }
+// })
 
 export const auth = createAsyncThunk('user/auth', async () => {
   try {
@@ -28,17 +61,6 @@ export const auth = createAsyncThunk('user/auth', async () => {
   }
 });
 
-export const axiosGetPost = createAsyncThunk('test', async () => {
-  return axios
-    .get(
-      'http://ec2-3-38-78-198.ap-northeast-2.compute.amazonaws.com/user/login/kakao'
-    )
-    .then((res) => {
-      console.log(res);
-      return res.data;
-    })
-    .catch((error) => console.log(error));
-});
 // const user = createSlice({
 //   name: 'user',
 //   reducers: {

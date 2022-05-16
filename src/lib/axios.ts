@@ -7,6 +7,10 @@ const baseURL = process.env.REACT_APP_BASE_URL;
 
 const instance = axios.create({
   baseURL: baseURL,
+  // withCredentials: true,
+  headers: {
+    withCredentials: true,
+  },
 });
 
 const setHeaderAccessToken = (token: string) => {
@@ -27,7 +31,7 @@ instance.interceptors.request.use((config: AxiosRequestConfig) => {
 
 instance.interceptors.response.use(
   (response: AxiosResponse) => {
-    console.log(response); 
+    console.log(response);
     return response;
   },
   (error) => {

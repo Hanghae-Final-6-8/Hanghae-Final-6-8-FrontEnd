@@ -4,7 +4,7 @@ import { naver, google } from '../../assets/icons';
 import KakaoLoginBtn from '../../components/molecules/KakaoLoginBtn';
 
 import { useAppDispatch } from '../../redux/configureStore';
-import { loginKakao } from '../../redux/modules/user';
+import { getKakaoURL, loginKakao } from '../../redux/modules/user';
 import { Button } from '../../components/atoms';
 
 const Login = () => {
@@ -16,8 +16,8 @@ const Login = () => {
   };
 
   const handleLoginKakao = async () => {
-    await appDispatch(loginKakao());
-    navigate('/main', { replace: true });
+    await appDispatch(getKakaoURL());
+    navigate('/user/login/kakao/callback', { replace: true });
     //console.log(process.env.REACT_APP_BASE_URL);
     // console.log(dispatch(loginKakao));
     // console.log(loginKakao);

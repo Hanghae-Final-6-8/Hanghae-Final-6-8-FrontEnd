@@ -28,7 +28,10 @@ function App() {
       <Routes>
         <Route path='/main' element={<Main />} />
         <Route path='/' element={<Login />} />
-        <Route path='/user/login/kakao/callback' element={<RedirectKakao />} />
+        <Route
+          path='/api/user/login/kakao/callback/*'
+          element={<RedirectKakao />}
+        />
 
         <Route element={<RootLayout />}>
           <Route path='/posts' element={<PostList />} />
