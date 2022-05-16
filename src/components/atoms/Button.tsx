@@ -1,15 +1,34 @@
+import { Text } from './';
+import classnames from 'classnames';
+
 interface BtnProps {
   children: string;
+  className?: string;
   onClick?: () => void;
+  fs?: string;
+  fw?: string;
+  fc?: string;
+  bg?: string;
+  mt?: string;
+  type?: string;
 }
 
 const Button = (props: BtnProps) => {
+  const bgBrownP = props.type === 'brownPType';
+
   return (
     <button
-      className='w-full mt-60px mt bg-stone-400 text-white rounded-btn font-500 text-sub2 py-2.5'
+      className={classnames('w-full rounded-btn py-2.5', {
+        'mt-4': props.mt || props.type === undefined,
+        'bg-brownP bg-cover': props.bg === undefined,
+        'bg-gray60 text-gray20': props.bg === undefined,
+        'bg-brownP bg-cover mt-30px': bgBrownP,
+      })}
       onClick={props.onClick}
     >
-      {props.children}
+      <Text fs={props.fs} fw={props.fw} fc={props.fc}>
+        {props.children}
+      </Text>
     </button>
   );
 };

@@ -63,6 +63,7 @@ module.exports = {
         red60: '#d5331f',
         brownS02: '#6d4937',
         brownS03: '#f5e9df',
+        white: '#ffffff',
       },
       backgroundImage: {
         brownP: "url('/src/assets/backgrounds/brownP.svg')",
