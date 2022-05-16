@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 
 const RootLayout = () => {
   return (
-    <div className='mx-5 my-12'>
+    <div className='px-5 py-12 h-full'>
       <Outlet />
     </div>
   );

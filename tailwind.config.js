@@ -9,12 +9,12 @@ module.exports = {
       700: 700,
     },
     fontSize: {
-      head: ['22px', '26px'],
+      head: ['22px', '34px'],
       subH33: ['20px', '33px'],
-      sub: ['20px', '24px'],
-      sub2: ['18px', '22px'],
-      body: ['14px', '18px'],
-      caption: ['12px', '16px'],
+      sub: ['20px', '30px'],
+      sub2: ['18px', '28px'],
+      body: ['14px', '22px'],
+      caption: ['12px', '18px'],
     },
 
     extend: {
@@ -38,7 +38,10 @@ module.exports = {
         '84px': '5.25rem',
         '104px': '6.5rem',
         '120px': '7.5rem',
+        '152px': '9.5rem',
+        '172px': '10.75rem',
         '200px': '12.5rem',
+        '227px': '14.1875rem',
         '289px': '18.0625rem',
       },
       borderRadius: {
@@ -47,12 +50,13 @@ module.exports = {
         btn: '0.875rem',
       },
       boxShadow: {
-        main: '0 -4px 20px rgba(11, 11, 11, 0.02)',
-        loginBtn: '0px 10px 30px rgba(11, 11, 11, 0.04)',
-        toolbar: '0px -4px 30px rgba(11, 11, 11, 0.06)',
-        contents: '0px 10px 20px rgba(11, 11, 11, 0.04)',
-        contentsCoffee: '0px 5px 40px rgba(11, 11, 11, 0.12)',
-        contentsStore: '0px 6px 20px rgba(11, 11, 11, 0.08)',
+        main: '0 -4px 20px rgba(17, 17, 17, 0.02)',
+        loginBtn: '0px 10px 30px rgba(17, 17, 17, 0.04)',
+        toolbar: '0px -4px 30px rgba(17, 17, 17, 0.06)',
+        contents: '0px 10px 20px rgba(17, 17, 17, 0.04)',
+        contentsCoffee: '0px 5px 40px rgba(17, 17, 17, 0.12)',
+        contentsStore: '0px 6px 20px rgba(17, 17, 17, 0.08)',
+        tasteBrown: '0px 10px 20px rgba(62, 37, 37, 0.14)',
       },
       colors: {
         gray90: '#111111',

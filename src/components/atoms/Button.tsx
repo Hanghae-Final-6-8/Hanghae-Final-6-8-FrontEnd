@@ -15,6 +15,9 @@ interface BtnProps {
 
 const Button = (props: BtnProps) => {
   const bgBrownP = props.type === 'brownPType';
+  const tasteSurvey = props.type === 'tasteSurvey';
+
+  const mt60px = props.mt === '60px';
 
   return (
     <button
@@ -23,6 +26,8 @@ const Button = (props: BtnProps) => {
         'bg-brownP bg-cover': props.bg === undefined,
         'bg-gray60 text-gray20': props.bg === undefined,
         'bg-brownP bg-cover mt-30px': bgBrownP,
+        'mt-60px': mt60px,
+        'absolute font-500 text-sub2 bottom-2 shadow-tasteBrown': tasteSurvey,
       })}
       onClick={props.onClick}
     >
