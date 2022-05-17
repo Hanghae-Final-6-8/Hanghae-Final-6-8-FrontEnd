@@ -2,6 +2,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import {
   getAccessTokenFromCookie,
   getRefreshTokenFromCookie,
+  removeCookies,
 } from '../utils/cookie';
 import { setMoveToLogin } from '../utils/setMoveToLogin';
 
@@ -18,6 +19,7 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use((config: AxiosRequestConfig) => {
+  //const accessToken = getAccessTokenFromCookie();
   console.log('request config입니다 \n', config);
   return config;
 });
@@ -33,6 +35,11 @@ instance.interceptors.response.use(
       config: originalRequest,
       status: statusCode,
     } = error.response;
+    if (statusCode === 440) {
+      removeCookies();
+      setMoveToLogin();
+      return Promise.reject(error);
+    }
 
     if (statusCode === 441) {
       const refreshToken = getRefreshTokenFromCookie();
@@ -41,10 +48,11 @@ instance.interceptors.response.use(
     }
     if (statusCode === 442) {
       const accessToken = getAccessTokenFromCookie();
-      originalRequest.heders['ACCESS_TOKEN'] = accessToken;
+      originalRequest.headers['ACCESS_TOKEN'] = accessToken;
       return axios(originalRequest);
     }
     if (statusCode === 443) {
+      removeCookies();
       setMoveToLogin();
       return Promise.reject(error);
     }

@@ -4,10 +4,11 @@ import instance from '../../lib/axios';
 import {
   setAccessTokenToCookie,
   setRefreshTokenToCookie,
+  removeCookies,
 } from '../../utils/cookie';
 
 const initialState = {
-  nickname: '',
+  nickname: null,
   isLogin: false,
 };
 
@@ -17,7 +18,6 @@ export const getKakaoURL = createAsyncThunk(
     try {
       await userApis.getKakaoURL().then((response) => {
         const url: string = response.data;
-        console.log(url);
         location.href = url;
         return;
       });
@@ -50,6 +50,7 @@ export const loginKakao = createAsyncThunk(
   }
 );
 
+// 유저의 로그인 여부를 판별합니다.
 export const auth = createAsyncThunk('user/auth', async () => {
   try {
     await userApis.auth().then((response) => {
@@ -60,30 +61,32 @@ export const auth = createAsyncThunk('user/auth', async () => {
   }
 });
 
-// export const user = createSlice({
-// 	name: 'user',
-// 	initialState,
-// 	reducers: {
-// 		authLogin: (_, action) => {
-// 			sessionStorage.setItem('accessToken', action.payload.accessToken);
-// 			sessionStorage.setItem('refreshToken', action.payload.refreshToken);
-// 			instance.defaults.headers.common[
-// 				'Authorization'
-// 			] = `Bearer ${action.payload.accessToken}`;
-// 		},
-// 	},
-// 	extraReducers: (builder) => {
-// 		builder.addCase(signIn.fulfilled, (state, action) => {
-// 			state.id = action.payload.id;
-// 			state.name = action.payload.name;
-// 			state.isLogin = true;
-// 		});
-// 		builder.addCase(getUserInfo.fulfilled, (state, action) => {
-// 			state.id = action.payload.id;
-// 			state.name = action.payload.name;
-// 			state.isLogin = true;
-// 		});
-// 	},
-// });
+export const logout = createAsyncThunk('user/logout', async () => {
+  try {
+    await userApis.logout().then((response) => {
+      removeCookies();
+      location.href = '../';
+      return;
+    });
+  } catch (err) {
+    return;
+  }
+});
 
-// export default user.reducer
+export const userSlice = createSlice({
+  name: 'user',
+  initialState,
+  reducers: {
+    // setUserState: (state,action) => {
+    // }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(loginKakao.fulfilled, (state, action) => {
+      console.log(action);
+      // state.nickname =
+      state.isLogin = true;
+    });
+  },
+});
+
+export default userSlice;

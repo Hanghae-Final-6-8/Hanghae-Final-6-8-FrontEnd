@@ -12,12 +12,7 @@ export const userApis = {
   loginNaver: () => instance.get('/api/user/login/naver'),
   loginGoogle: () => instance.get('/api/user/login/google'),
   auth: () => instance.get('/api/user/auth'),
-  logout: (token: string) =>
-    instance.post('/api/user/logout', {
-      headers: {
-        ACCESS_TOKEN: `Bearer ${token}`,
-      },
-    }),
+  logout: () => instance.get('/api/user/logout'),
   update: (token: string) =>
     instance.patch('/api/user/update', {
       headers: {
