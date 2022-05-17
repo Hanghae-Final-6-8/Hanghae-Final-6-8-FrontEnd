@@ -54,6 +54,9 @@ export const loginKakao = createAsyncThunk(
 export const auth = createAsyncThunk('user/auth', async () => {
   try {
     await userApis.auth().then((response) => {
+      // const user = {
+      //   nickname: response.data.nickname,
+      // };
       return;
     });
   } catch (err) {
@@ -76,14 +79,12 @@ export const logout = createAsyncThunk('user/logout', async () => {
 export const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {
-    // setUserState: (state,action) => {
-    // }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(loginKakao.fulfilled, (state, action) => {
-      console.log(action);
-      // state.nickname =
+      state.isLogin = true;
+    });
+    builder.addCase(auth.fulfilled, (state, action) => {
       state.isLogin = true;
     });
   },
