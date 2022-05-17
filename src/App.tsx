@@ -22,7 +22,19 @@ import {
 import NotFound from './pages/NotFound';
 import { RootLayout } from './components/templates';
 
+import { useEffect } from 'react';
+import { useAppDispatch } from './redux/configureStore';
+import { auth } from './redux/modules/user';
+import { getAccessTokenFromCookie } from './utils/cookie';
+
 function App() {
+  const appDispatch = useAppDispatch();
+  const isToken = getAccessTokenFromCookie();
+
+  useEffect(() => {
+    isToken && appDispatch(auth());
+  }, [isToken, appDispatch]);
+
   return (
     <>
       <Routes>
