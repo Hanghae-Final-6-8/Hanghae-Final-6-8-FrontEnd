@@ -12,7 +12,6 @@ const TasteSurvey01 = () => {
       alert('답변을 선택해주세요!');
       return;
     }
-    console.log(selectAnswer);
     navigate('../02', { state: { acidity: selectAnswer } });
   };
 
@@ -75,7 +74,10 @@ const TasteSurvey01 = () => {
         </div>
       </div>
       <Text type='tasteSurveyCaption'>앞으로 5문항이 남았어요!</Text>
-      <Button type='tasteSurvey' onClick={handleToNextPage}>
+      <Button
+        type={selectAnswer === 0 ? 'tasteSurveyNoneActive' : 'tasteSurvey'}
+        onClick={handleToNextPage}
+      >
         다음
       </Button>
     </>
