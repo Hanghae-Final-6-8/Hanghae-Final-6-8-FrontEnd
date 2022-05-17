@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import instance from '../../lib/axios';
 import axios from 'axios';
 
 export interface PostsItemDataParams {
@@ -14,6 +15,8 @@ export interface PostsItemDataParams {
 
 export interface PostsState {
   list: Array<PostsItemDataParams>;
+  paging?: number;
+  isLoading?: boolean;
 }
 
 interface AddPostsType {
@@ -26,33 +29,48 @@ interface AddPostsType {
 }
 
 const INITIAL_STATE: PostsState = {
-  list: [
-    // {
-    //   postsId: 1,
-    //   nickname: 'test',
-    //   postsImage:
-    //     'https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg',
-    //   title: '망원동 카페',
-    //   content: '커피마시기 좋은 날',
-    //   createdAt: '2022-01-01 17:30',
-    //   modifiedAt: '',
-    //   tagName: ['일상'],
-    // },
-  ],
+  list: [],
+  paging: 0,
+  isLoading: false,
 };
 
 // 커뮤니티 리스트 불러오기
-// export const axiosGetPostList = createAsyncThunk(
-//   'postsReducer/axiosGetPostList',
-//   async () => {
-//     return axios
-//       .get('URL')
-//       .then((res) => {
-//         return res.data;
-//       })
-//       .catch((error) => console.log(error));
-//   }
-// );
+export const axiosGetPostList = createAsyncThunk(
+  'postsReducer/axiosGetPostList',
+  async (data: number, thunkAPI) => {
+    console.log(data);
+    thunkAPI.dispatch(isLoading(true));
+    // return await instance
+    // .get(`/api/posts?page=${data}`)
+    return await axios
+      .get(`http://110.46.158.168:8091/api/posts?page=${data}`)
+      .then((res) => {
+        const post_list: Array<PostsItemDataParams> = [];
+        console.log(res.data.content);
+        // 페이징
+        thunkAPI.dispatch(setPageNum(++data));
+
+        res.data.content.map((post: any) => {
+          const tagStr = post.tag_name.slice(1, post.tag_name.length - 1);
+          const newTagStr = tagStr.split(',');
+          post_list.push({
+            postsId: post.posts_id,
+            title: post.title,
+            content: post.content,
+            tagName: newTagStr,
+            postsImage: post.posts_image,
+            nickname: post.nickname,
+            createdAt: post.created_at,
+            modifiedAt: post.modified_at,
+          });
+        });
+        console.log(post_list);
+
+        thunkAPI.dispatch(setPost(post_list));
+      })
+      .catch((error) => console.log(error));
+  }
+);
 
 // 커뮤니티 추가하기
 export const axiosAddPost = createAsyncThunk(
@@ -79,6 +97,17 @@ export const postsSlice = createSlice({
   name: 'postsReducer',
   initialState: INITIAL_STATE,
   reducers: {
+    isLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
+    },
+    setPageNum: (state, action: PayloadAction<number>) => {
+      console.log(action.payload);
+      state.paging = action.payload;
+    },
+    setPost: (state, action: PayloadAction<any>) => {
+      const new_list = [...state.list, ...action.payload];
+      return { ...state, list: new_list, isLoading: false };
+    },
     addPost: (state, action: PayloadAction<AddPostsType>) => {
       // 임시
       const today = new Date();
@@ -154,6 +183,7 @@ export const postsSlice = createSlice({
   // },
 });
 
-export const { addPost } = postsSlice.actions;
+export const { setPost, setPageNum, addPost, editPost, deletePost, isLoading } =
+  postsSlice.actions;
 
 export default postsSlice;

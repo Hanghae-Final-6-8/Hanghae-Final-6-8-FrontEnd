@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../redux/configureStore';
-// import { axiosGetPostList } from '../../redux/modules/posts';
+import { axiosGetPostList } from '../../redux/modules/posts';
 import { useAppDispatch } from '../../redux/configureStore';
 import postsSlice from '../../redux/modules/posts';
 
@@ -11,14 +11,18 @@ const PostList = () => {
   const appDispatch = useAppDispatch();
   // 토스트팝업 토글용 state
   const [toastStatus, setToastStatus] = useState(false);
-  // ...클릭시 해당 게시물의 postsId 저장용 state
+  // ...클릭시 해당 게시물의 postsId 저장
   const [clickedPostId, setClickedPostId] = useState(0);
+
+  // db에서 커뮤니티 리스트 가져오기
+  useEffect(() => {
+    appDispatch(axiosGetPostList(0));
+  }, []);
+
   // 리덕스에서 커뮤니티 리스트 가져옴
-  const postList = useSelector((store: RootState) => store.posts.list);
-  // api로 db에서 커뮤니티 리스트 가져오기
-  // useEffect(() => {
-  //   appDispatch(axiosGetPostList());
-  // }, []);
+  const { list, isLoading } = useSelector((store: RootState) => store.posts);
+
+  const paging = useSelector((store: RootState) => store.posts.paging);
 
   // 토스트팝업 띄우기
   const getSetToastFrom = (postsId: number) => {
@@ -43,6 +47,10 @@ const PostList = () => {
     appDispatch(postsSlice.actions.deletePost(postsId));
   };
 
+  const handleGetPostList = () => {
+    appDispatch(axiosGetPostList(paging!));
+  };
+
   return (
     <div>
       <div className='m-5'>커뮤니티</div>
@@ -52,9 +60,9 @@ const PostList = () => {
           flexWrap: 'wrap',
         }}
       >
-        {postList.map((post, idx) => {
+        {list.map((post, idx) => {
           return (
-            <div key={idx}>
+            <div className='w-full h-80' key={idx}>
               <div className='flex justify-between p-1'>
                 <div className='flex items-center'>
                   <img
@@ -134,6 +142,12 @@ const PostList = () => {
         onClick={handleMoveToWritePage}
       >
         +
+      </button>
+      <button
+        style={{ position: 'fixed', top: 55, right: 5 }}
+        onClick={handleGetPostList}
+      >
+        추가로드
       </button>
     </div>
   );
