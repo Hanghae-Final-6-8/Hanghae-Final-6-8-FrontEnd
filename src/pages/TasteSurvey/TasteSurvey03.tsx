@@ -1,4 +1,4 @@
-import { Button, Text, Span, Label } from '../../components/atoms';
+import { Button, Text, Span, Label, GridBox } from '../../components/atoms';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -22,12 +22,12 @@ const TasteSurvey03 = () => {
 
   return (
     <>
-      <div className='flex flex-col'>
+      <GridBox type='flexBasic'>
         <Text type='tasteNumber'>03</Text>
         <Text fw='500' fs='sub'>
           <Span fc='strong'>단 맛</Span>을 좋아하시나요?
         </Text>
-        <div className='flex flex-col mt-10 gap-4'>
+        <GridBox type='flexTasteSurvey'>
           <Label
             type={3 === selectAnswer ? 'tasteAnswerSelect' : 'tasteAnswer'}
             htmlFor='yes'
@@ -76,8 +76,8 @@ const TasteSurvey03 = () => {
             }}
             className='hidden translate-x-'
           />
-        </div>
-      </div>
+        </GridBox>
+      </GridBox>
       <Text type='tasteSurveyCaption'>앞으로 3문항이 남았어요!</Text>
       <Button
         type={selectAnswer === 0 ? 'tasteSurveyNoneActive' : 'tasteSurvey'}
