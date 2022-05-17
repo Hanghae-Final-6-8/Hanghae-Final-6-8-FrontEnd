@@ -1,4 +1,3 @@
-import { useForm } from 'react-hook-form';
 import { Button, Text, Span, Label } from '../../components/atoms';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -14,7 +13,7 @@ const TasteSurvey01 = () => {
       return;
     }
     console.log(selectAnswer);
-    navigate('../02', { state: { selectAnswer } });
+    navigate('../02', { state: { acidity: selectAnswer } });
   };
 
   return (
@@ -25,7 +24,10 @@ const TasteSurvey01 = () => {
           <Span fc='strong'>신 맛</Span>을 좋아하시나요?
         </Text>
         <div className='flex flex-col mt-10 gap-4'>
-          <Label type='tasteAnswerSelect' htmlFor='yes'>
+          <Label
+            type={3 === selectAnswer ? 'tasteAnswerSelect' : 'tasteAnswer'}
+            htmlFor='yes'
+          >
             네, 좋아해요!
           </Label>
           <input
@@ -38,7 +40,10 @@ const TasteSurvey01 = () => {
             }}
             className='hidden'
           />
-          <Label type='tasteAnswer' htmlFor='normal'>
+          <Label
+            type={2 === selectAnswer ? 'tasteAnswerSelect' : 'tasteAnswer'}
+            htmlFor='normal'
+          >
             음..보통이에요
           </Label>
           <input
@@ -51,7 +56,10 @@ const TasteSurvey01 = () => {
             }}
             className='hidden'
           />
-          <Label type='tasteAnswer' htmlFor='no'>
+          <Label
+            type={1 === selectAnswer ? 'tasteAnswerSelect' : 'tasteAnswer'}
+            htmlFor='no'
+          >
             아니요. 안 좋아해요
           </Label>
           <input
