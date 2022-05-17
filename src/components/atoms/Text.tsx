@@ -2,7 +2,6 @@ import classnames from 'classnames';
 
 interface Text {
   children: React.ReactNode;
-  className?: string;
   fw?: string;
   fs?: string;
   fc?: string;
