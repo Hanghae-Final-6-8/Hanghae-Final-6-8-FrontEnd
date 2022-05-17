@@ -16,7 +16,7 @@ const TasteSurvey05 = () => {
       return;
     }
     navigate('../06', {
-      state: { ...(tasteList as object), bitter: selectAnswer },
+      state: { ...(tasteList as object), nutty: selectAnswer },
     });
   };
 
@@ -74,7 +74,7 @@ const TasteSurvey05 = () => {
             onChange={() => {
               setSelectAnswer(1);
             }}
-            className='hidden translate-x-'
+            className='hidden'
           />
         </GridBox>
       </GridBox>

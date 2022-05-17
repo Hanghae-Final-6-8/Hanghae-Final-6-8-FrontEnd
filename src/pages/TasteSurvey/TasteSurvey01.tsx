@@ -69,7 +69,7 @@ const TasteSurvey01 = () => {
             onChange={() => {
               setSelectAnswer(1);
             }}
-            className='hidden translate-x-'
+            className='hidden'
           />
         </GridBox>
       </GridBox>
