@@ -5,5 +5,15 @@ import Span from './Span';
 import RoundBox from './RoundBox';
 import GridBox from './GridBox';
 import ToastPopupBox from './ToastPopupBox';
+import Label from './Label';
 
-export { Button, DarkWrapper, Text, Span, RoundBox, GridBox, ToastPopupBox };
+export {
+  Button,
+  DarkWrapper,
+  Text,
+  Span,
+  RoundBox,
+  GridBox,
+  ToastPopupBox,
+  Label,
+};

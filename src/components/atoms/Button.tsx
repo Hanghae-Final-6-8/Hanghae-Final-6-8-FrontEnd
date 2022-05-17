@@ -23,7 +23,7 @@ const Button = (props: BtnProps) => {
   return (
     <button
       className={classnames('w-full rounded-btn py-2.5', {
-        'mt-4': props.mt || props.type === undefined,
+        'mt-4': props.mt === undefined || props.type === undefined,
         'bg-brownP bg-cover': props.bg === undefined,
         'bg-gray60 text-gray20': props.bg === undefined,
         'bg-brownP bg-cover mt-30px': bgBrownP,
