@@ -35,6 +35,8 @@ const Text = (props: Text) => {
   const mt84px = props.mt === '84px';
 
   const tasteNumber = props.type === 'tasteNumber';
+  const head = props.type === 'head';
+  const caption = props.type === 'caption';
 
   return (
     <p
@@ -61,7 +63,9 @@ const Text = (props: Text) => {
         { 'text-white': fcWhite },
         { 'mt-2': mt8px },
         { 'mt-84px': mt84px },
-        { 'mt-84px font-700 text-sub text-gray60': tasteNumber }
+        { 'mt-84px font-700 text-sub text-gray60': tasteNumber },
+        { 'font-500 text-sub': head },
+        { 'mt-2.5 text-gray60 text-caption': caption }
       )}
     >
       {props.children}

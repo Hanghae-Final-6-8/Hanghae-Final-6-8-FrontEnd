@@ -4,5 +4,6 @@ import Text from './Text';
 import Span from './Span';
 import RoundBox from './RoundBox';
 import GridBox from './GridBox';
+import ToastPopupBox from './ToastPopupBox';
 
-export { Button, DarkWrapper, Text, Span, RoundBox, GridBox };
+export { Button, DarkWrapper, Text, Span, RoundBox, GridBox, ToastPopupBox };
