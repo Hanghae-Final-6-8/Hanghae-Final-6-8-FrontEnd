@@ -38,6 +38,7 @@ const Text = (props: Text) => {
   const head = props.type === 'head';
   const caption = props.type === 'caption';
   const tasteSurveyCaption = props.type === 'tasteSurveyCaption';
+  const tasteCaption = props.type === 'tasteCaption';
 
   return (
     <p
@@ -67,6 +68,7 @@ const Text = (props: Text) => {
         { 'mt-84px font-700 text-sub text-gray60': tasteNumber },
         { 'font-500 text-sub': head },
         { 'mt-2.5 text-gray60 text-caption': caption },
+        { 'text-gray60 text-caption text-right mt-5': tasteCaption },
         {
           'absolute font-400 text-caption text-brownS02 bottom-72px left-1/2 -translate-x-1/2':
             tasteSurveyCaption,

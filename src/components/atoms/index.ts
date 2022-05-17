@@ -6,6 +6,7 @@ import RoundBox from './RoundBox';
 import GridBox from './GridBox';
 import ToastPopupBox from './ToastPopupBox';
 import Label from './Label';
+import Hr from './Hr';
 
 export {
   Button,
@@ -16,4 +17,5 @@ export {
   GridBox,
   ToastPopupBox,
   Label,
+  Hr,
 };

@@ -37,6 +37,7 @@ module.exports = {
         '60px': '3.75rem',
         '72px': '4.5rem',
         '84px': '5.25rem',
+        '100px': '6.25rem',
         '104px': '6.5rem',
         '120px': '7.5rem',
         '152px': '9.5rem',
@@ -46,6 +47,7 @@ module.exports = {
         '289px': '18.0625rem',
       },
       borderRadius: {
+        '22px': '1.375rem',
         '36px': '2.25rem',
         '40px': '2.5rem',
         btn: '0.875rem',
