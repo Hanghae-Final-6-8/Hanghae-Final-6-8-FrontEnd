@@ -41,13 +41,13 @@ const StoreLocation = () => {
           return;
         }
       };
-
+      console.log(location);
       // 37.3049  127.0626
       ps.keywordSearch('스타벅스', placesSearchCB, {
         radius: 20000,
         location: new window.kakao.maps.LatLng(
-          location?.longitude,
-          location?.latitude
+          location?.latitude,
+          location?.longitude
         ),
       });
 

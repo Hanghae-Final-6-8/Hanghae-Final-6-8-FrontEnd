@@ -33,12 +33,12 @@ function App() {
           element={<RedirectKakao />}
         />
 
+        <Route path='/map' element={<StoreLocation />} />
         <Route element={<RootLayout />}>
           <Route path='/posts' element={<PostList />} />
           <Route path='/posts/:postsId' element={<PostDetail />} />
           <Route path='/posts/write' element={<AddEditPost />} />
           <Route path='/posts/write/:postsId' element={<AddEditPost />} />
-          <Route path='/map' element={<StoreLocation />} />
           <Route path='/mypage' element={<Mypage />} />
           <Route path='/survey' element={<TasteSurvey />}>
             <Route path='main' element={<TasteSurveyMain />} />
