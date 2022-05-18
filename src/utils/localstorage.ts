@@ -16,7 +16,7 @@ export const setObjLocalStorage = (key: string, value: any) => {
   localStorage.setItem(key, JSON.stringify(value));
 };
 
-export const getObjLocalStorage = (key: string, value: any) => {
+export const getObjLocalStorage = (key: string) => {
   const storageValue = localStorage.getItem(key) as any;
   return JSON.parse(storageValue);
 };
