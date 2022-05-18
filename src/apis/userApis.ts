@@ -1,29 +1,29 @@
 import instance from '../lib/axios';
 
-// 임시로 등록하였습니다.
-// header에 ACCESS_TOKEN 보내는 부분은 수정이 무조건적으로 필요합니다!
 export const userApis = {
   getKakaoURL: () => instance.get('/api/user/login/kakao'),
+  // loginKako는 임시로 빼서 구현했습니다. -> 추후 리팩토링 예정
   loginKakao: (code: string) => {
-    return instance.get('/api/user/login/kakao', {
+    return instance.get('/api/user/login/kakao/callback', {
       params: { code },
     });
   },
-  loginNaver: () => instance.get('/api/user/login/naver'),
-  loginGoogle: () => instance.get('/api/user/login/google'),
-  auth: () => instance.get('/api/user/auth'),
+  getNaverURL: () => instance.get('/api/user/login/naver'),
+  loginNaver: (code: string) =>
+    instance.get('/api/user/login/kakao/callback', {
+      params: { code },
+    }),
+  getGoogleURL: () => instance.get('/api/user/login/google'),
+  loginGoogle: (code: string) =>
+    instance.get('/api/user/login/google/callback', {
+      params: { code },
+    }),
   logout: () => instance.get('/api/user/logout'),
-  update: (token: string) =>
-    instance.patch('/api/user/update', {
-      headers: {
-        ACCESS_TOKEN: `Bearer ${token}`,
-        'content-type': 'multipart/form-data',
-      },
-    }),
-  info: (token: string) =>
-    instance.get('/api/user/info', {
-      headers: {
-        ACCESS_TOKEN: `Bearer ${token}`,
-      },
-    }),
+  reissue: () => instance.get('/api/user/reissue'),
+  update: (userdata: { nickname: string; profile_url: string }) =>
+    instance.patch('/api/user/update', userdata),
+  delete: () => instance.post('/api/user/delete'),
+  info: () => instance.get('/api/user/info', {}),
+  // 인증부분 API 완료하였으나 프로필url, nickname을 따로 저장해줘야 합니다.
+  auth: () => instance.get('/api/user/auth'),
 };
