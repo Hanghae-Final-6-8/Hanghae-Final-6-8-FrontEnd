@@ -2,7 +2,6 @@ import classnames from 'classnames';
 
 interface Text {
   children: React.ReactNode;
-  className?: string;
   fw?: string;
   fs?: string;
   fc?: string;
@@ -36,12 +35,16 @@ const Text = (props: Text) => {
   const mt84px = props.mt === '84px';
 
   const tasteNumber = props.type === 'tasteNumber';
+  const head = props.type === 'head';
+  const caption = props.type === 'caption';
+  const tasteSurveyCaption = props.type === 'tasteSurveyCaption';
+  const tasteCaption = props.type === 'tasteCaption';
 
   return (
     <p
       className={classnames(
         '',
-        { 'text-gray90': props.fc || props.type === undefined },
+        { 'text-gray90': props.fc === undefined && props.type === undefined },
         { 'font-400': fw400 },
         { 'font-500': fw500 },
         { 'font-700': fw700 },
@@ -62,7 +65,14 @@ const Text = (props: Text) => {
         { 'text-white': fcWhite },
         { 'mt-2': mt8px },
         { 'mt-84px': mt84px },
-        { 'mt-84px font-700 text-sub text-gray60': tasteNumber }
+        { 'mt-84px font-700 text-sub text-gray60': tasteNumber },
+        { 'font-500 text-sub': head },
+        { 'mt-2.5 text-gray60 text-caption': caption },
+        { 'text-gray60 text-caption text-right mt-5': tasteCaption },
+        {
+          'absolute font-400 text-caption text-brownS02 bottom-72px left-1/2 -translate-x-1/2':
+            tasteSurveyCaption,
+        }
       )}
     >
       {props.children}
