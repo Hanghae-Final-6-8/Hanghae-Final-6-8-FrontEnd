@@ -7,14 +7,16 @@ interface LabelProps {
   type?: string;
   ta?: string;
   img?: string;
+  key?: number;
+  bool?: boolean;
 }
 
 const Label = (props: LabelProps) => {
   const tasteAnswer = props.type === 'tasteAnswer';
   const tasteAnswerSelect = props.type === 'tasteAnswerSelect';
 
-  const flavorAnswer = props.type === 'flavorAnswer';
-  const flavorAnswerSelect = props.type === 'flavorAnswerSelect';
+  const flavorAnswer = props.bool === false;
+  const flavorAnswerSelect = props.bool === true;
 
   const flavorAnswerSec = props.type === 'flavorAnswerSec';
   const flavorAnswerSecSelect = props.type === 'flavorAnswerSecSelect';
