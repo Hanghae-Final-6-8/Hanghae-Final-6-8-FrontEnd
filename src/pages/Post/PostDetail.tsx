@@ -58,7 +58,7 @@ const PostDetail = () => {
         <></>
       )}
       <p>{post?.title}</p>
-      <img src={post?.postsImage} />
+      <img src='https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg' />
       <Likes postsId={Number(postsId)} />
       <p>{post?.content}</p>
       <hr />
