@@ -4,5 +4,6 @@ import Text from './Text';
 import Span from './Span';
 import RoundBox from './RoundBox';
 import GridBox from './GridBox';
+import InfinityScroll from './InfinityScroll';
 
-export { Button, DarkWrapper, Text, Span, RoundBox, GridBox };
+export { Button, DarkWrapper, Text, Span, RoundBox, GridBox, InfinityScroll };

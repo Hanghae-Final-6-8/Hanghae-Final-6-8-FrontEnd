@@ -17,6 +17,7 @@ export interface PostsState {
   list: Array<PostsItemDataParams>;
   paging?: number;
   isLoading?: boolean;
+  postsLoadedLen?: number;
 }
 
 interface AddPostsType {
@@ -32,18 +33,18 @@ const INITIAL_STATE: PostsState = {
   list: [],
   paging: 0,
   isLoading: false,
+  postsLoadedLen: 0,
 };
 
 // 커뮤니티 리스트 불러오기
 export const axiosGetPostList = createAsyncThunk(
   'postsReducer/axiosGetPostList',
   async (data: number, thunkAPI) => {
-    console.log(data);
     thunkAPI.dispatch(isLoading(true));
-    // return await instance
-    // .get(`/api/posts?page=${data}`)
-    return await axios
-      .get(`http://110.46.158.168:8091/api/posts?page=${data}`)
+    return await instance
+      .get(`/api/posts?page=${data}`)
+      // return await axios
+      //   .get(`http://110.46.158.168:8091/api/posts?page=${data}`)
       .then((res) => {
         const post_list: Array<PostsItemDataParams> = [];
         console.log(res.data.content);
@@ -64,11 +65,15 @@ export const axiosGetPostList = createAsyncThunk(
             modifiedAt: post.modified_at,
           });
         });
-        console.log(post_list);
 
-        thunkAPI.dispatch(setPost(post_list));
+        const postsLoadedLen = res.data.content.length;
+        thunkAPI.dispatch(isLoading(false));
+        thunkAPI.dispatch(setPost({ post_list, postsLoadedLen }));
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        thunkAPI.dispatch(isLoading(false));
+        console.log(error);
+      });
   }
 );
 
@@ -76,8 +81,10 @@ export const axiosGetPostList = createAsyncThunk(
 export const axiosAddPost = createAsyncThunk(
   'postsReducer/axiosAddPost',
   async (data: AddPostsType, thunkAPI) => {
-    return axios
-      .post('URL', {
+    return await instance
+      // return axios
+      // .post('http://110.46.158.168:8091/api/posts', {
+      .post('/api/posts', {
         title: data.title,
         content: data.content,
         tag_name: data.tagName,
@@ -85,6 +92,7 @@ export const axiosAddPost = createAsyncThunk(
       })
       .then((res) => {
         if (res.status === 200) {
+          console.log(res);
           console.log('커뮤니티글 등록성공');
         }
         thunkAPI.dispatch(addPost(data));
@@ -101,12 +109,15 @@ export const postsSlice = createSlice({
       state.isLoading = action.payload;
     },
     setPageNum: (state, action: PayloadAction<number>) => {
-      console.log(action.payload);
       state.paging = action.payload;
     },
     setPost: (state, action: PayloadAction<any>) => {
-      const new_list = [...state.list, ...action.payload];
-      return { ...state, list: new_list, isLoading: false };
+      const new_list = [...state.list, ...action.payload.post_list];
+      return {
+        ...state,
+        list: new_list,
+        postsLoadedLen: action.payload.postsLoadedLen,
+      };
     },
     addPost: (state, action: PayloadAction<AddPostsType>) => {
       // 임시
@@ -133,7 +144,7 @@ export const postsSlice = createSlice({
       ];
 
       action.payload.navi('/posts');
-      return { list: new_postsList };
+      return { ...state, list: new_postsList };
     },
     editPost: (state, action: PayloadAction<AddPostsType>) => {
       const today = new Date();
@@ -167,18 +178,18 @@ export const postsSlice = createSlice({
       action.payload.navi('/posts');
 
       // return { list: [...state.list, { ...state.list[idx], ...post_edited }] };
-      return { list: [post_edited, ...new_list] };
+      return { ...state, list: [post_edited, ...new_list] };
     },
     deletePost: (state, action: PayloadAction<number>) => {
       const new_list = state.list.filter((post) => {
         return post.postsId !== action.payload;
       });
-      return { list: new_list };
+      return { ...state, list: new_list };
     },
   },
   // extraReducers: (builder) => {
   //   builder.addCase(axiosGetPostList.fulfilled, (state: PostsState, action) => {
-  //     return { list: [...action.payload] };
+  //     return {...state, list: [...action.payload] };
   //   });
   // },
 });
