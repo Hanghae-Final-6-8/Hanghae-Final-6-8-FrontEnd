@@ -24,7 +24,7 @@ const TasteSurvey02 = () => {
     <>
       <GridBox type='flexBasic'>
         <Text type='tasteNumber'>02</Text>
-        <Text fw='500' fs='sub'>
+        <Text className='font-500 text-sub'>
           <Span fc='strong'>바디감</Span>이 있는 것을 좋아하시나요?
         </Text>
         <GridBox type='flexTasteSurvey'>

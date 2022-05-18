@@ -53,10 +53,7 @@ const Login = () => {
           </button>
         </div>
         <Button
-          className='mt-10 bg-brownP'
-          fc='white'
-          fw='500'
-          fs='sub2'
+          className='mt-10 bg-brownP text-white font-500 text-sub2'
           onClick={handleToMain}
         >
           둘러보기
