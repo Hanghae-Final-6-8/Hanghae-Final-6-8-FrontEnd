@@ -9,9 +9,7 @@ const TasteSurveyLoading = () => {
 
   return (
     <>
-      <GridBox className='h-full' type='flexBasic'>
-        <Spinner />
-      </GridBox>
+      <Spinner />
     </>
   );
 };
