@@ -8,6 +8,7 @@ import { setMoveToLogin } from '../utils/setMoveToLogin';
 
 const baseURL = process.env.REACT_APP_BASE_URL;
 const accessToken = getAccessTokenFromCookie();
+const refreshToken = getRefreshTokenFromCookie();
 
 const instance = axios.create({
   baseURL: baseURL,
@@ -16,10 +17,12 @@ const instance = axios.create({
 
 instance.interceptors.request.use((config: AxiosRequestConfig) => {
   const accessToken = getAccessTokenFromCookie();
+  const refreshToken = getRefreshTokenFromCookie();
   config.headers!['Content-Type'] = 'application/json; charset=utf-8';
   config.headers!['Access-Control-Allow-Origin'] = '*';
   config.headers!['Access-Control-Allow-Credentials'] = true;
   config.headers!['Authorization'] = `Bearer ${accessToken}`;
+  config.headers!['REFRESH_TOKEN'] = `Bearer ${refreshToken}`;
   (config.headers!.withCredentials = true),
     console.log('request config입니다 \n', config);
   return config;
