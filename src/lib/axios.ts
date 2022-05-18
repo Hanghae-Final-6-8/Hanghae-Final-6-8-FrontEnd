@@ -11,17 +11,17 @@ const accessToken = getAccessTokenFromCookie();
 
 const instance = axios.create({
   baseURL: baseURL,
-  headers: {
-    withCredentials: true,
-    ACCESS_TOKEN: `Bearer ${accessToken}`,
-  },
   timeout: 3000,
 });
 
 instance.interceptors.request.use((config: AxiosRequestConfig) => {
   const accessToken = getAccessTokenFromCookie();
-  config.headers!['ACCESS_TOKEN'] = `Bearer ${accessToken}`;
-  console.log('request config입니다 \n', config);
+  config.headers!['Content-Type'] = 'application/json; charset=utf-8';
+  config.headers!['Access-Control-Allow-Origin'] = '*';
+  config.headers!['Access-Control-Allow-Credentials'] = true;
+  config.headers!['Authorization'] = `Bearer ${accessToken}`;
+  (config.headers!.withCredentials = true),
+    console.log('request config입니다 \n', config);
   return config;
 });
 
@@ -36,27 +36,27 @@ instance.interceptors.response.use(
       config: originalRequest,
       status: statusCode,
     } = error.response;
-    if (statusCode === 440) {
-      removeCookies();
-      setMoveToLogin();
-      return Promise.reject(error);
-    }
+    // if (statusCode === 440) {
+    //   removeCookies();
+    //   setMoveToLogin();
+    //   return Promise.reject(error);
+    // }
 
-    if (statusCode === 441) {
-      const refreshToken = getRefreshTokenFromCookie();
-      originalRequest.headers['REFRESH_TOKEN'] = `Bearer ${refreshToken}`;
-      return axios(originalRequest);
-    }
-    if (statusCode === 442) {
-      const accessToken = getAccessTokenFromCookie();
-      originalRequest.headers['ACCESS_TOKEN'] = `Bearer ${accessToken}`;
-      return axios(originalRequest);
-    }
-    if (statusCode === 443) {
-      removeCookies();
-      setMoveToLogin();
-      return Promise.reject(error);
-    }
+    // if (statusCode === 441) {
+    //   const refreshToken = getRefreshTokenFromCookie();
+    //   originalRequest.headers['REFRESH_TOKEN'] = `Bearer ${refreshToken}`;
+    //   return axios(originalRequest);
+    // }
+    // if (statusCode === 442) {
+    //   const accessToken = getAccessTokenFromCookie();
+    //   originalRequest.headers['ACCESS_TOKEN'] = `Bearer ${accessToken}`;
+    //   return axios(originalRequest);
+    // }
+    // if (statusCode === 443) {
+    //   removeCookies();
+    //   setMoveToLogin();
+    //   return Promise.reject(error);
+    // }
 
     console.log(responseData, originalRequest, statusCode);
 
