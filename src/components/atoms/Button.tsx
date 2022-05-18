@@ -14,6 +14,7 @@ interface BtnProps {
 }
 
 const Button = (props: BtnProps) => {
+  const className = props.className === 'className';
   const bgBrownP = props.type === 'brownPType';
   const tasteSurvey = props.type === 'tasteSurvey';
   const tasteSurveyNoneActive = props.type === 'tasteSurveyNoneActive';
@@ -23,11 +24,15 @@ const Button = (props: BtnProps) => {
 
   return (
     <button
-      className={classnames('w-full rounded-btn py-2.5', {
-        'mt-4': props.mt === undefined && props.type === undefined,
+      className={classnames(`w-full rounded-btn py-2.5 ${props.className}`, {
+        'mt-4':
+          props.className === undefined &&
+          props.mt === undefined &&
+          props.type === undefined,
         'bg-brownP bg-cover':
           props.bg === undefined && props.type === undefined,
-        'bg-gray60 text-gray20': props.bg === undefined,
+        'bg-gray60 text-gray20':
+          props.className === undefined && props.bg === undefined,
         'bg-brownP bg-cover mt-30px': bgBrownP,
         'mt-60px': mt60px,
         'absolute font-500 text-sub2 bottom-2 bg-brownP bg-cover shadow-tasteBrown':

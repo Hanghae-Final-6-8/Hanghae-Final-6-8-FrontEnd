@@ -2,6 +2,7 @@ import classnames from 'classnames';
 
 interface Text {
   children: React.ReactNode;
+  className?: string;
   fw?: string;
   fs?: string;
   fc?: string;
@@ -10,6 +11,8 @@ interface Text {
 }
 
 const Text = (props: Text) => {
+  const className = props.className === 'className';
+
   const fw400 = props.fw === '400';
   const fw500 = props.fw === '500';
   const fw700 = props.fw === '700';
@@ -43,7 +46,7 @@ const Text = (props: Text) => {
   return (
     <p
       className={classnames(
-        '',
+        ``,
         { 'text-gray90': props.fc === undefined && props.type === undefined },
         { 'font-400': fw400 },
         { 'font-500': fw500 },

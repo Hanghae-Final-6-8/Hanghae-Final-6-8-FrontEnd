@@ -14,7 +14,7 @@ const RoundBox = (props: RoundBox) => {
   return (
     <div
       className={classnames('bg-white', {
-        'mt-52 px-30px py-34px rounded-36px': mainModal,
+        'mt-48 px-30px py-34px rounded-36px': mainModal,
       })}
     >
       {props.children}
