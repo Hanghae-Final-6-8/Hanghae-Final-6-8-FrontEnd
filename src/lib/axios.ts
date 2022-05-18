@@ -13,13 +13,14 @@ const instance = axios.create({
   baseURL: baseURL,
   headers: {
     withCredentials: true,
-    ACCESS_TOKEN: `${accessToken}`,
+    ACCESS_TOKEN: `Bearer ${accessToken}`,
   },
   timeout: 3000,
 });
 
 instance.interceptors.request.use((config: AxiosRequestConfig) => {
-  //const accessToken = getAccessTokenFromCookie();
+  const accessToken = getAccessTokenFromCookie();
+  config.headers!['ACCESS_TOKEN'] = `Bearer ${accessToken}`;
   console.log('request config입니다 \n', config);
   return config;
 });
@@ -43,12 +44,12 @@ instance.interceptors.response.use(
 
     if (statusCode === 441) {
       const refreshToken = getRefreshTokenFromCookie();
-      originalRequest.headers['REFRESH_TOKEN'] = refreshToken;
+      originalRequest.headers['REFRESH_TOKEN'] = `Bearer ${refreshToken}`;
       return axios(originalRequest);
     }
     if (statusCode === 442) {
       const accessToken = getAccessTokenFromCookie();
-      originalRequest.headers['ACCESS_TOKEN'] = accessToken;
+      originalRequest.headers['ACCESS_TOKEN'] = `Bearer ${accessToken}`;
       return axios(originalRequest);
     }
     if (statusCode === 443) {

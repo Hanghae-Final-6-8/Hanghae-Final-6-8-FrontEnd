@@ -4,13 +4,13 @@ const cookies = new Cookies();
 
 // 백에서 자동으로 jwt 토큰을 넣어주지 않을 경우를 위해 setCookie를 만들어두었습니다.
 export const setAccessTokenToCookie = (value: string) => {
-  return cookies.set('ACCESS_TOKEN', `Bearer ${value}`, {
+  return cookies.set('ACCESS_TOKEN', value, {
     path: '/',
   });
 };
 
 export const setRefreshTokenToCookie = (value: string) => {
-  return cookies.set('REFRESH_TOKEN', `Bearer ${value}`, {
+  return cookies.set('REFRESH_TOKEN', value, {
     path: '/',
   });
 };
