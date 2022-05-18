@@ -1,11 +1,11 @@
 import { Routes, Route } from 'react-router-dom';
-import Main from './pages/Main';
+import { Main } from './pages/Main';
 import PostList from './pages/Post/PostList';
 import PostDetail from './pages/Post/PostDetail';
 import { Login, RedirectKakao } from './pages/LoginPage';
 import AddEditPost from './pages/Post/AddEditPost';
-import BeansList from './pages/BeansList/BeansList';
-import Mypage from './pages/MyPage/Mypage';
+import { BeansList } from './pages/BeansList';
+import { Mypage } from './pages/MyPage';
 import StoreLocation from './pages/Map/StoreLocation';
 import {
   TasteSurvey,
@@ -19,7 +19,7 @@ import {
   TasteSurveyLoading,
   TasteSurveyNeedLogin,
 } from './pages/TasteSurvey';
-import NotFound from './pages/NotFound';
+import { NotFound } from './pages/System';
 import { RootLayout } from './components/templates';
 
 import { useEffect } from 'react';
