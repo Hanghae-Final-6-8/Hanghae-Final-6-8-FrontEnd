@@ -36,7 +36,7 @@ export const loginKakao = createAsyncThunk(
           params: { code },
         })
         .then((response) => {
-          const accessToken = response.headers.access_token;
+          const accessToken = response.headers.authorization;
           const refreshToken = response.headers.refresh_token;
           setAccessTokenToCookie(accessToken);
           setRefreshTokenToCookie(refreshToken);
