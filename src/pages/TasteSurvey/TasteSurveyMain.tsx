@@ -30,12 +30,8 @@ const TasteSurveyMain = () => {
           </Text>
         </div>
       </div>
-      <Button
-        className='font-white'
-        type='tasteSurvey'
-        onClick={handleToTasteStart}
-      >
-        <Text type='white'>테스트 시작하기</Text>
+      <Button type='tasteSurvey' onClick={handleToTasteStart}>
+        <Span>테스트 시작하기</Span>
       </Button>
     </>
   );
