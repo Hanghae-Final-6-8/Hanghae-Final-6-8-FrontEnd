@@ -36,7 +36,7 @@ export const loginKakao = createAsyncThunk(
           params: { code },
         })
         .then((response) => {
-          const accessToken = response.headers.authorization;
+          const accessToken = response.headers.access_token;
           const refreshToken = response.headers.refresh_token;
           setAccessTokenToCookie(accessToken);
           setRefreshTokenToCookie(refreshToken);
@@ -68,10 +68,11 @@ export const logout = createAsyncThunk('user/logout', async () => {
   try {
     await userApis.logout().then((response) => {
       removeCookies();
-      //location.href = '../';
+      location.href = '../';
       return;
     });
   } catch (err) {
+    removeCookies();
     return;
   }
 });
