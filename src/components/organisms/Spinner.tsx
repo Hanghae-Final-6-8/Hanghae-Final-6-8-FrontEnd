@@ -1,7 +1,11 @@
+import { spinnerBasic } from '../../assets/backgrounds';
+
 const Spinner = () => {
   return (
     <>
-      <div>로딩중</div>
+      <div className='m-auto'>
+        <img src={spinnerBasic} />
+      </div>
     </>
   );
 };
