@@ -68,10 +68,11 @@ export const logout = createAsyncThunk('user/logout', async () => {
   try {
     await userApis.logout().then((response) => {
       removeCookies();
-      //location.href = '../';
+      location.href = '../';
       return;
     });
   } catch (err) {
+    removeCookies();
     return;
   }
 });
