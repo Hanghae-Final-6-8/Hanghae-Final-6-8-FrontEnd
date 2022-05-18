@@ -1,41 +1,65 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { getAccessTokenFromCookie } from '../utils/cookie';
-
-// 임시로 구현하였습니다.
+import {
+  getAccessTokenFromCookie,
+  getRefreshTokenFromCookie,
+  removeCookies,
+} from '../utils/cookie';
+import { setMoveToLogin } from '../utils/setMoveToLogin';
 
 const baseURL = process.env.REACT_APP_BASE_URL;
+const accessToken = getAccessTokenFromCookie();
 
 const instance = axios.create({
   baseURL: baseURL,
-  // withCredentials: true,
   headers: {
     withCredentials: true,
+    ACCESS_TOKEN: `Bearer ${accessToken}`,
   },
+  timeout: 3000,
 });
-
-const setHeaderAccessToken = (token: string) => {
-  instance.defaults.headers.common['ACCESS_TOKEN'] = `Bearer ${token}`;
-};
-
-const setHeaderRefreshToken = (token: string) => {
-  instance.defaults.headers.common['REFRESH_TOKEN'] = `Bearer ${token}`;
-};
-
-// const checkToken = (config: AxiosRequestConfig) => {};
 
 instance.interceptors.request.use((config: AxiosRequestConfig) => {
   const accessToken = getAccessTokenFromCookie();
-  accessToken && setHeaderAccessToken(accessToken);
+  config.headers!['ACCESS_TOKEN'] = `Bearer ${accessToken}`;
+  console.log('request config입니다 \n', config);
   return config;
 });
 
 instance.interceptors.response.use(
   (response: AxiosResponse) => {
-    console.log(response);
+    console.log('response입니다 \n', response);
     return response;
   },
   (error) => {
-    console.log(error);
+    const {
+      data: responseData,
+      config: originalRequest,
+      status: statusCode,
+    } = error.response;
+    if (statusCode === 440) {
+      removeCookies();
+      setMoveToLogin();
+      return Promise.reject(error);
+    }
+
+    if (statusCode === 441) {
+      const refreshToken = getRefreshTokenFromCookie();
+      originalRequest.headers['REFRESH_TOKEN'] = `Bearer ${refreshToken}`;
+      return axios(originalRequest);
+    }
+    if (statusCode === 442) {
+      const accessToken = getAccessTokenFromCookie();
+      originalRequest.headers['ACCESS_TOKEN'] = `Bearer ${accessToken}`;
+      return axios(originalRequest);
+    }
+    if (statusCode === 443) {
+      removeCookies();
+      setMoveToLogin();
+      return Promise.reject(error);
+    }
+
+    console.log(responseData, originalRequest, statusCode);
+
     return error;
   }
 );

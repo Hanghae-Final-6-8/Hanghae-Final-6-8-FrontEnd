@@ -4,7 +4,7 @@ import KakaoLoginBtn from '../../components/molecules/KakaoLoginBtn';
 
 import { useAppDispatch } from '../../redux/configureStore';
 import { getKakaoURL } from '../../redux/modules/user';
-import { Button } from '../../components/atoms';
+import { Button, Hr } from '../../components/atoms';
 import { logoCopick, pickYourCoffee } from '../../assets/logo';
 
 const Login = () => {
@@ -36,7 +36,7 @@ const Login = () => {
           <img src={pickYourCoffee} />
         </div>
         <p className='text-body pt-3 text-gray60'>간편 회원가입/로그인</p>
-        <hr className='mx-auto mt-9px' style={{ width: '100px' }} />
+        <Hr type='main100' />
         <div className='mt-2.5'>
           <KakaoLoginBtn onClick={handleLoginKakao} />
           <button

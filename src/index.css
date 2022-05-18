@@ -83,19 +83,11 @@ body::-webkit-scrollbar {
   scrollbar-width: none; /* Firefox */
 }
 
-/*
-::-webkit-scrollbar {
-  display: none;
+.hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: polygon(0 0, 0 0, 0 0);
 }
-*/
-
-/* 
-#root {
-  width: 375px;
-  height: 812px;
-  overflow: scroll;
-  overflow-x: hidden;
-  background-color: #fff;
-  position: relative;
-}
-*/

@@ -1,12 +1,27 @@
 import classnames from 'classnames';
 
-interface GridBox {
+interface GridBoxProps {
   children: React.ReactNode;
   pt?: string;
+  type?: string;
 }
 
-const GridBox = (props: GridBox) => {
-  return <div className={classnames('', {})}>{props.children}</div>;
+const GridBox = (props: GridBoxProps) => {
+  const flexBasic = props.type === 'flexBasic';
+  const flexTasteSurvey = props.type === 'flexTasteSurvey';
+  const flexTasteSurvey06 = props.type === 'flexTasteSurvey06';
+
+  return (
+    <div
+      className={classnames('', {
+        'flex flex-col': flexBasic,
+        'flex flex-col mt-10 gap-4': flexTasteSurvey,
+        'grid grid-cols-2 mt-2 gap-2.5': flexTasteSurvey06,
+      })}
+    >
+      {props.children}
+    </div>
+  );
 };
 
 export default GridBox;

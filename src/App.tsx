@@ -22,7 +22,19 @@ import {
 import NotFound from './pages/NotFound';
 import { RootLayout } from './components/templates';
 
+import { useEffect } from 'react';
+import { useAppDispatch } from './redux/configureStore';
+import { auth } from './redux/modules/user';
+import { getAccessTokenFromCookie } from './utils/cookie';
+
 function App() {
+  const appDispatch = useAppDispatch();
+  const isToken = getAccessTokenFromCookie();
+
+  useEffect(() => {
+    isToken && appDispatch(auth());
+  }, [isToken, appDispatch]);
+
   return (
     <>
       <Routes>
@@ -33,12 +45,12 @@ function App() {
           element={<RedirectKakao />}
         />
 
+        <Route path='/map' element={<StoreLocation />} />
         <Route element={<RootLayout />}>
           <Route path='/posts' element={<PostList />} />
           <Route path='/posts/:postsId' element={<PostDetail />} />
           <Route path='/posts/write' element={<AddEditPost />} />
           <Route path='/posts/write/:postsId' element={<AddEditPost />} />
-          <Route path='/map' element={<StoreLocation />} />
           <Route path='/mypage' element={<Mypage />} />
           <Route path='/survey' element={<TasteSurvey />}>
             <Route path='main' element={<TasteSurveyMain />} />

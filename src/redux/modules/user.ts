@@ -1,8 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { userApis } from '../../apis';
 import instance from '../../lib/axios';
+import {
+  setAccessTokenToCookie,
+  setRefreshTokenToCookie,
+  removeCookies,
+} from '../../utils/cookie';
 
-const initialState = {};
+const initialState = {
+  nickname: null,
+  isLogin: false,
+};
 
 export const getKakaoURL = createAsyncThunk(
   'user/login/kakao/url',
@@ -10,7 +18,6 @@ export const getKakaoURL = createAsyncThunk(
     try {
       await userApis.getKakaoURL().then((response) => {
         const url: string = response.data;
-        console.log(url);
         location.href = url;
         return;
       });
@@ -29,7 +36,12 @@ export const loginKakao = createAsyncThunk(
           params: { code },
         })
         .then((response) => {
-          console.log(response);
+          const accessToken = response.headers.access_token;
+          const refreshToken = response.headers.refresh_token;
+          setAccessTokenToCookie(accessToken);
+          setRefreshTokenToCookie(refreshToken);
+
+          return;
         });
     } catch (err) {
       console.log(err);
@@ -38,34 +50,44 @@ export const loginKakao = createAsyncThunk(
   }
 );
 
-// export const loginKakao = createAsyncThunk('user/login/kakao', async (code) => {
-//   try{
-//     await userApis.loginKakao(code).then((response) => {
-//       console.log(response)
-//       return
-//     })
-//   } catch (err) {
-//     console.log(err)
-//     return
-//   }
-// })
-
+// 유저의 로그인 여부를 판별합니다.
 export const auth = createAsyncThunk('user/auth', async () => {
   try {
-    await userApis.auth('data').then((response) => {
+    await userApis.auth().then((response) => {
+      // const user = {
+      //   nickname: response.data.nickname,
+      // };
       return;
     });
   } catch (err) {
-    console.log(err);
     return;
   }
 });
 
-// const user = createSlice({
-//   name: 'user',
-//   reducers: {
+export const logout = createAsyncThunk('user/logout', async () => {
+  try {
+    await userApis.logout().then((response) => {
+      removeCookies();
+      location.href = '../';
+      return;
+    });
+  } catch (err) {
+    return;
+  }
+});
 
-//   }
-// })
+export const userSlice = createSlice({
+  name: 'user',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(loginKakao.fulfilled, (state, action) => {
+      state.isLogin = true;
+    });
+    builder.addCase(auth.fulfilled, (state, action) => {
+      state.isLogin = true;
+    });
+  },
+});
 
-// export default user.reducer
+export default userSlice;
