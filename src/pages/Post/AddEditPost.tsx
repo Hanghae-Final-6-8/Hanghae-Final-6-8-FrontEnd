@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/configureStore';
 import { PostsItemDataParams } from '../../redux/modules/posts';
 import { PostsState } from '../../redux/modules/posts';
-// import { axiosAddPosts } from '../redux/modules/posts';
+import { axiosAddPost } from '../../redux/modules/posts';
 
 const AddEditPost = () => {
   // 수정하려고 들어왔을 때
@@ -88,8 +88,20 @@ const AddEditPost = () => {
 
   // 커뮤니티 등록
   const handleAddPosts = () => {
+    // appDispatch(
+    //   postsSlice.actions.addPost({
+    //     postsId: undefined,
+    //     title,
+    //     content,
+    //     tagName,
+    //     postsImage: images[0],
+    //     navi: navigate,
+    //   })
+    // );
+
+    // API연결할때 주석 해제
     appDispatch(
-      postsSlice.actions.addPost({
+      axiosAddPost({
         postsId: undefined,
         title,
         content,
@@ -98,15 +110,6 @@ const AddEditPost = () => {
         navi: navigate,
       })
     );
-
-    // API연결할때 주석 해제
-    // appDispatch(axiosAddPost({
-    //   title,
-    //   content,
-    //   tagName,
-    //   postsImage:
-    //     'https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg',
-    // }));
   };
 
   const handleEditpost = () => {

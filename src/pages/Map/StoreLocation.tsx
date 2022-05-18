@@ -30,9 +30,6 @@ const StoreLocation = () => {
           // 정상적으로 검색이 완료됐으면
           // 검색 목록과 마커를 표출
           displayPlaces(data);
-          console.log(data);
-          // 페이지 번호를 표출
-          displayPagination(pagination);
         } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
           alert('검색 결과가 존재하지 않습니다.');
           return;
@@ -41,13 +38,13 @@ const StoreLocation = () => {
           return;
         }
       };
-
+      console.log(location);
       // 37.3049  127.0626
       ps.keywordSearch('스타벅스', placesSearchCB, {
         radius: 20000,
         location: new window.kakao.maps.LatLng(
-          location?.longitude,
-          location?.latitude
+          location?.latitude,
+          location?.longitude
         ),
       });
 
@@ -85,23 +82,6 @@ const StoreLocation = () => {
           // 해당 장소에 인포윈도우에 장소명을 표시합니다
           // mouseout 했을 때는 인포윈도우를 닫습니다
           (function (marker, title) {
-            // 마우스 올렸을 때 정보 보이기
-            // window.kakao.maps.event.addListener(
-            //   marker,
-            //   'mouseover',
-            //   function () {
-            //     displayInfowindow(marker, title);
-            //   }
-            // );
-            // 마우스 벗어나면 정보 사라지기
-            // window.kakao.maps.event.addListener(
-            //   marker,
-            //   'mouseout',
-            //   function () {
-            //     infowindow.close();
-            //   }
-            // );
-
             itemEl.onmouseover = function () {
               displayInfowindow(marker, title);
             };
@@ -231,38 +211,6 @@ const StoreLocation = () => {
         markers = [];
       };
 
-      // 검색결과 목록 하단에 페이지번호를 표시는 함수
-      const displayPagination = (pagination: any) => {
-        const paginationEl = document.getElementById('pagination'),
-          fragment = document.createDocumentFragment();
-        let i;
-
-        // 기존에 추가된 페이지번호를 삭제
-        while (paginationEl?.hasChildNodes()) {
-          paginationEl.removeChild(paginationEl!.lastChild!);
-        }
-
-        for (i = 1; i <= pagination.last; i++) {
-          // eslint-disable-next-line prefer-const
-          let el = document.createElement('a');
-          el.href = '#';
-          el.innerHTML = i.toString();
-
-          if (i === pagination.current) {
-            el.className = 'on';
-          } else {
-            el.onclick = (function (i) {
-              return function () {
-                pagination.gotoPage(i);
-              };
-            })(i);
-          }
-
-          fragment.appendChild(el);
-        }
-        paginationEl?.appendChild(fragment);
-      };
-
       // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
       // 인포윈도우에 장소명을 표시합니다
       const displayInfowindow = (marker: any, title: any) => {
@@ -338,7 +286,6 @@ const StoreLocation = () => {
         </div>
 
         <ul id='placesList'>목록</ul>
-        <div id='pagination'>페이징</div>
       </div>
     </div>
   );
