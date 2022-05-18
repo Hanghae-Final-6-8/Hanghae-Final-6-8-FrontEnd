@@ -29,10 +29,10 @@ const Login = () => {
   return (
     <>
       <div className='flex flex-col  px-6 text-center bg-brownS01bg bg-cover h-full'>
-        <header className='mt-227px mx-auto'>
-          <img src={logoCopick} />
+        <header className='mt-180px mx-auto'>
+          <img className='h-20' src={logoCopick} />
         </header>
-        <div className='pt-200px mx-auto w-172px'>
+        <div className='mt-[148px] mx-auto w-172px'>
           <img src={pickYourCoffee} />
         </div>
         <p className='text-body pt-3 text-gray60'>간편 회원가입/로그인</p>
@@ -52,7 +52,13 @@ const Login = () => {
             <img className='mx-auto' src={google} />
           </button>
         </div>
-        <Button mt='60px' fc='white' fw='500' fs='sub2' onClick={handleToMain}>
+        <Button
+          className='mt-10 bg-brownP'
+          fc='white'
+          fw='500'
+          fs='sub2'
+          onClick={handleToMain}
+        >
           둘러보기
         </Button>
       </div>
