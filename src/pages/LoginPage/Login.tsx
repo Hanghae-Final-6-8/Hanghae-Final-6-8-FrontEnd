@@ -28,7 +28,7 @@ const Login = () => {
 
   return (
     <>
-      <div className='flex flex-col  px-6 text-center bg-brownS01bg bg-cover h-full'>
+      <div className='flex flex-col  px-6 text-center bg-brownS01bg bg-cover h-full touch-none'>
         <header className='mt-180px mx-auto'>
           <img className='h-20' src={logoCopick} />
         </header>
