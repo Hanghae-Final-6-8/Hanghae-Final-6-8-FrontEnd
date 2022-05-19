@@ -35,7 +35,7 @@ const InfinityScroll: React.FC<LayoutProps> = (props) => {
     if (loading) {
       return;
     }
-    console.log(isNext);
+
     if (isNext) {
       domEl[0].addEventListener('scroll', handleScroll);
     } else {

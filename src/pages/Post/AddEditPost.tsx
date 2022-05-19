@@ -98,7 +98,7 @@ const AddEditPost = () => {
   const handleAddPosts = () => {
     appDispatch(
       postsSlice.actions.addPost({
-        postsId: undefined,
+        postsId: Math.random(),
         title: 'sample',
         content: 'this is sample data',
         tagName: ['카페', '갬성'],

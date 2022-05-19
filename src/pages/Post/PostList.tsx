@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../redux/configureStore';
 import { axiosGetPostList } from '../../redux/modules/posts';
-import { axiosDeletePost } from '../../redux/modules/posts';
 import { useAppDispatch } from '../../redux/configureStore';
 import { InfinityScroll } from '../../components/atoms/index';
 import { EditDelToastModal } from '../../components/molecules/index';
@@ -41,14 +40,6 @@ const PostList = () => {
   // 커뮤니티 상세페이지로 이동
   const handleMoveToDetailPage = (postsId: number) => {
     navigate(`/posts/${postsId}`);
-  };
-  // 커뮤니티 수정페이지로 이동
-  const handleMoveToEditPage = (postsId: number) => {
-    navigate(`/posts/write/${postsId}`);
-  };
-  // 커뮤니티 글 삭제
-  const handleDeletePost = (postsId: number) => {
-    appDispatch(axiosDeletePost(postsId));
   };
 
   const handleGetPostList = () => {
@@ -111,27 +102,7 @@ const PostList = () => {
                     handleMoveToDetailPage(post.postsId);
                   }}
                 />
-                {toastStatus && (
-                  // <div>
-                  //   <div className=' w-80 h-80 bg-gray-300 absolute flex flex-col justify-around'>
-                  //     <button
-                  //       onClick={() => {
-                  //         handleMoveToEditPage(clickedPostId);
-                  //       }}
-                  //     >
-                  //       수정 하시겠습니까?
-                  //     </button>
-                  //     <button
-                  //       onClick={() => {
-                  //         handleDeletePost(clickedPostId);
-                  //       }}
-                  //     >
-                  //       삭제 하시겠습니까?
-                  //     </button>
-                  //   </div>
-                  // </div>
-                  <EditDelToastModal />
-                )}
+                {toastStatus && <EditDelToastModal postsId={clickedPostId} />}
               </div>
             );
           })}
