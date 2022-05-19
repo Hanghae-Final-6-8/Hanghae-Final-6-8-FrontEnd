@@ -13,14 +13,14 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../redux/configureStore';
-import { getTasteSurvey, saveTasteList } from '../../redux/modules/taste';
+import { getTasteSurvey } from '../../redux/modules/taste';
 import { useEffect } from 'react';
 
 const MainYesTasteSurvey = () => {
   const navigate = useNavigate();
   const tasteList = useSelector((state: RootState) => state.taste);
   const appDispatch = useAppDispatch();
-  //console.log(tasteList);
+
   useEffect(() => {
     appDispatch(getTasteSurvey());
   }, []);
@@ -57,6 +57,9 @@ const MainYesTasteSurvey = () => {
   tasteList.nuttyFlavor
     ? beansFlavorFormdata.push({ id: 4, name: '견과류 향' })
     : null;
+  if (beansFlavorFormdata.length === 0) {
+    beansFlavorFormdata.push({ id: 5, name: '무난함' });
+  }
 
   const recommendFormdata = [
     { id: 1, name: '파이크 플레이스 로스트', img: coffee_default },
