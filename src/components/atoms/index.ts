@@ -9,6 +9,7 @@ import ToastPopupBox from './ToastPopupBox';
 import Label from './Label';
 import Hr from './Hr';
 import Image from './Image';
+import Chart from './Chart';
 
 export {
   Button,
@@ -22,4 +23,5 @@ export {
   Hr,
   InfinityScroll,
   Image,
+  Chart,
 };

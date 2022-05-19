@@ -8,6 +8,7 @@ import {
   GridBox,
   Button,
   Image,
+  Chart,
 } from '../../components/atoms';
 import { useNavigate } from 'react-router-dom';
 
@@ -82,7 +83,7 @@ const MainYesTasteSurvey = () => {
                 <img src={beans} />
                 원두의 맛
               </Text>
-              <div>chart.js 써야함</div>
+              <Chart />
             </RoundBox>
             <RoundBox className='mt-2.5' type='mainRoundBox'>
               <Text type='mainSubTitle'>
