@@ -14,16 +14,17 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../redux/configureStore';
 import { getTasteSurvey } from '../../redux/modules/taste';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const MainYesTasteSurvey = () => {
   const navigate = useNavigate();
   const tasteList = useSelector((state: RootState) => state.taste);
+  const user = useSelector((state: RootState) => state.user);
   const appDispatch = useAppDispatch();
 
   useEffect(() => {
-    appDispatch(getTasteSurvey());
-  }, []);
+    user.isLogin && appDispatch(getTasteSurvey());
+  }, [user.isLogin, appDispatch]);
 
   const handelShareByKakaotalk = () => {
     alert('아직 구현 중에 있습니다!');
