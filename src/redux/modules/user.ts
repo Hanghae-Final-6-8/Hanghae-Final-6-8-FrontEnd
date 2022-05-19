@@ -41,7 +41,6 @@ export const loginKakao = createAsyncThunk(
   async (codeInput: Login) => {
     try {
       const code = codeInput.codeInput;
-      console.log(code);
       await instance
         .get('/api/user/login/kakao/callback', {
           params: { code },

@@ -9,10 +9,9 @@ import {
   removeCookies,
 } from '../utils/cookie';
 import { setMoveToLogin } from '../utils/setMoveToLogin';
+import { useEffect } from 'react';
 
 const baseURL = process.env.REACT_APP_BASE_URL;
-const accessToken = getAccessTokenFromCookie();
-const refreshToken = getRefreshTokenFromCookie();
 
 const instance = axios.create({
   baseURL: baseURL,
@@ -20,7 +19,7 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use((config: AxiosRequestConfig) => {
-  // const accessToken = getAccessTokenFromCookie();
+  const accessToken = getAccessTokenFromCookie();
   config.headers!['Content-Type'] = 'application/json; charset=utf-8';
   config.headers!['Access-Control-Allow-Origin'] = '*';
   config.headers!['Access-Control-Allow-Credentials'] = true;
@@ -65,11 +64,11 @@ instance.interceptors.response.use(
 
     if (statusCode === 441) {
       // const refreshToken = getRefreshTokenFromCookie();
-      originalRequest.headers['Authorization'] = `Bearer ${refreshToken}`;
+      // originalRequest.headers['Authorization'] = `Bearer ${refreshToken}`;
       return axios(originalRequest);
     }
     if (statusCode === 442) {
-      // const accessToken = getAccessTokenFromCookie();
+      const accessToken = getAccessTokenFromCookie();
       originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
       return axios(originalRequest);
     }
