@@ -50,16 +50,20 @@ const MainYesTasteSurvey = () => {
 
   // 원두의 향 추가
   const beansFlavorFormdata = [];
-  tasteList.floral ? beansFlavorFormdata.push({ id: 1, name: '꽃 향' }) : null;
-  tasteList.cocoaFlavor
-    ? beansFlavorFormdata.push({ id: 2, name: '코코아 향' })
-    : null;
-  tasteList.fruitFlavor
-    ? beansFlavorFormdata.push({ id: 3, name: '과일 향' })
-    : null;
-  tasteList.nuttyFlavor
-    ? beansFlavorFormdata.push({ id: 4, name: '견과류 향' })
-    : null;
+  if (tasteList) {
+    tasteList.floral
+      ? beansFlavorFormdata.push({ id: 1, name: '꽃 향' })
+      : null;
+    tasteList.cocoaFlavor
+      ? beansFlavorFormdata.push({ id: 2, name: '코코아 향' })
+      : null;
+    tasteList.fruitFlavor
+      ? beansFlavorFormdata.push({ id: 3, name: '과일 향' })
+      : null;
+    tasteList.nuttyFlavor
+      ? beansFlavorFormdata.push({ id: 4, name: '견과류 향' })
+      : null;
+  }
   if (beansFlavorFormdata.length === 0) {
     beansFlavorFormdata.push({ id: 5, name: '무난함' });
   }
