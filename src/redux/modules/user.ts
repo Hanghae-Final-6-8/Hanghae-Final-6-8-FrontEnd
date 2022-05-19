@@ -7,6 +7,11 @@ import {
   removeCookies,
 } from '../../utils/cookie';
 
+interface Login {
+  code: string;
+  navigate: (to: string, state: any) => void;
+}
+
 const initialState = {
   nickname: null,
   // isLogin: false,
@@ -30,7 +35,7 @@ export const getKakaoURL = createAsyncThunk(
 );
 export const loginKakao = createAsyncThunk(
   'user/login/kakao',
-  async (code: string) => {
+  async (code: Login) => {
     try {
       await instance
         .get('/api/user/login/kakao/callback', {
@@ -41,6 +46,8 @@ export const loginKakao = createAsyncThunk(
           const refreshToken = response.headers.refresh_token;
           setAccessTokenToCookie(accessToken);
           setRefreshTokenToCookie(refreshToken);
+
+          code.navigate('/main', { replace: true });
 
           return;
         });

@@ -17,7 +17,7 @@ const Login = () => {
 
   const handleLoginKakao = async () => {
     await appDispatch(getKakaoURL());
-    navigate('/api/user/login/kakao/callback', { replace: true });
+    navigate('../user/login/kakao/callback', { replace: true });
   };
 
   const handleNotReadyToLogin = () => {
