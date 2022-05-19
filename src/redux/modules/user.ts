@@ -11,7 +11,7 @@ interface Navigate {
   replace: boolean;
 }
 interface Login {
-  code: string;
+  codeInput: string;
   navigate: (to: string, state: Navigate) => void;
 }
 
@@ -38,8 +38,10 @@ export const getKakaoURL = createAsyncThunk(
 );
 export const loginKakao = createAsyncThunk(
   'user/login/kakao',
-  async (code: Login) => {
+  async (codeInput: Login) => {
     try {
+      const code = codeInput;
+      console.log(code);
       await instance
         .get('/api/user/login/kakao/callback', {
           params: { code },
