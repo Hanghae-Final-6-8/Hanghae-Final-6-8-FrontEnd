@@ -31,7 +31,7 @@ const TasteSurvey = () => {
 
   return (
     <>
-      <div className='relative h-full'>
+      <div className='relative h-full touch-none'>
         {!isUselessPath ? (
           <>
             <button className='absolute left-0'>
