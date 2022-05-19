@@ -33,10 +33,10 @@ const Text = (props: Text) => {
             hasBtnClassName === undefined &&
             props.type === undefined,
         },
-        { 'mt-84px font-700 text-sub text-gray60': tasteNumber },
+        { 'mt-16 font-700 text-sub text-gray60': tasteNumber },
         { 'font-500 text-sub': head },
         { 'mt-2.5 text-gray60 text-caption': caption },
-        { 'text-gray60 text-caption text-right mt-5': tasteCaption },
+        { 'text-gray60 text-caption text-right mt-3': tasteCaption },
         {
           'absolute font-400 text-caption text-brownS02 bottom-72px left-1/2 -translate-x-1/2':
             tasteSurveyCaption,

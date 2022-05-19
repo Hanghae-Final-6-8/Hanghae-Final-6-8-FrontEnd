@@ -17,7 +17,7 @@ const GridBox = (props: GridBoxProps) => {
     <div
       className={classnames(`${className}`, {
         'flex flex-col': flexBasic,
-        'flex flex-col mt-10 gap-4': flexTasteSurvey,
+        'flex flex-col mt-30px gap-4': flexTasteSurvey,
         'grid grid-cols-2 mt-2 gap-2.5': flexTasteSurvey06,
         'grid grid-cols-2 mt-5 gap-2.5': mainRecommendSimmilar,
       })}

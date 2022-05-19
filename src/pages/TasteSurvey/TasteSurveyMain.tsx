@@ -1,6 +1,6 @@
 import { Button, Text, Span } from '../../components/atoms';
 import { useNavigate } from 'react-router-dom';
-import { imgExample } from '../../assets/images';
+import { tasteSurveyMain } from '../../assets/images';
 
 const TasteSurveyMain = () => {
   const navigate = useNavigate();
@@ -12,14 +12,14 @@ const TasteSurveyMain = () => {
   return (
     <>
       <div className='flex flex-col text-center'>
-        <div className='mt-152px'>
+        <div className='mt-20'>
           <Text className='text-head font-500'>나에게 딱 맞는</Text>
           <Text className='text-head font-500'>
             <Span fc='strong'>원두</Span>는 무엇일까?
           </Text>
         </div>
-        <div className='mx-auto mt-30px h-250px'>
-          <img src={imgExample} />
+        <div className='mx-auto h-52'>
+          <img src={tasteSurveyMain} />
         </div>
         <div className='mt-30px'>
           <Text className='font-500 text-body'>

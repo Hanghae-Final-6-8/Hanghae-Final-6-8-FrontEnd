@@ -34,10 +34,10 @@ const TasteSurvey = () => {
       <div className='relative h-full'>
         {!isUselessPath ? (
           <>
-            <button className='absolute top-3.5 left-0'>
+            <button className='absolute left-0'>
               <img className='w-8' src={left} onClick={handleToPrevPage} />
             </button>
-            <button className='absolute top-3.5 right-0' onClick={handleToMain}>
+            <button className='absolute right-0' onClick={handleToMain}>
               <img className='w-8' src={cross} />
             </button>
           </>
