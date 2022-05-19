@@ -8,12 +8,14 @@ const RedirectKakao = () => {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
 
-  const code = new URL(location.href).searchParams.get('code')!;
+  const codeInput = new URL(location.href).searchParams.get('code')!;
+
+  console.log(codeInput);
 
   useEffect(() => {
     const kakaoDispatch = async () => {
       try {
-        await appDispatch(loginKakao({ code, navigate })).then;
+        await appDispatch(loginKakao({ codeInput, navigate }));
         //navigate('/main', { replace: true });
       } catch (err) {
         console.log(err);
