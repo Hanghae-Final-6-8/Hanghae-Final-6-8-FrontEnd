@@ -7,9 +7,12 @@ import {
   removeCookies,
 } from '../../utils/cookie';
 
+interface Navigate {
+  replace: boolean;
+}
 interface Login {
   code: string;
-  navigate: (to: string, state: any) => void;
+  navigate: (to: string, state: Navigate) => void;
 }
 
 const initialState = {
