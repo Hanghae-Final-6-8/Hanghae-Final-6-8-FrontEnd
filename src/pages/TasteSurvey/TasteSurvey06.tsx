@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/configureStore';
 import { flower, fruits, chocolate, penuts } from '../../assets/icons';
+import { setObjLocalStorage } from '../../utils/localstorage';
 
 const TasteSurvey06 = () => {
   const location = useLocation();
