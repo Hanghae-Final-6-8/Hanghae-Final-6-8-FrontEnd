@@ -5,9 +5,9 @@ import {
 } from '../../utils/localstorage';
 
 const TasteSurveyNeedLogin = () => {
-  const location = useLocation();
-  const tasteList = location.state;
-  console.log(tasteList);
+  // const location = useLocation();
+  // const tasteList = location.state;
+  // console.log(tasteList);
 
   // console.log(getObjLocalStorage('result'));
 

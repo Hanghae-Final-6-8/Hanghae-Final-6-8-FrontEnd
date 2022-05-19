@@ -4,27 +4,30 @@ import instance from '../../lib/axios';
 
 const initialState = {};
 
+interface TasteList {
+  surveyResult: {
+    acidity: number;
+    body: number;
+    sweetness: number;
+    bitter: number;
+    nutty: number;
+    floral: number;
+    fruit_flavor: number;
+    cocoa_flavor: number;
+    nutty_flavor: number;
+  };
+  navigate?: (to: string) => void;
+}
+
 export const postTasteSurvey = createAsyncThunk(
   'taste/tests',
-  async (
-    tasteList: {
-      acidity: number;
-      body: number;
-      sweetness: number;
-      bitter: number;
-      nutty: number;
-      floral: number;
-      fruit_flavor: number;
-      cocoa_flavor: number;
-      nutty_flavor: number;
-    },
-    { rejectWithValue }
-  ) => {
+  async (tasteList: TasteList, { rejectWithValue }) => {
     try {
-      await tasteApis.postTasteSurvey(tasteList).then((reponse) => {
-        console.log(reponse);
-        return;
-      });
+      await tasteApis
+        .postTasteSurvey(tasteList.surveyResult)
+        .then((reponse) => {
+          return;
+        });
     } catch (err: any) {
       console.log(err);
       return rejectWithValue(err.response.data);
