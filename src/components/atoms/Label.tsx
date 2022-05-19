@@ -4,14 +4,14 @@ import { check } from '../../assets/icons';
 interface LabelProps {
   children: React.ReactNode;
   htmlFor: string;
-  type?: string;
-  ta?: string;
+  className?: string;
   img?: string;
-  key?: number;
+  type?: string;
   bool?: boolean;
 }
 
 const Label = (props: LabelProps) => {
+  const className = props.className;
   const tasteAnswer = props.type === 'tasteAnswer';
   const tasteAnswerSelect = props.type === 'tasteAnswerSelect';
 
@@ -21,13 +21,10 @@ const Label = (props: LabelProps) => {
   const flavorAnswerSec = props.type === 'flavorAnswerSec';
   const flavorAnswerSecSelect = props.type === 'flavorAnswerSecSelect';
 
-  const center = props.ta === 'center';
-
   return (
     <label
       className={classnames(
-        '',
-        { 'text-center': center },
+        `${className}`,
         {
           'bg-white h-11 rounded-btn text-body font-500 e px-3.5 py-2 shadow-contents text-gray30 cursor-pointer':
             tasteAnswer,

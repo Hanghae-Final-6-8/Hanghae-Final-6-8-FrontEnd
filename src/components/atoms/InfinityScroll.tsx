@@ -8,10 +8,8 @@ interface LayoutProps {
   isNext: boolean;
 }
 
-const domEl = document.getElementsByClassName(
-  'rounded-3xl overflow-scroll no-scrollbar'
-);
-
+const domEl = document.getElementsByClassName('infinityScroll');
+console.log(domEl);
 const InfinityScroll: React.FC<LayoutProps> = (props) => {
   const { callNext, isNext, loading } = props;
 
@@ -25,7 +23,7 @@ const InfinityScroll: React.FC<LayoutProps> = (props) => {
 
     const scrollTop = domEl[0].scrollTop;
 
-    if (scrollHeight - clientHeight - scrollTop < 50) {
+    if (scrollHeight - clientHeight - scrollTop < 200) {
       console.log('!callNext!');
       callNext();
     }
@@ -44,7 +42,7 @@ const InfinityScroll: React.FC<LayoutProps> = (props) => {
       domEl[0].removeEventListener('scroll', handleScroll);
     }
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => domEl[0].removeEventListener('scroll', handleScroll);
   }, [isNext, loading]);
 
   return <>{props.children}</>;

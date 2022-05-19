@@ -3,7 +3,6 @@ import logger from 'redux-logger';
 import postsSlice from './modules/posts';
 import commentSlice from './modules/comment';
 import likesSlice from './modules/likes';
-import imageSlice from './modules/image';
 import { useDispatch } from 'react-redux';
 import userSlice from './modules/user';
 
@@ -11,7 +10,6 @@ const rootReducer = combineReducers({
   posts: postsSlice.reducer,
   comment: commentSlice.reducer,
   likes: likesSlice.reducer,
-  image: imageSlice.reducer,
   user: userSlice.reducer,
 });
 

@@ -4,7 +4,7 @@ import { RootState } from '../../redux/configureStore';
 import Comment from '../../components/molecules/Comment';
 import { useState } from 'react';
 import { useAppDispatch } from '../../redux/configureStore';
-import commentSlice from '../../redux/modules/comment';
+import {axiosAddComment} from '../../redux/modules/comment';
 import Likes from '../../components/atoms/Likes';
 import { useNavigate } from 'react-router-dom';
 
@@ -29,7 +29,7 @@ const PostDetail = () => {
   };
   // 코멘트 추가
   const handleAddComment = (postsId: number) => {
-    appDispatch(commentSlice.actions.addComment({ postsId, comment }));
+    appDispatch(axiosAddComment({ postsId, comment }));
   };
 
   const handleBacktoPrev = () => {
@@ -58,7 +58,7 @@ const PostDetail = () => {
         <></>
       )}
       <p>{post?.title}</p>
-      <img src={post?.postsImage} />
+      <img src='https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg' />
       <Likes postsId={Number(postsId)} />
       <p>{post?.content}</p>
       <hr />

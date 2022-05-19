@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 
 interface HrProps {
+  className?: string;
   type?: string;
 }
 

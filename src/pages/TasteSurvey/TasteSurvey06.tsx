@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/configureStore';
 import { flower, fruits, chocolate, penuts } from '../../assets/icons';
+import { setObjLocalStorage } from '../../utils/localstorage';
 
 const TasteSurvey06 = () => {
   const location = useLocation();
@@ -158,7 +159,7 @@ const TasteSurvey06 = () => {
     <>
       <GridBox type='flexBasic'>
         <Text type='tasteNumber'>06</Text>
-        <Text fw='500' fs='sub'>
+        <Text className='font-500 text-sub'>
           <Span fc='strong'>특별한 향</Span>을 좋아하시나요?
         </Text>
         <Text type='tasteCaption'>복수선택 가능</Text>

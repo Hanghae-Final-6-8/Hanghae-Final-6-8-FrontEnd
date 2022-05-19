@@ -1,12 +1,12 @@
 import classnames from 'classnames';
 
-interface Wrapper {
+interface WrapperProps {
   children: React.ReactNode;
   onClick: () => void;
   data?: string;
 }
 
-const DarkWrapper = (props: Wrapper) => {
+const DarkWrapper = (props: WrapperProps) => {
   const mainModal = props.data === 'mainModal';
 
   return (

@@ -28,7 +28,7 @@ const Login = () => {
 
   return (
     <>
-      <div className='flex flex-col  px-6 text-center bg-brownS01bg bg-cover h-full'>
+      <div className='flex flex-col  px-6 text-center bg-brownS01bg bg-cover h-full touch-none'>
         <header className='mt-180px mx-auto'>
           <img className='h-20' src={logoCopick} />
         </header>
@@ -53,10 +53,7 @@ const Login = () => {
           </button>
         </div>
         <Button
-          className='mt-10 bg-brownP'
-          fc='white'
-          fw='500'
-          fs='sub2'
+          className='mt-10 bg-brownP text-white font-500 text-sub2'
           onClick={handleToMain}
         >
           둘러보기

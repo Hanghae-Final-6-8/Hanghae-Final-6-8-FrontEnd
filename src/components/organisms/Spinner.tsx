@@ -1,7 +1,14 @@
+import { spinnerBasic } from '../../assets/backgrounds';
+import { GridBox } from '../atoms';
+
 const Spinner = () => {
   return (
     <>
-      <div>로딩중</div>
+      <GridBox className='h-full' type='flexBasic'>
+        <div className='m-auto'>
+          <img src={spinnerBasic} />
+        </div>
+      </GridBox>
     </>
   );
 };

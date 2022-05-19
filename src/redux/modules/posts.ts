@@ -5,7 +5,7 @@ import axios from 'axios';
 export interface PostsItemDataParams {
   postsId: number;
   nickname: string;
-  postsImage: string;
+  postsImage: File | string;
   title: string;
   content: string;
   createdAt: string;
@@ -25,7 +25,7 @@ interface AddPostsType {
   title: string;
   content: string;
   tagName: string[];
-  postsImage: string;
+  postsImage: File | string;
   navi: (to: string) => void;
 }
 
@@ -41,10 +41,10 @@ export const axiosGetPostList = createAsyncThunk(
   'postsReducer/axiosGetPostList',
   async (data: number, thunkAPI) => {
     thunkAPI.dispatch(isLoading(true));
-    return await instance
-      .get(`/api/posts?page=${data}`)
-      // return await axios
-      //   .get(`http://110.46.158.168:8091/api/posts?page=${data}`)
+    // return await instance
+    //   .get(`/api/posts?page=${data}`)
+    return await axios
+      .get(`http://110.46.158.168:8090/api/posts?page=${data}`)
       .then((res) => {
         const post_list: Array<PostsItemDataParams> = [];
         console.log(res.data.content);
@@ -77,25 +77,127 @@ export const axiosGetPostList = createAsyncThunk(
   }
 );
 
+interface formType {
+  formData: FormData;
+  navi: (to: string) => void;
+}
 // 커뮤니티 추가하기
 export const axiosAddPost = createAsyncThunk(
   'postsReducer/axiosAddPost',
-  async (data: AddPostsType, thunkAPI) => {
-    return await instance
-      // return axios
-      // .post('http://110.46.158.168:8091/api/posts', {
-      .post('/api/posts', {
-        title: data.title,
-        content: data.content,
-        tag_name: data.tagName,
-        posts_image: data.postsImage,
+  async (data: formType, thunkAPI) => {
+    // return await instance
+    // .post('/api/posts', {
+    ////////
+    // return axios
+    //   .post('http://110.46.158.168:8090/api/posts', {
+    //     title: data.title,
+    //     content: data.content,
+    //     tag_name: data.tagName,
+    //     posts_image: data.postsImage,
+    //   })
+    const dataArray = [];
+    for (const d of data.formData.entries()) {
+      dataArray.push(d[1]);
+    }
+    const tagArr = dataArray[2].toString();
+    const tagArrSliced = tagArr.slice(1, tagArr.length - 1);
+    const newTagArr = tagArrSliced.split(',');
+    const toReduxData = {
+      postsId: undefined,
+      title: dataArray[0].toString(),
+      content: dataArray[1].toString(),
+      tagName: newTagArr,
+      postsImage: dataArray[3],
+      navi: data.navi,
+    };
+    console.log(toReduxData);
+    return axios({
+      url: 'http://110.46.158.168:8090/api/posts',
+      method: 'POST',
+      data: data.formData,
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        console.log('커뮤니티글 등록성공');
+
+        thunkAPI.dispatch(addPost(toReduxData));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+);
+
+// 커뮤니티 수정하기
+export const axiosEditPost = createAsyncThunk(
+  'postsReducer/axiosEditPost',
+  async (data: formType, thunkAPI) => {
+    // return await instance
+    // .post('/api/posts', {
+    ////////
+    // return axios
+    //   .post('http://110.46.158.168:8090/api/posts', {
+    //     title: data.title,
+    //     content: data.content,
+    //     tag_name: data.tagName,
+    //     posts_image: data.postsImage,
+    //   })
+    const dataArray = [];
+    for (const d of data.formData.entries()) {
+      dataArray.push(d[1]);
+    }
+    const tagArr = dataArray[3].toString();
+    const tagArrSliced = tagArr.slice(1, tagArr.length - 1);
+    const newTagArr = tagArrSliced.split(',');
+    const toReduxData = {
+      postsId: Number(dataArray[0]),
+      title: dataArray[1].toString(),
+      content: dataArray[2].toString(),
+      tagName: newTagArr,
+      postsImage: dataArray[4],
+      navi: data.navi,
+    };
+    console.log(toReduxData);
+    return axios({
+      url: 'http://110.46.158.168:8090/api/posts/update',
+      method: 'POST',
+      data: data.formData,
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        console.log('커뮤니티글 수정성공');
+
+        thunkAPI.dispatch(editPost(toReduxData));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+);
+
+// 커뮤니티 삭제하기
+export const axiosDeletePost = createAsyncThunk(
+  'postsReducer/axiosDeletePost',
+  async (data: number, thunkAPI) => {
+    // return await instance
+    // .post('/api/posts', {
+    ////////
+    return axios
+      .post('http://110.46.158.168:8090/api/posts/delete', {
+        posts_id: data,
       })
       .then((res) => {
-        if (res.status === 200) {
-          console.log(res);
-          console.log('커뮤니티글 등록성공');
-        }
-        thunkAPI.dispatch(addPost(data));
+        console.log(res);
+        thunkAPI.dispatch(deletePost(data));
+      })
+      .catch((error) => {
+        console.log(error);
       });
   }
 );

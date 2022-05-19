@@ -1,7 +1,8 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/configureStore';
-import commentSlice from '../../redux/modules/comment';
 import { useAppDispatch } from '../../redux/configureStore';
+import { useEffect } from 'react';
+import { commentActionCreators } from '../../redux/modules/comment';
 
 // 부모 컴포넌트로부터 받아오는 props의 타입 지정
 interface postsIdProps {
@@ -13,7 +14,12 @@ const Comment = (props: postsIdProps) => {
   // 커뮤니티(포스트) 아이디를 props로 받아옴
   const postsId = props.postsId;
 
-  // 코멘트 리스트 불러오기
+  // 댓글 비동기로 불러와서 리덕스에 주입
+  useEffect(() => {
+    appDispatch(commentActionCreators.axiosGetCommentList(postsId));
+  }, []);
+
+  // 코멘트 리스트 리덕스에서 불러오기
   const commentList = useSelector((store: RootState) => store.comment.list);
   const postComentList = commentList.filter((comment) => {
     return comment.postsId === Number(postsId);
@@ -24,7 +30,7 @@ const Comment = (props: postsIdProps) => {
 
   // 댓글 삭제
   const handleDeleteComment = (commentsId: number) => {
-    appDispatch(commentSlice.actions.deleteComment(commentsId));
+    appDispatch(commentActionCreators.axiosDeleteComment(commentsId));
   };
   return (
     <div className='flex flex-col'>

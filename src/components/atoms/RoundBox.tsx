@@ -9,11 +9,12 @@ interface RoundBox {
 }
 
 const RoundBox = (props: RoundBox) => {
+  const className = props.className;
   const mainModal = props.round === 'mainModal';
 
   return (
     <div
-      className={classnames('bg-white', {
+      className={classnames(`bg-white ${className}`, {
         'mt-48 px-30px py-34px rounded-36px': mainModal,
       })}
     >

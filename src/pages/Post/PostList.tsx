@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../redux/configureStore';
 import { axiosGetPostList } from '../../redux/modules/posts';
 import { useAppDispatch } from '../../redux/configureStore';
-import postsSlice from '../../redux/modules/posts';
 import { InfinityScroll } from '../../components/atoms/index';
+import { EditDelToastModal } from '../../components/molecules/index';
 
 const PostList = () => {
   const navigate = useNavigate();
@@ -41,19 +41,11 @@ const PostList = () => {
   const handleMoveToDetailPage = (postsId: number) => {
     navigate(`/posts/${postsId}`);
   };
-  // 커뮤니티 수정페이지로 이동
-  const handleMoveToEditPage = (postsId: number) => {
-    navigate(`/posts/write/${postsId}`);
-  };
-  // 커뮤니티 글 삭제
-  const handleDeletePost = (postsId: number) => {
-    appDispatch(postsSlice.actions.deletePost(postsId));
-  };
 
   const handleGetPostList = () => {
     appDispatch(axiosGetPostList(paging!));
   };
-  console.log(isLoading);
+
   return (
     <div>
       <div className='m-5'>커뮤니티</div>
@@ -104,32 +96,13 @@ const PostList = () => {
                   <></>
                 )}
                 <img
-                  src={post.postsImage}
+                  src='https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg'
                   className='rounded-md mr-2'
                   onClick={() => {
                     handleMoveToDetailPage(post.postsId);
                   }}
                 />
-                {toastStatus && (
-                  <div>
-                    <div className=' w-80 h-80 bg-gray-300 absolute flex flex-col justify-around'>
-                      <button
-                        onClick={() => {
-                          handleMoveToEditPage(clickedPostId);
-                        }}
-                      >
-                        수정 하시겠습니까?
-                      </button>
-                      <button
-                        onClick={() => {
-                          handleDeletePost(clickedPostId);
-                        }}
-                      >
-                        삭제 하시겠습니까?
-                      </button>
-                    </div>
-                  </div>
-                )}
+                {toastStatus && <EditDelToastModal postsId={clickedPostId} />}
               </div>
             );
           })}

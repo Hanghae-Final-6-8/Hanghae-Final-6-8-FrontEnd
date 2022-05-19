@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
+import { axiosEditPost } from '../../redux/modules/posts';
 import postsSlice from '../../redux/modules/posts';
-// import imageSlice from '../../redux/modules/image';
-import ImageUploading, { ImageListType } from 'react-images-uploading';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/configureStore';
 import { useParams } from 'react-router-dom';
@@ -26,16 +25,24 @@ const AddEditPost = () => {
   const [tagName, setTagName] = useState<Array<string>>([]);
 
   const [content, setContent] = useState<string>('');
-  // 이미지
-  const [images, setImages] = useState([]);
-  const maxNumber = 69;
+  // 이미지 파일
+  const [file, setFiles] = useState<File[]>([]);
+  // 이미지 미리보기
+  const [prevImage, setPrevImage] = useState<any>();
 
-  const onChange = (
-    imageList: ImageListType,
-    addUpdateIndex: number[] | undefined
-  ) => {
-    console.log(imageList, addUpdateIndex);
-    setImages(imageList as never[]);
+  const getOnLoadFileFrom = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.currentTarget.files;
+
+    if (file && file.length) {
+      setFiles((existing) => existing.concat(Array.from(file)));
+    }
+
+    const reader = new FileReader();
+    const toPrevFile = file![0];
+    reader.readAsDataURL(toPrevFile);
+    reader.onloadend = () => {
+      setPrevImage(reader.result);
+    };
   };
 
   // 수정하기위한 포스트를 담아두기 위해.
@@ -90,40 +97,33 @@ const AddEditPost = () => {
   const handleAddPosts = () => {
     // appDispatch(
     //   postsSlice.actions.addPost({
-    //     postsId: undefined,
-    //     title,
-    //     content,
-    //     tagName,
-    //     postsImage: images[0],
+    //     postsId: Math.random(),
+    //     title: 'sample',
+    //     content: 'this is sample data',
+    //     tagName: ['카페', '갬성'],
+    //     postsImage:
+    //       'https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg',
     //     navi: navigate,
     //   })
     // );
 
-    // API연결할때 주석 해제
-    appDispatch(
-      axiosAddPost({
-        postsId: undefined,
-        title,
-        content,
-        tagName,
-        postsImage: images[0],
-        navi: navigate,
-      })
-    );
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('content', content);
+    formData.append('tag_name', '[' + tagName.toString() + ']');
+    formData.append('posts_image', file[0]);
+    appDispatch(axiosAddPost({ formData, navi: navigate }));
   };
 
+  //커뮤니티 수정
   const handleEditpost = () => {
-    appDispatch(
-      postsSlice.actions.editPost({
-        postsId: post ? post.postsId : undefined,
-        title,
-        content,
-        tagName,
-        postsImage:
-          'https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg',
-        navi: navigate,
-      })
-    );
+    const formData = new FormData();
+    formData.append('posts_id', post!.postsId.toString());
+    formData.append('title', title);
+    formData.append('content', content);
+    formData.append('tag_name', '[' + tagName.toString() + ']');
+    formData.append('posts_image', file[0]);
+    appDispatch(axiosEditPost({ formData, navi: navigate }));
   };
 
   const handleBacktoPrev = () => {
@@ -166,47 +166,8 @@ const AddEditPost = () => {
       ) : (
         <></>
       )}
-
-      <ImageUploading value={images} onChange={onChange} maxNumber={maxNumber}>
-        {({
-          imageList,
-          onImageUpload,
-          onImageUpdate,
-          onImageRemove,
-          isDragging,
-          dragProps,
-        }) => (
-          // write your building UI
-          <div className='upload__image-wrapper '>
-            <button
-              style={isDragging ? { color: 'red' } : undefined}
-              onClick={onImageUpload}
-              {...dragProps}
-            >
-              이미지선택
-            </button>
-            &nbsp;
-            {imageList.map((image, index) => (
-              <div key={index} className='image-item'>
-                <img
-                  src={image.dataURL}
-                  alt=''
-                  width='100'
-                  className='h-52 w-full'
-                />
-                <div className='image-item__btn-wrapper'>
-                  <button className='mr-1' onClick={() => onImageUpdate(index)}>
-                    이미지바꾸기
-                  </button>
-                  <button className='mr-1' onClick={() => onImageRemove(index)}>
-                    이미지삭제
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </ImageUploading>
+      <img className='w-28 h-28' src={prevImage} />
+      <input type='file' id='image' onChange={getOnLoadFileFrom} />
       <textarea
         className='h-52 w-full'
         style={{ border: '1px solid #111', resize: 'none' }}

@@ -1,16 +1,19 @@
 import classnames from 'classnames';
 
-interface Span {
-  fc?: string;
-  className?: string;
+interface SpanProps {
   children: React.ReactNode;
+  className?: string;
+  fc?: string;
 }
 
-const Span = (props: Span) => {
+const Span = (props: SpanProps) => {
+  const className = props.className;
   const fontColor = props.fc === 'strong';
 
   return (
-    <span className={classnames('', { 'text-amber-900': fontColor })}>
+    <span
+      className={classnames(`${className}`, { 'text-amber-900': fontColor })}
+    >
       {props.children}
     </span>
   );
