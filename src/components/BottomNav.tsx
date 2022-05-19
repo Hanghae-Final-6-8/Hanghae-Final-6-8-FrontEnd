@@ -53,7 +53,7 @@ const BottomNav = () => {
     location.pathname === '/survey/06' ||
     location.pathname === '/survey/needlogin' ||
     location.pathname === '/survey/loading' ||
-    location.pathname === '/user/login/kakao/callback'
+    location.pathname === '/app/user/login/kakao/callback'
   ) {
     return null;
   }
