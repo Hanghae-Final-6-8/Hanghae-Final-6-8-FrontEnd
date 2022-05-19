@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { tasteApis } from '../../apis';
-import instance from '../../lib/axios';
+import { removeLocalStorage } from '../../utils/localstorage';
 
 const INITIAL_STATE = {
   acidity: 3,
@@ -46,6 +46,7 @@ export const postTasteSurvey = createAsyncThunk(
         .then((response) => {
           thunkAPI.dispatch(saveTasteList(response.data.data));
           // 일부러 시간을 끄는 용도로 사용했습니다.
+          removeLocalStorage('surveyResult');
           setTimeout(() => {
             tasteList.navigate('/main');
           }, 1500);
