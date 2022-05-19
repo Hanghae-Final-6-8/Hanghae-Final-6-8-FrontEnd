@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 const Main = () => {
   return (
     <>
-      <MainNoTasteSurvey />
+      {/* <MainNoTasteSurvey /> */}
       <MainYesTasteSurvey />
     </>
   );

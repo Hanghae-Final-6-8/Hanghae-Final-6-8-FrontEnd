@@ -1,6 +1,7 @@
 import add from './add.svg';
 import bookmark from './bookmark.svg';
 import bookmark_full from './bookmark_full.svg';
+import beans from './beans.svg';
 import camera from './camera.svg';
 import check from './check.svg';
 import chocolate from './chocolate.svg';
@@ -43,6 +44,7 @@ import left from './arrow/left.svg';
 
 export {
   add,
+  beans,
   bookmark,
   bookmark_full,
   camera,

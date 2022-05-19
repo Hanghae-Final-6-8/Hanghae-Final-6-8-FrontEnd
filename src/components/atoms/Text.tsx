@@ -18,6 +18,10 @@ const Text = (props: Text) => {
   const tasteSurveyCaption = props.type === 'tasteSurveyCaption';
   const tasteCaption = props.type === 'tasteCaption';
   const white = props.type === 'white';
+  const mainSubTitle = props.type === 'mainSubTitle';
+  const mainBeansFlavor = props.type === 'mainBeansFlavor';
+  const mainBodyTitle = props.type === 'mainBodyTitle';
+  const mainRedcommendSimmilar = props.type === 'mainRedcommendSimmilar';
 
   return (
     <p
@@ -37,7 +41,15 @@ const Text = (props: Text) => {
           'absolute font-400 text-caption text-brownS02 bottom-72px left-1/2 -translate-x-1/2':
             tasteSurveyCaption,
         },
-        { 'text-white': white }
+        { 'text-white': white },
+        {
+          'text-gray90 text-sub2 font-500 flex': mainSubTitle,
+          'inline-block border-gray30 border-x border-y mt-3.5 font-400 text-body px-2.5 py-0.75 rounded-xl text-gray90':
+            mainBeansFlavor,
+          'font-500 text-sub': mainBodyTitle,
+          'text-center text-gray90 text-caption font-500 mt-2.5':
+            mainRedcommendSimmilar,
+        }
       )}
     >
       {props.children}

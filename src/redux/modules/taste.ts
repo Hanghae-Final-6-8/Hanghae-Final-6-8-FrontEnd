@@ -38,6 +38,20 @@ export const postTasteSurvey = createAsyncThunk(
   }
 );
 
+export const getTasteSurvey = createAsyncThunk(
+  'taste/tests/result',
+  async () => {
+    try {
+      await tasteApis.getTasteSurvey().then((response) => {
+        return;
+      });
+    } catch (err: any) {
+      console.log(err);
+      return;
+    }
+  }
+);
+
 export const tasteSlice = createSlice({
   name: 'tasteReducer',
   initialState: INITIAL_STATE,
