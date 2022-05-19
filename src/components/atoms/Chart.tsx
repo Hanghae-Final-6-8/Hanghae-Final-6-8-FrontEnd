@@ -13,6 +13,7 @@ ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip);
 
 interface ChartProps {
   children?: React.ReactNode;
+  beansData: Array<number>;
 }
 
 const Chart = (props: ChartProps) => {
@@ -20,13 +21,15 @@ const Chart = (props: ChartProps) => {
     labels: ['산미', '단 맛', '고소한 맛', '바디감', '쓴 맛'],
     datasets: [
       {
-        data: [2, 3, 2, 1, 2],
+        data: props.beansData,
         backgroundColor: 'rgba(109,73,55,0.7)',
         borderColor: '#6D4937',
         borderWidth: 1,
       },
     ],
   };
+
+  console.log(data.datasets[0].data);
 
   return (
     <div>

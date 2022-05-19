@@ -8,6 +8,7 @@ interface RoundBox {
   bg?: string;
   round?: string;
   id?: string;
+  cafeId?: number;
 }
 
 const RoundBox = (props: RoundBox) => {

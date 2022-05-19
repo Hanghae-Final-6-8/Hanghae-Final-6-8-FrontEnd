@@ -11,9 +11,15 @@ import {
   Chart,
 } from '../../components/atoms';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/configureStore';
+import { useEffect } from 'react';
 
 const MainYesTasteSurvey = () => {
   const navigate = useNavigate();
+  const tasteList = useSelector((state: RootState) => state.taste);
+  console.log(tasteList);
+
   const handelShareByKakaotalk = () => {
     alert('아직 구현 중에 있습니다!');
   };
@@ -34,10 +40,18 @@ const MainYesTasteSurvey = () => {
     navigate('../survey/main');
   };
 
-  const beansFlavorFormdata = [
-    { id: 1, name: '꽃 향' },
-    { id: 2, name: '과일 향' },
-  ];
+  // 원두의 향 추가
+  const beansFlavorFormdata = [];
+  tasteList.floral ? beansFlavorFormdata.push({ id: 1, name: '꽃 향' }) : null;
+  tasteList.cocoaFlavor
+    ? beansFlavorFormdata.push({ id: 2, name: '코코아 향' })
+    : null;
+  tasteList.fruitFlavor
+    ? beansFlavorFormdata.push({ id: 3, name: '과일 향' })
+    : null;
+  tasteList.nuttyFlavor
+    ? beansFlavorFormdata.push({ id: 4, name: '견과류 향' })
+    : null;
 
   const recommendFormdata = [
     { id: 1, name: '파이크 플레이스 로스트', img: coffee_default },
@@ -65,15 +79,14 @@ const MainYesTasteSurvey = () => {
                 <img className='mx-auto' src={coffee_default} />
               </div>
               <figcaption className='text-center text-sub2 font-500 mt-26px'>
-                <strong className='block'>파이크 플레이스 로스트</strong>
+                <strong className='block'>{tasteList.beanName}</strong>
                 <Text className='inline-block mt-1.5 font-400 text-body bg-brownS03 px-2.5 py-0.75 rounded-xl text-brownS02'>
-                  블랜드
+                  {tasteList.type === 1 ? '싱글 오리진' : '블렌드'}
                 </Text>
               </figcaption>
             </figure>
             <p className='mt-3 text-body font-400 line-clamp-2 h-10 text-gray-400'>
-              코코아와 구운 견과류의 은은하고 풍부한 향으로 가벼운 산도를
-              조화시킴으로써 스타벅스의 다양성을 강조했습니다
+              {tasteList.description}
             </p>
             <button className='block mx-auto' onClick={handleShowDescription}>
               <img src={down} />
@@ -83,7 +96,15 @@ const MainYesTasteSurvey = () => {
                 <img src={beans} />
                 원두의 맛
               </Text>
-              <Chart />
+              <Chart
+                beansData={[
+                  tasteList.acidity,
+                  tasteList.sweetness,
+                  tasteList.nutty,
+                  tasteList.body,
+                  tasteList.bitter,
+                ]}
+              />
             </RoundBox>
             <RoundBox className='mt-2.5' type='mainRoundBox'>
               <Text type='mainSubTitle'>
@@ -100,20 +121,27 @@ const MainYesTasteSurvey = () => {
             </RoundBox>
             <GridBox className='mt-12'>
               <Text type='mainBodyTitle'>
-                <Span type='strong'>파이크 플레이스 로스트</Span>를
+                <Span type='strong'>{tasteList.beanName}</Span>를
               </Text>
               <Text type='mainBodyTitle'>맛볼 수 있는 카페는?</Text>
               <RoundBox
                 className='text-center relative overflow-hidden mt-5'
                 type='mainRoundBox'
+                cafeId={tasteList.cafeId}
                 onClick={handleToMap}
               >
                 <div className='absolute top-0 left-0 right-0 h-72px bg-defaultBg01'>
                   {/*  */}
                 </div>
-                <Image className='mx-auto' type='circle' src={coffee_default} />
+                <Image
+                  className='mx-auto'
+                  type='circle'
+                  src={
+                    tasteList.cafeImage ? tasteList.cafeImage : coffee_default
+                  }
+                />
                 <Text className='mt-1.5 text-gray90 font-500 text-body'>
-                  스타벅스
+                  {tasteList.cafeName}
                 </Text>
                 <Text className='mt-1.5 text-gray80 text-caption'>
                   매장 위치 보러가기
@@ -127,7 +155,7 @@ const MainYesTasteSurvey = () => {
             </GridBox>
             <GridBox className='mt-12'>
               <Text type='mainBodyTitle'>
-                <Span type='strong'>파이크 플레이스 로스트</Span>와
+                <Span type='strong'>{tasteList.beanName}</Span>와
               </Text>
               <Text type='mainBodyTitle'>비슷한 원두도 있어요!</Text>
               <GridBox type='mainRecommendSimmilar'>
