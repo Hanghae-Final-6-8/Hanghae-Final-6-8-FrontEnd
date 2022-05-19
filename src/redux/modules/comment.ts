@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 export interface CommentItemDataParams {
   postsId: number;
@@ -30,6 +31,65 @@ const INITIAL_STATE: CommentState = {
     // },
   ],
 };
+// 댓글 조회
+export const axiosGetCommentList = createAsyncThunk(
+  'commentReducer/axiosGetCommentList',
+  async (data: number, thunkAPI) => {
+    return await axios
+      .get(`http://110.46.158.168:8090/api/comments?posts_id=${data}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+);
+
+interface addCommentType {
+  postsId: number;
+  comment: string;
+}
+// 댓글 등록
+export const axiosAddComment = createAsyncThunk(
+  'commentReducer/axiosAddComment',
+  async (data: addCommentType, thunkAPI) => {
+    const commentData = {
+      content: data.comment,
+      posts_id: data.postsId,
+    };
+    return await axios({
+      url: 'http://110.46.158.168:8090/api/comments',
+      method: 'POST',
+      data: commentData,
+    })
+      .then((res) => {
+        console.log(res);
+        thunkAPI.dispatch(addComment(data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+);
+// 댓글 삭제
+export const axiosDeleteComment = createAsyncThunk(
+  'commentReducer/axiosDeleteComment',
+  async (data: number, thunkAPI) => {
+    return await axios({
+      url: 'http://110.46.158.168:8090/api/comments/delete',
+      method: 'POST',
+      data: data,
+    })
+      .then((res) => {
+        console.log(res);
+        thunkAPI.dispatch(deleteComment(data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+);
 
 export const commentSlice = createSlice({
   // 액션명
@@ -60,6 +120,14 @@ export const commentSlice = createSlice({
   },
 });
 
-export const { addComment } = commentSlice.actions;
-
 export default commentSlice;
+
+export const { addComment, deleteComment } = commentSlice.actions;
+
+const commentActionCreators = {
+  axiosAddComment,
+  axiosGetCommentList,
+  axiosDeleteComment,
+};
+
+export { commentActionCreators };
