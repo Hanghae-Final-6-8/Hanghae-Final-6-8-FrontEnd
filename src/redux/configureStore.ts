@@ -5,12 +5,14 @@ import commentSlice from './modules/comment';
 import likesSlice from './modules/likes';
 import { useDispatch } from 'react-redux';
 import userSlice from './modules/user';
+import mypageSlice from './modules/mypage';
 
 const rootReducer = combineReducers({
   posts: postsSlice.reducer,
   comment: commentSlice.reducer,
   likes: likesSlice.reducer,
   user: userSlice.reducer,
+  mypage: mypageSlice.reducer,
 });
 
 export const store = configureStore({

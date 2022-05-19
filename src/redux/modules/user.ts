@@ -9,7 +9,8 @@ import {
 
 const initialState = {
   nickname: null,
-  isLogin: false,
+  // isLogin: false,
+  isLogin: true,
 };
 
 export const getKakaoURL = createAsyncThunk(

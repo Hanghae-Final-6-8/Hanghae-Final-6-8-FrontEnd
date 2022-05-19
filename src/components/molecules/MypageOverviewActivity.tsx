@@ -1,4 +1,16 @@
+import { useEffect } from 'react';
+import { likeActionCreators } from '../../redux/modules/mypage';
+import { useAppDispatch } from '../../redux/configureStore';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/configureStore';
+
 const MypageOverviewActivity = () => {
+  const appDispatch = useAppDispatch();
+  useEffect(() => {
+    appDispatch(likeActionCreators.getUserInfo());
+  }, []);
+  const userInfo = useSelector((store: RootState) => store.mypage);
+
   return (
     <div>
       <div className='flex flex-col m-5'>
@@ -8,9 +20,9 @@ const MypageOverviewActivity = () => {
           <div>내 활동</div>
         </div>
         <div className='flex justify-around'>
-          <div>0</div>
-          <div>0</div>
-          <div>0</div>
+          <div>{userInfo.favorite}</div>
+          <div>{userInfo.likes}</div>
+          <div>{userInfo.activity}</div>
         </div>
       </div>
     </div>
