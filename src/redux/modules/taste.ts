@@ -43,14 +43,15 @@ export const postTasteSurvey = createAsyncThunk(
     try {
       await tasteApis
         .postTasteSurvey(tasteList.surveyResult)
-        .then((reponse) => {
-          tasteList.navigate('/main');
-          //console.log(thunkAPI);
-          //thunkAPI.dispatch(saveTasteList);
+        .then((response) => {
+          thunkAPI.dispatch(saveTasteList(response.data.data));
+          // 일부러 시간을 끄는 용도로 사용했습니다.
+          setTimeout(() => {
+            tasteList.navigate('/main');
+          }, 1500);
           return;
         });
     } catch (err: any) {
-      console.log(err);
       return thunkAPI.rejectWithValue(err.response.data);
     }
   }
@@ -58,9 +59,10 @@ export const postTasteSurvey = createAsyncThunk(
 
 export const getTasteSurvey = createAsyncThunk(
   'taste/tests/result',
-  async () => {
+  async (_, thunkAPI) => {
     try {
       await tasteApis.getTasteSurvey().then((response) => {
+        thunkAPI.dispatch(saveTasteList(response.data.data));
         return;
       });
     } catch (err: any) {
@@ -75,9 +77,8 @@ export const tasteSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     saveTasteList: (state, action: PayloadAction<any>) => {
-      console.log(state);
-      console.log(action);
-      return;
+      state = action.payload;
+      return state;
     },
   },
   extraReducers: () => {

@@ -12,13 +12,18 @@ import {
 } from '../../components/atoms';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/configureStore';
+import { RootState, useAppDispatch } from '../../redux/configureStore';
+import { getTasteSurvey, saveTasteList } from '../../redux/modules/taste';
 import { useEffect } from 'react';
 
 const MainYesTasteSurvey = () => {
   const navigate = useNavigate();
   const tasteList = useSelector((state: RootState) => state.taste);
-  console.log(tasteList);
+  const appDispatch = useAppDispatch();
+  //console.log(tasteList);
+  useEffect(() => {
+    appDispatch(getTasteSurvey());
+  }, []);
 
   const handelShareByKakaotalk = () => {
     alert('아직 구현 중에 있습니다!');

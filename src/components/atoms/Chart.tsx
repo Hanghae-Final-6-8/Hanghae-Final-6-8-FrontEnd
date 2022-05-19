@@ -29,8 +29,6 @@ const Chart = (props: ChartProps) => {
     ],
   };
 
-  console.log(data.datasets[0].data);
-
   return (
     <div>
       <Radar data={data} />
