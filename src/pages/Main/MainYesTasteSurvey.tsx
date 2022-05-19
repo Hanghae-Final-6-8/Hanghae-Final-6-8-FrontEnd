@@ -15,16 +15,18 @@ import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../redux/configureStore';
 import { getTasteSurvey } from '../../redux/modules/taste';
 import { useEffect, useState } from 'react';
+import { getAccessTokenFromCookie } from '../../utils/cookie';
 
 const MainYesTasteSurvey = () => {
   const navigate = useNavigate();
   const tasteList = useSelector((state: RootState) => state.taste);
   const user = useSelector((state: RootState) => state.user);
   const appDispatch = useAppDispatch();
+  const isToken = getAccessTokenFromCookie();
 
   useEffect(() => {
-    user.isLogin && appDispatch(getTasteSurvey());
-  }, [user.isLogin, appDispatch]);
+    isToken && user.isLogin && appDispatch(getTasteSurvey());
+  }, [isToken, user.isLogin, appDispatch]);
 
   const handelShareByKakaotalk = () => {
     alert('아직 구현 중에 있습니다!');
