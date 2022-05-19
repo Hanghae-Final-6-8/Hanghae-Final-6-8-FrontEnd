@@ -1,8 +1,8 @@
-import { useLocation } from 'react-router-dom';
-import { GridBox } from '../../components/atoms';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Spinner } from '../../components/organisms';
 
 const TasteSurveyLoading = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const tasteList = location.state;
   console.log(tasteList);

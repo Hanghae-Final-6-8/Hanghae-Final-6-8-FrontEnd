@@ -19,7 +19,6 @@ const TasteSurvey = () => {
   const [isUselessPath, setIseUselessPath] = useState(false);
   useEffect(() => {
     const currentLocation = location.pathname;
-    console.log(currentLocation);
     if (
       currentLocation === '/survey/loading' ||
       currentLocation === '/survey/needlogin'
