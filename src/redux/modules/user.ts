@@ -40,7 +40,7 @@ export const loginKakao = createAsyncThunk(
   'user/login/kakao',
   async (codeInput: Login) => {
     try {
-      const code = codeInput;
+      const code = codeInput.codeInput;
       console.log(code);
       await instance
         .get('/api/user/login/kakao/callback', {
@@ -52,7 +52,7 @@ export const loginKakao = createAsyncThunk(
           setAccessTokenToCookie(accessToken);
           setRefreshTokenToCookie(refreshToken);
 
-          code.navigate('/main', { replace: true });
+          codeInput.navigate('/main', { replace: true });
 
           return;
         });
