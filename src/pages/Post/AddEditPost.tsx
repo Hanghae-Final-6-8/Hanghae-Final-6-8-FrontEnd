@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/configureStore';
 import { PostsItemDataParams } from '../../redux/modules/posts';
 import { PostsState } from '../../redux/modules/posts';
-// import { axiosAddPost } from '../../redux/modules/posts';
+import { axiosAddPost } from '../../redux/modules/posts';
 
 const AddEditPost = () => {
   // 수정하려고 들어왔을 때
@@ -95,24 +95,24 @@ const AddEditPost = () => {
 
   // 커뮤니티 등록
   const handleAddPosts = () => {
-    appDispatch(
-      postsSlice.actions.addPost({
-        postsId: Math.random(),
-        title: 'sample',
-        content: 'this is sample data',
-        tagName: ['카페', '갬성'],
-        postsImage:
-          'https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg',
-        navi: navigate,
-      })
-    );
+    // appDispatch(
+    //   postsSlice.actions.addPost({
+    //     postsId: Math.random(),
+    //     title: 'sample',
+    //     content: 'this is sample data',
+    //     tagName: ['카페', '갬성'],
+    //     postsImage:
+    //       'https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg',
+    //     navi: navigate,
+    //   })
+    // );
 
-    // const formData = new FormData();
-    // formData.append('title', title);
-    // formData.append('content', content);
-    // formData.append('tag_name', '[' + tagName.toString() + ']');
-    // formData.append('posts_image', file[0]);
-    // appDispatch(axiosAddPost({ formData, navi: navigate }));
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('content', content);
+    formData.append('tag_name', '[' + tagName.toString() + ']');
+    formData.append('posts_image', file[0]);
+    appDispatch(axiosAddPost({ formData, navi: navigate }));
   };
 
   //커뮤니티 수정

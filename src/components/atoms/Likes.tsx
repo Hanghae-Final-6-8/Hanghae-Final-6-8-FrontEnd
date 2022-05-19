@@ -13,6 +13,8 @@ const Likes = (props: likesProps) => {
   // 포스트 아이디
   const postsId = props.postsId;
   const appDispatch = useAppDispatch();
+  // db에서 좋아요 불러오기
+
   // 좋아요 리스트 가져옴
   const likesList = useSelector((store: RootState) => store.likes.list);
 

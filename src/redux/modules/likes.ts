@@ -25,6 +25,21 @@ const INITIAL_STATE: LikesState = {
     // },
   ],
 };
+// 좋아요 불러오기
+export const axiosGetLike = createAsyncThunk(
+  'likesReducer/axiosGetLike',
+  async (data: number, thunkAPI) => {
+    return await axios
+      //URL 변경예정
+      .get(`http://110.46.158.168:8090/api/likes?page=${data}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+);
 
 // 좋아요 등록
 export const axiosAddLike = createAsyncThunk(
@@ -101,6 +116,7 @@ export default likesSlice;
 export const { addLikes, deleteLikes } = likesSlice.actions;
 
 const likeActionCreators = {
+  axiosGetLike,
   axiosAddLike,
   axiosDeleteLike,
 };
