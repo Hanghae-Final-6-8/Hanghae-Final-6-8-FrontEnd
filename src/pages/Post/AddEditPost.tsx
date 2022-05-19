@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { axiosEditPost } from '../../redux/modules/posts';
-// import ImageUploading, { ImageListType } from 'react-images-uploading';
 import postsSlice from '../../redux/modules/posts';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/configureStore';
@@ -10,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/configureStore';
 import { PostsItemDataParams } from '../../redux/modules/posts';
 import { PostsState } from '../../redux/modules/posts';
-import { axiosAddPost } from '../../redux/modules/posts';
+// import { axiosAddPost } from '../../redux/modules/posts';
 
 const AddEditPost = () => {
   // 수정하려고 들어왔을 때
