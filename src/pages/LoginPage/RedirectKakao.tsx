@@ -13,8 +13,8 @@ const RedirectKakao = () => {
   useEffect(() => {
     const kakaoDispatch = async () => {
       try {
-        await appDispatch(loginKakao(code));
-        navigate('/main', { replace: true });
+        await appDispatch(loginKakao({ code, navigate })).then;
+        //navigate('/main', { replace: true });
       } catch (err) {
         console.log(err);
       }

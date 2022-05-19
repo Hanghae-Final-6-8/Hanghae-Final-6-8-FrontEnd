@@ -1,6 +1,9 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import instance from '../../lib/axios';
-import axios from 'axios';
+import { postApis } from '../../apis/postApis';
+// 삭제예정
+// import instance from '../../lib/axios';
+// 삭제예정
+// import axios from 'axios';
 
 export interface PostsItemDataParams {
   postsId: number;
@@ -41,11 +44,8 @@ export const axiosGetPostList = createAsyncThunk(
   'postsReducer/axiosGetPostList',
   async (data: number, thunkAPI) => {
     thunkAPI.dispatch(isLoading(true));
-    // return await instance
-    //   .get(`/api/posts?page=${data}`)
-    return await axios
-      .get(`http://110.46.158.168:8090/api/posts?page=${data}`)
-      .then((res) => {
+    try {
+      await postApis.getPostList(data).then((res) => {
         const post_list: Array<PostsItemDataParams> = [];
         console.log(res.data.content);
         // 페이징
@@ -69,11 +69,43 @@ export const axiosGetPostList = createAsyncThunk(
         const postsLoadedLen = res.data.content.length;
         thunkAPI.dispatch(isLoading(false));
         thunkAPI.dispatch(setPost({ post_list, postsLoadedLen }));
-      })
-      .catch((error) => {
-        thunkAPI.dispatch(isLoading(false));
-        console.log(error);
       });
+    } catch (error) {
+      thunkAPI.dispatch(isLoading(false));
+      console.log(error);
+    }
+
+    // return await axios
+    //   .get(`http://110.46.158.168:8090/api/posts?page=${data}`)
+    //   .then((res) => {
+    //     const post_list: Array<PostsItemDataParams> = [];
+    //     console.log(res.data.content);
+    //     // 페이징
+    //     thunkAPI.dispatch(setPageNum(++data));
+
+    //     res.data.content.map((post: any) => {
+    //       const tagStr = post.tag_name.slice(1, post.tag_name.length - 1);
+    //       const newTagStr = tagStr.split(',');
+    //       post_list.push({
+    //         postsId: post.posts_id,
+    //         title: post.title,
+    //         content: post.content,
+    //         tagName: newTagStr,
+    //         postsImage: post.posts_image,
+    //         nickname: post.nickname,
+    //         createdAt: post.created_at,
+    //         modifiedAt: post.modified_at,
+    //       });
+    //     });
+
+    //     const postsLoadedLen = res.data.content.length;
+    //     thunkAPI.dispatch(isLoading(false));
+    //     thunkAPI.dispatch(setPost({ post_list, postsLoadedLen }));
+    //   })
+    //   .catch((error) => {
+    //     thunkAPI.dispatch(isLoading(false));
+    //     console.log(error);
+    //   });
   }
 );
 
@@ -85,16 +117,6 @@ interface formType {
 export const axiosAddPost = createAsyncThunk(
   'postsReducer/axiosAddPost',
   async (data: formType, thunkAPI) => {
-    // return await instance
-    // .post('/api/posts', {
-    ////////
-    // return axios
-    //   .post('http://110.46.158.168:8090/api/posts', {
-    //     title: data.title,
-    //     content: data.content,
-    //     tag_name: data.tagName,
-    //     posts_image: data.postsImage,
-    //   })
     const dataArray = [];
     for (const d of data.formData.entries()) {
       dataArray.push(d[1]);
@@ -111,23 +133,34 @@ export const axiosAddPost = createAsyncThunk(
       navi: data.navi,
     };
     console.log(toReduxData);
-    return axios({
-      url: 'http://110.46.158.168:8090/api/posts',
-      method: 'POST',
-      data: data.formData,
-      headers: {
-        'content-type': 'multipart/form-data',
-      },
-    })
-      .then((res) => {
+    try {
+      await postApis.addPost(data.formData).then((res) => {
         console.log(res);
         console.log('커뮤니티글 등록성공');
 
         thunkAPI.dispatch(addPost(toReduxData));
-      })
-      .catch((error) => {
-        console.log(error);
       });
+    } catch (error) {
+      console.log(error);
+    }
+
+    // return axios({
+    //   url: 'http://110.46.158.168:8090/api/posts',
+    //   method: 'POST',
+    //   data: data.formData,
+    //   headers: {
+    //     'content-type': 'multipart/form-data',
+    //   },
+    // })
+    //   .then((res) => {
+    //     console.log(res);
+    //     console.log('커뮤니티글 등록성공');
+
+    //     thunkAPI.dispatch(addPost(toReduxData));
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   }
 );
 
@@ -135,16 +168,6 @@ export const axiosAddPost = createAsyncThunk(
 export const axiosEditPost = createAsyncThunk(
   'postsReducer/axiosEditPost',
   async (data: formType, thunkAPI) => {
-    // return await instance
-    // .post('/api/posts', {
-    ////////
-    // return axios
-    //   .post('http://110.46.158.168:8090/api/posts', {
-    //     title: data.title,
-    //     content: data.content,
-    //     tag_name: data.tagName,
-    //     posts_image: data.postsImage,
-    //   })
     const dataArray = [];
     for (const d of data.formData.entries()) {
       dataArray.push(d[1]);
@@ -161,23 +184,34 @@ export const axiosEditPost = createAsyncThunk(
       navi: data.navi,
     };
     console.log(toReduxData);
-    return axios({
-      url: 'http://110.46.158.168:8090/api/posts/update',
-      method: 'POST',
-      data: data.formData,
-      headers: {
-        'content-type': 'multipart/form-data',
-      },
-    })
-      .then((res) => {
+    try {
+      await postApis.editPost(data.formData).then((res) => {
         console.log(res);
         console.log('커뮤니티글 수정성공');
 
         thunkAPI.dispatch(editPost(toReduxData));
-      })
-      .catch((error) => {
-        console.log(error);
       });
+    } catch (error) {
+      console.log(error);
+    }
+
+    // return axios({
+    //   url: 'http://110.46.158.168:8090/api/posts/update',
+    //   method: 'POST',
+    //   data: data.formData,
+    //   headers: {
+    //     'content-type': 'multipart/form-data',
+    //   },
+    // })
+    //   .then((res) => {
+    //     console.log(res);
+    //     console.log('커뮤니티글 수정성공');
+
+    //     thunkAPI.dispatch(editPost(toReduxData));
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   }
 );
 
@@ -185,20 +219,26 @@ export const axiosEditPost = createAsyncThunk(
 export const axiosDeletePost = createAsyncThunk(
   'postsReducer/axiosDeletePost',
   async (data: number, thunkAPI) => {
-    // return await instance
-    // .post('/api/posts', {
-    ////////
-    return axios
-      .post('http://110.46.158.168:8090/api/posts/delete', {
-        posts_id: data,
-      })
-      .then((res) => {
+    try {
+      await postApis.deletePost(data).then((res) => {
         console.log(res);
         thunkAPI.dispatch(deletePost(data));
-      })
-      .catch((error) => {
-        console.log(error);
       });
+    } catch (error) {
+      console.log(error);
+    }
+
+    // return axios
+    //   .post('http://110.46.158.168:8090/api/posts/delete', {
+    //     posts_id: data,
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //     thunkAPI.dispatch(deletePost(data));
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   }
 );
 

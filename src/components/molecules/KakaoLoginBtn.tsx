@@ -1,15 +1,21 @@
 import { kakao } from '../../assets/icons';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../redux/configureStore';
+import { getKakaoURL } from '../../redux/modules/user';
 
-interface OnClick {
-  onClick: () => void;
-}
+const KakaoLoginBtn = () => {
+  const navigate = useNavigate();
+  const appDispatch = useAppDispatch();
+  const handleLoginKakao = async () => {
+    await appDispatch(getKakaoURL());
+    navigate('../user/login/kakao/callback', { replace: true });
+  };
 
-const KakaoLoginBtn = (props: OnClick) => {
   return (
     <>
       <button
         className='w-50px h-50px mr-7 rounded-full bg-white shadow-loginBtn'
-        onClick={props.onClick}
+        onClick={handleLoginKakao}
       >
         <img className='mx-auto' src={kakao} />
       </button>

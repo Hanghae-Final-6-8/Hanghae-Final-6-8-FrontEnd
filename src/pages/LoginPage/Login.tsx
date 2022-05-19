@@ -1,23 +1,15 @@
-import { useNavigate } from 'react-router-dom';
 import { naver, google } from '../../assets/icons';
 import KakaoLoginBtn from '../../components/molecules/KakaoLoginBtn';
+import { useNavigate } from 'react-router-dom';
 
-import { useAppDispatch } from '../../redux/configureStore';
-import { getKakaoURL } from '../../redux/modules/user';
 import { Button, Hr } from '../../components/atoms';
 import { logoCopick, pickYourCoffee } from '../../assets/logo';
 
 const Login = () => {
   const navigate = useNavigate();
-  const appDispatch = useAppDispatch();
 
   const handleToMain = () => {
     navigate('../main');
-  };
-
-  const handleLoginKakao = async () => {
-    await appDispatch(getKakaoURL());
-    navigate('/api/user/login/kakao/callback', { replace: true });
   };
 
   const handleNotReadyToLogin = () => {
@@ -38,7 +30,7 @@ const Login = () => {
         <p className='text-body pt-3 text-gray60'>간편 회원가입/로그인</p>
         <Hr type='main100' />
         <div className='mt-2.5'>
-          <KakaoLoginBtn onClick={handleLoginKakao} />
+          <KakaoLoginBtn />
           <button
             className='w-50px h-50px  mr-7 rounded-full bg-white shadow-loginBtn'
             onClick={handleNotReadyToLogin}

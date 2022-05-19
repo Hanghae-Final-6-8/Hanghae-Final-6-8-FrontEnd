@@ -60,10 +60,12 @@ const TasteSurvey06 = () => {
     }
 
     if (user.isLogin) {
+      setObjLocalStorage('surveyResult', tasteList);
       navigate('../loading', {
         state: { ...(tasteList as object) },
       });
     } else {
+      setObjLocalStorage('surveyResult', tasteList);
       navigate('../needlogin', {
         state: { ...(tasteList as object) },
       });
