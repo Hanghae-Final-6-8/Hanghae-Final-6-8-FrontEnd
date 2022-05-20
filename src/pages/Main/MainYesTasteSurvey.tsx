@@ -1,5 +1,4 @@
 import { bookmark, down, share, beans, right } from '../../assets/icons/';
-import MainModal from '../../components/MainModal';
 import { coffee_default } from '../../assets/images';
 import {
   RoundBox,
@@ -14,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../redux/configureStore';
 import { getTasteSurvey } from '../../redux/modules/taste';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { getAccessTokenFromCookie } from '../../utils/cookie';
 
 const MainYesTasteSurvey = () => {
@@ -25,7 +24,7 @@ const MainYesTasteSurvey = () => {
   const isToken = getAccessTokenFromCookie();
 
   useEffect(() => {
-    isToken && user.isLogin && appDispatch(getTasteSurvey());
+    !tasteList.beanName && appDispatch(getTasteSurvey());
   }, [isToken, user.isLogin, appDispatch]);
 
   const handelShareByKakaotalk = () => {
