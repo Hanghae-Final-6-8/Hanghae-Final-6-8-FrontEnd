@@ -24,13 +24,21 @@ const BeansList = () => {
         <>
           <div className='font-500 text-head'>원두 종류</div>
           <div className='flex justify-around mt-6 h-[46px] text-center cursor-pointer items-center mb-5 border-b border-gray20'>
-            <div className=' w-full' onClick={handleToSearch}>
-              <Text type={isSearch ? 'beansNavClicked' : 'beansNav'}>
+            <div className=' w-full h-full' onClick={handleToSearch}>
+              <Text
+                className='block h-full leading-[46px]'
+                type={isSearch ? 'beansNavClicked' : 'beansNav'}
+              >
                 원두 검색
               </Text>
             </div>
-            <div className='w-full' onClick={handleToCafe}>
-              <Text type={isSearch ? 'beansNav' : 'beansNavClicked'}>카페</Text>
+            <div className='w-full h-full' onClick={handleToCafe}>
+              <Text
+                className='block h-full leading-[46px]'
+                type={isSearch ? 'beansNav' : 'beansNavClicked'}
+              >
+                카페
+              </Text>
             </div>
           </div>
         </>
