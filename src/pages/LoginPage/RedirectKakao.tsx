@@ -10,8 +10,6 @@ const RedirectKakao = () => {
 
   const codeInput = new URL(location.href).searchParams.get('code')!;
 
-  console.log(codeInput);
-
   useEffect(() => {
     const kakaoDispatch = async () => {
       try {

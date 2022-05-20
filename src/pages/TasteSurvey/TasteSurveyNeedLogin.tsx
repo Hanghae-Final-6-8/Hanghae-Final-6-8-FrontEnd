@@ -1,6 +1,7 @@
 import { login } from '../../assets/icons';
 import { Text, Span, Button, GridBox } from '../../components/atoms';
 import { useNavigate } from 'react-router-dom';
+import { LoginBtnGroup } from '../../components/organisms';
 
 const TasteSurveyNeedLogin = () => {
   const navigate = useNavigate();
@@ -25,6 +26,9 @@ const TasteSurveyNeedLogin = () => {
         <Text className='text-caption text-gray60'>
           빠르게 나에게 딱 맞는 원두를 확인해 보세요!
         </Text>
+        <div className='flex flex-col text-center'>
+          <LoginBtnGroup className='mt-[153px]' />
+        </div>
       </GridBox>
       <Button type='tasteSurveyNoneActive' onClick={handleCloseTasteSurvey}>
         결과 보지 않고 닫기
