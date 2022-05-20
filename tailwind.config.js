@@ -80,9 +80,9 @@ module.exports = {
         10: 14,
       },
       backgroundImage: {
-        brownP: "url('/src/assets/backgrounds/brownP.svg')",
+        brownP: "url('/src/assets/backgrounds/brownNoise.jpg')",
         brownS01: "url('/src/assets/backgrounds/brownS01.svg')",
-        brownS01bg: "url('/src/assets/backgrounds/brownS01bg.svg')",
+        brownS01bg: "url('/src/assets/backgrounds/beigeNoise.jpg')",
         basicBg: "url('/src/assets/backgrounds/basicBg.svg')",
         defaultBg01: "url('/src/assets/backgrounds/default_back01.jpg')",
         mainBrownBg: "url('/src/assets/backgrounds/mainBrownBg.svg')",
