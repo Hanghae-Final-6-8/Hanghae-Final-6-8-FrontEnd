@@ -211,7 +211,6 @@ const MainYesTasteSurvey = () => {
           />
         </button>
       </main>
-      <MainModal />
     </>
   );
 };

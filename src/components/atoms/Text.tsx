@@ -22,6 +22,7 @@ const Text = (props: Text) => {
   const mainBeansFlavor = props.type === 'mainBeansFlavor';
   const mainBodyTitle = props.type === 'mainBodyTitle';
   const mainRedcommendSimmilar = props.type === 'mainRedcommendSimmilar';
+  const main2header = props.type === 'main2header';
 
   return (
     <p
@@ -49,7 +50,8 @@ const Text = (props: Text) => {
           'font-500 text-sub': mainBodyTitle,
           'text-center text-gray90 text-caption font-500 mt-2.5':
             mainRedcommendSimmilar,
-        }
+        },
+        { 'font-700 text-head': main2header }
       )}
     >
       {props.children}

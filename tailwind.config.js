@@ -82,6 +82,7 @@ module.exports = {
         brownS01bg: "url('/src/assets/backgrounds/brownS01bg.svg')",
         basicBg: "url('/src/assets/backgrounds/basicBg.svg')",
         defaultBg01: "url('/src/assets/backgrounds/default_back01.jpg')",
+        mainBrownBg: "url('/src/assets/backgrounds/mainBrownBg.svg')",
       },
     },
   },
