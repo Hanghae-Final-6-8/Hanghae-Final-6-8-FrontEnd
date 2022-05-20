@@ -10,6 +10,7 @@ import Label from './Label';
 import Hr from './Hr';
 import Image from './Image';
 import Chart from './Chart';
+import Input from './Input';
 
 export {
   Button,
@@ -24,4 +25,5 @@ export {
   InfinityScroll,
   Image,
   Chart,
+  Input,
 };
