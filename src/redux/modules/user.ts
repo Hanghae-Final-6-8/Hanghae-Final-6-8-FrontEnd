@@ -18,7 +18,9 @@ interface Login {
 const initialState = {
   nickname: null,
   isLogin: false,
+  profile_url: null,
   //isLogin: true,
+  tasteId: null,
 };
 
 export const getKakaoURL = createAsyncThunk(
@@ -99,6 +101,9 @@ export const userSlice = createSlice({
     });
     builder.addCase(auth.fulfilled, (state, action) => {
       state.isLogin = true;
+    });
+    builder.addCase(logout.fulfilled, (state, action) => {
+      state.isLogin = false;
     });
   },
 });

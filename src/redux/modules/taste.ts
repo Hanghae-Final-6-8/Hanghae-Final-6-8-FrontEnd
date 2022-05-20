@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { tasteApis } from '../../apis';
 import { removeLocalStorage } from '../../utils/localstorage';
 
-const INITIAL_STATE = {
+const initialState = {
   acidity: 3,
   beanId: 48,
   beanName: '오리지널 원두 블렌드',
@@ -75,7 +75,7 @@ export const getTasteSurvey = createAsyncThunk(
 
 export const tasteSlice = createSlice({
   name: 'tasteReducer',
-  initialState: INITIAL_STATE,
+  initialState,
   reducers: {
     saveTasteList: (state, action: PayloadAction<any>) => {
       state = action.payload;
