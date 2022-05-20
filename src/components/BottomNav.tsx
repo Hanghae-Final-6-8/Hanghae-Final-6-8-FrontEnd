@@ -13,7 +13,7 @@ import { RootState } from '../redux/configureStore';
 const BottomNav = () => {
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user);
-  console.log(user);
+  //console.log(user);
 
   const [isActivePopup, setIsActivePopup] = useState(false);
 
