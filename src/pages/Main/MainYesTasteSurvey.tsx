@@ -25,7 +25,7 @@ const MainYesTasteSurvey = () => {
 
   useEffect(() => {
     !tasteList.beanName && appDispatch(getTasteSurvey());
-  }, [isToken, user.isLogin, appDispatch]);
+  }, [tasteList.beanName, appDispatch]);
 
   const handelShareByKakaotalk = () => {
     alert('아직 구현 중에 있습니다!');
