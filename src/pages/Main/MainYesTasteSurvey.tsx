@@ -12,7 +12,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../redux/configureStore';
-import { getTasteSurvey } from '../../redux/modules/taste';
+import { getTasteSurvey, getSimilarBeans } from '../../redux/modules/taste';
 import { useEffect } from 'react';
 import { getAccessTokenFromCookie } from '../../utils/cookie';
 
@@ -24,8 +24,11 @@ const MainYesTasteSurvey = () => {
   const isToken = getAccessTokenFromCookie();
 
   useEffect(() => {
+    // 리덕스에 데이터가 null일 경우 API를 요청합니다.
     !tasteList.beanName && appDispatch(getTasteSurvey());
+    !tasteList.similar[0].beanName && appDispatch(getSimilarBeans());
   }, [tasteList.beanName, appDispatch]);
+  console.log(tasteList.similar[0].beanName);
 
   const handelShareByKakaotalk = () => {
     alert('아직 구현 중에 있습니다!');
@@ -67,12 +70,23 @@ const MainYesTasteSurvey = () => {
     beansFlavorFormdata.push({ id: 5, name: '무난함' });
   }
 
-  const recommendFormdata = [
-    { id: 1, name: '파이크 플레이스 로스트', img: coffee_default },
-    { id: 2, name: '파이크 플레이스 로스트', img: coffee_default },
-    { id: 3, name: '파이크 플레이스 로스트', img: coffee_default },
-    { id: 4, name: '파이크 플레이스 로스트', img: coffee_default },
-  ];
+  // interface SimilarData {
+  //   beanId: number,
+  //   beanName: string,
+  //   description: string,
+  //   type: number
+  // }
+
+  // interface SimilarDataArray extends Array<SimilarData> {};
+  // const recommendFormdata: Array<SimilarDataArray> = [];
+
+  // 비슷한 원두 추천
+  const recommendFormdata = [{ id: 0, img: '', name: '' }];
+  // if (tasteList.similar) {
+  //   tasteList.similar.forEach((item) => {
+  //     recommendFormdata.push(item)
+  //   })
+  // }
 
   return (
     <>

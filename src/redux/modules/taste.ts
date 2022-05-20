@@ -10,15 +10,21 @@ const initialState = {
   body: 0,
   cafeId: 0,
   cafeImage: null,
-  cafeName: '',
+  cafeName: null,
   cocoaFlavor: 0,
-  description: '',
+  description: null,
   floral: 0,
   fruitFlavor: 0,
   nutty: 0,
   nuttyFlavor: 0,
   sweetness: 0,
   type: 0,
+  similar: [
+    { beanId: 0, beanName: null, description: null, type: 0 },
+    { beanId: 0, beanName: null, description: null, type: 0 },
+    { beanId: 0, beanName: null, description: null, type: 0 },
+    { beanId: 0, beanName: null, description: null, type: 0 },
+  ],
 };
 
 interface TasteList {
@@ -44,8 +50,8 @@ export const postTasteSurvey = createAsyncThunk(
         .postTasteSurvey(tasteList.surveyResult)
         .then((response) => {
           thunkAPI.dispatch(saveTasteList(response.data.data));
-          // 일부러 시간을 끄는 용도로 사용했습니다.
           removeLocalStorage('surveyResult');
+          // 일부러 시간을 끄는 용도로 사용했습니다.
           setTimeout(() => {
             tasteList.navigate('/main');
           }, 1500);
@@ -72,6 +78,20 @@ export const getTasteSurvey = createAsyncThunk(
   }
 );
 
+export const getSimilarBeans = createAsyncThunk(
+  'taste/similar',
+  async (_, thunkAPI) => {
+    try {
+      await tasteApis.getSimilarBeans().then((response) => {
+        thunkAPI.dispatch(saveSimilarList(response.data.data));
+        return;
+      });
+    } catch (err) {
+      return;
+    }
+  }
+);
+
 export const tasteSlice = createSlice({
   name: 'tasteReducer',
   initialState,
@@ -80,12 +100,16 @@ export const tasteSlice = createSlice({
       state = action.payload;
       return state;
     },
+    saveSimilarList: (state, action: PayloadAction<any>) => {
+      state.similar = action.payload;
+      return state;
+    },
   },
   extraReducers: () => {
     //
   },
 });
 
-export const { saveTasteList } = tasteSlice.actions;
+export const { saveTasteList, saveSimilarList } = tasteSlice.actions;
 
 export default tasteSlice;
