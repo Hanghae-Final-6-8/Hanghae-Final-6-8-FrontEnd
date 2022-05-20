@@ -36,7 +36,9 @@ export const axiosGetCommentList = createAsyncThunk(
   'commentReducer/axiosGetCommentList',
   async (data: number, thunkAPI) => {
     return await axios
-      .get(`http://110.46.158.168:8090/api/comments?posts_id=${data}`)
+      // .get(`https://copickserver.site/api/comments?posts_id=${data}`)
+      // .get('https://copickserver.site/api/comments/mine')
+      .get('http://110.46.158.168:8090/api/comments/mine')
       .then((res) => {
         console.log(res);
       })
@@ -59,7 +61,7 @@ export const axiosAddComment = createAsyncThunk(
       posts_id: data.postsId,
     };
     return await axios({
-      url: 'http://110.46.158.168:8090/api/comments',
+      url: 'https://copickserver.site/api/comments',
       method: 'POST',
       data: commentData,
     })
@@ -77,9 +79,9 @@ export const axiosDeleteComment = createAsyncThunk(
   'commentReducer/axiosDeleteComment',
   async (data: number, thunkAPI) => {
     return await axios({
-      url: 'http://110.46.158.168:8090/api/comments/delete',
+      url: 'https://copickserver.site/api/comments/delete',
       method: 'POST',
-      data: data,
+      data: { comments_id: data },
     })
       .then((res) => {
         console.log(res);

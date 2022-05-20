@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { axiosEditPost } from '../../redux/modules/posts';
-import postsSlice from '../../redux/modules/posts';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/configureStore';
 import { useParams } from 'react-router-dom';
@@ -25,9 +24,9 @@ const AddEditPost = () => {
   const [tagName, setTagName] = useState<Array<string>>([]);
 
   const [content, setContent] = useState<string>('');
-  // 이미지 파일
+  // 이미지 파일 전송용
   const [file, setFiles] = useState<File[]>([]);
-  // 이미지 미리보기
+  // 이미지 미리보기용
   const [prevImage, setPrevImage] = useState<any>();
 
   const getOnLoadFileFrom = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +44,7 @@ const AddEditPost = () => {
     };
   };
 
-  // 수정하기위한 포스트를 담아두기 위해.
+  // 수정용 포스트
   const postList: PostsState = { list: [] };
   let post: PostsItemDataParams | undefined = {
     postsId: 0,
@@ -57,7 +56,7 @@ const AddEditPost = () => {
     createdAt: '',
     modifiedAt: '',
   };
-  // 게시글 수정 url로 들어온 경우
+  // 게시글수정 url경우
   if (postsIdparams.postsId) {
     postList.list = useSelector((store: RootState) => store.posts.list);
     post = postList.list.find((post: PostsItemDataParams) => {
@@ -69,6 +68,7 @@ const AddEditPost = () => {
     setTitle(post ? post.title : '');
     setContent(post ? post.content : '');
     setTagName(post ? post.tagName : []);
+    setPrevImage(post ? post.postsImage : '');
   }, []);
 
   // 커뮤니티 타이틀 set
@@ -95,35 +95,23 @@ const AddEditPost = () => {
 
   // 커뮤니티 등록
   const handleAddPosts = () => {
-    appDispatch(
-      postsSlice.actions.addPost({
-        postsId: Math.random(),
-        title: 'sample',
-        content: 'this is sample data',
-        tagName: ['카페', '갬성'],
-        postsImage:
-          'https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg',
-        navi: navigate,
-      })
-    );
-
-    // const formData = new FormData();
-    // formData.append('title', title);
-    // formData.append('content', content);
-    // formData.append('tag_name', '[' + tagName.toString() + ']');
-    // formData.append('posts_image', file[0]);
-    // appDispatch(axiosAddPost({ formData, navi: navigate }));
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('content', content);
+    formData.append('tag_name', '[' + tagName.toString() + ']');
+    formData.append('posts_image', file[0]);
+    appDispatch(axiosAddPost({ formData, navi: navigate, prevImage }));
   };
 
   //커뮤니티 수정
   const handleEditpost = () => {
     const formData = new FormData();
-    formData.append('posts_id', post!.postsId.toString());
+    formData.append('posts_id', post!.postsId!.toString());
     formData.append('title', title);
     formData.append('content', content);
     formData.append('tag_name', '[' + tagName.toString() + ']');
     formData.append('posts_image', file[0]);
-    appDispatch(axiosEditPost({ formData, navi: navigate }));
+    appDispatch(axiosEditPost({ formData, navi: navigate, prevImage }));
   };
 
   const handleBacktoPrev = () => {

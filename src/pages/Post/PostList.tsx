@@ -17,7 +17,9 @@ const PostList = () => {
 
   // db에서 커뮤니티 리스트 가져오기
   useEffect(() => {
-    appDispatch(axiosGetPostList(0));
+    if (list.length < 2) {
+      appDispatch(axiosGetPostList(0));
+    }
   }, []);
 
   // 커뮤니티 리스트, 로딩
@@ -63,6 +65,7 @@ const PostList = () => {
           isNext={postsLoadedLen === 4 ? true : false}
         >
           {list.map((post, idx) => {
+            console.log(post.postsImage);
             return (
               <div className='w-full h-80' key={idx}>
                 <div className='flex justify-between p-1'>
@@ -75,37 +78,33 @@ const PostList = () => {
                   </div>
                   <button
                     onClick={() => {
-                      getSetToastFrom(post.postsId);
+                      getSetToastFrom(post.postsId!);
                     }}
                   >
                     ···
                   </button>
                 </div>
-                {post.tagName?.length !== 0 ? (
-                  post.tagName.map((tag, index) => {
-                    return (
-                      <span
-                        className='inline-block bg-lime-800 text-white mr-1 rounded-md text-sm font-bold p-1'
-                        key={index}
-                      >
-                        {tag}
-                      </span>
-                    );
-                  })
-                ) : (
-                  <></>
-                )}
                 <img
-                  src='https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg'
-                  className='rounded-md mr-2'
+                  src={
+                    post.postsImage
+                      ? post.postsImage.toString()
+                      : 'https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814052__340.png'
+                  }
                   onClick={() => {
-                    handleMoveToDetailPage(post.postsId);
+                    handleMoveToDetailPage(post.postsId!);
                   }}
                 />
-                {toastStatus && <EditDelToastModal postsId={clickedPostId} />}
+                {post.isLikes === null ? (
+                  <button>🤍</button>
+                ) : (
+                  <button>❤️</button>
+                )}
+
+                <span>{post.likesCount}개</span>
               </div>
             );
           })}
+          {toastStatus && <EditDelToastModal postsId={clickedPostId} />}
         </InfinityScroll>
       </div>
 

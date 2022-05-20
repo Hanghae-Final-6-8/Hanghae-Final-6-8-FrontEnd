@@ -4,7 +4,7 @@ import { RootState } from '../../redux/configureStore';
 import Comment from '../../components/molecules/Comment';
 import { useState } from 'react';
 import { useAppDispatch } from '../../redux/configureStore';
-import {axiosAddComment} from '../../redux/modules/comment';
+import { axiosAddComment } from '../../redux/modules/comment';
 import Likes from '../../components/atoms/Likes';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,9 +14,9 @@ const PostDetail = () => {
   // postsId는 App.tsx에서 라우팅 할때 정한 파라미터명이다.
   const postsId = useParams().postsId;
   // 리덕스에서 커뮤니티 리스트 가져옴
-  const postList = useSelector((store: RootState) => store.posts.list);
+  const { list } = useSelector((store: RootState) => store.posts);
   // 커뮤니티 리스트중에서 url 파라미터와 같은 커뮤니티 담음
-  const post = postList.find((post) => {
+  const post = list.find((post) => {
     // url 파라미터는 string으로 넘어와서 형변환 해줘야한다.
     return post.postsId === Number(postsId);
   });
@@ -43,11 +43,16 @@ const PostDetail = () => {
       </button>
       <span>{post?.nickname}</span>
       <span>{post?.createdAt}</span>
+
+      <img src={post?.postsImage.toString()} />
+      <Likes postsId={Number(postsId)} />
+      <p>{post?.title}</p>
+      <p>{post?.content}</p>
       {post?.tagName.length !== 0 ? (
         post?.tagName.map((tag, idx) => {
           return (
             <span
-              className='inline-block bg-lime-800 text-white mr-1 rounded-md text-sm font-bold p-1'
+              className='inline-block bg-orange-100 text-amber-800 mr-1 rounded-md text-sm font-bold p-1'
               key={idx}
             >
               {tag}
@@ -57,10 +62,6 @@ const PostDetail = () => {
       ) : (
         <></>
       )}
-      <p>{post?.title}</p>
-      <img src='https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg' />
-      <Likes postsId={Number(postsId)} />
-      <p>{post?.content}</p>
       <hr />
       <input
         type='text'

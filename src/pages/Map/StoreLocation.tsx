@@ -119,6 +119,10 @@ const StoreLocation = () => {
             places.place_name +
             '</a>';
 
+        el.style.marginBottom = '10px';
+        el.style.borderBottom = '1px solid #e5e5e5';
+        el.style.padding = '15px';
+
         if (places.road_address_name) {
           itemStr +=
             '    <span style="color:grey;font-size:14px">' +
@@ -289,6 +293,7 @@ const StoreLocation = () => {
               <span style={{ color: '#964B00' }}>{cafeName}</span> 매장 정보예요
             </p>
           </div>
+          <hr className='mb-5' />
           <ul id='placesList'>목록</ul>
         </div>
       </div>
