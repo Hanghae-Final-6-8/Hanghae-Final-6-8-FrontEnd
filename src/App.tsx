@@ -4,7 +4,12 @@ import PostList from './pages/Post/PostList';
 import PostDetail from './pages/Post/PostDetail';
 import { Login, RedirectKakao } from './pages/LoginPage';
 import AddEditPost from './pages/Post/AddEditPost';
-import { BeansList } from './pages/BeansList';
+import {
+  BeansList,
+  BeanDetail,
+  BeansByCafe,
+  BeansSearch,
+} from './pages/BeansList';
 import { Mypage } from './pages/MyPage';
 import StoreLocation from './pages/Map/StoreLocation';
 import {
@@ -63,7 +68,11 @@ function App() {
             <Route path='loading' element={<TasteSurveyLoading />} />
             <Route path='needlogin' element={<TasteSurveyNeedLogin />} />
           </Route>
-          <Route path='/beans' element={<BeansList />} />
+          <Route path='/beans' element={<BeansList />}>
+            <Route path=':beanId' element={<BeanDetail />} />
+            <Route path='search' element={<BeansSearch />} />
+            <Route path='cafe' element={<BeansByCafe />} />
+          </Route>
         </Route>
 
         <Route path='*' element={<NotFound />} />

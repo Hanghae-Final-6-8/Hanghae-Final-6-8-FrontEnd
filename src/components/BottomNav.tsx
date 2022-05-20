@@ -29,7 +29,7 @@ const BottomNav = () => {
     handleClosePopup();
   };
   const handleToBeansList = () => {
-    navigate('./beans');
+    navigate('./beans/search');
     handleClosePopup();
   };
 
