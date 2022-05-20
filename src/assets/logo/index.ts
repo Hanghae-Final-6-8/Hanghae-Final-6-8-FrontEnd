@@ -1,5 +1,5 @@
 import logoCopick from './logoCopick.svg';
-import logoCopickSqure from './logoCopickSqure.svg';
+import logoCopickSquare from './logoCopickSquare.svg';
 import pickYourCoffee from './pickYourCoffee.svg';
 
-export { logoCopick, logoCopickSqure, pickYourCoffee };
+export { logoCopick, logoCopickSquare, pickYourCoffee };

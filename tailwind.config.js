@@ -64,6 +64,7 @@ module.exports = {
         contentsCoffee: '0px 5px 40px rgba(17, 17, 17, 0.12)',
         contentsStore: '0px 6px 20px rgba(17, 17, 17, 0.08)',
         tasteBrown: '0px 10px 20px rgba(62, 37, 37, 0.14)',
+        con14: '0px 10px 20px rgba(17, 17, 17, 0.14)',
       },
       colors: {
         gray90: '#111111',

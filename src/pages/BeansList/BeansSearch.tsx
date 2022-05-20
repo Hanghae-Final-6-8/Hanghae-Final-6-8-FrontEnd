@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Input } from '../../components/atoms';
+import { GridBox, Image, Text, RoundBox } from '../../components/atoms';
 import { search } from '../../assets/icons';
+import { logoCopickSquare } from '../../assets/logo';
 
 const BeansSearch = () => {
   const [inputValue, setInputValue] = useState('');
@@ -12,6 +13,63 @@ const BeansSearch = () => {
     e.preventDefault();
     setInputValue('');
   };
+
+  const beansFormdata = [
+    {
+      bean_id: 1,
+      bean_name: '파이크 플레이스 로스트',
+      bean_description: '코코아와 구운 견과류의 은은한 향',
+      type: 1,
+    },
+    {
+      bean_id: 2,
+      bean_name: '파이크 플레이스 로스트',
+      bean_description: '코코아와 구운 견과류의 은은한 향',
+      type: 1,
+    },
+    {
+      bean_id: 3,
+      bean_name: '파이크 플레이스 로스트',
+      bean_description: '코코아와 구운 견과류의 은은한 향',
+      type: 1,
+    },
+    {
+      bean_id: 4,
+      bean_name: '파이크 플레이스 로스트',
+      bean_description: '코코아와 구운 견과류의 은은한 향',
+      type: 1,
+    },
+    {
+      bean_id: 5,
+      bean_name: '파이크 플레이스 로스트',
+      bean_description: '코코아와 구운 견과류의 은은한 향',
+      type: 1,
+    },
+    {
+      bean_id: 6,
+      bean_name: '파이크 플레이스 로스트',
+      bean_description: '코코아와 구운 견과류의 은은한 향',
+      type: 1,
+    },
+    {
+      bean_id: 7,
+      bean_name: '파이크 플레이스 로스트',
+      bean_description: '코코아와 구운 견과류의 은은한 향',
+      type: 1,
+    },
+    {
+      bean_id: 8,
+      bean_name: '파이크 플레이스 로스트',
+      bean_description: '코코아와 구운 견과류의 은은한 향',
+      type: 1,
+    },
+    {
+      bean_id: 9,
+      bean_name: '파이크 플레이스 로스트',
+      bean_description: '코코아와 구운 견과류의 은은한 향',
+      type: 1,
+    },
+  ];
 
   return (
     <>
@@ -33,6 +91,25 @@ const BeansSearch = () => {
           />
         </button>
       </form>
+      <GridBox className='gap-2.5 mt-5 pb-32' type='flexBasic'>
+        {beansFormdata.map((item) => (
+          <RoundBox
+            key={item.bean_id}
+            className='flex items-center'
+            type='beansRoundBox'
+          >
+            <div className='mr-7 rounded-full overflow-hidden w-16'>
+              <img src={logoCopickSquare} />
+            </div>
+            <div className=''>
+              <Text className='text-gray90 text-body'>{item.bean_name}</Text>
+              <Text className='line-clamp-1 text-caption text-gray80'>
+                {item.bean_description}
+              </Text>
+            </div>
+          </RoundBox>
+        ))}
+      </GridBox>
     </>
   );
 };

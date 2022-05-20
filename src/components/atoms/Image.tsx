@@ -15,7 +15,7 @@ const Image = (props: ImageProps) => {
   return (
     <div
       className={classnames(
-        `relative border-1 overflow-hidden bg-no-repeat text-center align-middle ${className}`,
+        `relative overflow-hidden text-center align-middle ${className}`,
         {
           'rounded-full h-20 w-20 border-2 border-white shadow-contentsStore':
             circle,
