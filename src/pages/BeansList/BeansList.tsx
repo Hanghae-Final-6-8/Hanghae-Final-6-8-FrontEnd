@@ -6,16 +6,12 @@ const BeansList = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [isSearch, setIsSearch] = useState(true);
-
   const handleToSearch = () => {
     navigate('./search');
-    setIsSearch(true);
   };
 
   const handleToCafe = () => {
     navigate('./cafe');
-    setIsSearch(false);
   };
   return (
     <>
@@ -27,7 +23,11 @@ const BeansList = () => {
             <div className=' w-full h-full' onClick={handleToSearch}>
               <Text
                 className='block h-full leading-[46px]'
-                type={isSearch ? 'beansNavClicked' : 'beansNav'}
+                type={
+                  location.pathname === '/beans/search'
+                    ? 'beansNavClicked'
+                    : 'beansNav'
+                }
               >
                 원두 검색
               </Text>
@@ -35,7 +35,11 @@ const BeansList = () => {
             <div className='w-full h-full' onClick={handleToCafe}>
               <Text
                 className='block h-full leading-[46px]'
-                type={isSearch ? 'beansNav' : 'beansNavClicked'}
+                type={
+                  location.pathname === '/beans/cafe'
+                    ? 'beansNavClicked'
+                    : 'beansNav'
+                }
               >
                 카페
               </Text>
