@@ -3,22 +3,22 @@ import { tasteApis } from '../../apis';
 import { removeLocalStorage } from '../../utils/localstorage';
 
 const initialState = {
-  acidity: 3,
-  beanId: 48,
+  acidity: 0,
+  beanId: 0,
   beanName: null,
-  bitter: 2,
-  body: 2,
-  cafeId: 29,
+  bitter: 0,
+  body: 0,
+  cafeId: 0,
   cafeImage: null,
-  cafeName: '감성커피',
+  cafeName: '',
   cocoaFlavor: 0,
   description: '',
-  floral: 1,
-  fruitFlavor: 1,
-  nutty: 1,
+  floral: 0,
+  fruitFlavor: 0,
+  nutty: 0,
   nuttyFlavor: 0,
-  sweetness: 2,
-  type: 2,
+  sweetness: 0,
+  type: 0,
 };
 
 interface TasteList {
