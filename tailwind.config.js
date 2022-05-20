@@ -76,6 +76,9 @@ module.exports = {
         brownS03: '#f5e9df',
         white: '#ffffff',
       },
+      textUnderlineOffset: {
+        10: 14,
+      },
       backgroundImage: {
         brownP: "url('/src/assets/backgrounds/brownP.svg')",
         brownS01: "url('/src/assets/backgrounds/brownS01.svg')",

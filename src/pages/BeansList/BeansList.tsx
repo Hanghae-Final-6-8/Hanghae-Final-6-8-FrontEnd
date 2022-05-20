@@ -1,9 +1,41 @@
-import { Outlet } from 'react-router-dom';
+import { useState } from 'react';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { Text } from '../../components/atoms';
 
 const BeansList = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [isSearch, setIsSearch] = useState(true);
+
+  const handleToSearch = () => {
+    navigate('./search');
+    setIsSearch(true);
+  };
+
+  const handleToCafe = () => {
+    navigate('./cafe');
+    setIsSearch(false);
+  };
   return (
     <>
-      <div>커피 리스트 페이지 입니다.</div>
+      {location.pathname === '/beans/search' ||
+      location.pathname === '/beans/cafe' ? (
+        <>
+          <div className='font-500 text-head'>원두 종류</div>
+          <div className='flex justify-around mt-6 h-[46px] text-center cursor-pointer items-center mb-5 border-b border-gray20'>
+            <div className=' w-full' onClick={handleToSearch}>
+              <Text type={isSearch ? 'beansNavClicked' : 'beansNav'}>
+                원두 검색
+              </Text>
+            </div>
+            <div className='w-full' onClick={handleToCafe}>
+              <Text type={isSearch ? 'beansNav' : 'beansNavClicked'}>카페</Text>
+            </div>
+          </div>
+        </>
+      ) : null}
+
       <Outlet />
     </>
   );

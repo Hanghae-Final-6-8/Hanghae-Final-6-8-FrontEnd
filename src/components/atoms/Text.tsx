@@ -24,6 +24,9 @@ const Text = (props: Text) => {
   const mainRedcommendSimmilar = props.type === 'mainRedcommendSimmilar';
   const main2header = props.type === 'main2header';
 
+  const beansNav = props.type === 'beansNav';
+  const beansNavClicked = props.type === 'beansNavClicked';
+
   return (
     <p
       className={classnames(
@@ -51,7 +54,12 @@ const Text = (props: Text) => {
           'text-center text-gray90 text-caption font-500 mt-2.5':
             mainRedcommendSimmilar,
         },
-        { 'font-700 text-head': main2header }
+        { 'font-700 text-head': main2header },
+        {
+          'font-500 text-gray30 text-body': beansNav,
+          'font-500 text-gray90 text-body underline decoration-2 underline-offset-10':
+            beansNavClicked,
+        }
       )}
     >
       {props.children}
