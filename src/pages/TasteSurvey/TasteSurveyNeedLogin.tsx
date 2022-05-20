@@ -2,11 +2,13 @@ import { login } from '../../assets/icons';
 import { Text, Span, Button, GridBox } from '../../components/atoms';
 import { useNavigate } from 'react-router-dom';
 import { LoginBtnGroup } from '../../components/organisms';
+import { removeLocalStorage } from '../../utils/localstorage';
 
 const TasteSurveyNeedLogin = () => {
   const navigate = useNavigate();
 
   const handleCloseTasteSurvey = () => {
+    removeLocalStorage('surveyResult');
     navigate('../../main');
   };
 
