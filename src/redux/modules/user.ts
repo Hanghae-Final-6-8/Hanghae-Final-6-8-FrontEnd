@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { userApis } from '../../apis';
 import instance from '../../lib/axios';
 import {
@@ -40,9 +40,9 @@ export const getKakaoURL = createAsyncThunk(
 );
 export const loginKakao = createAsyncThunk(
   'user/login/kakao',
-  async (codeInput: Login) => {
+  async (data: Login) => {
     try {
-      const code = codeInput.codeInput;
+      const code = data.codeInput;
       await instance
         .get('/api/user/login/kakao/callback', {
           params: { code },
@@ -53,7 +53,7 @@ export const loginKakao = createAsyncThunk(
           setAccessTokenToCookie(accessToken);
           setRefreshTokenToCookie(refreshToken);
 
-          codeInput.navigate('/main', { replace: true });
+          data.navigate('/main', { replace: true });
 
           return;
         });
@@ -65,12 +65,10 @@ export const loginKakao = createAsyncThunk(
 );
 
 // 유저의 로그인 여부를 판별합니다.
-export const auth = createAsyncThunk('user/auth', async () => {
+export const auth = createAsyncThunk('user/auth', async (_, thunkAPI) => {
   try {
     await userApis.auth().then((response) => {
-      // const user = {
-      //   nickname: response.data.nickname,
-      // };
+      thunkAPI.dispatch(setUserInfo(response.data.data));
       return;
     });
   } catch (err) {
@@ -94,7 +92,12 @@ export const logout = createAsyncThunk('user/logout', async () => {
 export const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    setUserInfo: (state, action: PayloadAction<any>) => {
+      state = action.payload;
+      return state;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(loginKakao.fulfilled, (state, action) => {
       state.isLogin = true;
@@ -107,5 +110,7 @@ export const userSlice = createSlice({
     });
   },
 });
+
+export const { setUserInfo } = userSlice.actions;
 
 export default userSlice;
