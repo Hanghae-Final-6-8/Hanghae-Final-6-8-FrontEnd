@@ -162,7 +162,7 @@ const MainYesTasteSurvey = () => {
                   매장 위치 보러가기
                   <img
                     className='inline w-4'
-                    style={{ filter: 'f' }}
+                    style={{ filter: '' }}
                     src={right}
                   />
                 </Text>
