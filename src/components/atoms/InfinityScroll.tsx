@@ -9,7 +9,7 @@ interface LayoutProps {
 }
 
 const domEl = document.getElementsByClassName('infinityScroll');
-console.log(domEl);
+
 const InfinityScroll: React.FC<LayoutProps> = (props) => {
   const { callNext, isNext, loading } = props;
 

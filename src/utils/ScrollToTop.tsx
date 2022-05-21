@@ -4,8 +4,10 @@ import { useLocation } from 'react-router-dom';
 export default function ScrollToTop() {
   const { pathname } = useLocation();
 
+  const domEl = document.getElementsByClassName('infinityScroll');
+
   useEffect(() => {
-    window.scrollTo(0, 0);
+    domEl[0].scrollTo(0, 0);
   }, [pathname]);
 
   return null;
