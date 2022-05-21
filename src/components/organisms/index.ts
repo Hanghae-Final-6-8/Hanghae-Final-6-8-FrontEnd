@@ -4,6 +4,7 @@ import MyLikes from './MyLikes';
 import MyActivity from './MyActivity';
 import LoginBtnGroup from './LoginBtnGroup';
 import MainTopCarousel from './MainTopCarousel';
+import BeansToastPopup from './BeansToastPopup';
 
 export {
   Spinner,
@@ -12,4 +13,5 @@ export {
   MyActivity,
   LoginBtnGroup,
   MainTopCarousel,
+  BeansToastPopup,
 };

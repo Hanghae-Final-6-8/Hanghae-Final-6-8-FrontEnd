@@ -31,6 +31,7 @@ import { useEffect } from 'react';
 import { useAppDispatch } from './redux/configureStore';
 import { auth } from './redux/modules/user';
 import { getAccessTokenFromCookie } from './utils/cookie';
+import ScrollToTop from './utils/ScrollToTop';
 
 function App() {
   const appDispatch = useAppDispatch();
@@ -42,6 +43,7 @@ function App() {
 
   return (
     <>
+      <ScrollToTop />
       <Routes>
         <Route path='/main' element={<Main />} />
         <Route path='/' element={<Login />} />
