@@ -167,7 +167,9 @@ const MainYesTasteSurvey = () => {
                   className='mx-auto'
                   type='circle'
                   src={
-                    tasteList.cafeImage ? tasteList.cafeImage : coffee_default
+                    tasteList.cafeLogoImage
+                      ? tasteList.cafeLogoImage
+                      : coffee_default
                   }
                 />
                 <Text className='mt-1.5 text-gray90 font-500 text-body'>
