@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { Text } from '../../components/atoms';
+import ScrollToTop from '../../utils/ScrollToTop';
 
 const BeansList = () => {
   const navigate = useNavigate();

@@ -1,8 +1,18 @@
 import { up, down } from '../../assets/icons';
 import { GridBox, RoundBox, Text } from '../../components/atoms';
 import { logoCopickSquare } from '../../assets/logo';
+import { BeansToastPopup } from '../../components/organisms';
+import { useState } from 'react';
 
 const BeansByCafe = () => {
+  const [isActivePopup, setIsActivePopup] = useState(false);
+  const handleClosePopup = () => {
+    setIsActivePopup(false);
+  };
+  const handleIsActivePopup = () => {
+    setIsActivePopup(true);
+  };
+
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
   };
@@ -102,6 +112,7 @@ const BeansByCafe = () => {
           </RoundBox>
         ))}
       </GridBox>
+      {isActivePopup ? <BeansToastPopup onClick={handleClosePopup} /> : null}
     </>
   );
 };
