@@ -157,7 +157,7 @@ const MainYesTasteSurvey = () => {
                 type='mainRoundBox'
                 cafeId={tasteList.cafeId}
                 onClick={() => {
-                  handleToMap(tasteList.cafeName);
+                  handleToMap(tasteList.cafeName ? tasteList.cafeName : '');
                 }}
               >
                 <div className='absolute top-0 left-0 right-0 h-72px bg-defaultBg01'>
