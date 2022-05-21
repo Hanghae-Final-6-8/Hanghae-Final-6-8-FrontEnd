@@ -2,7 +2,15 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { beansApis } from '../../apis';
 
 const initialState = {
-  beanlist: [{ bean_id: 0, bean_name: null, bean_description: null, type: 0 }],
+  beanlist: [
+    {
+      beanId: 0,
+      beanName: null,
+      description: null,
+      type: 0,
+      beanImage: null,
+    },
+  ],
   isLoaded: false,
 };
 

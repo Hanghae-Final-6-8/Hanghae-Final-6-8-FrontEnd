@@ -1,12 +1,12 @@
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Text, GridBox, RoundBox } from '../../components/atoms';
 import { RootState, useAppDispatch } from '../../redux/configureStore';
 import { useEffect, useState } from 'react';
 import { getBeansList } from '../../redux/modules/beans';
 import { useSelector } from 'react-redux';
 
-import { logoCopickSquare } from '../../assets/logo';
 import { BeansCafeBtn, BeansSearchForm } from '../../components/molecules';
+import { coffee_default } from '../../assets/images';
 
 const BeansList = () => {
   const navigate = useNavigate();
@@ -14,62 +14,16 @@ const BeansList = () => {
   const beans = useSelector((state: RootState) => state.beans);
   const [clickedSearchBtn, setClickedSearchBtn] = useState(true);
 
-  const beansFormdata = [
-    {
-      bean_id: 1,
-      bean_name: '파이크 플레이스 로스트',
-      bean_description: '코코아와 구운 견과류의 은은한 향',
-      type: 1,
-    },
-    {
-      bean_id: 2,
-      bean_name: '파이크 플레이스 로스트',
-      bean_description: '코코아와 구운 견과류의 은은한 향',
-      type: 1,
-    },
-    {
-      bean_id: 3,
-      bean_name: '파이크 플레이스 로스트',
-      bean_description: '코코아와 구운 견과류의 은은한 향',
-      type: 1,
-    },
-    {
-      bean_id: 4,
-      bean_name: '파이크 플레이스 로스트',
-      bean_description: '코코아와 구운 견과류의 은은한 향',
-      type: 1,
-    },
-    {
-      bean_id: 5,
-      bean_name: '파이크 플레이스 로스트',
-      bean_description: '코코아와 구운 견과류의 은은한 향',
-      type: 1,
-    },
-    {
-      bean_id: 6,
-      bean_name: '파이크 플레이스 로스트',
-      bean_description: '코코아와 구운 견과류의 은은한 향',
-      type: 1,
-    },
-    {
-      bean_id: 7,
-      bean_name: '파이크 플레이스 로스트',
-      bean_description: '코코아와 구운 견과류의 은은한 향',
-      type: 1,
-    },
-    {
-      bean_id: 8,
-      bean_name: '파이크 플레이스 로스트',
-      bean_description: '코코아와 구운 견과류의 은은한 향',
-      type: 1,
-    },
-    {
-      bean_id: 9,
-      bean_name: '파이크 플레이스 로스트',
-      bean_description: '코코아와 구운 견과류의 은은한 향',
-      type: 1,
-    },
-  ];
+  const beansFormdata: {
+    beanId: number;
+    beanName: null;
+    description: null;
+    type: number;
+    beanImage: null;
+  }[] = [];
+  beans.beanlist.forEach((el) => {
+    beansFormdata.push(el);
+  });
 
   useEffect(() => {
     !beans.isLoaded && appDispatch(getBeansList());
@@ -81,6 +35,10 @@ const BeansList = () => {
 
   const handleToCafeBtn = () => {
     setClickedSearchBtn(false);
+  };
+
+  const handleToBeansDetail = () => {
+    navigate('/');
   };
   return (
     <>
@@ -108,17 +66,21 @@ const BeansList = () => {
       <GridBox className='gap-2.5 mt-5 pb-32' type='flexBasic'>
         {beansFormdata.map((item) => (
           <RoundBox
-            key={item.bean_id}
-            className='flex items-center'
+            key={item.beanId}
+            className='items-center flex'
             type='beansRoundBox'
+            onClick={handleToBeansDetail}
           >
-            <div className='mr-7 rounded-full overflow-hidden w-16'>
-              <img src={logoCopickSquare} />
+            <div className='shrink-0 mr-7  w-16 h-16'>
+              <img
+                className='h-16 mx-auto'
+                src={item.beanImage ? item.beanImage : coffee_default}
+              />
             </div>
             <div>
-              <Text className='text-gray90 text-body'>{item.bean_name}</Text>
+              <Text className='text-gray90 text-body'>{item.beanName}</Text>
               <Text className='line-clamp-1 text-caption text-gray80'>
-                {item.bean_description}
+                {item.description}
               </Text>
             </div>
           </RoundBox>
