@@ -123,14 +123,33 @@ const AddEditPost = () => {
       <button className='m-2' onClick={handleBacktoPrev}>
         ◀
       </button>
-      {postsIdparams.postsId ? <h1>게시글 수정</h1> : <h1>게시글 작성</h1>}
+      {postsIdparams.postsId ? (
+        <h1 className='text-center'>게시물 수정</h1>
+      ) : (
+        <h1 className='text-center'>새 게시물</h1>
+      )}
+      <div className='flex'>
+        <div>
+          <img className='w-28 h-28' src={prevImage} />
+          <input type='file' id='image' onChange={getOnLoadFileFrom} />
+        </div>
 
-      <input
-        type='text'
-        placeholder='제목을 입력해주세요'
-        onChange={getInputTitleFrom}
-        value={title}
-      />
+        <div>
+          <input
+            type='text'
+            placeholder='제목을 입력해주세요'
+            onChange={getInputTitleFrom}
+            value={title}
+          />
+          <textarea
+            className='h-52 w-full'
+            style={{ border: '1px solid #111', resize: 'none' }}
+            onChange={getInputContentFrom}
+            value={content}
+          />
+        </div>
+      </div>
+
       <input
         type='text'
         placeholder='태그 입력후 Enter'
@@ -154,20 +173,12 @@ const AddEditPost = () => {
       ) : (
         <></>
       )}
-      <img className='w-28 h-28' src={prevImage} />
-      <input type='file' id='image' onChange={getOnLoadFileFrom} />
-      <textarea
-        className='h-52 w-full'
-        style={{ border: '1px solid #111', resize: 'none' }}
-        onChange={getInputContentFrom}
-        value={content}
-      />
 
       {postsIdparams.postsId ? (
         <button onClick={handleEditpost}>수정하기</button>
       ) : (
         <button className='border-2' onClick={handleAddPosts}>
-          등록하기
+          공유하기
         </button>
       )}
     </div>

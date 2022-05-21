@@ -36,7 +36,6 @@ export const axiosGetPostList = createAsyncThunk(
     try {
       await postApis.getPostList(data).then((res) => {
         const post_list: Array<PostsItemDataParams> = [];
-        console.log(res.data.data.content);
         // 페이징
         thunkAPI.dispatch(setPageNum(++data));
         // console.log(res.data.data.content);
@@ -63,7 +62,6 @@ export const axiosGetPostList = createAsyncThunk(
 
         const postsLoadedLen = res.data.data.content.length;
         thunkAPI.dispatch(isLoading(false));
-        console.log(post_list);
         thunkAPI.dispatch(setPost({ post_list, postsLoadedLen }));
       });
     } catch (error) {
@@ -189,7 +187,6 @@ export const postsSlice = createSlice({
       state.paging = action.payload;
     },
     setPost: (state, action: PayloadAction<any>) => {
-      console.log(action.payload.post_list);
       const new_list = [...state.list, ...action.payload.post_list];
       return {
         ...state,

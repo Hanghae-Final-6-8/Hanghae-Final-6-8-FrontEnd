@@ -1,13 +1,14 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { commentApis } from '../../apis/commentApis';
 import axios from 'axios';
 
 export interface CommentItemDataParams {
-  postsId: number;
+  postsId: number | null;
   commentsId: number;
   nickname: string;
   content: string;
   createdAt: string;
-  modifiedAt: string;
+  modifiedAt: string | null;
 }
 
 export interface CommentState {
