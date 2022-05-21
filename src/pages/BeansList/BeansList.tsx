@@ -1,11 +1,21 @@
-import { useState } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { Text } from '../../components/atoms';
-import ScrollToTop from '../../utils/ScrollToTop';
+import { RootState, useAppDispatch } from '../../redux/configureStore';
+import { useEffect } from 'react';
+import { getBeansList } from '../../redux/modules/beans';
+import { useSelector } from 'react-redux';
 
 const BeansList = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const appDispatch = useAppDispatch();
+  const beans = useSelector((state: RootState) => state.beans);
+
+  useEffect(() => {
+    !beans.isLoaded && appDispatch(getBeansList());
+  }, [appDispatch]);
+
+  console.log(beans.beanlist);
 
   const handleToSearch = () => {
     navigate('./search');
