@@ -21,12 +21,17 @@ const MainYesTasteSurvey = () => {
   const tasteList = useSelector((state: RootState) => state.taste);
   const appDispatch = useAppDispatch();
 
+  // useEffect(() => {
+  //   appDispatch(getSimilarBeans());
+
+  // }, []);
+
   useEffect(() => {
     // 리덕스에 데이터가 null일 경우 API를 요청합니다.
     !tasteList.beanName && appDispatch(getTasteSurvey());
-    tasteList.similar.length < 2 && appDispatch(getSimilarBeans());
-  }, [tasteList.beanName, tasteList.similar, appDispatch]);
-
+    // 임시적으로 매번 호출하게 처리해놨습니다.
+    appDispatch(getSimilarBeans());
+  }, [tasteList.beanName, appDispatch]);
   const handelShareByKakaotalk = () => {
     alert('아직 구현 중에 있습니다!');
   };
