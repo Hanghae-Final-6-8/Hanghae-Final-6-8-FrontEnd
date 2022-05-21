@@ -25,7 +25,7 @@ const initialState = {
   similar: [
     { beanId: 0, beanName: '', description: '', beanImage: '', type: 0 },
   ],
-  isSimilarLoad: false,
+  isSimilarLoaded: false,
 };
 
 interface TasteList {
@@ -109,11 +109,11 @@ export const tasteSlice = createSlice({
   extraReducers: (builder) => {
     // getSimilarBeans API 재요청을 막기 위함입니다.
     builder.addCase(getSimilarBeans.fulfilled, (state, action) => {
-      state.isSimilarLoad = true;
+      state.isSimilarLoaded = true;
     });
     // 다시 취향조사를 하게되면 시작됩니다.
     builder.addCase(postTasteSurvey.pending, (state, action) => {
-      state.isSimilarLoad = false;
+      state.isSimilarLoaded = false;
     });
   },
 });
