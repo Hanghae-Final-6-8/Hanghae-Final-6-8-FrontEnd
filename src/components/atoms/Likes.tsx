@@ -4,6 +4,7 @@ import { RootState } from '../../redux/configureStore';
 import { useAppDispatch } from '../../redux/configureStore';
 import { likeActionCreators } from '../../redux/modules/likes';
 import { LikesItemDataParams } from '../../redux/modules/likes';
+import { axiosDeleteLike } from '../../redux/modules/likes';
 
 interface likesProps {
   postsId: number;

@@ -31,8 +31,8 @@ const MainYesTasteSurvey = () => {
     alert('아직 구현 중에 있습니다!');
   };
 
-  const handleToMap = () => {
-    alert('아직 구현 중에 있습니다!');
+  const handleToMap = (cafeName: string) => {
+    navigate(`/map/${cafeName}`);
   };
   const handleAddBookmark = () => {
     alert('아직 구현 중에 있습니다!');
@@ -142,7 +142,9 @@ const MainYesTasteSurvey = () => {
                 className='text-center relative overflow-hidden mt-5'
                 type='mainRoundBox'
                 cafeId={tasteList.cafeId}
-                onClick={handleToMap}
+                onClick={() => {
+                  handleToMap(tasteList.cafeName);
+                }}
               >
                 <div className='absolute top-0 left-0 right-0 h-72px bg-defaultBg01'>
                   {/*  */}

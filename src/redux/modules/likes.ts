@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+// 삭제예정
 import axios from 'axios';
+import { likeApis } from '../../apis/likeApis';
 
 export interface LikesItemDataParams {
   postsId: number;
@@ -16,7 +18,7 @@ interface AddLikesType {
   nickname: string;
 }
 
-const INITIAL_STATE: LikesState = {
+const initialState: LikesState = {
   list: [
     // {
     //   postsId: 1,
@@ -26,20 +28,20 @@ const INITIAL_STATE: LikesState = {
   ],
 };
 // 좋아요 불러오기
-export const axiosGetLike = createAsyncThunk(
-  'likesReducer/axiosGetLike',
-  async (data: number, thunkAPI) => {
-    return await axios
-      //URL 변경예정
-      .get(`http://110.46.158.168:8090/api/likes?page=${data}`)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-);
+// export const axiosGetLike = createAsyncThunk(
+//   'likesReducer/axiosGetLike',
+//   async (data: number, thunkAPI) => {
+//     return await axios
+//       //URL 변경예정
+//       .get('http://110.46.158.168:8090/api/likes/mine')
+//       .then((res) => {
+//         console.log(res);
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//   }
+// );
 
 // 좋아요 등록
 export const axiosAddLike = createAsyncThunk(
@@ -49,7 +51,7 @@ export const axiosAddLike = createAsyncThunk(
       posts_id: data.postsId,
     };
     return await axios({
-      url: 'http://110.46.158.168:8090/api/likes',
+      url: 'https://copickserver.site/api/likes',
       method: 'POST',
       data: _data,
     })
@@ -70,7 +72,7 @@ export const axiosDeleteLike = createAsyncThunk(
       posts_id: data,
     };
     return await axios({
-      url: 'http://110.46.158.168:8090/api/likes',
+      url: 'https://copickserver.site/api/likes',
       method: 'POST',
       data: _data,
     })
@@ -86,7 +88,7 @@ export const axiosDeleteLike = createAsyncThunk(
 
 export const likesSlice = createSlice({
   name: 'likesReducer',
-  initialState: INITIAL_STATE,
+  initialState,
   reducers: {
     addLikes: (state, action: PayloadAction<AddLikesType>) => {
       const new_likesList = [
@@ -116,7 +118,7 @@ export default likesSlice;
 export const { addLikes, deleteLikes } = likesSlice.actions;
 
 const likeActionCreators = {
-  axiosGetLike,
+  // axiosGetLike,
   axiosAddLike,
   axiosDeleteLike,
 };

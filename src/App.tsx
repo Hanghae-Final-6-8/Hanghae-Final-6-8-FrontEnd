@@ -50,7 +50,7 @@ function App() {
           element={<RedirectKakao />}
         />
 
-        <Route path='/map' element={<StoreLocation />} />
+        <Route path='/map/:cafeName' element={<StoreLocation />} />
         <Route element={<RootLayout />}>
           <Route path='/posts' element={<PostList />} />
           <Route path='/posts/:postsId' element={<PostDetail />} />
