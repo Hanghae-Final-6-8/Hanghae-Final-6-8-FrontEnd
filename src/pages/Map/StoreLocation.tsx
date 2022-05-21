@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import useCurrentLocation from './useCurrentPosition';
+import { useParams } from 'react-router-dom';
 
 const StoreLocation = () => {
+  const cafeName = useParams().cafeName;
   const { location, error } = useCurrentLocation();
   // 마커를 클릭하면 장소명을 표출할 인포윈도우
   const infowindow = new window.kakao.maps.InfoWindow({ zIndex: 1 });
@@ -29,19 +31,20 @@ const StoreLocation = () => {
         if (status === window.kakao.maps.services.Status.OK) {
           // 정상적으로 검색이 완료됐으면
           // 검색 목록과 마커를 표출
+
           displayPlaces(data);
         } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
-          alert('검색 결과가 존재하지 않습니다.');
+          alert('주변 20km내에 매장이 없습니다.');
           return;
         } else if (status === window.kakao.maps.services.Status.ERROR) {
           alert('검색 결과 중 오류가 발생했습니다.');
           return;
         }
       };
-      console.log(location);
-      // 37.3049  127.0626
-      ps.keywordSearch('스타벅스', placesSearchCB, {
-        radius: 20000,
+
+      ps.keywordSearch(cafeName, placesSearchCB, {
+        // 반지름 m단위
+        radius: 10000,
         location: new window.kakao.maps.LatLng(
           location?.latitude,
           location?.longitude
@@ -115,6 +118,10 @@ const StoreLocation = () => {
             '" target="_blank">' +
             places.place_name +
             '</a>';
+
+        el.style.marginBottom = '10px';
+        el.style.borderBottom = '1px solid #e5e5e5';
+        el.style.padding = '15px';
 
         if (places.road_address_name) {
           itemStr +=
@@ -261,6 +268,7 @@ const StoreLocation = () => {
       >
         지도
       </div>
+
       <div
         id='menu_wrap'
         className='bg_white no-scrollbar'
@@ -279,13 +287,15 @@ const StoreLocation = () => {
         }}
       >
         <div>
-          <p style={{ fontWeight: 'bold' }}>USER님 주변에 있는</p>
-          <p style={{ marginBottom: '20px', fontWeight: 'bold' }}>
-            <span style={{ color: '#964B00' }}>스타벅스</span> 매장 정보예요
-          </p>
+          <div>
+            {/* <p style={{ fontWeight: 'bold' }}>USER님 주변에 있는</p> */}
+            <p style={{ marginBottom: '20px', fontWeight: 'bold' }}>
+              <span style={{ color: '#964B00' }}>{cafeName}</span> 매장 정보예요
+            </p>
+          </div>
+          <hr className='mb-5' />
+          <ul id='placesList'>목록</ul>
         </div>
-
-        <ul id='placesList'>목록</ul>
       </div>
     </div>
   );

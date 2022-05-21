@@ -16,6 +16,8 @@ const RoundBox = (props: RoundBox) => {
   const mainModal = props.round === 'mainModal';
   const mainRoundBox = props.type === 'mainRoundBox';
 
+  const beansRoundBox = props.type === 'beansRoundBox';
+
   const isOnClick = props.onClick;
 
   return (
@@ -26,6 +28,9 @@ const RoundBox = (props: RoundBox) => {
         {
           'mt-48 px-30px py-34px rounded-36px': mainModal,
           'relative rounded-30px px-7 py-30px shadow-contents': mainRoundBox,
+        },
+        {
+          'relative rounded-30px px-5 py-5 shadow-con14': beansRoundBox,
         }
       )}
       onClick={props.onClick}

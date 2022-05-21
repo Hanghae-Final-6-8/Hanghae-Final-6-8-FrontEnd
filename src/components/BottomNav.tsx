@@ -13,7 +13,7 @@ import { RootState } from '../redux/configureStore';
 const BottomNav = () => {
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user);
-  // console.log(user.isLogin);
+  //console.log(user);
 
   const [isActivePopup, setIsActivePopup] = useState(false);
 
@@ -29,7 +29,7 @@ const BottomNav = () => {
     handleClosePopup();
   };
   const handleToBeansList = () => {
-    navigate('./beans');
+    navigate('./beans/search');
     handleClosePopup();
   };
 

@@ -13,4 +13,5 @@ export const tasteApis = {
     nutty_flavor: number;
   }) => instance.post('/api/taste/tests', tasteList),
   getTasteSurvey: () => instance.get('/api/taste/tests'),
+  getSimilarBeans: () => instance.get('/api/taste/beans'),
 };

@@ -4,7 +4,12 @@ import PostList from './pages/Post/PostList';
 import PostDetail from './pages/Post/PostDetail';
 import { Login, RedirectKakao } from './pages/LoginPage';
 import AddEditPost from './pages/Post/AddEditPost';
-import { BeansList } from './pages/BeansList';
+import {
+  BeansList,
+  BeanDetail,
+  BeansByCafe,
+  BeansSearch,
+} from './pages/BeansList';
 import { Mypage } from './pages/MyPage';
 import StoreLocation from './pages/Map/StoreLocation';
 import {
@@ -26,6 +31,7 @@ import { useEffect } from 'react';
 import { useAppDispatch } from './redux/configureStore';
 import { auth } from './redux/modules/user';
 import { getAccessTokenFromCookie } from './utils/cookie';
+import ScrollToTop from './utils/ScrollToTop';
 
 function App() {
   const appDispatch = useAppDispatch();
@@ -37,6 +43,7 @@ function App() {
 
   return (
     <>
+      <ScrollToTop />
       <Routes>
         <Route path='/main' element={<Main />} />
         <Route path='/' element={<Login />} />
@@ -45,7 +52,7 @@ function App() {
           element={<RedirectKakao />}
         />
 
-        <Route path='/map' element={<StoreLocation />} />
+        <Route path='/map/:cafeName' element={<StoreLocation />} />
         <Route element={<RootLayout />}>
           <Route path='/posts' element={<PostList />} />
           <Route path='/posts/:postsId' element={<PostDetail />} />
@@ -63,7 +70,11 @@ function App() {
             <Route path='loading' element={<TasteSurveyLoading />} />
             <Route path='needlogin' element={<TasteSurveyNeedLogin />} />
           </Route>
-          <Route path='/beans' element={<BeansList />} />
+          <Route path='/beans' element={<BeansList />}>
+            <Route path=':beanId' element={<BeanDetail />} />
+            <Route path='search' element={<BeansSearch />} />
+            <Route path='cafe' element={<BeansByCafe />} />
+          </Route>
         </Route>
 
         <Route path='*' element={<NotFound />} />

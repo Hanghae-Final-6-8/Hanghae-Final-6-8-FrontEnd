@@ -1,5 +1,4 @@
 import { bookmark, down, share, beans, right } from '../../assets/icons/';
-import MainModal from '../../components/MainModal';
 import { coffee_default } from '../../assets/images';
 import {
   RoundBox,
@@ -13,27 +12,31 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../redux/configureStore';
-import { getTasteSurvey } from '../../redux/modules/taste';
-import { useEffect, useState } from 'react';
-import { getAccessTokenFromCookie } from '../../utils/cookie';
+import { getTasteSurvey, getSimilarBeans } from '../../redux/modules/taste';
+import { useEffect } from 'react';
+import { logoCopickSquare } from '../../assets/logo';
 
 const MainYesTasteSurvey = () => {
   const navigate = useNavigate();
   const tasteList = useSelector((state: RootState) => state.taste);
-  const user = useSelector((state: RootState) => state.user);
   const appDispatch = useAppDispatch();
-  const isToken = getAccessTokenFromCookie();
+
+  // useEffect(() => {
+  //   appDispatch(getSimilarBeans());
+
+  // }, []);
 
   useEffect(() => {
-    isToken && user.isLogin && appDispatch(getTasteSurvey());
-  }, [isToken, user.isLogin, appDispatch]);
-
+    // 리덕스에 데이터가 null일 경우 API를 요청합니다.
+    !tasteList.beanName && appDispatch(getTasteSurvey());
+    !tasteList.isSimilarLoaded && appDispatch(getSimilarBeans());
+  }, [tasteList.beanName, appDispatch]);
   const handelShareByKakaotalk = () => {
     alert('아직 구현 중에 있습니다!');
   };
 
-  const handleToMap = () => {
-    alert('아직 구현 중에 있습니다!');
+  const handleToMap = (cafeName: string) => {
+    navigate(`/map/${cafeName}`);
   };
   const handleAddBookmark = () => {
     alert('아직 구현 중에 있습니다!');
@@ -50,26 +53,41 @@ const MainYesTasteSurvey = () => {
 
   // 원두의 향 추가
   const beansFlavorFormdata = [];
-  tasteList.floral ? beansFlavorFormdata.push({ id: 1, name: '꽃 향' }) : null;
-  tasteList.cocoaFlavor
-    ? beansFlavorFormdata.push({ id: 2, name: '코코아 향' })
-    : null;
-  tasteList.fruitFlavor
-    ? beansFlavorFormdata.push({ id: 3, name: '과일 향' })
-    : null;
-  tasteList.nuttyFlavor
-    ? beansFlavorFormdata.push({ id: 4, name: '견과류 향' })
-    : null;
+  if (tasteList) {
+    tasteList.floral
+      ? beansFlavorFormdata.push({ id: 1, name: '꽃 향' })
+      : null;
+    tasteList.cocoaFlavor
+      ? beansFlavorFormdata.push({ id: 2, name: '코코아 향' })
+      : null;
+    tasteList.fruitFlavor
+      ? beansFlavorFormdata.push({ id: 3, name: '과일 향' })
+      : null;
+    tasteList.nuttyFlavor
+      ? beansFlavorFormdata.push({ id: 4, name: '견과류 향' })
+      : null;
+  }
   if (beansFlavorFormdata.length === 0) {
     beansFlavorFormdata.push({ id: 5, name: '무난함' });
   }
 
-  const recommendFormdata = [
-    { id: 1, name: '파이크 플레이스 로스트', img: coffee_default },
-    { id: 2, name: '파이크 플레이스 로스트', img: coffee_default },
-    { id: 3, name: '파이크 플레이스 로스트', img: coffee_default },
-    { id: 4, name: '파이크 플레이스 로스트', img: coffee_default },
-  ];
+  // interface SimilarData {
+  //   beanId: number,
+  //   beanName: string,
+  //   description: string,
+  //   type: number
+  // }
+
+  // interface SimilarDataArray extends Array<SimilarData> {};
+  // const recommendFormdata: Array<SimilarDataArray> = [];
+
+  // 비슷한 원두 추천
+  const recommendFormdata = [];
+  if (tasteList.similar) {
+    for (let i = 0; i < tasteList.similar.length; i++) {
+      recommendFormdata.push(tasteList.similar[i]);
+    }
+  }
 
   return (
     <>
@@ -87,7 +105,12 @@ const MainYesTasteSurvey = () => {
           <article className='relative -top-28'>
             <figure className='relative'>
               <div>
-                <img className='mx-auto' src={coffee_default} />
+                <img
+                  className='mx-auto'
+                  src={
+                    tasteList.beanImage ? tasteList.beanImage : coffee_default
+                  }
+                />
               </div>
               <figcaption className='text-center text-sub2 font-500 mt-26px'>
                 <strong className='block'>{tasteList.beanName}</strong>
@@ -139,16 +162,26 @@ const MainYesTasteSurvey = () => {
                 className='text-center relative overflow-hidden mt-5'
                 type='mainRoundBox'
                 cafeId={tasteList.cafeId}
-                onClick={handleToMap}
+                onClick={() => {
+                  handleToMap(tasteList.cafeName ? tasteList.cafeName : '');
+                }}
               >
                 <div className='absolute top-0 left-0 right-0 h-72px bg-defaultBg01'>
-                  {/*  */}
+                  <img
+                    src={
+                      tasteList.cafeBackGroundImage
+                        ? tasteList.cafeBackGroundImage
+                        : ''
+                    }
+                  />
                 </div>
                 <Image
                   className='mx-auto'
                   type='circle'
                   src={
-                    tasteList.cafeImage ? tasteList.cafeImage : coffee_default
+                    tasteList.cafeLogoImage
+                      ? tasteList.cafeLogoImage
+                      : logoCopickSquare
                   }
                 />
                 <Text className='mt-1.5 text-gray90 font-500 text-body'>
@@ -158,7 +191,7 @@ const MainYesTasteSurvey = () => {
                   매장 위치 보러가기
                   <img
                     className='inline w-4'
-                    style={{ filter: 'f' }}
+                    style={{ filter: '' }}
                     src={right}
                   />
                 </Text>
@@ -172,13 +205,16 @@ const MainYesTasteSurvey = () => {
               <GridBox type='mainRecommendSimmilar'>
                 {recommendFormdata.map((item) => (
                   <RoundBox
-                    key={item.id}
+                    key={item.beanId}
                     type='mainRoundBox'
                     onClick={handleToClickBeans}
                   >
                     <div className='w-20 mx-auto'>
-                      <img className='h-90px mx-auto' src={item.img} />
-                      <Text type='mainRedcommendSimmilar'>{item.name}</Text>
+                      <img
+                        className='h-90px mx-auto'
+                        src={item.beanImage ? item.beanImage : coffee_default}
+                      />
+                      <Text type='mainRedcommendSimmilar'>{item.beanName}</Text>
                     </div>
                   </RoundBox>
                 ))}
@@ -207,7 +243,6 @@ const MainYesTasteSurvey = () => {
           />
         </button>
       </main>
-      <MainModal />
     </>
   );
 };

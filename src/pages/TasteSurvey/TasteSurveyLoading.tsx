@@ -4,6 +4,7 @@ import { Spinner } from '../../components/organisms';
 import { getObjLocalStorage } from '../../utils/localstorage';
 import { useAppDispatch } from '../../redux/configureStore';
 import { postTasteSurvey } from '../../redux/modules/taste';
+import { auth } from '../../redux/modules/user';
 
 const TasteSurveyLoading = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const TasteSurveyLoading = () => {
 
   useEffect(() => {
     appDispatch(postTasteSurvey({ surveyResult, navigate }));
+    // user tasteId를 변경하기 위해 재요청
   }, []);
   //console.log(surveyResult);
 

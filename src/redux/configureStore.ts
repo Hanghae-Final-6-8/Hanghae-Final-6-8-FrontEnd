@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import userSlice from './modules/user';
 import tasteSlice from './modules/taste';
 import mypageSlice from './modules/mypage';
+import beansSlice from './modules/beans';
 
 const rootReducer = combineReducers({
   posts: postsSlice.reducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   user: userSlice.reducer,
   taste: tasteSlice.reducer,
   mypage: mypageSlice.reducer,
+  beans: beansSlice.reducer,
 });
 
 export const store = configureStore({

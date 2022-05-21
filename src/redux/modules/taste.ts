@@ -1,25 +1,31 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { buildQueries } from '@testing-library/react';
 import { tasteApis } from '../../apis';
 import { removeLocalStorage } from '../../utils/localstorage';
 
-const INITIAL_STATE = {
-  acidity: 3,
-  beanId: 48,
-  beanName: '오리지널 원두 블렌드',
-  bitter: 2,
-  body: 2,
-  cafeId: 29,
-  cafeImage: null,
-  cafeName: '감성커피',
+const initialState = {
+  acidity: 0,
+  beanId: 0,
+  beanName: null,
+  beanImage: null,
+  bitter: 0,
+  body: 0,
+  cafeId: 0,
+  cafeLogoImage: null,
+  cafeBackGroundImage: null,
+  cafeName: null,
   cocoaFlavor: 0,
-  description:
-    '좀 더 풍성해진 입안 감촉과 (산미와 단맛)의 조화로운 밸런스로 산비가 다소 높을 순 있지만 한 잔을 다 비우기에 거슬리지 않은 산뜻한 느낌의 원두',
-  floral: 1,
-  fruitFlavor: 1,
-  nutty: 1,
+  description: null,
+  floral: 0,
+  fruitFlavor: 0,
+  nutty: 0,
   nuttyFlavor: 0,
-  sweetness: 2,
-  type: 2,
+  sweetness: 0,
+  type: 0,
+  similar: [
+    { beanId: 0, beanName: '', description: '', beanImage: '', type: 0 },
+  ],
+  isSimilarLoaded: false,
 };
 
 interface TasteList {
@@ -45,8 +51,8 @@ export const postTasteSurvey = createAsyncThunk(
         .postTasteSurvey(tasteList.surveyResult)
         .then((response) => {
           thunkAPI.dispatch(saveTasteList(response.data.data));
-          // 일부러 시간을 끄는 용도로 사용했습니다.
           removeLocalStorage('surveyResult');
+          // 일부러 시간을 끄는 용도로 사용했습니다.
           setTimeout(() => {
             tasteList.navigate('/main');
           }, 1500);
@@ -73,20 +79,45 @@ export const getTasteSurvey = createAsyncThunk(
   }
 );
 
+export const getSimilarBeans = createAsyncThunk(
+  'taste/similar',
+  async (_, thunkAPI) => {
+    try {
+      await tasteApis.getSimilarBeans().then((response) => {
+        thunkAPI.dispatch(saveSimilarList(response.data.data));
+        return;
+      });
+    } catch (err) {
+      return;
+    }
+  }
+);
+
 export const tasteSlice = createSlice({
   name: 'tasteReducer',
-  initialState: INITIAL_STATE,
+  initialState,
   reducers: {
     saveTasteList: (state, action: PayloadAction<any>) => {
       state = action.payload;
       return state;
     },
+    saveSimilarList: (state, action: PayloadAction<any>) => {
+      state.similar = action.payload;
+      return state;
+    },
   },
-  extraReducers: () => {
-    //
+  extraReducers: (builder) => {
+    // getSimilarBeans API 재요청을 막기 위함입니다.
+    builder.addCase(getSimilarBeans.fulfilled, (state, action) => {
+      state.isSimilarLoaded = true;
+    });
+    // 다시 취향조사를 하게되면 시작됩니다.
+    builder.addCase(postTasteSurvey.pending, (state, action) => {
+      state.isSimilarLoaded = false;
+    });
   },
 });
 
-export const { saveTasteList } = tasteSlice.actions;
+export const { saveTasteList, saveSimilarList } = tasteSlice.actions;
 
 export default tasteSlice;
