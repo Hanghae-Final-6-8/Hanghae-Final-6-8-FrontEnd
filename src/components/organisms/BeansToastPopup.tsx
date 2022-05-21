@@ -1,5 +1,4 @@
 import { ToastPopupBox, DarkWrapper } from '../atoms';
-import { useState } from 'react';
 
 interface BeansToastPopupProps {
   onClick: () => void;
@@ -8,7 +7,7 @@ interface BeansToastPopupProps {
 const BeansToastPopup = (props: BeansToastPopupProps) => {
   return (
     <DarkWrapper onClick={props.onClick}>
-      <ToastPopupBox>hi</ToastPopupBox>
+      <ToastPopupBox>{/*  */}</ToastPopupBox>
     </DarkWrapper>
   );
 };

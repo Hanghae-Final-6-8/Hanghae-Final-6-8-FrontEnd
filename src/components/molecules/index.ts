@@ -7,6 +7,8 @@ import EditDelToastModal from './EditDelToastModal';
 import MypageHeader from './MypageHeader';
 import MypageOverviewActivity from './MypageOverviewActivity';
 import MypageTabs from './MypageTabs';
+import BeansCafeBtn from './BeansCafeBtn';
+import BeansSearchForm from './BeansSearchForm';
 
 export {
   Comment,
@@ -18,4 +20,6 @@ export {
   MypageTabs,
   NaverLoginBtn,
   GoogleLoginBtn,
+  BeansCafeBtn,
+  BeansSearchForm,
 };

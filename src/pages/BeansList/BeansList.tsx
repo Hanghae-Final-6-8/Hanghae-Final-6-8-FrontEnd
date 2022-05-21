@@ -1,26 +1,18 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Text, GridBox, RoundBox } from '../../components/atoms';
 import { RootState, useAppDispatch } from '../../redux/configureStore';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { getBeansList } from '../../redux/modules/beans';
 import { useSelector } from 'react-redux';
-import { search } from '../../assets/icons';
+
 import { logoCopickSquare } from '../../assets/logo';
+import { BeansCafeBtn, BeansSearchForm } from '../../components/molecules';
 
 const BeansList = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const appDispatch = useAppDispatch();
   const beans = useSelector((state: RootState) => state.beans);
-  const [inputValue, setInputValue] = useState('');
-
-  const handleInputValue: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    setInputValue(e.target.value);
-  };
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-    setInputValue('');
-  };
 
   const beansFormdata = [
     {
@@ -120,24 +112,8 @@ const BeansList = () => {
         </div>
       </div>
 
-      <form className='relative' onSubmit={handleSubmit}>
-        <input
-          type='text'
-          placeholder=' 당신의 원두를 찾아보세요...'
-          className='w-full bg-brownP h-[43px] bg-transparent text-white placeholder-inherit rounded-full px-5'
-          value={inputValue}
-          onChange={handleInputValue}
-        />
-        <button type='submit' className='absolute right-4 top-2'>
-          <img
-            style={{
-              filter:
-                'invert(94%) sepia(100%) saturate(0%) hue-rotate(240deg) brightness(108%) contrast(101%)',
-            }}
-            src={search}
-          />
-        </button>
-      </form>
+      <BeansCafeBtn />
+      <BeansSearchForm />
       <GridBox className='gap-2.5 mt-5 pb-32' type='flexBasic'>
         {beansFormdata.map((item) => (
           <RoundBox
@@ -148,7 +124,7 @@ const BeansList = () => {
             <div className='mr-7 rounded-full overflow-hidden w-16'>
               <img src={logoCopickSquare} />
             </div>
-            <div className=''>
+            <div>
               <Text className='text-gray90 text-body'>{item.bean_name}</Text>
               <Text className='line-clamp-1 text-caption text-gray80'>
                 {item.bean_description}
