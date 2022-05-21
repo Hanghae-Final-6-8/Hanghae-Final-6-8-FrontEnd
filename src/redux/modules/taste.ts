@@ -22,10 +22,7 @@ const initialState = {
   sweetness: 0,
   type: 0,
   similar: [
-    { beanId: 0, beanName: null, description: null, type: 0 },
-    { beanId: 0, beanName: null, description: null, type: 0 },
-    { beanId: 0, beanName: null, description: null, type: 0 },
-    { beanId: 0, beanName: null, description: null, type: 0 },
+    { beanId: 0, beanName: '', description: '', beanImage: '', type: 0 },
   ],
 };
 

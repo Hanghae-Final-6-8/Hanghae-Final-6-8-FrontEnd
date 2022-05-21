@@ -14,21 +14,18 @@ import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../redux/configureStore';
 import { getTasteSurvey, getSimilarBeans } from '../../redux/modules/taste';
 import { useEffect } from 'react';
-import { getAccessTokenFromCookie } from '../../utils/cookie';
+import { logoCopickSquare } from '../../assets/logo';
 
 const MainYesTasteSurvey = () => {
   const navigate = useNavigate();
   const tasteList = useSelector((state: RootState) => state.taste);
-  const user = useSelector((state: RootState) => state.user);
   const appDispatch = useAppDispatch();
-  const isToken = getAccessTokenFromCookie();
 
   useEffect(() => {
     // 리덕스에 데이터가 null일 경우 API를 요청합니다.
     !tasteList.beanName && appDispatch(getTasteSurvey());
-    !tasteList.similar[0].beanName && appDispatch(getSimilarBeans());
-  }, [tasteList.beanName, appDispatch]);
-  console.log(tasteList.similar[0].beanName);
+    tasteList.similar.length < 2 && appDispatch(getSimilarBeans());
+  }, [tasteList.beanName, tasteList.similar, appDispatch]);
 
   const handelShareByKakaotalk = () => {
     alert('아직 구현 중에 있습니다!');
@@ -81,12 +78,12 @@ const MainYesTasteSurvey = () => {
   // const recommendFormdata: Array<SimilarDataArray> = [];
 
   // 비슷한 원두 추천
-  const recommendFormdata = [{ id: 0, img: '', name: '' }];
-  // if (tasteList.similar) {
-  //   tasteList.similar.forEach((item) => {
-  //     recommendFormdata.push(item)
-  //   })
-  // }
+  const recommendFormdata = [];
+  if (tasteList.similar) {
+    for (let i = 0; i < tasteList.similar.length; i++) {
+      recommendFormdata.push(tasteList.similar[i]);
+    }
+  }
 
   return (
     <>
@@ -104,7 +101,12 @@ const MainYesTasteSurvey = () => {
           <article className='relative -top-28'>
             <figure className='relative'>
               <div>
-                <img className='mx-auto' src={coffee_default} />
+                <img
+                  className='mx-auto'
+                  src={
+                    tasteList.beanImage ? tasteList.beanImage : coffee_default
+                  }
+                />
               </div>
               <figcaption className='text-center text-sub2 font-500 mt-26px'>
                 <strong className='block'>{tasteList.beanName}</strong>
@@ -161,7 +163,13 @@ const MainYesTasteSurvey = () => {
                 }}
               >
                 <div className='absolute top-0 left-0 right-0 h-72px bg-defaultBg01'>
-                  {/*  */}
+                  <img
+                    src={
+                      tasteList.cafeBackGroundImage
+                        ? tasteList.cafeBackGroundImage
+                        : ''
+                    }
+                  />
                 </div>
                 <Image
                   className='mx-auto'
@@ -169,7 +177,7 @@ const MainYesTasteSurvey = () => {
                   src={
                     tasteList.cafeLogoImage
                       ? tasteList.cafeLogoImage
-                      : coffee_default
+                      : logoCopickSquare
                   }
                 />
                 <Text className='mt-1.5 text-gray90 font-500 text-body'>
@@ -193,13 +201,16 @@ const MainYesTasteSurvey = () => {
               <GridBox type='mainRecommendSimmilar'>
                 {recommendFormdata.map((item) => (
                   <RoundBox
-                    key={item.id}
+                    key={item.beanId}
                     type='mainRoundBox'
                     onClick={handleToClickBeans}
                   >
                     <div className='w-20 mx-auto'>
-                      <img className='h-90px mx-auto' src={item.img} />
-                      <Text type='mainRedcommendSimmilar'>{item.name}</Text>
+                      <img
+                        className='h-90px mx-auto'
+                        src={item.beanImage ? item.beanImage : coffee_default}
+                      />
+                      <Text type='mainRedcommendSimmilar'>{item.beanName}</Text>
                     </div>
                   </RoundBox>
                 ))}
