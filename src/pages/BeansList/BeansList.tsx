@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Text, GridBox, RoundBox } from '../../components/atoms';
 import { RootState, useAppDispatch } from '../../redux/configureStore';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getBeansList } from '../../redux/modules/beans';
 import { useSelector } from 'react-redux';
 
@@ -10,9 +10,9 @@ import { BeansCafeBtn, BeansSearchForm } from '../../components/molecules';
 
 const BeansList = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const appDispatch = useAppDispatch();
   const beans = useSelector((state: RootState) => state.beans);
+  const [clickedSearchBtn, setClickedSearchBtn] = useState(true);
 
   const beansFormdata = [
     {
@@ -75,45 +75,36 @@ const BeansList = () => {
     !beans.isLoaded && appDispatch(getBeansList());
   }, [appDispatch]);
 
-  const handleToSearch = () => {
-    navigate('./search');
+  const handleToSearchBtn = () => {
+    setClickedSearchBtn(true);
   };
 
-  const handleToCafe = () => {
-    navigate('./cafe');
+  const handleToCafeBtn = () => {
+    setClickedSearchBtn(false);
   };
   return (
     <>
       <div className='font-500 text-head'>원두 종류</div>
       <div className='flex justify-around mt-6 h-[46px] text-center cursor-pointer items-center mb-5 border-b border-gray20'>
-        <div className=' w-full h-full' onClick={handleToSearch}>
+        <div className=' w-full h-full' onClick={handleToSearchBtn}>
           <Text
             className='block h-full leading-[46px]'
-            type={
-              location.pathname === '/beans/search'
-                ? 'beansNavClicked'
-                : 'beansNav'
-            }
+            type={clickedSearchBtn ? 'beansNavClicked' : 'beansNav'}
           >
             원두 검색
           </Text>
         </div>
-        <div className='w-full h-full' onClick={handleToCafe}>
+        <div className='w-full h-full' onClick={handleToCafeBtn}>
           <Text
             className='block h-full leading-[46px]'
-            type={
-              location.pathname === '/beans/cafe'
-                ? 'beansNavClicked'
-                : 'beansNav'
-            }
+            type={!clickedSearchBtn ? 'beansNavClicked' : 'beansNav'}
           >
             카페
           </Text>
         </div>
       </div>
+      {clickedSearchBtn ? <BeansSearchForm /> : <BeansCafeBtn />}
 
-      <BeansCafeBtn />
-      <BeansSearchForm />
       <GridBox className='gap-2.5 mt-5 pb-32' type='flexBasic'>
         {beansFormdata.map((item) => (
           <RoundBox
