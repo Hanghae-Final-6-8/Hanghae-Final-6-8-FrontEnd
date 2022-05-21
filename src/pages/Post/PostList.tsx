@@ -17,7 +17,9 @@ const PostList = () => {
 
   // db에서 커뮤니티 리스트 가져오기
   useEffect(() => {
-    appDispatch(axiosGetPostList(0));
+    if (list.length < 2) {
+      appDispatch(axiosGetPostList(0));
+    }
   }, []);
 
   // 커뮤니티 리스트, 로딩
@@ -49,12 +51,7 @@ const PostList = () => {
   return (
     <div>
       <div className='m-5'>커뮤니티</div>
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-        }}
-      >
+      <div className='flex flex-col pb-24'>
         <InfinityScroll
           callNext={() => {
             appDispatch(axiosGetPostList(paging!));
@@ -64,74 +61,58 @@ const PostList = () => {
         >
           {list.map((post, idx) => {
             return (
-              <div className='w-full h-80' key={idx}>
+              <div
+                className='bg-white w-full mb-3 shadow-lg rounded-30px'
+                key={idx}
+              >
                 <div className='flex justify-between p-1'>
-                  <div className='flex items-center'>
+                  <div className='flex items-center mb-4'>
                     <img
-                      className='h-14 w-14 mr-2 rounded-full'
+                      className='h-12 w-12 rounded-full mr-4'
                       src='https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg'
                     />
                     <span>{post.nickname}</span>
                   </div>
                   <button
                     onClick={() => {
-                      getSetToastFrom(post.postsId);
+                      getSetToastFrom(post.postsId!);
                     }}
                   >
                     ···
                   </button>
                 </div>
-                {post.tagName?.length !== 0 ? (
-                  post.tagName.map((tag, index) => {
-                    return (
-                      <span
-                        className='inline-block bg-lime-800 text-white mr-1 rounded-md text-sm font-bold p-1'
-                        key={index}
-                      >
-                        {tag}
-                      </span>
-                    );
-                  })
-                ) : (
-                  <></>
-                )}
                 <img
-                  src='https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg'
-                  className='rounded-md mr-2'
+                  className='w-full'
+                  src={
+                    post.postsImage
+                      ? post.postsImage.toString()
+                      : 'https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814052__340.png'
+                  }
                   onClick={() => {
-                    handleMoveToDetailPage(post.postsId);
+                    handleMoveToDetailPage(post.postsId!);
                   }}
                 />
-                {toastStatus && <EditDelToastModal postsId={clickedPostId} />}
+                <div className='p-4'>
+                  {post.isLikes === null ? (
+                    <button>🤍</button>
+                  ) : (
+                    <button>❤️</button>
+                  )}
+
+                  <span>{post.likesCount}개</span>
+                </div>
               </div>
             );
           })}
+          {toastStatus && <EditDelToastModal postsId={clickedPostId} />}
         </InfinityScroll>
       </div>
 
       <button
-        style={{
-          fontSize: '3rem',
-          backgroundColor: 'pink',
-          height: '3rem',
-          width: '3rem',
-          lineHeight: '3rem',
-          borderRadius: '100%',
-          textAlign: 'center',
-          boxSizing: 'border-box',
-          position: 'fixed',
-          top: 5,
-          right: 5,
-        }}
+        className='text-[24px] bg-white shadow-lg h-10 w-10 rounded-full fixed top-3 right-6'
         onClick={handleMoveToWritePage}
       >
         +
-      </button>
-      <button
-        style={{ position: 'fixed', top: 55, right: 5 }}
-        onClick={handleGetPostList}
-      >
-        추가로드
       </button>
     </div>
   );
