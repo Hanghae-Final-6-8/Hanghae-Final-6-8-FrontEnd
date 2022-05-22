@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import useCurrentLocation from './useCurrentPosition';
+import useCurrentLocation from '../../utils/useCurrentPosition';
 import { useParams } from 'react-router-dom';
 
 const StoreLocation = () => {

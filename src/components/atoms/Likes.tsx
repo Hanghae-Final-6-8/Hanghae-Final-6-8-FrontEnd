@@ -1,10 +1,11 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/configureStore';
 // import likesSlice from '../../redux/modules/likes';
 import { useAppDispatch } from '../../redux/configureStore';
 import { likeActionCreators } from '../../redux/modules/likes';
 import { LikesItemDataParams } from '../../redux/modules/likes';
-import { axiosDeleteLike } from '../../redux/modules/likes';
+import { addLikeDB } from '../../redux/modules/posts';
 
 interface likesProps {
   postsId: number;
@@ -15,6 +16,11 @@ const Likes = (props: likesProps) => {
   const postsId = props.postsId;
   const appDispatch = useAppDispatch();
   // db에서 좋아요 불러오기
+
+  const postList = useSelector((store: RootState) => store.posts.list);
+  const _post = postList.find((p) => {
+    return p.postsId === postsId;
+  });
 
   // 좋아요 리스트 가져옴
   const likesList = useSelector((store: RootState) => store.likes.list);
@@ -42,11 +48,7 @@ const Likes = (props: likesProps) => {
 
   // 좋아요 추가
   const handleAddLikes = () => {
-    const userNickname = 'test2';
-    appDispatch(
-      // likesSlice.actions.addLikes({ postsId, nickname: userNickname })
-      likeActionCreators.axiosAddLike({ postsId, nickname: userNickname })
-    );
+    appDispatch(addLikeDB(postsId));
   };
   // 좋아요 삭제
   const handleDeleteLikes = () => {
@@ -57,7 +59,7 @@ const Likes = (props: likesProps) => {
   };
   return (
     <div>
-      {userLiked === undefined ? (
+      {_post?.isLikes === null ? (
         <button onClick={handleAddLikes}>🤍</button>
       ) : (
         <button onClick={handleDeleteLikes}>❤️</button>
