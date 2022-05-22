@@ -33,6 +33,7 @@ export const searchBeans = createAsyncThunk(
   async (data: string, thunkAPI) => {
     try {
       await beansApis.searchBeans(data).then((response) => {
+        thunkAPI.dispatch(saveBeansList(response.data.data));
         return;
       });
     } catch (err) {
@@ -53,6 +54,9 @@ export const beansSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getBeansList.fulfilled, (state, action) => {
       state.isLoaded = true;
+    });
+    builder.addCase(searchBeans.fulfilled, (state, action) => {
+      state.isLoaded = false;
     });
   },
 });

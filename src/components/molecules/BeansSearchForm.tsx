@@ -1,6 +1,10 @@
 import { search } from '../../assets/icons';
 import { useState } from 'react';
+import { useAppDispatch } from '../../redux/configureStore';
+import { searchBeans } from '../../redux/modules/beans';
+
 const BeansSearchForm = () => {
+  const appDispatch = useAppDispatch();
   const [inputValue, setInputValue] = useState('');
 
   const handleInputValue: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -8,6 +12,7 @@ const BeansSearchForm = () => {
   };
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+    appDispatch(searchBeans(inputValue));
     setInputValue('');
   };
 
@@ -18,6 +23,7 @@ const BeansSearchForm = () => {
           type='text'
           placeholder=' 당신의 원두를 찾아보세요...'
           className='w-full bg-brownP h-[43px] bg-transparent text-white placeholder-inherit rounded-full px-5'
+          maxLength={20}
           value={inputValue}
           onChange={handleInputValue}
         />
