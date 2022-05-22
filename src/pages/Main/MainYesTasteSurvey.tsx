@@ -30,7 +30,7 @@ const MainYesTasteSurvey = () => {
     // 리덕스에 데이터가 null일 경우 API를 요청합니다.
     !tasteList.beanName && appDispatch(getTasteSurvey());
     !tasteList.isSimilarLoaded && appDispatch(getSimilarBeans());
-  }, [tasteList.beanName, appDispatch]);
+  }, [tasteList.beanName, tasteList.isSimilarLoaded, appDispatch]);
   const handelShareByKakaotalk = () => {
     alert('아직 구현 중에 있습니다!');
   };
