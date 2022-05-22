@@ -4,7 +4,7 @@ import { RootState } from '../../redux/configureStore';
 import Comment from '../../components/molecules/Comment';
 import { useState } from 'react';
 import { useAppDispatch } from '../../redux/configureStore';
-import { axiosAddComment } from '../../redux/modules/comment';
+import { addCommentDB } from '../../redux/modules/comment';
 import Likes from '../../components/atoms/Likes';
 import { useNavigate } from 'react-router-dom';
 
@@ -29,7 +29,7 @@ const PostDetail = () => {
   };
   // 코멘트 추가
   const handleAddComment = (postsId: number) => {
-    appDispatch(axiosAddComment({ postsId, comment }));
+    appDispatch(addCommentDB({ posts_id: postsId, content: comment }));
   };
 
   const handleBacktoPrev = () => {

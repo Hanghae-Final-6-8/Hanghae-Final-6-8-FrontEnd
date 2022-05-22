@@ -16,7 +16,7 @@ const Comment = (props: postsIdProps) => {
 
   // 댓글 비동기로 불러와서 리덕스에 주입
   useEffect(() => {
-    appDispatch(commentActionCreators.axiosGetCommentList(postsId));
+    appDispatch(commentActionCreators.getCommentListDB(postsId));
   }, []);
 
   // 코멘트 리스트 리덕스에서 불러오기
@@ -30,7 +30,7 @@ const Comment = (props: postsIdProps) => {
 
   // 댓글 삭제
   const handleDeleteComment = (commentsId: number) => {
-    appDispatch(commentActionCreators.axiosDeleteComment(commentsId));
+    appDispatch(commentActionCreators.deleteCommentDB(commentsId));
   };
   return (
     <div className='flex flex-col'>

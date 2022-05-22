@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { commentApis } from '../../apis/commentApis';
-import axios from 'axios';
 
 export interface CommentItemDataParams {
   postsId: number | null;
@@ -33,64 +32,47 @@ const INITIAL_STATE: CommentState = {
   ],
 };
 // 댓글 조회
-export const axiosGetCommentList = createAsyncThunk(
-  'commentReducer/axiosGetCommentList',
+export const getCommentListDB = createAsyncThunk(
+  'commentReducer/getCommentListDB',
   async (data: number, thunkAPI) => {
-    return await axios
-      // .get(`https://copickserver.site/api/comments?posts_id=${data}`)
-      // .get('https://copickserver.site/api/comments/mine')
-      .get('http://110.46.158.168:8090/api/comments/mine')
-      .then((res) => {
+    try {
+      await commentApis.getCommentList(data).then((res) => {
         console.log(res);
-      })
-      .catch((error) => {
-        console.log(error);
       });
+    } catch (error) {
+      console.log(error);
+    }
   }
 );
 
 interface addCommentType {
-  postsId: number;
-  comment: string;
+  content: string;
+  posts_id: number;
 }
 // 댓글 등록
-export const axiosAddComment = createAsyncThunk(
-  'commentReducer/axiosAddComment',
+export const addCommentDB = createAsyncThunk(
+  'commentReducer/addCommentDB',
   async (data: addCommentType, thunkAPI) => {
-    const commentData = {
-      content: data.comment,
-      posts_id: data.postsId,
-    };
-    return await axios({
-      url: 'https://copickserver.site/api/comments',
-      method: 'POST',
-      data: commentData,
-    })
-      .then((res) => {
+    try {
+      await commentApis.addComment(data).then((res) => {
         console.log(res);
-        thunkAPI.dispatch(addComment(data));
-      })
-      .catch((error) => {
-        console.log(error);
       });
+    } catch (error) {
+      console.log(error);
+    }
   }
 );
 // 댓글 삭제
-export const axiosDeleteComment = createAsyncThunk(
-  'commentReducer/axiosDeleteComment',
+export const deleteCommentDB = createAsyncThunk(
+  'commentReducer/deleteCommentDB',
   async (data: number, thunkAPI) => {
-    return await axios({
-      url: 'https://copickserver.site/api/comments/delete',
-      method: 'POST',
-      data: { comments_id: data },
-    })
-      .then((res) => {
+    try {
+      await commentApis.deleteComment(data).then((res) => {
         console.log(res);
-        thunkAPI.dispatch(deleteComment(data));
-      })
-      .catch((error) => {
-        console.log(error);
       });
+    } catch (error) {
+      console.log(error);
+    }
   }
 );
 
@@ -128,9 +110,9 @@ export default commentSlice;
 export const { addComment, deleteComment } = commentSlice.actions;
 
 const commentActionCreators = {
-  axiosAddComment,
-  axiosGetCommentList,
-  axiosDeleteComment,
+  addCommentDB,
+  getCommentListDB,
+  deleteCommentDB,
 };
 
 export { commentActionCreators };

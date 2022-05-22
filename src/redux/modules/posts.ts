@@ -166,6 +166,7 @@ export const deletePostDB = createAsyncThunk(
 );
 
 // * 좋아요 *
+// 좋아요 추가
 export const addLikeDB = createAsyncThunk(
   'postsReducer/addLikeDB',
   async (data: number, thunkAPI) => {
@@ -173,6 +174,20 @@ export const addLikeDB = createAsyncThunk(
       await likeApis.addLike(data).then((res) => {
         console.log(res);
         thunkAPI.dispatch(addLike(data));
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const deleteLikeDB = createAsyncThunk(
+  'postsReducer/deleteLikeDB',
+  async (data: number, thunkAPI) => {
+    try {
+      await likeApis.deleteLike(data).then((res) => {
+        console.log(res);
+        thunkAPI.dispatch(deleteLike(data));
       });
     } catch (error) {
       console.log(error);
@@ -272,6 +287,12 @@ export const postsSlice = createSlice({
       });
       state.list[idx].isLikes = 1;
     },
+    deleteLike: (state, action: PayloadAction<number>) => {
+      const idx = state.list.findIndex((post) => {
+        return post.postsId === action.payload;
+      });
+      state.list[idx].isLikes = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getPostListDB.fulfilled, (state, action) => {
@@ -288,6 +309,7 @@ export const {
   deletePost,
   isLoading,
   addLike,
+  deleteLike,
 } = postsSlice.actions;
 
 export default postsSlice;

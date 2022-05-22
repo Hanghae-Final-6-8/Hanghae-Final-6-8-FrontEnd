@@ -6,6 +6,8 @@ import { getPostListDB } from '../../redux/modules/posts';
 import { useAppDispatch } from '../../redux/configureStore';
 import { InfinityScroll } from '../../components/atoms/index';
 import { EditDelToastModal } from '../../components/molecules/index';
+import { addLikeDB } from '../../redux/modules/posts';
+import { deleteLikeDB } from '../../redux/modules/posts';
 
 const PostList = () => {
   const navigate = useNavigate();
@@ -45,9 +47,14 @@ const PostList = () => {
     navigate(`/posts/${postsId}`);
   };
 
-  // const handleGetPostList = () => {
-  //   appDispatch(axiosGetPostList(paging!));
-  // };
+  // 좋아요 추가
+  const handleAddLikes = (postsId: number) => {
+    appDispatch(addLikeDB(postsId));
+  };
+  // 좋아요 삭제
+  const handleDeleteLikes = (postsId: number) => {
+    appDispatch(deleteLikeDB(postsId));
+  };
 
   return (
     <div>
@@ -96,9 +103,21 @@ const PostList = () => {
                 />
                 <div className='p-4'>
                   {post.isLikes === null ? (
-                    <button>🤍</button>
+                    <button
+                      onClick={() => {
+                        handleAddLikes(post.postsId!);
+                      }}
+                    >
+                      🤍
+                    </button>
                   ) : (
-                    <button>❤️</button>
+                    <button
+                      onClick={() => {
+                        handleDeleteLikes(post.postsId!);
+                      }}
+                    >
+                      ❤️
+                    </button>
                   )}
 
                   <span>{post.likesCount}개</span>
