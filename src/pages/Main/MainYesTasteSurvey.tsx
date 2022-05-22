@@ -19,16 +19,20 @@ import { logoCopickSquare } from '../../assets/logo';
 const MainYesTasteSurvey = () => {
   const navigate = useNavigate();
   const { beanId } = useParams();
+  const appDispatch = useAppDispatch();
   const tasteList = !beanId
     ? useSelector((state: RootState) => state.taste)
     : useSelector((state: RootState) => state.beans.beansDetail);
-  const appDispatch = useAppDispatch();
 
+  console.log(beanId);
+  console.log(tasteList);
   useEffect(() => {
     // 리덕스에 데이터가 null일 경우 API를 요청합니다.
     !tasteList.beanName && appDispatch(getTasteSurvey());
-    !beanId && tasteList.isSimilarLoaded && appDispatch(getSimilarBeans());
-  }, [tasteList.beanName, tasteList.isSimilarLoaded, appDispatch]);
+    if (!beanId) {
+      appDispatch(getSimilarBeans());
+    }
+  }, [tasteList.beanName, beanId, tasteList.isSimilarLoaded, appDispatch]);
   const handelShareByKakaotalk = () => {
     alert('아직 구현 중에 있습니다!');
   };
