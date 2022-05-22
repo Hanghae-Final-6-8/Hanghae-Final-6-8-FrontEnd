@@ -9,7 +9,7 @@ interface RoundBox {
   round?: string;
   id?: string;
   cafeId?: number;
-  data?: any;
+  data?: string | number;
 }
 
 const RoundBox = (props: RoundBox) => {

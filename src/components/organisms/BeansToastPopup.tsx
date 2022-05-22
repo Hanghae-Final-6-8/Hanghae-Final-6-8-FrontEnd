@@ -1,32 +1,45 @@
+import { useEffect } from 'react';
 import { check } from '../../assets/icons';
+import { RootState, useAppDispatch } from '../../redux/configureStore';
+import { getCafeList } from '../../redux/modules/cafe';
 import { ToastPopupBox, DarkWrapper, Text, Span, Button } from '../atoms';
+import { useSelector } from 'react-redux';
 
 interface BeansToastPopupProps {
   onClick: () => void;
 }
 
 const BeansToastPopup = (props: BeansToastPopupProps) => {
-  const cafeListFormdata = [
-    { cafe_id: 1, cafe_name: '스타벅스' },
-    { cafe_id: 2, cafe_name: '투썸플레이스' },
-    { cafe_id: 3, cafe_name: '탐앤탐스' },
-    { cafe_id: 4, cafe_name: '엔제리너스' },
-  ];
+  const appDispatch = useAppDispatch();
+  const cafe = useSelector((state: RootState) => state.cafe);
+  useEffect(() => {
+    !cafe.isLoaded && appDispatch(getCafeList());
+  }, []);
+
+  //console.log(cafe);
+
+  const cafeListFormdata: { cafeId: number; cafeName: string }[] = [];
+  cafe.cafeList.forEach((el) => {
+    cafeListFormdata.push(el);
+  });
 
   return (
     <DarkWrapper onClick={props.onClick}>
-      <ToastPopupBox type='default'>
+      <ToastPopupBox className='h-96' type='default'>
         <div className='flex justify-between mb-30px'>
           <Text className='font-500 text-sub'>
             <Span type='strong'>찾으시는 카페</Span>를 선택해주세요!
           </Text>
           <img src={check} />
         </div>
-        {cafeListFormdata.map((item) => (
-          <Button type='selectBtn' key={item.cafe_id}>
-            {item.cafe_name}
-          </Button>
-        ))}
+
+        <div className='h-[800px] flex flex-col'>
+          {cafeListFormdata.map((item) => (
+            <Button type='selectBtn' key={item.cafeId}>
+              {item.cafeName}
+            </Button>
+          ))}
+        </div>
       </ToastPopupBox>
     </DarkWrapper>
   );
