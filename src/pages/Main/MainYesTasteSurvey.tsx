@@ -13,6 +13,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../redux/configureStore';
 import { getTasteSurvey, getSimilarBeans } from '../../redux/modules/taste';
+import { detailBeans } from '../../redux/modules/beans';
 import { useEffect } from 'react';
 import { logoCopickSquare } from '../../assets/logo';
 
@@ -24,8 +25,8 @@ const MainYesTasteSurvey = () => {
     ? useSelector((state: RootState) => state.taste)
     : useSelector((state: RootState) => state.beans.beansDetail);
 
-  console.log(beanId);
-  console.log(tasteList);
+  // console.log(beanId);
+  // console.log(tasteList);
   useEffect(() => {
     // 리덕스에 데이터가 null일 경우 API를 요청합니다.
     !tasteList.beanName && appDispatch(getTasteSurvey());
@@ -46,8 +47,14 @@ const MainYesTasteSurvey = () => {
   const handleShowDescription = () => {
     alert('아직 구현 중에 있습니다!');
   };
-  const handleToClickBeans = () => {
-    alert('아직 구현 중에 있습니다!');
+  const handleToClickBeans = (e: {
+    currentTarget: { getAttribute: (arg0: string) => void };
+  }) => {
+    const currentTargetValue = Number(
+      e.currentTarget.getAttribute('data-beanid')
+    );
+    appDispatch(detailBeans(currentTargetValue));
+    navigate(`/beans/${currentTargetValue}`);
   };
   const handleToTasteSurvay = () => {
     navigate('/survey/main');
@@ -202,6 +209,7 @@ const MainYesTasteSurvey = () => {
                         key={item.beanId}
                         type='mainRoundBox'
                         onClick={handleToClickBeans}
+                        data={item.beanId}
                       >
                         <div className='w-20 mx-auto'>
                           <img
