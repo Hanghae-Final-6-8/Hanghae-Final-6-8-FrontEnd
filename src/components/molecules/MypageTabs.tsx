@@ -1,7 +1,4 @@
-import { Routes, Route, Link } from 'react-router-dom';
-import { MyFavorites } from '../../components/organisms';
-import { MyLikes } from '../../components/organisms';
-import { MyActivity } from '../../components/organisms';
+import { Link, Outlet } from 'react-router-dom';
 
 const MypageTabs = () => {
   return (
@@ -17,11 +14,7 @@ const MypageTabs = () => {
           <Link to='activiry'>내활동</Link>
         </div>
       </div>
-      <Routes>
-        <Route path='favorites' element={<MyFavorites />} />
-        <Route path='likes' element={<MyLikes />} />
-        <Route path='activiry' element={<MyActivity />} />
-      </Routes>
+      <Outlet />
     </div>
   );
 };

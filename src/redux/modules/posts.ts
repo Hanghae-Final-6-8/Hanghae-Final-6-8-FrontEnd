@@ -41,7 +41,7 @@ export const getPostListDB = createAsyncThunk(
         const post_list: Array<PostsItemDataParams> = [];
         // 페이징
         thunkAPI.dispatch(setPageNum(++data));
-        // console.log(res.data.data.content);
+        console.log(res.data.data.content);
         res.data.data.content.map((post: any) => {
           let newTagStr = [];
           if (post.tag_name !== null) {
