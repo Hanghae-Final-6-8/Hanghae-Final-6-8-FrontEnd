@@ -9,7 +9,7 @@ import {
   Image,
   Chart,
 } from '../../components/atoms';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../redux/configureStore';
 import { getTasteSurvey, getSimilarBeans } from '../../redux/modules/taste';
@@ -18,18 +18,16 @@ import { logoCopickSquare } from '../../assets/logo';
 
 const MainYesTasteSurvey = () => {
   const navigate = useNavigate();
-  const tasteList = useSelector((state: RootState) => state.taste);
+  const { beanId } = useParams();
+  const tasteList = !beanId
+    ? useSelector((state: RootState) => state.taste)
+    : useSelector((state: RootState) => state.beans.beansDetail);
   const appDispatch = useAppDispatch();
-
-  // useEffect(() => {
-  //   appDispatch(getSimilarBeans());
-
-  // }, []);
 
   useEffect(() => {
     // 리덕스에 데이터가 null일 경우 API를 요청합니다.
     !tasteList.beanName && appDispatch(getTasteSurvey());
-    !tasteList.isSimilarLoaded && appDispatch(getSimilarBeans());
+    !beanId && tasteList.isSimilarLoaded && appDispatch(getSimilarBeans());
   }, [tasteList.beanName, tasteList.isSimilarLoaded, appDispatch]);
   const handelShareByKakaotalk = () => {
     alert('아직 구현 중에 있습니다!');
@@ -48,7 +46,7 @@ const MainYesTasteSurvey = () => {
     alert('아직 구현 중에 있습니다!');
   };
   const handleToTasteSurvay = () => {
-    navigate('../survey/main');
+    navigate('/survey/main');
   };
 
   // 원두의 향 추가
@@ -70,16 +68,6 @@ const MainYesTasteSurvey = () => {
   if (beansFlavorFormdata.length === 0) {
     beansFlavorFormdata.push({ id: 5, name: '무난함' });
   }
-
-  // interface SimilarData {
-  //   beanId: number,
-  //   beanName: string,
-  //   description: string,
-  //   type: number
-  // }
-
-  // interface SimilarDataArray extends Array<SimilarData> {};
-  // const recommendFormdata: Array<SimilarDataArray> = [];
 
   // 비슷한 원두 추천
   const recommendFormdata = [];
@@ -197,51 +185,63 @@ const MainYesTasteSurvey = () => {
                 </Text>
               </RoundBox>
             </GridBox>
-            <GridBox className='mt-12'>
-              <Text type='mainBodyTitle'>
-                <Span type='strong'>{tasteList.beanName}</Span>와
-              </Text>
-              <Text type='mainBodyTitle'>비슷한 원두도 있어요!</Text>
-              <GridBox type='mainRecommendSimmilar'>
-                {recommendFormdata.map((item) => (
-                  <RoundBox
-                    key={item.beanId}
-                    type='mainRoundBox'
-                    onClick={handleToClickBeans}
-                  >
-                    <div className='w-20 mx-auto'>
-                      <img
-                        className='h-90px mx-auto'
-                        src={item.beanImage ? item.beanImage : coffee_default}
-                      />
-                      <Text type='mainRedcommendSimmilar'>{item.beanName}</Text>
-                    </div>
-                  </RoundBox>
-                ))}
-              </GridBox>
-            </GridBox>
-            <Button
-              className='text-white font-500 text-sub2 mt-12'
-              type='brownPType'
-              onClick={handleToTasteSurvay}
-            >
-              테스트 다시하기
-            </Button>
+            {!beanId ? (
+              <>
+                <GridBox className='mt-12'>
+                  <Text type='mainBodyTitle'>
+                    <Span type='strong'>{tasteList.beanName}</Span>와
+                  </Text>
+                  <Text type='mainBodyTitle'>비슷한 원두도 있어요!</Text>
+                  <GridBox type='mainRecommendSimmilar'>
+                    {recommendFormdata.map((item) => (
+                      <RoundBox
+                        key={item.beanId}
+                        type='mainRoundBox'
+                        onClick={handleToClickBeans}
+                      >
+                        <div className='w-20 mx-auto'>
+                          <img
+                            className='h-90px mx-auto'
+                            src={
+                              item.beanImage ? item.beanImage : coffee_default
+                            }
+                          />
+                          <Text type='mainRedcommendSimmilar'>
+                            {item.beanName}
+                          </Text>
+                        </div>
+                      </RoundBox>
+                    ))}
+                  </GridBox>
+                </GridBox>
+                <Button
+                  className='text-white font-500 text-sub2 mt-12'
+                  type='brownPType'
+                  onClick={handleToTasteSurvay}
+                >
+                  테스트 다시하기
+                </Button>
+              </>
+            ) : null}
           </article>
         </div>
-        <button
-          className='fixed w-12 h-12 rounded-full z-10 bg-brownP bg-cover bg-right bottom-104px right-6 shadow-tasteBrown'
-          onClick={handelShareByKakaotalk}
-        >
-          <img
-            className='mx-auto '
-            src={share}
-            style={{
-              filter:
-                'invert(95%) sepia(0%) saturate(21%) hue-rotate(357deg) brightness(104%) contrast(108%)',
-            }}
-          />
-        </button>
+        {!beanId ? (
+          <>
+            <button
+              className='fixed w-12 h-12 rounded-full z-10 bg-brownP bg-cover bg-right bottom-104px right-6 shadow-tasteBrown'
+              onClick={handelShareByKakaotalk}
+            >
+              <img
+                className='mx-auto '
+                src={share}
+                style={{
+                  filter:
+                    'invert(95%) sepia(0%) saturate(21%) hue-rotate(357deg) brightness(104%) contrast(108%)',
+                }}
+              />
+            </button>
+          </>
+        ) : null}
       </main>
     </>
   );
