@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { Text, GridBox, RoundBox } from '../../components/atoms';
 import { RootState, useAppDispatch } from '../../redux/configureStore';
 import { useEffect, useState } from 'react';
-import { getBeansList } from '../../redux/modules/beans';
+import { detailBeans, getBeansList } from '../../redux/modules/beans';
 import { useSelector } from 'react-redux';
 
 import { BeansCafeBtn, BeansSearchForm } from '../../components/molecules';
@@ -37,8 +37,13 @@ const BeansList = () => {
     setClickedSearchBtn(false);
   };
 
-  const handleToBeansDetail = () => {
-    navigate('/');
+  const handleToBeansDetail = (e: {
+    currentTarget: { getAttribute: (arg0: string) => void };
+  }) => {
+    const currentTargetValue = Number(
+      e.currentTarget.getAttribute('data-beanid')
+    );
+    appDispatch(detailBeans(currentTargetValue));
   };
   return (
     <>
@@ -67,6 +72,7 @@ const BeansList = () => {
         {beansFormdata.map((item) => (
           <RoundBox
             key={item.beanId}
+            data={item.beanId}
             className='items-center flex'
             type='beansRoundBox'
             onClick={handleToBeansDetail}

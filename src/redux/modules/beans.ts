@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { beansApis } from '../../apis';
+import { useNavigate } from 'react-router-dom';
 
 const initialState = {
   beanlist: [
@@ -9,6 +10,28 @@ const initialState = {
       description: null,
       type: 0,
       beanImage: null,
+    },
+  ],
+  beansDetail: [
+    {
+      acidity: 0,
+      beanId: 0,
+      beanName: null,
+      beanImage: null,
+      bitter: 0,
+      body: 0,
+      cafeId: 0,
+      cafeLogoImage: null,
+      cafeBackGroundImage: null,
+      cafeName: null,
+      cocoaFlavor: 0,
+      description: null,
+      floral: 0,
+      fruitFlavor: 0,
+      nutty: 0,
+      nuttyFlavor: 0,
+      sweetness: 0,
+      type: 0,
     },
   ],
   isLoaded: false,
@@ -42,6 +65,22 @@ export const searchBeans = createAsyncThunk(
   }
 );
 
+export const detailBeans = createAsyncThunk(
+  'beans/detail',
+  async (data: number, thunkAPI) => {
+    //const navigate = useNavigate();
+    try {
+      await beansApis.detailBeans(data).then((response) => {
+        thunkAPI.dispatch(saveBeansDetail(response.data.data));
+        //navigate(`../beans/${data}`);
+        return;
+      });
+    } catch (err) {
+      return;
+    }
+  }
+);
+
 export const beansSlice = createSlice({
   name: 'beansReducer',
   initialState,
@@ -49,6 +88,10 @@ export const beansSlice = createSlice({
     saveBeansList: (state, action: PayloadAction<any>) => {
       state.beanlist = action.payload;
       return state;
+    },
+    saveBeansDetail: (state, action: PayloadAction<any>) => {
+      state.beansDetail = action.payload;
+      return;
     },
   },
   extraReducers: (builder) => {
@@ -61,6 +104,6 @@ export const beansSlice = createSlice({
   },
 });
 
-export const { saveBeansList } = beansSlice.actions;
+export const { saveBeansList, saveBeansDetail } = beansSlice.actions;
 
 export default beansSlice;
