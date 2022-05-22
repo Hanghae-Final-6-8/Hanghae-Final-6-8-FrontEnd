@@ -46,6 +46,7 @@ function App() {
           path='/api/user/login/kakao/callback/*'
           element={<RedirectKakao />}
         />
+        <Route path='/beans/:beanId' element={<BeanDetail />} />
 
         <Route path='/map/:cafeName' element={<StoreLocation />} />
         <Route element={<RootLayout />}>
@@ -66,7 +67,6 @@ function App() {
             <Route path='needlogin' element={<TasteSurveyNeedLogin />} />
           </Route>
           <Route path='/beans' element={<BeansList />} />
-          <Route path='/beans/:beanId' element={<BeanDetail />} />
           {/* <Route path='cafe' element={<BeansByCafe />} /> */}
         </Route>
 
