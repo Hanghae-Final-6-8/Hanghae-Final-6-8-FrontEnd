@@ -2,34 +2,20 @@ import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { commentApis } from '../../apis/commentApis';
 
 export interface CommentItemDataParams {
-  postsId: number | null;
+  // postsId: number | null;
   commentsId: number;
   nickname: string;
   content: string;
   createdAt: string;
-  modifiedAt: string | null;
 }
 
 export interface CommentState {
   list: Array<CommentItemDataParams>;
 }
 
-interface AddCommentType {
-  postsId: number;
-  comment: string;
-}
-
-const INITIAL_STATE: CommentState = {
-  list: [
-    // {
-    //   postsId: 1,
-    //   commentsId: 1,
-    //   nickname: 'user1',
-    //   content: '맛있어보이네요!',
-    //   createdAt: '2022-01-01 10:30',
-    //   modifiedAt: '',
-    // },
-  ],
+const initialState: CommentState = {
+  list: [],
+  // myCommentList:[]
 };
 // 댓글 조회
 export const getCommentListDB = createAsyncThunk(
@@ -37,6 +23,30 @@ export const getCommentListDB = createAsyncThunk(
   async (data: number, thunkAPI) => {
     try {
       await commentApis.getCommentList(data).then((res) => {
+        // 어떻게 넘어오는지 확인필요
+        console.log(res);
+        // const newCommentList: Array<CommentItemDataParams> = [];
+        // res.data.data.content.map((comment) => {
+        //   newCommentList.push({
+        //     commentsId: comment.comments_id,
+        //     nickname: comment.nickname,
+        //     content: comment.content,
+        //     createdAt: comment.created_at,
+        //   });
+        // });
+        // thunkAPI.dispatch(setCommentList(newCommentList));
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+// 내 댓글 조회
+export const getMyCommentDB = createAsyncThunk(
+  'commentReducer/getMyCommentDB',
+  async () => {
+    try {
+      await commentApis.getMyComment().then((res) => {
         console.log(res);
       });
     } catch (error) {
@@ -56,6 +66,8 @@ export const addCommentDB = createAsyncThunk(
     try {
       await commentApis.addComment(data).then((res) => {
         console.log(res);
+        // 커뮤니티처럼 댓글정보 다 와야함다고 요청
+        // code here
       });
     } catch (error) {
       console.log(error);
@@ -69,6 +81,7 @@ export const deleteCommentDB = createAsyncThunk(
     try {
       await commentApis.deleteComment(data).then((res) => {
         console.log(res);
+        thunkAPI.dispatch(deleteComment(data));
       });
     } catch (error) {
       console.log(error);
@@ -79,39 +92,49 @@ export const deleteCommentDB = createAsyncThunk(
 export const commentSlice = createSlice({
   // 액션명
   name: 'commentReducer',
-  initialState: INITIAL_STATE,
+  initialState,
   reducers: {
-    addComment: (state, action: PayloadAction<AddCommentType>) => {
+    setCommentList: (
+      state,
+      action: PayloadAction<Array<CommentItemDataParams>>
+    ) => {
+      // const newList = [...state.list,action.payload];
+      // return {...state, list:newList};
+      action.payload.map((comment) => {
+        state.list.push(comment);
+      });
+    },
+    addComment: (state, action: PayloadAction<CommentItemDataParams>) => {
       const new_commentList = [
         ...state.list,
         {
-          postsId: action.payload.postsId,
-          commentsId: Math.random(),
-          nickname: 'test1',
-          content: action.payload.comment,
-          createdAt: '2022-01-01 20:30',
-          modifiedAt: '',
+          commentsId: action.payload.commentsId,
+          nickname: action.payload.nickname,
+          content: action.payload.content,
+          createdAt: action.payload.createdAt,
         },
       ];
-      return { list: new_commentList };
+      return { ...state, list: new_commentList };
     },
     deleteComment: (state, action: PayloadAction<number>) => {
       const new_list = state.list.filter((comment) => {
         return comment.commentsId !== action.payload;
       });
 
-      return { list: new_list };
+      return { ...state, list: new_list };
     },
   },
 });
 
 export default commentSlice;
 
-export const { addComment, deleteComment } = commentSlice.actions;
+export const { setCommentList, addComment, deleteComment } =
+  commentSlice.actions;
 
 const commentActionCreators = {
   addCommentDB,
   getCommentListDB,
+  getMyCommentDB,
   deleteCommentDB,
 };
 

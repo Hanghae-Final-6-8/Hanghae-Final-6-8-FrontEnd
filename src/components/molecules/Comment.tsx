@@ -21,9 +21,9 @@ const Comment = (props: postsIdProps) => {
 
   // 코멘트 리스트 리덕스에서 불러오기
   const commentList = useSelector((store: RootState) => store.comment.list);
-  const postComentList = commentList.filter((comment) => {
-    return comment.postsId === Number(postsId);
-  });
+  // const postComentList = commentList.filter((comment) => {
+  //   return comment.postsId === Number(postsId);
+  // });
 
   //임시. 로그인 구현시 삭제
   const nickname = 'test1';
@@ -34,7 +34,7 @@ const Comment = (props: postsIdProps) => {
   };
   return (
     <div className='flex flex-col'>
-      {postComentList.map((comment, index) => {
+      {commentList.map((comment, index) => {
         return (
           <div key={index}>
             <img

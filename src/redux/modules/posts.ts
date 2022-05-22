@@ -223,10 +223,10 @@ export const postsSlice = createSlice({
       state.paging = action.payload;
     },
     setPost: (state, action: PayloadAction<any>) => {
-      const new_list = [...state.list, ...action.payload.post_list];
+      const newList = [...state.list, ...action.payload.post_list];
       return {
         ...state,
-        list: new_list,
+        list: newList,
         postsLoadedLen: action.payload.postsLoadedLen,
       };
     },
