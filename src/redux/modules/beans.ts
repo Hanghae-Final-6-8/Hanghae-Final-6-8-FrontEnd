@@ -28,6 +28,19 @@ export const getBeansList = createAsyncThunk(
   }
 );
 
+export const searchBeans = createAsyncThunk(
+  'beans/search',
+  async (data: string, thunkAPI) => {
+    try {
+      await beansApis.searchBeans(data).then((response) => {
+        return;
+      });
+    } catch (err) {
+      return;
+    }
+  }
+);
+
 export const beansSlice = createSlice({
   name: 'beansReducer',
   initialState,
