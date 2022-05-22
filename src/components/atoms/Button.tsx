@@ -4,8 +4,9 @@ import classnames from 'classnames';
 interface BtnProps {
   children: React.ReactNode;
   className?: string;
-  onClick?: () => void;
+  onClick?: (e: any | null) => void;
   type?: string;
+  data?: string | number;
 }
 
 const Button = (props: BtnProps) => {
@@ -39,6 +40,7 @@ const Button = (props: BtnProps) => {
         }
       )}
       onClick={props.onClick}
+      data-cafeid={props.data}
     >
       <Text btnClassName={className} type={props.type}>
         {props.children}

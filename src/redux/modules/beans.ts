@@ -1,3 +1,4 @@
+import { getBeansListByCafe } from './cafe';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { beansApis } from '../../apis';
 import { useNavigate } from 'react-router-dom';
@@ -101,6 +102,9 @@ export const beansSlice = createSlice({
       state.isLoaded = true;
     });
     builder.addCase(searchBeans.fulfilled, (state, action) => {
+      state.isLoaded = false;
+    });
+    builder.addCase(getBeansListByCafe.fulfilled, (state, action) => {
       state.isLoaded = false;
     });
   },
