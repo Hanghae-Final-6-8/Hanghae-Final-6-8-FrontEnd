@@ -1,4 +1,4 @@
-import { bookmark, down, share, beans, right } from '../../assets/icons/';
+import { bookmark, down, up, share, beans, right } from '../../assets/icons/';
 import { coffee_default } from '../../assets/images';
 import {
   RoundBox,
@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../redux/configureStore';
 import { getTasteSurvey, getSimilarBeans } from '../../redux/modules/taste';
 import { detailBeans } from '../../redux/modules/beans';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { logoCopickSquare } from '../../assets/logo';
 import { addFavoriteList } from '../../redux/modules/favorite';
 
@@ -26,8 +26,6 @@ const MainYesTasteSurvey = () => {
     ? useSelector((state: RootState) => state.taste)
     : useSelector((state: RootState) => state.beans.beansDetail);
 
-  // console.log(beanId);
-  // console.log(tasteList);
   useEffect(() => {
     // 리덕스에 데이터가 null일 경우 API를 요청합니다.
     !tasteList.beanName && appDispatch(getTasteSurvey());
@@ -35,6 +33,9 @@ const MainYesTasteSurvey = () => {
       appDispatch(getSimilarBeans());
     }
   }, [tasteList.beanName, beanId, tasteList.isSimilarLoaded, appDispatch]);
+
+  const [clickedDesc, setClickedDesc] = useState(false);
+
   const handelShareByKakaotalk = () => {
     alert('아직 구현 중에 있습니다!');
   };
@@ -54,7 +55,11 @@ const MainYesTasteSurvey = () => {
   };
 
   const handleShowDescription = () => {
-    alert('아직 구현 중에 있습니다!');
+    if (clickedDesc) {
+      setClickedDesc(false);
+    } else {
+      setClickedDesc(true);
+    }
   };
 
   const handleToClickBeans = (e: {
@@ -136,11 +141,11 @@ const MainYesTasteSurvey = () => {
                 </Text>
               </figcaption>
             </figure>
-            <p className='mt-3 text-body font-400 line-clamp-2 h-10 text-gray-400'>
+            <Text type={clickedDesc ? 'clickedDescription' : 'description'}>
               {tasteList.description}
-            </p>
+            </Text>
             <button className='block mx-auto' onClick={handleShowDescription}>
-              <img src={down} />
+              <img src={clickedDesc ? up : down} />
             </button>
             <RoundBox type='mainRoundBox'>
               <Text type='mainSubTitle'>
