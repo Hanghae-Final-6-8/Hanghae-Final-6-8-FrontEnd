@@ -17,6 +17,7 @@ export interface PostsItemDataParams {
 
 export interface PostsState {
   list: Array<PostsItemDataParams>;
+  post?: PostsItemDataParams;
   paging?: number;
   isLoading?: boolean;
   postsLoadedLen?: number;
@@ -25,12 +26,25 @@ export interface PostsState {
 
 const initialState: PostsState = {
   list: [],
+  post: {
+    postsId: 0,
+    nickname: '',
+    postsImage: '',
+    title: '',
+    content: '',
+    createdAt: '',
+    modifiedAt: '',
+    tagName: [],
+    isLikes: null,
+    likesCount: null,
+  },
   isLoading: false,
   paging: 0,
   postsLoadedLen: 0,
   isListLoaded: false,
 };
 
+// * 커뮤니티 *
 // 커뮤니티 리스트 불러오기
 export const getPostListDB = createAsyncThunk(
   'postsReducer/getPostListDB',
@@ -67,10 +81,47 @@ export const getPostListDB = createAsyncThunk(
 
         const postsLoadedLen = res.data.data.content.length;
         thunkAPI.dispatch(isLoading(false));
-        thunkAPI.dispatch(setPost({ postList, postsLoadedLen }));
+        thunkAPI.dispatch(setPostList({ postList, postsLoadedLen }));
       });
     } catch (error) {
       thunkAPI.dispatch(isLoading(false));
+      console.log(error);
+    }
+  }
+);
+
+// 커뮤니티 게시글 상세보기
+export const getPostDB = createAsyncThunk(
+  'postsReducer/getPostDB',
+  async (data: number, thunkAPI) => {
+    try {
+      await postApis.getPostDetail(data).then((res) => {
+        console.log(res);
+        // 임시
+        // console.log(res.data.data.content);
+        let newTagStr = [];
+        if (res.data.data.tag_name !== null) {
+          const tagStr = res.data.data.tag_name.slice(
+            1,
+            res.data.data.tag_name.length - 1
+          );
+          newTagStr = tagStr.split(',');
+        }
+        const post = {
+          postsId: res.data.data.posts_id,
+          nickname: res.data.data.nickname,
+          postsImage: res.data.data.posts_image,
+          title: res.data.data.title,
+          content: res.data.data.content,
+          createdAt: res.data.data.created_at,
+          modifiedAt: res.data.data.modified_at,
+          tagName: newTagStr,
+          isLikes: res.data.data.isLikes,
+          likesCount: res.data.data.likes_count,
+        };
+        thunkAPI.dispatch(setPost(post));
+      });
+    } catch (error) {
       console.log(error);
     }
   }
@@ -82,7 +133,6 @@ interface formType {
   prevImage: string;
 }
 
-// * 커뮤니티 *
 // 커뮤니티 추가하기
 export const addPostDB = createAsyncThunk(
   'postsReducer/addPostDB',
@@ -256,13 +306,17 @@ export const postsSlice = createSlice({
     setPageNum: (state, action: PayloadAction<number>) => {
       state.paging = action.payload;
     },
-    setPost: (state, action: PayloadAction<any>) => {
+    setPostList: (state, action: PayloadAction<any>) => {
       const newList = [...state.list, ...action.payload.postList];
       return {
         ...state,
         list: newList,
         postsLoadedLen: action.payload.postsLoadedLen,
       };
+    },
+    setPost: (state, action: PayloadAction<PostsItemDataParams>) => {
+      const newPost = { ...state.post, ...action.payload };
+      return { ...state, post: newPost };
     },
     setPostLiked: (
       state,
@@ -333,12 +387,19 @@ export const postsSlice = createSlice({
         return post.postsId === action.payload;
       });
       state.list[idx].isLikes = 1;
+      // 다음과 같이 likesCount값을 cnt에 재정의한 원인: likesCount를 null로 초기화했기때문
+      const likesCnt = state.list[idx].likesCount;
+      const cnt = likesCnt === null ? 0 : likesCnt;
+      state.list[idx].likesCount = cnt! + 1;
     },
     deleteLike: (state, action: PayloadAction<number>) => {
       const idx = state.list.findIndex((post) => {
         return post.postsId === action.payload;
       });
       state.list[idx].isLikes = null;
+      const likesCnt = state.list[idx].likesCount;
+      const cnt = likesCnt === null ? 0 : likesCnt;
+      state.list[idx].likesCount = cnt! - 1;
     },
   },
   extraReducers: (builder) => {
@@ -351,6 +412,7 @@ export const postsSlice = createSlice({
 });
 
 export const {
+  setPostList,
   setPost,
   setPostLiked,
   setPageNum,

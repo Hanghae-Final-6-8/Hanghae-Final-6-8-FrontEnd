@@ -3,6 +3,8 @@ import instance from '../lib/axios';
 export const postApis = {
   getPostList: (page: number) =>
     instance.get('/api/posts', { params: { page } }),
+  getPostDetail: (posts_id: number) =>
+    instance.get('/api/posts', { params: posts_id }),
   addPost: (data: FormData) =>
     instance.post('/api/posts', data, {
       headers: {

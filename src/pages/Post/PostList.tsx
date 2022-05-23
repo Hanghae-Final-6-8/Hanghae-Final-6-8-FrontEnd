@@ -120,7 +120,9 @@ const PostList = () => {
                     </button>
                   )}
 
-                  <span>{post.likesCount}개</span>
+                  <span>
+                    {post.likesCount !== null ? post.likesCount : '0'}개
+                  </span>
                 </div>
               </div>
             );
