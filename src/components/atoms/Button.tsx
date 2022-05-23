@@ -32,7 +32,7 @@ const Button = (props: BtnProps) => {
             tasteSurvey,
           'absolute font-500 text-sub2 bottom-2 text-white bg-gray30 shadow-tasteBrown':
             tasteSurveyNoneActive,
-          'bg-brownP bg-cover mt-30px mb-34px  shadow-tasteBrown text-body font-500':
+          'bg-brownP bg-cover mt-30px mb-34px  shadow-tasteBrown text-body font-500 text-white':
             toastPopup,
         },
         {

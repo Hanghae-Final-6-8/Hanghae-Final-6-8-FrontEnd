@@ -21,9 +21,9 @@ const ToastPopupBox = (props: ToastPopupBoxProps) => {
   return (
     <div
       className={classnames(`bg-white ${className}`, {
-        'absolute z-20 h-full w-full bottom-0 pb-84px px-30px rounded-t-40px pt-34px':
+        'absolute z-20 w-full bottom-0 pb-84px px-30px rounded-t-40px pt-34px':
           defaultBox,
-        'absolute z-20 h-full w-full bottom-0 rounded-t-40px pt-34px':
+        'absolute z-20 h-full w-full bottom-0 pb-20 rounded-t-40px pt-34px':
           scrollBox,
       })}
     >
