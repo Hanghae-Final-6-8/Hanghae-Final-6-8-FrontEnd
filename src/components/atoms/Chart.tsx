@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import {
   Chart as ChartJS,
   RadialLinearScale,
@@ -28,10 +27,21 @@ const Chart = (props: ChartProps) => {
       },
     ],
   };
+  const options = {
+    scales: {
+      r: {
+        suggestedMin: 0,
+        suggestedMax: 3,
+        ticks: {
+          stepSize: 1,
+        },
+      },
+    },
+  };
 
   return (
     <div>
-      <Radar data={data} />
+      <Radar data={data} options={options} />
     </div>
   );
 };
