@@ -64,6 +64,58 @@ export const loginKakao = createAsyncThunk(
   }
 );
 
+export const getNaverURL = createAsyncThunk(
+  'user/login/naver/url',
+  async () => {
+    try {
+      await userApis.getKakaoURL().then((response) => {
+        return;
+      });
+    } catch (err) {
+      return;
+    }
+  }
+);
+
+export const loginNaver = createAsyncThunk(
+  'user/login/naver',
+  async (code: string) => {
+    try {
+      await userApis.loginNaver(code).then((response) => {
+        return;
+      });
+    } catch (err) {
+      return;
+    }
+  }
+);
+
+export const getGoogleURL = createAsyncThunk(
+  'user/login/google/url',
+  async () => {
+    try {
+      await userApis.getGoogleURL().then((response) => {
+        return;
+      });
+    } catch (err) {
+      return;
+    }
+  }
+);
+
+export const loginGoogle = createAsyncThunk(
+  'user/login/google',
+  async (code: string) => {
+    try {
+      await userApis.loginGoogle(code).then((response) => {
+        return;
+      });
+    } catch (err) {
+      return;
+    }
+  }
+);
+
 // 유저의 로그인 여부를 판별합니다.
 export const auth = createAsyncThunk('user/auth', async (_, thunkAPI) => {
   try {
