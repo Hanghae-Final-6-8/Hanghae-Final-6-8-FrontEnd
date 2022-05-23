@@ -94,6 +94,6 @@ body::-webkit-scrollbar {
 
 /* filter */
 .filter-gray30 {
-  filter: invert(84%) sepia(1%) saturate(301%) hue-rotate(27deg)
-    brightness(104%) contrast(96%);
+  filter: invert(73%) sepia(71%) saturate(1%) hue-rotate(7deg) brightness(110%)
+    contrast(86%);
 }
