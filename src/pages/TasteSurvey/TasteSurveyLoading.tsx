@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Spinner } from '../../components/organisms';
-import { getObjLocalStorage } from '../../utils/localstorage';
+import { getObjLocalStorage } from '../../utils/localStorage';
 import { useAppDispatch } from '../../redux/configureStore';
 import { postTasteSurvey } from '../../redux/modules/taste';
 import { auth } from '../../redux/modules/user';

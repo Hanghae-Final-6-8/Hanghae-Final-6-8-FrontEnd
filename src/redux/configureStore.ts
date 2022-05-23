@@ -8,6 +8,8 @@ import userSlice from './modules/user';
 import tasteSlice from './modules/taste';
 import mypageSlice from './modules/mypage';
 import beansSlice from './modules/beans';
+import cafeSlice from './modules/cafe';
+import favoriteSlice from './modules/favorite';
 
 const rootReducer = combineReducers({
   posts: postsSlice.reducer,
@@ -17,6 +19,8 @@ const rootReducer = combineReducers({
   taste: tasteSlice.reducer,
   mypage: mypageSlice.reducer,
   beans: beansSlice.reducer,
+  cafe: cafeSlice.reducer,
+  favorite: favoriteSlice.reducer,
 });
 
 export const store = configureStore({
