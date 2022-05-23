@@ -43,20 +43,16 @@ export const loginKakao = createAsyncThunk(
   async (data: Login) => {
     try {
       const code = data.codeInput;
-      await instance
-        .get('/api/user/login/kakao/callback', {
-          params: { code },
-        })
-        .then((response) => {
-          const accessToken = response.headers.access_token;
-          const refreshToken = response.headers.refresh_token;
-          setAccessTokenToCookie(accessToken);
-          setRefreshTokenToCookie(refreshToken);
+      await userApis.loginKakao(code).then((response) => {
+        const accessToken = response.headers.access_token;
+        const refreshToken = response.headers.refresh_token;
+        setAccessTokenToCookie(accessToken);
+        setRefreshTokenToCookie(refreshToken);
 
-          data.navigate('/main', { replace: true });
+        data.navigate('/main', { replace: true });
 
-          return;
-        });
+        return;
+      });
     } catch (err) {
       console.log(err);
       return;
