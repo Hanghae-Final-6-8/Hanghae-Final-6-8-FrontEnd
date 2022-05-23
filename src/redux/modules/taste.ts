@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { buildQueries } from '@testing-library/react';
 import { tasteApis } from '../../apis';
-import { removeLocalStorage } from '../../utils/localstorage';
+import { removeLocalStorage } from '../../utils/localStorage';
 
 const initialState = {
   acidity: 0,

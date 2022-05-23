@@ -1,5 +1,11 @@
+import { MainYesTasteSurvey } from '../Main';
+
 const BeanDetail = () => {
-  return <>BeanDetail 페이지</>;
+  return (
+    <>
+      <MainYesTasteSurvey />
+    </>
+  );
 };
 
 export default BeanDetail;

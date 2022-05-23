@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../redux/configureStore';
-import { axiosGetPostList } from '../../redux/modules/posts';
+import { getPostListDB } from '../../redux/modules/posts';
 import { useAppDispatch } from '../../redux/configureStore';
 import { InfinityScroll } from '../../components/atoms/index';
 import { EditDelToastModal } from '../../components/molecules/index';
+import { addLikeDB } from '../../redux/modules/posts';
+import { deleteLikeDB } from '../../redux/modules/posts';
 
 const PostList = () => {
   const navigate = useNavigate();
@@ -17,18 +19,19 @@ const PostList = () => {
 
   // db에서 커뮤니티 리스트 가져오기
   useEffect(() => {
-    if (list.length < 2) {
-      appDispatch(axiosGetPostList(0));
-    }
+    // if (list.length < 2) {}
+    !isListLoaded && appDispatch(getPostListDB(0));
   }, []);
 
   // 커뮤니티 리스트, 로딩
-  const { list, isLoading } = useSelector((store: RootState) => store.posts);
+  const { list, isLoading, isListLoaded } = useSelector(
+    (store: RootState) => store.posts
+  );
   // 페이징 넘버, db에서받아온 post수
   const { paging, postsLoadedLen } = useSelector(
     (store: RootState) => store.posts
   );
-
+  console.log(isListLoaded);
   // 토스트팝업 띄우기
   const getSetToastFrom = (postsId: number) => {
     setToastStatus(!toastStatus);
@@ -44,8 +47,13 @@ const PostList = () => {
     navigate(`/posts/${postsId}`);
   };
 
-  const handleGetPostList = () => {
-    appDispatch(axiosGetPostList(paging!));
+  // 좋아요 추가
+  const handleAddLikes = (postsId: number) => {
+    appDispatch(addLikeDB(postsId));
+  };
+  // 좋아요 삭제
+  const handleDeleteLikes = (postsId: number) => {
+    appDispatch(deleteLikeDB(postsId));
   };
 
   return (
@@ -54,7 +62,7 @@ const PostList = () => {
       <div className='flex flex-col pb-24'>
         <InfinityScroll
           callNext={() => {
-            appDispatch(axiosGetPostList(paging!));
+            appDispatch(getPostListDB(paging!));
           }}
           loading={isLoading!}
           isNext={postsLoadedLen === 4 ? true : false}
@@ -74,6 +82,7 @@ const PostList = () => {
                     <span>{post.nickname}</span>
                   </div>
                   <button
+                    className='p-4'
                     onClick={() => {
                       getSetToastFrom(post.postsId!);
                     }}
@@ -94,9 +103,21 @@ const PostList = () => {
                 />
                 <div className='p-4'>
                   {post.isLikes === null ? (
-                    <button>🤍</button>
+                    <button
+                      onClick={() => {
+                        handleAddLikes(post.postsId!);
+                      }}
+                    >
+                      🤍
+                    </button>
                   ) : (
-                    <button>❤️</button>
+                    <button
+                      onClick={() => {
+                        handleDeleteLikes(post.postsId!);
+                      }}
+                    >
+                      ❤️
+                    </button>
                   )}
 
                   <span>{post.likesCount}개</span>

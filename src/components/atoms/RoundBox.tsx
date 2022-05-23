@@ -3,12 +3,13 @@ import classnames from 'classnames';
 interface RoundBox {
   children: React.ReactNode;
   type?: string;
-  onClick?: () => void;
+  onClick?: (e: any | null) => void;
   className?: string;
   bg?: string;
   round?: string;
   id?: string;
   cafeId?: number;
+  data?: string | number;
 }
 
 const RoundBox = (props: RoundBox) => {
@@ -34,6 +35,7 @@ const RoundBox = (props: RoundBox) => {
         }
       )}
       onClick={props.onClick}
+      data-beanid={props.data}
     >
       {props.children}
     </div>
