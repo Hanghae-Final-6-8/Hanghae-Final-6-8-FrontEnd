@@ -25,8 +25,8 @@ export interface PostsState {
 
 const initialState: PostsState = {
   list: [],
-  paging: 0,
   isLoading: false,
+  paging: 0,
   postsLoadedLen: 0,
   isListLoaded: false,
 };
@@ -38,9 +38,11 @@ export const getPostListDB = createAsyncThunk(
     thunkAPI.dispatch(isLoading(true));
     try {
       await postApis.getPostList(data).then((res) => {
-        const post_list: Array<PostsItemDataParams> = [];
+        const postList: Array<PostsItemDataParams> = [];
         // 페이징
-        thunkAPI.dispatch(setPageNum(++data));
+        if (res.data.data.content.length !== 0) {
+          thunkAPI.dispatch(setPageNum(++data));
+        }
         console.log(res.data.data.content);
         res.data.data.content.map((post: any) => {
           let newTagStr = [];
@@ -49,7 +51,7 @@ export const getPostListDB = createAsyncThunk(
             newTagStr = tagStr.split(',');
           }
 
-          post_list.push({
+          postList.push({
             postsId: post.posts_id,
             title: post.title,
             content: post.content,
@@ -65,7 +67,7 @@ export const getPostListDB = createAsyncThunk(
 
         const postsLoadedLen = res.data.data.content.length;
         thunkAPI.dispatch(isLoading(false));
-        thunkAPI.dispatch(setPost({ post_list, postsLoadedLen }));
+        thunkAPI.dispatch(setPost({ postList, postsLoadedLen }));
       });
     } catch (error) {
       thunkAPI.dispatch(isLoading(false));
@@ -180,7 +182,7 @@ export const addLikeDB = createAsyncThunk(
     }
   }
 );
-
+// 좋아요 삭제
 export const deleteLikeDB = createAsyncThunk(
   'postsReducer/deleteLikeDB',
   async (data: number, thunkAPI) => {
@@ -188,6 +190,38 @@ export const deleteLikeDB = createAsyncThunk(
       await likeApis.deleteLike(data).then((res) => {
         console.log(res);
         thunkAPI.dispatch(deleteLike(data));
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+// 좋아요 누른 게시물 조회
+export const getPostsLikedDB = createAsyncThunk(
+  'postsReducer/getPostsLikedDB',
+  async (data, thunkAPI) => {
+    try {
+      await likeApis.getPostsLiked().then((res) => {
+        console.log(res);
+        const newList: Array<PostsItemDataParams> = [];
+        res.data.data.content.map((post: any) => {
+          let newTagStr = [];
+          if (post.tag_name !== null) {
+            const tagStr = post.tag_name.slice(1, post.tag_name.length - 1);
+            newTagStr = tagStr.split(',');
+          }
+          newList.push({
+            postsId: post.posts_id,
+            nickname: post.nickname,
+            postsImage: post.posts_image,
+            title: post.title,
+            content: post.content,
+            createdAt: post.created_at,
+            modifiedAt: post.modified_at,
+            tagName: newTagStr,
+          });
+        });
+        thunkAPI.dispatch(setPostLiked(newList));
       });
     } catch (error) {
       console.log(error);
@@ -228,6 +262,19 @@ export const postsSlice = createSlice({
         ...state,
         list: newList,
         postsLoadedLen: action.payload.postsLoadedLen,
+      };
+    },
+    setPostLiked: (
+      state,
+      action: PayloadAction<Array<PostsItemDataParams>>
+    ) => {
+      const newList = [...state.list, ...action.payload];
+      return {
+        list: newList,
+        isLoading: false,
+        postsLoadedLen: 0,
+        paging: 0,
+        isListLoaded: false,
       };
     },
     addPost: (state, action: PayloadAction<AddPostsType>) => {
@@ -296,13 +343,16 @@ export const postsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getPostListDB.fulfilled, (state, action) => {
-      state.isListLoaded = true;
+      if (state.list.length !== 0) {
+        state.isListLoaded = true;
+      }
     });
   },
 });
 
 export const {
   setPost,
+  setPostLiked,
   setPageNum,
   addPost,
   editPost,

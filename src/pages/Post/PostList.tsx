@@ -20,7 +20,7 @@ const PostList = () => {
   // db에서 커뮤니티 리스트 가져오기
   useEffect(() => {
     // if (list.length < 2) {}
-    !isListLoaded && list.length === 0 && appDispatch(getPostListDB(0));
+    !isListLoaded && appDispatch(getPostListDB(0));
   }, []);
 
   // 커뮤니티 리스트, 로딩
