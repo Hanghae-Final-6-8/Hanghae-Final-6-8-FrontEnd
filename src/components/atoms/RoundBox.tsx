@@ -18,6 +18,7 @@ const RoundBox = (props: RoundBox) => {
   const mainRoundBox = props.type === 'mainRoundBox';
 
   const beansRoundBox = props.type === 'beansRoundBox';
+  const main2RoundBox = props.type === 'main2RoundBox';
 
   const isOnClick = props.onClick;
 
@@ -32,6 +33,10 @@ const RoundBox = (props: RoundBox) => {
         },
         {
           'relative rounded-30px px-5 py-5 shadow-con14': beansRoundBox,
+        },
+        {
+          'relative rounded-30px px-5 py-5 items-center flex w-[280px] bg-defaultBg03':
+            main2RoundBox,
         }
       )}
       onClick={props.onClick}
