@@ -38,9 +38,7 @@ instance.interceptors.request.use((config: AxiosRequestConfig) => {
  * 5. 이런 식으로 하면 됩니다.
  * 6. 임시적으로 로컬에서 작업을 하기 위해 이런식으로 하고 있습니다.
  ***************************************************************************/
-// setAccessTokenToCookie(
-//   ''
-// );
+setAccessTokenToCookie('asdfasdf');
 // setRefreshTokenToCookie(
 //   ''
 // );
@@ -50,7 +48,7 @@ instance.interceptors.response.use(
     console.log('response입니다 \n', response);
     return response;
   },
-  (error) => {
+  async (error) => {
     const {
       data: responseData,
       config: originalRequest,
@@ -63,9 +61,18 @@ instance.interceptors.response.use(
     }
 
     if (statusCode === 441) {
-      // const refreshToken = getRefreshTokenFromCookie();
-      // originalRequest.headers['Authorization'] = `Bearer ${refreshToken}`;
-      return axios(originalRequest);
+      const refreshToken = getRefreshTokenFromCookie();
+      originalRequest.headers['Authorization'] = `Bearer ${refreshToken}`;
+      try {
+        const data = await instance.get('/api/user/reissue');
+        if (data) {
+          console.log(data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+      //return axios(originalRequest);
+      return Promise.reject(error);
     }
     if (statusCode === 442) {
       const accessToken = getAccessTokenFromCookie();
