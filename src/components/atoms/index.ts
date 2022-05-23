@@ -11,6 +11,7 @@ import Hr from './Hr';
 import Image from './Image';
 import Chart from './Chart';
 import Input from './Input';
+import Icon from './Icon';
 
 export {
   Button,
@@ -26,4 +27,5 @@ export {
   Image,
   Chart,
   Input,
+  Icon,
 };
