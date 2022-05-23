@@ -42,7 +42,7 @@ const MainYesTasteSurvey = () => {
     navigate(`/map/${cafeName}`);
   };
   const handleAddBookmark = () => {
-    alert('아직 구현 중에 있습니다!');
+    alert('즐겨찾기 등록 완료!');
   };
   const handleShowDescription = () => {
     alert('아직 구현 중에 있습니다!');
@@ -81,11 +81,17 @@ const MainYesTasteSurvey = () => {
   }
 
   // 비슷한 원두 추천
-  const recommendFormdata = [];
+  const recommendFormdata: {
+    beanId: number;
+    beanName: string;
+    description: string;
+    beanImage: string;
+    type: number;
+  }[] = [];
   if (tasteList.similar) {
-    for (let i = 0; i < tasteList.similar.length; i++) {
-      recommendFormdata.push(tasteList.similar[i]);
-    }
+    tasteList.similar.forEach((el) => {
+      recommendFormdata.push(el);
+    });
   }
 
   return (
@@ -96,6 +102,7 @@ const MainYesTasteSurvey = () => {
           <button
             className='absolute top-0 right-0 w-8'
             onClick={handleAddBookmark}
+            data-beanid={tasteList.beanId}
           >
             <img className='w-full' src={bookmark} />
           </button>
