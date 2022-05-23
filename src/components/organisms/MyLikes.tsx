@@ -14,12 +14,21 @@ const MyLikes = () => {
     (store: RootState) => store.mypage
   );
 
-  console.log(listLiked);
-
   return (
-    <div>
+    <div className='flex flex-wrap pb-24'>
       {listLiked.map((post, index) => {
-        return <div key={index}>{post.title}</div>;
+        return (
+          <div className='ml-1 mr-1' key={index}>
+            <img
+              className='w-24'
+              src={
+                post.postsImage
+                  ? post.postsImage.toString()
+                  : 'https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814052__340.png'
+              }
+            />
+          </div>
+        );
       })}
     </div>
   );

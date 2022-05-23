@@ -140,7 +140,7 @@ export const mypageSlice = createSlice({
       state,
       action: PayloadAction<Array<PostsItemDataParams>>
     ) => {
-      const newListLiked = [...state.listLiked, ...action.payload];
+      const newListLiked = [...action.payload];
       return {
         ...state,
         listLiked: newListLiked,
@@ -150,11 +150,14 @@ export const mypageSlice = createSlice({
       state,
       action: PayloadAction<Array<PostsItemDataParams>>
     ) => {
-      const newListActivity = [...state.listLiked, ...action.payload];
+      const newListActivity = [...action.payload];
       return {
         ...state,
         listMyActivity: newListActivity,
       };
+    },
+    setIsListLikedLoaded: (state, action: PayloadAction<boolean>) => {
+      state.isListLikedLoaded = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -173,11 +176,16 @@ export const mypageSlice = createSlice({
 
 export default mypageSlice;
 
-export const { setFavorLikeActivity, setPostLiked, setPostActivity } =
-  mypageSlice.actions;
+export const {
+  setFavorLikeActivity,
+  setPostLiked,
+  setPostActivity,
+  setIsListLikedLoaded,
+} = mypageSlice.actions;
 
 const likeActionCreators = {
   getUserInfo,
+  setIsListLikedLoaded,
 };
 
 export { likeActionCreators };
