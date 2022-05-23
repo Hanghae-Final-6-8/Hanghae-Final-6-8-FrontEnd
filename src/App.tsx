@@ -57,11 +57,7 @@ function App() {
           <Route path='/posts/:postsId' element={<PostDetail />} />
           <Route path='/posts/write' element={<AddEditPost />} />
           <Route path='/posts/write/:postsId' element={<AddEditPost />} />
-          <Route path='/mypage' element={<Mypage />}>
-            <Route path='favorites' element={<MyFavorites />} />
-            <Route path='likes' element={<MyLikes />} />
-            <Route path='activiry' element={<MyActivity />} />
-          </Route>
+          <Route path='/mypage' element={<Mypage />} />
           <Route path='/survey' element={<TasteSurvey />}>
             <Route path='main' element={<TasteSurveyMain />} />
             <Route path='01' element={<TasteSurvey01 />} />

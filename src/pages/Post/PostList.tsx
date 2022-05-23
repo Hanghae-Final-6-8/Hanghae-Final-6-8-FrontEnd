@@ -65,7 +65,7 @@ const PostList = () => {
             appDispatch(getPostListDB(paging!));
           }}
           loading={isLoading!}
-          isNext={postsLoadedLen === 4 ? true : false}
+          isNext={postsLoadedLen === 20 ? true : false}
         >
           {list.map((post, idx) => {
             return (

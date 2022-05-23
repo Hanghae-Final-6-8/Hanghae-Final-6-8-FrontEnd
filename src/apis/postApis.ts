@@ -18,4 +18,3 @@ export const postApis = {
   deletePost: (data: number) =>
     instance.post('/api/posts/delete', { posts_id: data }),
 };
-                                    

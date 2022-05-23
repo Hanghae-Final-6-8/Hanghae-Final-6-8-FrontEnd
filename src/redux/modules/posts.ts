@@ -257,7 +257,7 @@ export const postsSlice = createSlice({
       state.paging = action.payload;
     },
     setPost: (state, action: PayloadAction<any>) => {
-      const newList = [...state.list, ...action.payload.post_list];
+      const newList = [...state.list, ...action.payload.postList];
       return {
         ...state,
         list: newList,
