@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useState } from 'react';
 import { editPostDB } from '../../redux/modules/posts';
 import { useNavigate } from 'react-router-dom';
@@ -79,12 +79,15 @@ const AddEditPost = () => {
   const getInputTagNameFrom = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputTag(e.target.value);
   };
+  // 태그 추가
   const onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
     if (inputTag.length !== 0 && e.key === 'Enter') {
       setTagName([inputTag, ...tagName]);
       setInputTag('');
     }
   };
+
+  // 태그 지우기
   const deleteTag = (tag: string) => {
     setTagName(tagName.filter((t) => t !== tag));
   };
@@ -129,7 +132,7 @@ const AddEditPost = () => {
       ) : (
         <h1 className='text-center mb-5'>새 게시물</h1>
       )}
-      <div className='bg-white shadow-lg rounded-30px pt-5 pb-5 pl-5 pr-5'>
+      <div className='bg-white shadow-xl rounded-30px pt-5 pb-5 pl-5 pr-5'>
         <div className='flex flex-col w-full border-b pt-5 pb-5 '>
           <div className='flex mb-5'>
             <div className='relative mr-3'>
@@ -170,14 +173,17 @@ const AddEditPost = () => {
               />
             </div>
           </div>
-          <input
-            type='text'
-            className='outline-none mb-1'
-            placeholder='태그 입력후 Enter'
-            onChange={getInputTagNameFrom}
-            onKeyDown={onKeyDown}
-            value={inputTag}
-          />
+          <div className='HashWrapOuter'>
+            <input
+              type='text'
+              className='HashInput outline-none mb-1'
+              placeholder='태그 입력후 Enter'
+              onChange={getInputTagNameFrom}
+              onKeyDown={onKeyDown}
+              value={inputTag}
+            />
+          </div>
+
           <div>
             {tagName.length !== 0 ? (
               tagName.map((tag, index) => {

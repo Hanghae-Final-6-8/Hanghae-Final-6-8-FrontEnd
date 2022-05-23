@@ -2,19 +2,27 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../redux/configureStore';
 import { RootState } from '../../redux/configureStore';
-import { getPostsLikedDB } from '../../redux/modules/posts';
+import { getPostsLikedDB } from '../../redux/modules/mypage';
 
 const MyLikes = () => {
   const appDispatch = useAppDispatch();
   useEffect(() => {
-    appDispatch(getPostsLikedDB());
+    !isListLikedLoaded && appDispatch(getPostsLikedDB());
   }, []);
 
-  const postListLiked = useSelector((store: RootState) => store.posts.list);
+  const { listLiked, isListLikedLoaded } = useSelector(
+    (store: RootState) => store.mypage
+  );
 
-  console.log(postListLiked);
+  console.log(listLiked);
 
-  return <div>좋아요 커뮤니티 리스트</div>;
+  return (
+    <div>
+      {listLiked.map((post, index) => {
+        return <div key={index}>{post.title}</div>;
+      })}
+    </div>
+  );
 };
 
 export default MyLikes;

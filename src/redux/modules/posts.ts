@@ -246,38 +246,6 @@ export const deleteLikeDB = createAsyncThunk(
     }
   }
 );
-// 좋아요 누른 게시물 조회
-export const getPostsLikedDB = createAsyncThunk(
-  'postsReducer/getPostsLikedDB',
-  async (data, thunkAPI) => {
-    try {
-      await likeApis.getPostsLiked().then((res) => {
-        console.log(res);
-        const newList: Array<PostsItemDataParams> = [];
-        res.data.data.content.map((post: any) => {
-          let newTagStr = [];
-          if (post.tag_name !== null) {
-            const tagStr = post.tag_name.slice(1, post.tag_name.length - 1);
-            newTagStr = tagStr.split(',');
-          }
-          newList.push({
-            postsId: post.posts_id,
-            nickname: post.nickname,
-            postsImage: post.posts_image,
-            title: post.title,
-            content: post.content,
-            createdAt: post.created_at,
-            modifiedAt: post.modified_at,
-            tagName: newTagStr,
-          });
-        });
-        thunkAPI.dispatch(setPostLiked(newList));
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-);
 
 // * reducer *
 
@@ -318,19 +286,7 @@ export const postsSlice = createSlice({
       const newPost = { ...state.post, ...action.payload };
       return { ...state, post: newPost };
     },
-    setPostLiked: (
-      state,
-      action: PayloadAction<Array<PostsItemDataParams>>
-    ) => {
-      const newList = [...state.list, ...action.payload];
-      return {
-        list: newList,
-        isLoading: false,
-        postsLoadedLen: 0,
-        paging: 0,
-        isListLoaded: false,
-      };
-    },
+
     addPost: (state, action: PayloadAction<AddPostsType>) => {
       const new_postsList = [
         {
@@ -414,7 +370,6 @@ export const postsSlice = createSlice({
 export const {
   setPostList,
   setPost,
-  setPostLiked,
   setPageNum,
   addPost,
   editPost,

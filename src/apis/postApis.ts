@@ -5,6 +5,7 @@ export const postApis = {
     instance.get('/api/posts', { params: { page } }),
   getPostDetail: (posts_id: number) =>
     instance.get('/api/posts', { params: posts_id }),
+  getPostListMine: () => instance.get('/api/posts/mine'),
   addPost: (data: FormData) =>
     instance.post('/api/posts', data, {
       headers: {
