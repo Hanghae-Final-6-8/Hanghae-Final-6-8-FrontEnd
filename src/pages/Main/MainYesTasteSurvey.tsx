@@ -25,6 +25,23 @@ const MainYesTasteSurvey = () => {
   const tasteList = !beanId
     ? useSelector((state: RootState) => state.taste)
     : useSelector((state: RootState) => state.beans.beansDetail);
+  const [randomBg, setRandomBg] = useState(0);
+  const [clickedDesc, setClickedDesc] = useState(false);
+
+  // 배경 랜덤 함수
+  useEffect(() => {
+    setRandomBg(Math.floor(Math.random() * 5));
+  }, [setRandomBg]);
+  const selectRandomBg = (num: number) => {
+    const bgList = [
+      'bg-defaultBg01',
+      'bg-defaultBg02',
+      'bg-defaultBg03',
+      'bg-defaultBg04',
+      'bg-defaultBg05',
+    ];
+    return bgList[num];
+  };
 
   useEffect(() => {
     // 리덕스에 데이터가 null일 경우 API를 요청합니다.
@@ -33,8 +50,6 @@ const MainYesTasteSurvey = () => {
       appDispatch(getSimilarBeans());
     }
   }, [tasteList.beanName, beanId, tasteList.isSimilarLoaded, appDispatch]);
-
-  const [clickedDesc, setClickedDesc] = useState(false);
 
   const handelShareByKakaotalk = () => {
     alert('아직 구현 중에 있습니다!');
@@ -112,7 +127,11 @@ const MainYesTasteSurvey = () => {
 
   return (
     <>
-      <main className='relative px-6 py-12 bg-defaultBg01 bg-contain bg-no-repeat bg-fixed w-full h-full'>
+      <main
+        className={`relative px-6 py-12 ${selectRandomBg(
+          randomBg
+        )} bg-contain bg-no-repeat bg-fixed w-full h-full`}
+      >
         <header className='relative'>
           <strong className='text-head font-500 text-white'>Copick</strong>
           <button
