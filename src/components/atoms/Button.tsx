@@ -17,6 +17,7 @@ const Button = (props: BtnProps) => {
   const toastPopup = props.type === 'toastPopup';
 
   const selectBtn = props.type === 'selectBtn';
+  const clickedSelectBtn = props.type === 'clickedSelectBtn';
 
   return (
     <button
@@ -37,6 +38,8 @@ const Button = (props: BtnProps) => {
         {
           'shadow-tasteBrown text-body mb-[3px] bg-white text-gray60':
             selectBtn,
+          'shadow-tasteBrown text-body mb-[3px] bg-brownP text-white':
+            clickedSelectBtn,
         }
       )}
       onClick={props.onClick}
