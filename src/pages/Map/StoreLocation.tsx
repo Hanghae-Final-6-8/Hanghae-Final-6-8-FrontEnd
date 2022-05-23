@@ -1,12 +1,18 @@
 import { useEffect } from 'react';
-import useCurrentLocation from './useCurrentPosition';
-import { useParams } from 'react-router-dom';
+import useCurrentLocation from '../../utils/useCurrentPosition';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const StoreLocation = () => {
   const cafeName = useParams().cafeName;
+  const navigate = useNavigate();
+
   const { location, error } = useCurrentLocation();
   // 마커를 클릭하면 장소명을 표출할 인포윈도우
   const infowindow = new window.kakao.maps.InfoWindow({ zIndex: 1 });
+
+  const goBack = () => {
+    navigate(-1);
+  };
 
   useEffect(() => {
     const container = document.getElementById('map');
@@ -297,6 +303,9 @@ const StoreLocation = () => {
           <ul id='placesList'>목록</ul>
         </div>
       </div>
+      <button className='fixed top-3 left-3 z-[1000]' onClick={goBack}>
+        뒤로가기
+      </button>
     </div>
   );
 };

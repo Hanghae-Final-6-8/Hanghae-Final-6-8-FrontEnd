@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { axiosEditPost } from '../../redux/modules/posts';
+import { editPostDB } from '../../redux/modules/posts';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/configureStore';
 import { useParams } from 'react-router-dom';
@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/configureStore';
 import { PostsItemDataParams } from '../../redux/modules/posts';
 import { PostsState } from '../../redux/modules/posts';
-import { axiosAddPost } from '../../redux/modules/posts';
+import { addPostDB } from '../../redux/modules/posts';
 
 const AddEditPost = () => {
   // 수정하려고 들어왔을 때
@@ -98,9 +98,9 @@ const AddEditPost = () => {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('content', content);
-    formData.append('tag_name', '[' + tagName.toString() + ']');
+    formData.append('tag_name', tagName.toString());
     formData.append('posts_image', file[0]);
-    appDispatch(axiosAddPost({ formData, navi: navigate, prevImage }));
+    appDispatch(addPostDB({ formData, navi: navigate, prevImage }));
   };
 
   //커뮤니티 수정
@@ -109,9 +109,9 @@ const AddEditPost = () => {
     formData.append('posts_id', post!.postsId!.toString());
     formData.append('title', title);
     formData.append('content', content);
-    formData.append('tag_name', '[' + tagName.toString() + ']');
+    formData.append('tag_name', tagName.toString());
     formData.append('posts_image', file[0]);
-    appDispatch(axiosEditPost({ formData, navi: navigate, prevImage }));
+    appDispatch(editPostDB({ formData, navi: navigate, prevImage }));
   };
 
   const handleBacktoPrev = () => {
@@ -128,7 +128,7 @@ const AddEditPost = () => {
       ) : (
         <h1 className='text-center'>새 게시물</h1>
       )}
-      <div className='flex'>
+      <div className='flex flex-col'>
         <div>
           <img className='w-28 h-28' src={prevImage} />
           <input type='file' id='image' onChange={getOnLoadFileFrom} />

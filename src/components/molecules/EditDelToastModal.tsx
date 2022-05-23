@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/configureStore';
-import { axiosDeletePost } from '../../redux/modules/posts';
+import { deletePostDB } from '../../redux/modules/posts';
 import { DarkWrapper, RoundBox } from '../atoms';
 import { Button, Text } from '../atoms';
 
@@ -19,7 +19,7 @@ const EditDelToastModal = (props: postsIdType) => {
   };
   // 커뮤니티 글 삭제
   const handleDeletePost = (postsId: number) => {
-    appDispatch(axiosDeletePost(postsId));
+    appDispatch(deletePostDB(postsId));
   };
 
   const [isActivePopup, setIsActivePopup] = useState(true);

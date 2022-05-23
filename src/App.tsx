@@ -6,6 +6,9 @@ import { Login, RedirectKakao } from './pages/LoginPage';
 import AddEditPost from './pages/Post/AddEditPost';
 import { BeansList, BeanDetail } from './pages/BeansList';
 import { Mypage } from './pages/MyPage';
+import { MyFavorites } from './components/organisms';
+import { MyLikes } from './components/organisms';
+import { MyActivity } from './components/organisms';
 import StoreLocation from './pages/Map/StoreLocation';
 import {
   TasteSurvey,
@@ -54,7 +57,11 @@ function App() {
           <Route path='/posts/:postsId' element={<PostDetail />} />
           <Route path='/posts/write' element={<AddEditPost />} />
           <Route path='/posts/write/:postsId' element={<AddEditPost />} />
-          <Route path='/mypage/*' element={<Mypage />} />
+          <Route path='/mypage' element={<Mypage />}>
+            <Route path='favorites' element={<MyFavorites />} />
+            <Route path='likes' element={<MyLikes />} />
+            <Route path='activiry' element={<MyActivity />} />
+          </Route>
           <Route path='/survey' element={<TasteSurvey />}>
             <Route path='main' element={<TasteSurveyMain />} />
             <Route path='01' element={<TasteSurvey01 />} />
