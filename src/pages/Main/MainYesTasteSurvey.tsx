@@ -16,6 +16,7 @@ import { getTasteSurvey, getSimilarBeans } from '../../redux/modules/taste';
 import { detailBeans } from '../../redux/modules/beans';
 import { useEffect } from 'react';
 import { logoCopickSquare } from '../../assets/logo';
+import { addFavoriteList } from '../../redux/modules/favorite';
 
 const MainYesTasteSurvey = () => {
   const navigate = useNavigate();
@@ -41,12 +42,21 @@ const MainYesTasteSurvey = () => {
   const handleToMap = (cafeName: string) => {
     navigate(`/map/${cafeName}`);
   };
-  const handleAddBookmark = () => {
+
+  const handleAddBookmark = (e: {
+    currentTarget: { getAttribute: (arg0: string) => void };
+  }) => {
+    const currentTargetValue = Number(
+      e.currentTarget.getAttribute('data-beanid')
+    );
+    appDispatch(addFavoriteList(currentTargetValue));
     alert('즐겨찾기 등록 완료!');
   };
+
   const handleShowDescription = () => {
     alert('아직 구현 중에 있습니다!');
   };
+
   const handleToClickBeans = (e: {
     currentTarget: { getAttribute: (arg0: string) => void };
   }) => {
@@ -56,6 +66,7 @@ const MainYesTasteSurvey = () => {
     appDispatch(detailBeans(currentTargetValue));
     navigate(`/beans/${currentTargetValue}`);
   };
+
   const handleToTasteSurvay = () => {
     navigate('/survey/main');
   };
