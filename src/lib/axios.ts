@@ -50,7 +50,7 @@ instance.interceptors.response.use(
     console.log('response입니다 \n', response);
     return response;
   },
-  (error) => {
+  async (error) => {
     const {
       data: responseData,
       config: originalRequest,
@@ -63,18 +63,19 @@ instance.interceptors.response.use(
     }
 
     if (statusCode === 441) {
-      // const refreshToken = getRefreshTokenFromCookie();
-      // originalRequest.headers['Authorization'] = `Bearer ${refreshToken}`;
-      return axios(originalRequest);
-    }
-    if (statusCode === 442) {
-      const accessToken = getAccessTokenFromCookie();
-      originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
-      return axios(originalRequest);
-    }
-    if (statusCode === 443) {
-      removeCookies();
-      setMoveToLogin();
+      const refreshToken = getRefreshTokenFromCookie();
+      //originalRequest.headers['Authorization'] = `Bearer ${refreshToken}`;
+      //instance.headers[]
+
+      // const accessToken = response.headers.access_token;
+      // const refreshToken = response.headers.refresh_token;
+      // setAccessTokenToCookie(accessToken);
+      // setRefreshTokenToCookie(refreshToken);
+
+      //await axios(originalRequest)
+
+      console.log(responseData, originalRequest, statusCode);
+
       return Promise.reject(error);
     }
 
