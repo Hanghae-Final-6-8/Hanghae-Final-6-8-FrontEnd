@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { postApis } from '../../apis/postApis';
 import { likeApis } from '../../apis/likeApis';
+import { setIsListLikedLoaded } from './mypage';
+import { setIsListMyActivityLoaded } from './mypage';
 
 export interface PostsItemDataParams {
   postsId: number | undefined;
@@ -160,6 +162,7 @@ export const addPostDB = createAsyncThunk(
           navi: data.navi,
         };
         thunkAPI.dispatch(addPost(addedData));
+        thunkAPI.dispatch(setIsListMyActivityLoaded(false));
       });
     } catch (error) {
       console.log(error);
@@ -195,6 +198,7 @@ export const editPostDB = createAsyncThunk(
         };
 
         thunkAPI.dispatch(editPost(addedData));
+        thunkAPI.dispatch(setIsListMyActivityLoaded(false));
       });
     } catch (error) {
       console.log(error);
@@ -210,6 +214,7 @@ export const deletePostDB = createAsyncThunk(
       await postApis.deletePost(data).then((res) => {
         console.log(res);
         thunkAPI.dispatch(deletePost(data));
+        thunkAPI.dispatch(setIsListMyActivityLoaded(false));
       });
     } catch (error) {
       console.log(error);
@@ -226,6 +231,8 @@ export const addLikeDB = createAsyncThunk(
       await likeApis.addLike(data).then((res) => {
         console.log(res);
         thunkAPI.dispatch(addLike(data));
+        // 좋아요누른 게시물 재랜더링위해
+        thunkAPI.dispatch(setIsListLikedLoaded(false));
       });
     } catch (error) {
       console.log(error);
@@ -240,6 +247,8 @@ export const deleteLikeDB = createAsyncThunk(
       await likeApis.deleteLike(data).then((res) => {
         console.log(res);
         thunkAPI.dispatch(deleteLike(data));
+        // 좋아요누른 게시물 재랜더링위해
+        thunkAPI.dispatch(setIsListLikedLoaded(false));
       });
     } catch (error) {
       console.log(error);

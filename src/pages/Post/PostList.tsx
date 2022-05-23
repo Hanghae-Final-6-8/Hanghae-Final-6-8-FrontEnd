@@ -8,7 +8,6 @@ import { InfinityScroll } from '../../components/atoms/index';
 import { EditDelToastModal } from '../../components/molecules/index';
 import { addLikeDB } from '../../redux/modules/posts';
 import { deleteLikeDB } from '../../redux/modules/posts';
-import { setIsListLikedLoaded } from '../../redux/modules/mypage';
 
 const PostList = () => {
   const navigate = useNavigate();
@@ -51,14 +50,10 @@ const PostList = () => {
   // 좋아요 추가
   const handleAddLikes = (postsId: number) => {
     appDispatch(addLikeDB(postsId));
-    // 좋아요누른 게시물 재랜더링위해
-    appDispatch(setIsListLikedLoaded(false));
   };
   // 좋아요 삭제
   const handleDeleteLikes = (postsId: number) => {
     appDispatch(deleteLikeDB(postsId));
-    // 좋아요누른 게시물 재랜더링위해
-    appDispatch(setIsListLikedLoaded(false));
   };
 
   return (

@@ -159,6 +159,9 @@ export const mypageSlice = createSlice({
     setIsListLikedLoaded: (state, action: PayloadAction<boolean>) => {
       state.isListLikedLoaded = action.payload;
     },
+    setIsListMyActivityLoaded: (state, action: PayloadAction<boolean>) => {
+      state.isListMyActivityLoaded = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getPostsLikedDB.fulfilled, (state, action) => {
@@ -181,6 +184,7 @@ export const {
   setPostLiked,
   setPostActivity,
   setIsListLikedLoaded,
+  setIsListMyActivityLoaded,
 } = mypageSlice.actions;
 
 const likeActionCreators = {

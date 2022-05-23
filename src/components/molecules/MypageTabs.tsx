@@ -19,7 +19,7 @@ const MypageTabs = () => {
 
   return (
     <div>
-      <div className='tabs flex justify-around w-full h-full'>
+      <div className='tabs flex justify-around w-full h-full pb-6'>
         <div onClick={handleToFacorites}>
           <Text
             className='block h-full leading-[46px]'
