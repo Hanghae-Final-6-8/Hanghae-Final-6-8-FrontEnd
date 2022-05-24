@@ -12,6 +12,10 @@ const BeansSearchForm = () => {
   };
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+    if (inputValue === '') {
+      alert('검색어를 입력해주세요!');
+      return;
+    }
     appDispatch(searchBeans(inputValue));
     setInputValue('');
   };

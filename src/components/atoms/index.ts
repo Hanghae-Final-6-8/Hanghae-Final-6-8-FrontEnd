@@ -12,6 +12,8 @@ import Image from './Image';
 import Chart from './Chart';
 import Input from './Input';
 import Icon from './Icon';
+import BgVideo from './BgVideo';
+import PrevBtn from './PrevBtn';
 
 export {
   Button,
@@ -28,4 +30,6 @@ export {
   Chart,
   Input,
   Icon,
+  BgVideo,
+  PrevBtn,
 };

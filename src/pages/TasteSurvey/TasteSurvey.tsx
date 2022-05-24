@@ -1,18 +1,14 @@
 import { Outlet } from 'react-router-dom';
-import { cross, left } from '../../assets/icons';
+import { cross } from '../../assets/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { PrevBtn } from '../../components/atoms';
 
 const TasteSurvey = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const handleToMain = () => {
     navigate('../main', { replace: true });
-  };
-
-  const handleToPrevPage = () => {
-    // 일단 뒤로가기 처리를 해놨으나 로직에 따라 변경할 수 있습니다.
-    navigate(-1);
   };
 
   // 현재 pathname을 가져오기 위한 useEffect 사용
@@ -34,9 +30,7 @@ const TasteSurvey = () => {
       <div className='relative h-full touch-none'>
         {!isUselessPath ? (
           <>
-            <button className='absolute left-0'>
-              <img className='w-8' src={left} onClick={handleToPrevPage} />
-            </button>
+            <PrevBtn />
             <button className='absolute right-0' onClick={handleToMain}>
               <img className='w-8' src={cross} />
             </button>

@@ -52,7 +52,7 @@ const BeansToastPopup = (props: BeansToastPopupProps) => {
           <img src={check} />
         </div>
 
-        <div className='h-full pt-6 px-30px pb-36 overflow-y-auto no-scrollbar'>
+        <div className='h-full pt-6 px-30px pb-14 overflow-y-auto no-scrollbar'>
           {cafeListFormdata.map((item) => (
             <Button
               type={
