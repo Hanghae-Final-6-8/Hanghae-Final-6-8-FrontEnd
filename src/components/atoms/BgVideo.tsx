@@ -1,6 +1,6 @@
 import bg from '../../assets/backgrounds/beans_video.mp4';
 
-const BgWeb = () => {
+const BgVideo = () => {
   return (
     <video muted autoPlay loop className='h-full object-cover brightness-bg'>
       <source src={bg} type='video/mp4' />
@@ -8,4 +8,4 @@ const BgWeb = () => {
   );
 };
 
-export default BgWeb;
+export default BgVideo;

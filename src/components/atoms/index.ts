@@ -12,7 +12,7 @@ import Image from './Image';
 import Chart from './Chart';
 import Input from './Input';
 import Icon from './Icon';
-import BgWeb from './BgWeb';
+import BgVideo from './BgVideo';
 
 export {
   Button,
@@ -29,5 +29,5 @@ export {
   Chart,
   Input,
   Icon,
-  BgWeb,
+  BgVideo,
 };
