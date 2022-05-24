@@ -95,6 +95,9 @@ module.exports = {
         cardImg02: "url('/src/assets/images/cardImg002.png')",
         cardImg03: "url('/src/assets/images/cardImg03.png')",
       },
+      brightness: {
+        bg: '.40',
+      },
     },
   },
   plugins: [require('@tailwindcss/line-clamp')],
