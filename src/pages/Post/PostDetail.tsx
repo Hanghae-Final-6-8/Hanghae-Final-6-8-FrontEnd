@@ -14,18 +14,20 @@ const PostDetail = () => {
   const appDispatch = useAppDispatch();
   // postsId는 App.tsx에서 라우팅 할때 정한 파라미터명이다.
   const postsId = useParams().postsId;
-  // 리덕스에서 커뮤니티 리스트 가져옴
-  const { list } = useSelector((store: RootState) => store.posts);
-  // 커뮤니티 리스트중에서 url 파라미터와 같은 커뮤니티 담음
-  const post = list.find((post) => {
-    // url 파라미터는 string으로 넘어와서 형변환 해줘야한다.
-    return post.postsId === Number(postsId);
-  });
+
+  // // 리덕스에서 커뮤니티 리스트 가져옴
+  // const { list } = useSelector((store: RootState) => store.posts);
+  // // 커뮤니티 리스트중에서 url 파라미터와 같은 커뮤니티 담음
+  // const post = list.find((post) => {
+  //   // url 파라미터는 string으로 넘어와서 형변환 해줘야한다.
+  //   return post.postsId === Number(postsId);
+  // });
+
   // 포스트 디테일 가져오기
   useEffect(() => {
     appDispatch(getPostDB(Number(postsId)));
   }, []);
-
+  const post = useSelector((store: RootState) => store.posts.post);
   // 코멘트 state
   const [comment, setComment] = useState<string>('');
   // 코멘트 state에 값넣기
