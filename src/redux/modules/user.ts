@@ -64,7 +64,7 @@ export const getNaverURL = createAsyncThunk(
   'user/login/naver/url',
   async () => {
     try {
-      await userApis.getKakaoURL().then((response) => {
+      await userApis.getNaverURL().then((response) => {
         return;
       });
     } catch (err) {
