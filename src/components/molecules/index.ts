@@ -9,6 +9,8 @@ import MypageOverviewActivity from './MypageOverviewActivity';
 import MypageTabs from './MypageTabs';
 import BeansCafeBtn from './BeansCafeBtn';
 import BeansSearchForm from './BeansSearchForm';
+import BgWeb from './BgWeb';
+import BgWebFixed from './BgWebFixed';
 
 export {
   Comment,
@@ -22,4 +24,6 @@ export {
   LoginBtnGoogle,
   BeansCafeBtn,
   BeansSearchForm,
+  BgWeb,
+  BgWebFixed,
 };

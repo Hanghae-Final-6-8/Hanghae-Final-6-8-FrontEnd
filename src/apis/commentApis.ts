@@ -5,7 +5,7 @@ interface addCommentType {
 }
 export const commentApis = {
   getCommentList: (posts_id: number) =>
-    instance.get('/api/comments', { params: { posts_id } }),
+    instance.get(`/api/comments/${posts_id}`, {}),
   getMyComment: () => instance.get('/api/comments/mine'),
   addComment: (data: addCommentType) =>
     instance.post('/api/comments', data, {}),

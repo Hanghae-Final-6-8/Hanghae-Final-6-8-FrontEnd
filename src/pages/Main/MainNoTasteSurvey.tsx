@@ -13,7 +13,7 @@ import { mainHeaderImg } from '../../assets/images';
 import { MainTopCarousel } from '../../components/organisms';
 import { useNavigate } from 'react-router-dom';
 import { coffee_default } from '../../assets/images';
-import { logoCopickSquare } from '../../assets/logo';
+import { logoCopickSquare, copick } from '../../assets/logo';
 
 const MainNoTasteSurvey = () => {
   const navigate = useNavigate();
@@ -24,17 +24,16 @@ const MainNoTasteSurvey = () => {
     <>
       <main className='relative px-6 py-12 bg-mainBrownBg bg-no-repeat bg-fixed w-full h-full '>
         <img className='absolute right-0 top-[27px]' src={mainHeaderImg} />
-        <header className='relative'>
-          <strong className='text-head font-500 text-white'>Copick</strong>
+        <header className='relative h-60px'>
+          <img className='h-3.5' src={copick} />
         </header>
-
-        <Text type='main2header' className='absolute text-white mt-[56px]'>
+        <Text type='main2header' className='absolute text-white mt-30px'>
           커피수혈도 이젠
         </Text>
-        <Text type='main2header' className='absolute text-white mt-[90px]'>
-          나에게 맞는 원두로{' '}
+        <Text type='main2header' className='absolute text-white mt-[64px]'>
+          나에게 맞는 원두로
         </Text>
-        <Text className='absolute text-white mt-[130px] text-body'>
+        <Text className='absolute text-white mt-28 text-body'>
           테스트를 통해 알아보는 나의 원두 취향!
         </Text>
 

@@ -1,4 +1,12 @@
-import { bookmark, down, up, share, beans, right } from '../../assets/icons/';
+import {
+  bookmark,
+  down,
+  up,
+  share,
+  beans,
+  right,
+  left,
+} from '../../assets/icons/';
 import { coffee_default } from '../../assets/images';
 import {
   RoundBox,
@@ -8,6 +16,7 @@ import {
   Button,
   Image,
   Chart,
+  PrevBtn,
 } from '../../components/atoms';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -15,7 +24,7 @@ import { RootState, useAppDispatch } from '../../redux/configureStore';
 import { getTasteSurvey, getSimilarBeans } from '../../redux/modules/taste';
 import { detailBeans } from '../../redux/modules/beans';
 import { useEffect, useState } from 'react';
-import { logoCopickSquare } from '../../assets/logo';
+import { logoCopickSquare, copick } from '../../assets/logo';
 import { addFavoriteList } from '../../redux/modules/favorite';
 
 const MainYesTasteSurvey = () => {
@@ -132,8 +141,12 @@ const MainYesTasteSurvey = () => {
           randomBg
         )} bg-contain bg-no-repeat bg-fixed w-full h-full`}
       >
-        <header className='relative'>
-          <strong className='text-head font-500 text-white'>Copick</strong>
+        <header className={!beanId ? 'relative pt-2' : 'relative'}>
+          {!beanId ? (
+            <img className='h-3.5' src={copick} />
+          ) : (
+            <PrevBtn className='filter-gray30' />
+          )}
           <button
             className='absolute top-0 right-0 w-8'
             onClick={handleAddBookmark}

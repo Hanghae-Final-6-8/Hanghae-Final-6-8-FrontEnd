@@ -16,6 +16,13 @@ declare global {
   }
 }
 
+declare global {
+  interface Window {
+    // eslint-disable-next-line
+    Kakao: any;
+  }
+}
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

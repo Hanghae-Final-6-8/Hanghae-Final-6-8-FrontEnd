@@ -4,7 +4,7 @@ import { commentApis } from '../../apis/commentApis';
 export interface CommentItemDataParams {
   // postsId: number | null;
   commentsId: number;
-  nickname: string;
+  nickname?: string;
   content: string;
   createdAt: string;
 }
@@ -24,17 +24,18 @@ export const getCommentListDB = createAsyncThunk(
     try {
       await commentApis.getCommentList(data).then((res) => {
         // 어떻게 넘어오는지 확인필요
-        console.log(res);
-        // const newCommentList: Array<CommentItemDataParams> = [];
-        // res.data.data.content.map((comment) => {
-        //   newCommentList.push({
-        //     commentsId: comment.comments_id,
-        //     nickname: comment.nickname,
-        //     content: comment.content,
-        //     createdAt: comment.created_at,
-        //   });
-        // });
-        // thunkAPI.dispatch(setCommentList(newCommentList));
+        // console.log(res);
+        console.log(res.data.data.content);
+        const newCommentList: Array<CommentItemDataParams> = [];
+        res.data.data.content.map((comment: any) => {
+          newCommentList.push({
+            commentsId: comment.comments_id,
+            nickname: comment.nickname,
+            content: comment.content,
+            createdAt: comment.created_at,
+          });
+        });
+        thunkAPI.dispatch(setCommentList(newCommentList));
       });
     } catch (error) {
       console.log(error);
@@ -65,9 +66,15 @@ export const addCommentDB = createAsyncThunk(
   async (data: addCommentType, thunkAPI) => {
     try {
       await commentApis.addComment(data).then((res) => {
-        console.log(res);
+        console.log(res.data);
         // 커뮤니티처럼 댓글정보 다 와야함다고 요청
-        // code here
+        thunkAPI.dispatch(
+          addComment({
+            commentsId: res.data.id,
+            content: res.data.content,
+            createdAt: res.data.createdAt,
+          })
+        );
       });
     } catch (error) {
       console.log(error);
@@ -100,9 +107,7 @@ export const commentSlice = createSlice({
     ) => {
       // const newList = [...state.list,action.payload];
       // return {...state, list:newList};
-      action.payload.map((comment) => {
-        state.list.push(comment);
-      });
+      return { list: action.payload };
     },
     addComment: (state, action: PayloadAction<CommentItemDataParams>) => {
       const new_commentList = [

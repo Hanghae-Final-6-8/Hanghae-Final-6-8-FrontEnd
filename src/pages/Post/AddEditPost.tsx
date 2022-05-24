@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useState } from 'react';
 import { editPostDB } from '../../redux/modules/posts';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +9,8 @@ import { RootState } from '../../redux/configureStore';
 import { PostsItemDataParams } from '../../redux/modules/posts';
 import { PostsState } from '../../redux/modules/posts';
 import { addPostDB } from '../../redux/modules/posts';
-
+import { Button } from '../../components/atoms';
+import { left } from '../../assets/icons';
 const AddEditPost = () => {
   // 수정하려고 들어왔을 때
   const postsIdparams = useParams();
@@ -79,11 +80,15 @@ const AddEditPost = () => {
   const getInputTagNameFrom = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputTag(e.target.value);
   };
+  // 태그 추가
   const onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
     if (inputTag.length !== 0 && e.key === 'Enter') {
       setTagName([inputTag, ...tagName]);
+      setInputTag('');
     }
   };
+
+  // 태그 지우기
   const deleteTag = (tag: string) => {
     setTagName(tagName.filter((t) => t !== tag));
   };
@@ -119,68 +124,106 @@ const AddEditPost = () => {
   };
 
   return (
-    <div style={{ border: '1px solid #111' }}>
-      <button className='m-2' onClick={handleBacktoPrev}>
-        ◀
+    <div>
+      <button className='m-2 p-2' onClick={handleBacktoPrev}>
+        <img src={left} />
       </button>
       {postsIdparams.postsId ? (
-        <h1 className='text-center'>게시물 수정</h1>
+        <h1 className='text-center mb-5'>게시물 수정</h1>
       ) : (
-        <h1 className='text-center'>새 게시물</h1>
+        <h1 className='text-center mb-5'>새 게시물</h1>
       )}
-      <div className='flex flex-col'>
-        <div>
-          <img className='w-28 h-28' src={prevImage} />
-          <input type='file' id='image' onChange={getOnLoadFileFrom} />
+      <div className='bg-white shadow-xl rounded-30px pt-5 pb-5 pl-5 pr-5'>
+        <div className='flex flex-col w-full border-b pt-5 pb-5 '>
+          <div className='flex mb-5'>
+            <div className='relative mr-3'>
+              <img
+                className='w-24 h-24'
+                src={
+                  prevImage
+                    ? prevImage
+                    : 'https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814052__340.png'
+                }
+              />
+              <label
+                className='absolute top-0 left-0 w-24 h-24 opacity-0'
+                htmlFor='inputFile'
+              >
+                파일업로드
+              </label>
+              <input
+                id='inputFile'
+                className='hidden'
+                type='file'
+                onChange={getOnLoadFileFrom}
+              />
+            </div>
+
+            <div className='w-48 h-24'>
+              <input
+                type='text'
+                placeholder='제목을 입력해주세요'
+                onChange={getInputTitleFrom}
+                value={title}
+              />
+              <textarea
+                className='h-full w-full resize-none outline-none'
+                placeholder='당신의 커피를 보여주세요...'
+                onChange={getInputContentFrom}
+                value={content}
+              />
+            </div>
+          </div>
+          <div className='HashWrapOuter'>
+            <input
+              type='text'
+              className='HashInput outline-none mb-1'
+              placeholder='태그 입력후 Enter'
+              onChange={getInputTagNameFrom}
+              onKeyDown={onKeyDown}
+              value={inputTag}
+            />
+          </div>
+
+          <div>
+            {tagName.length !== 0 ? (
+              tagName.map((tag, index) => {
+                return (
+                  <span
+                    className='inline-block bg-lime-800 text-white mr-1 rounded-md text-sm font-bold p-1 cursor-pointer'
+                    key={index}
+                    onClick={() => {
+                      deleteTag(tag);
+                    }}
+                  >
+                    {tag}
+                  </span>
+                );
+              })
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
 
-        <div>
-          <input
-            type='text'
-            placeholder='제목을 입력해주세요'
-            onChange={getInputTitleFrom}
-            value={title}
-          />
-          <textarea
-            className='h-52 w-full'
-            style={{ border: '1px solid #111', resize: 'none' }}
-            onChange={getInputContentFrom}
-            value={content}
-          />
-        </div>
+        {postsIdparams.postsId ? (
+          <Button
+            className='text-white font-500 text-sub2 mt-12'
+            type='brownPType'
+            onClick={handleEditpost}
+          >
+            수정하기
+          </Button>
+        ) : (
+          <Button
+            className='text-white font-500 text-sub2 mt-12'
+            type='brownPType'
+            onClick={handleAddPosts}
+          >
+            공유하기
+          </Button>
+        )}
       </div>
-
-      <input
-        type='text'
-        placeholder='태그 입력후 Enter'
-        onChange={getInputTagNameFrom}
-        onKeyDown={onKeyDown}
-      />
-      {tagName.length !== 0 ? (
-        tagName.map((tag, index) => {
-          return (
-            <span
-              className='inline-block bg-lime-800 text-white mr-1 rounded-md text-sm font-bold p-1 cursor-pointer'
-              key={index}
-              onClick={() => {
-                deleteTag(tag);
-              }}
-            >
-              {tag}
-            </span>
-          );
-        })
-      ) : (
-        <></>
-      )}
-
-      {postsIdparams.postsId ? (
-        <button onClick={handleEditpost}>수정하기</button>
-      ) : (
-        <button className='border-2' onClick={handleAddPosts}>
-          공유하기
-        </button>
-      )}
     </div>
   );
 };
