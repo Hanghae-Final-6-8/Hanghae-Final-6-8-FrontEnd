@@ -1,20 +1,61 @@
-import { Link, Outlet } from 'react-router-dom';
+import { useState } from 'react';
+import { Text } from '../atoms';
+import { MyFavorites } from '../organisms';
+import { MyLikes } from '../organisms';
+import { MyActivity } from '../organisms';
 
 const MypageTabs = () => {
+  const [toggleValue, setToggleValue] = useState<number>(0);
+
+  const handleToFacorites = () => {
+    setToggleValue(0);
+  };
+  const handleToMyLikes = () => {
+    setToggleValue(1);
+  };
+  const handleToMyActivity = () => {
+    setToggleValue(2);
+  };
+
   return (
     <div>
-      <div className='tabs flex justify-around'>
-        <div className='tab'>
-          <Link to='favorites'>즐겨찾기</Link>
+      <div className='tabs flex justify-around w-full h-full pb-6'>
+        <div className='cursor-pointer' onClick={handleToFacorites}>
+          <Text
+            className='block h-full leading-[46px]'
+            type={toggleValue === 0 ? 'beansNavClicked' : 'beansNav'}
+          >
+            즐겨찾기
+          </Text>
         </div>
-        <div className='tab'>
-          <Link to='likes'>좋아요</Link>
+        <div className='cursor-pointer' onClick={handleToMyLikes}>
+          <Text
+            className='block h-full leading-[46px]'
+            type={toggleValue === 1 ? 'beansNavClicked' : 'beansNav'}
+          >
+            좋아요
+          </Text>
         </div>
-        <div className='tab'>
-          <Link to='activiry'>내활동</Link>
+        <div className='cursor-pointer' onClick={handleToMyActivity}>
+          <Text
+            className='block h-full leading-[46px]'
+            type={toggleValue === 2 ? 'beansNavClicked' : 'beansNav'}
+          >
+            내활동
+          </Text>
         </div>
       </div>
-      <Outlet />
+      <div>
+        {toggleValue === 0 ? (
+          <MyFavorites />
+        ) : toggleValue === 1 ? (
+          <MyLikes />
+        ) : toggleValue === 2 ? (
+          <MyActivity />
+        ) : (
+          <></>
+        )}
+      </div>
     </div>
   );
 };

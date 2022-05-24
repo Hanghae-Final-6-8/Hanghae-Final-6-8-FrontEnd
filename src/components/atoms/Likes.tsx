@@ -3,6 +3,7 @@ import { RootState } from '../../redux/configureStore';
 import { useAppDispatch } from '../../redux/configureStore';
 import { addLikeDB } from '../../redux/modules/posts';
 import { deleteLikeDB } from '../../redux/modules/posts';
+import { heart, heart_full } from '../../assets/icons';
 // import { useEffect } from 'react';
 // import likesSlice from '../../redux/modules/likes';
 // import { likeActionCreators } from '../../redux/modules/likes';
@@ -57,9 +58,13 @@ const Likes = (props: likesProps) => {
   return (
     <div>
       {post?.isLikes === null ? (
-        <button onClick={handleAddLikes}>🤍</button>
+        <button onClick={handleAddLikes}>
+          <img src={heart} />
+        </button>
       ) : (
-        <button onClick={handleDeleteLikes}>❤️</button>
+        <button onClick={handleDeleteLikes}>
+          <img src={heart_full} />
+        </button>
       )}
 
       <span>좋아요 {post?.likesCount}개</span>

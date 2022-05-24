@@ -8,6 +8,7 @@ import { InfinityScroll } from '../../components/atoms/index';
 import { EditDelToastModal } from '../../components/molecules/index';
 import { addLikeDB } from '../../redux/modules/posts';
 import { deleteLikeDB } from '../../redux/modules/posts';
+import { heart, heart_full, edit } from '../../assets/icons';
 
 const PostList = () => {
   const navigate = useNavigate();
@@ -58,14 +59,23 @@ const PostList = () => {
 
   return (
     <div>
-      <div className='m-5'>커뮤니티</div>
+      <div className='flex justify-between'>
+        <div className='m-5'>커뮤니티</div>
+        <button
+          className='bg-white shadow-lg rounded-full w-10 h-10 flex justify-center items-center'
+          onClick={handleMoveToWritePage}
+        >
+          <img src={edit} />
+        </button>
+      </div>
+
       <div className='flex flex-col pb-24'>
         <InfinityScroll
           callNext={() => {
             appDispatch(getPostListDB(paging!));
           }}
           loading={isLoading!}
-          isNext={postsLoadedLen === 4 ? true : false}
+          isNext={postsLoadedLen === 20 ? true : false}
         >
           {list.map((post, idx) => {
             return (
@@ -108,7 +118,7 @@ const PostList = () => {
                         handleAddLikes(post.postsId!);
                       }}
                     >
-                      🤍
+                      <img src={heart} />
                     </button>
                   ) : (
                     <button
@@ -116,11 +126,13 @@ const PostList = () => {
                         handleDeleteLikes(post.postsId!);
                       }}
                     >
-                      ❤️
+                      <img src={heart_full} />
                     </button>
                   )}
 
-                  <span>{post.likesCount}개</span>
+                  <span>
+                    {post.likesCount !== null ? post.likesCount : '0'}개
+                  </span>
                 </div>
               </div>
             );
@@ -128,13 +140,6 @@ const PostList = () => {
           {toastStatus && <EditDelToastModal postsId={clickedPostId} />}
         </InfinityScroll>
       </div>
-
-      <button
-        className='text-[24px] bg-white shadow-lg h-10 w-10 rounded-full fixed top-3 right-6'
-        onClick={handleMoveToWritePage}
-      >
-        +
-      </button>
     </div>
   );
 };

@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { postApis } from '../../apis/postApis';
 import { likeApis } from '../../apis/likeApis';
+import { setIsListLikedLoaded } from './mypage';
+import { setIsListMyActivityLoaded } from './mypage';
 
 export interface PostsItemDataParams {
   postsId: number | undefined;
@@ -17,6 +19,7 @@ export interface PostsItemDataParams {
 
 export interface PostsState {
   list: Array<PostsItemDataParams>;
+  post?: PostsItemDataParams;
   paging?: number;
   isLoading?: boolean;
   postsLoadedLen?: number;
@@ -25,12 +28,25 @@ export interface PostsState {
 
 const initialState: PostsState = {
   list: [],
+  post: {
+    postsId: 0,
+    nickname: '',
+    postsImage: '',
+    title: '',
+    content: '',
+    createdAt: '',
+    modifiedAt: '',
+    tagName: [],
+    isLikes: null,
+    likesCount: null,
+  },
   isLoading: false,
   paging: 0,
   postsLoadedLen: 0,
   isListLoaded: false,
 };
 
+// * 커뮤니티 *
 // 커뮤니티 리스트 불러오기
 export const getPostListDB = createAsyncThunk(
   'postsReducer/getPostListDB',
@@ -67,10 +83,46 @@ export const getPostListDB = createAsyncThunk(
 
         const postsLoadedLen = res.data.data.content.length;
         thunkAPI.dispatch(isLoading(false));
-        thunkAPI.dispatch(setPost({ postList, postsLoadedLen }));
+        thunkAPI.dispatch(setPostList({ postList, postsLoadedLen }));
       });
     } catch (error) {
       thunkAPI.dispatch(isLoading(false));
+      console.log(error);
+    }
+  }
+);
+
+// 커뮤니티 게시글 상세보기
+export const getPostDB = createAsyncThunk(
+  'postsReducer/getPostDB',
+  async (data: number, thunkAPI) => {
+    try {
+      await postApis.getPostDetail(data).then((res) => {
+        // console.log(res.data.data);
+        let newTagStr = [];
+        if (res.data.data.tag_name !== null) {
+          const tagStr = res.data.data.tag_name.slice(
+            1,
+            res.data.data.tag_name.length - 1
+          );
+          newTagStr = tagStr.split(',');
+        }
+        const post = {
+          postsId: res.data.data.posts_id,
+          nickname: res.data.data.nickname,
+          postsImage: res.data.data.posts_image,
+          title: res.data.data.title,
+          content: res.data.data.content,
+          createdAt: res.data.data.created_at,
+          modifiedAt: res.data.data.modified_at,
+          tagName: newTagStr,
+          isLikes: res.data.data.isLikes,
+          likesCount: res.data.data.likes_count,
+        };
+        thunkAPI.dispatch(setPost(post));
+        thunkAPI.dispatch(isLoading(false));
+      });
+    } catch (error) {
       console.log(error);
     }
   }
@@ -82,7 +134,6 @@ interface formType {
   prevImage: string;
 }
 
-// * 커뮤니티 *
 // 커뮤니티 추가하기
 export const addPostDB = createAsyncThunk(
   'postsReducer/addPostDB',
@@ -110,6 +161,7 @@ export const addPostDB = createAsyncThunk(
           navi: data.navi,
         };
         thunkAPI.dispatch(addPost(addedData));
+        thunkAPI.dispatch(setIsListMyActivityLoaded(false));
       });
     } catch (error) {
       console.log(error);
@@ -145,6 +197,7 @@ export const editPostDB = createAsyncThunk(
         };
 
         thunkAPI.dispatch(editPost(addedData));
+        thunkAPI.dispatch(setIsListMyActivityLoaded(false));
       });
     } catch (error) {
       console.log(error);
@@ -160,6 +213,7 @@ export const deletePostDB = createAsyncThunk(
       await postApis.deletePost(data).then((res) => {
         console.log(res);
         thunkAPI.dispatch(deletePost(data));
+        thunkAPI.dispatch(setIsListMyActivityLoaded(false));
       });
     } catch (error) {
       console.log(error);
@@ -176,6 +230,8 @@ export const addLikeDB = createAsyncThunk(
       await likeApis.addLike(data).then((res) => {
         console.log(res);
         thunkAPI.dispatch(addLike(data));
+        // 좋아요누른 게시물 재랜더링위해
+        thunkAPI.dispatch(setIsListLikedLoaded(false));
       });
     } catch (error) {
       console.log(error);
@@ -190,38 +246,8 @@ export const deleteLikeDB = createAsyncThunk(
       await likeApis.deleteLike(data).then((res) => {
         console.log(res);
         thunkAPI.dispatch(deleteLike(data));
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-);
-// 좋아요 누른 게시물 조회
-export const getPostsLikedDB = createAsyncThunk(
-  'postsReducer/getPostsLikedDB',
-  async (data, thunkAPI) => {
-    try {
-      await likeApis.getPostsLiked().then((res) => {
-        console.log(res);
-        const newList: Array<PostsItemDataParams> = [];
-        res.data.data.content.map((post: any) => {
-          let newTagStr = [];
-          if (post.tag_name !== null) {
-            const tagStr = post.tag_name.slice(1, post.tag_name.length - 1);
-            newTagStr = tagStr.split(',');
-          }
-          newList.push({
-            postsId: post.posts_id,
-            nickname: post.nickname,
-            postsImage: post.posts_image,
-            title: post.title,
-            content: post.content,
-            createdAt: post.created_at,
-            modifiedAt: post.modified_at,
-            tagName: newTagStr,
-          });
-        });
-        thunkAPI.dispatch(setPostLiked(newList));
+        // 좋아요누른 게시물 재랜더링위해
+        thunkAPI.dispatch(setIsListLikedLoaded(false));
       });
     } catch (error) {
       console.log(error);
@@ -256,27 +282,19 @@ export const postsSlice = createSlice({
     setPageNum: (state, action: PayloadAction<number>) => {
       state.paging = action.payload;
     },
-    setPost: (state, action: PayloadAction<any>) => {
-      const newList = [...state.list, ...action.payload.post_list];
+    setPostList: (state, action: PayloadAction<any>) => {
+      const newList = [...action.payload.postList];
       return {
         ...state,
         list: newList,
         postsLoadedLen: action.payload.postsLoadedLen,
       };
     },
-    setPostLiked: (
-      state,
-      action: PayloadAction<Array<PostsItemDataParams>>
-    ) => {
-      const newList = [...state.list, ...action.payload];
-      return {
-        list: newList,
-        isLoading: false,
-        postsLoadedLen: 0,
-        paging: 0,
-        isListLoaded: false,
-      };
+    setPost: (state, action: PayloadAction<PostsItemDataParams>) => {
+      const newPost = { ...state.post, ...action.payload };
+      return { ...state, post: newPost };
     },
+
     addPost: (state, action: PayloadAction<AddPostsType>) => {
       const new_postsList = [
         {
@@ -316,7 +334,6 @@ export const postsSlice = createSlice({
       // 라우팅처리
       action.payload.navi('/posts');
 
-      // return { ...state, list: [post_edited, ...new_list] };
       return {
         ...state,
         list: [post_edited, ...state.list],
@@ -333,12 +350,19 @@ export const postsSlice = createSlice({
         return post.postsId === action.payload;
       });
       state.list[idx].isLikes = 1;
+      // 다음과 같이 likesCount값을 cnt에 재정의한 원인: likesCount를 null로 초기화했기때문
+      const likesCnt = state.list[idx].likesCount;
+      const cnt = likesCnt === null ? 0 : likesCnt;
+      state.list[idx].likesCount = cnt! + 1;
     },
     deleteLike: (state, action: PayloadAction<number>) => {
       const idx = state.list.findIndex((post) => {
         return post.postsId === action.payload;
       });
       state.list[idx].isLikes = null;
+      const likesCnt = state.list[idx].likesCount;
+      const cnt = likesCnt === null ? 0 : likesCnt;
+      state.list[idx].likesCount = cnt! - 1;
     },
   },
   extraReducers: (builder) => {
@@ -351,8 +375,8 @@ export const postsSlice = createSlice({
 });
 
 export const {
+  setPostList,
   setPost,
-  setPostLiked,
   setPageNum,
   addPost,
   editPost,
