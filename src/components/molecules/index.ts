@@ -1,7 +1,7 @@
 import Comment from './Comment';
-import KakaoLoginBtn from './KakaoLoginBtn';
-import NaverLoginBtn from './NaverLoginBtn';
-import GoogleLoginBtn from './GoogleLoginBtn';
+import LoginBtnKakao from './LoginBtnKakao';
+import LoginBtnNaver from './LoginBtnNaver';
+import LoginBtnGoogle from './LoginBtnGoogle';
 import LogoutBtn from './LogoutBtn';
 import EditDelToastModal from './EditDelToastModal';
 import MypageHeader from './MypageHeader';
@@ -12,14 +12,14 @@ import BeansSearchForm from './BeansSearchForm';
 
 export {
   Comment,
-  KakaoLoginBtn,
+  LoginBtnKakao,
   LogoutBtn,
   EditDelToastModal,
   MypageHeader,
   MypageOverviewActivity,
   MypageTabs,
-  NaverLoginBtn,
-  GoogleLoginBtn,
+  LoginBtnNaver,
+  LoginBtnGoogle,
   BeansCafeBtn,
   BeansSearchForm,
 };

@@ -6,7 +6,7 @@ const handleNotReadyToLogin = () => {
   );
 };
 
-const GoogleLoginBtn = () => {
+const LoginBtnGoogle = () => {
   return (
     <button
       className='w-50px h-50px rounded-full bg-white shadow-loginBtn'
@@ -17,4 +17,4 @@ const GoogleLoginBtn = () => {
   );
 };
 
-export default GoogleLoginBtn;
+export default LoginBtnGoogle;

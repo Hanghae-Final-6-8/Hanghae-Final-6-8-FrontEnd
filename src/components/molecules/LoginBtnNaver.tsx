@@ -1,6 +1,6 @@
 import { naver } from '../../assets/icons';
 
-const NaverLoginBtn = () => {
+const LoginBtnNaver = () => {
   const handleNotReadyToLogin = () => {
     alert(
       '네이버, 구글 로그인은 구현 중 입니다.\n(사이트 완성 후 검수를 받아야 합니다)'
@@ -16,4 +16,4 @@ const NaverLoginBtn = () => {
   );
 };
 
-export default NaverLoginBtn;
+export default LoginBtnNaver;
