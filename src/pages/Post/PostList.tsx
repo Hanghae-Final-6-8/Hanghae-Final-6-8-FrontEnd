@@ -9,18 +9,21 @@ import { EditDelToastModal } from '../../components/molecules/index';
 import { addLikeDB } from '../../redux/modules/posts';
 import { deleteLikeDB } from '../../redux/modules/posts';
 import { heart, heart_full, edit } from '../../assets/icons';
+import { setModalToggle } from '../../redux/modules/modalToggle';
 
 const PostList = () => {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
+
   // 토스트팝업 토글용 state
-  const [toastStatus, setToastStatus] = useState(false);
+  const toggle = useSelector(
+    (store: RootState) => store.modatToggle.modalToggle
+  );
   // ...클릭시 해당 게시물의 postsId 저장
   const [clickedPostId, setClickedPostId] = useState(0);
 
   // db에서 커뮤니티 리스트 가져오기
   useEffect(() => {
-    // if (list.length < 2) {}
     !isListLoaded && appDispatch(getPostListDB(0));
   }, []);
 
@@ -35,7 +38,7 @@ const PostList = () => {
   console.log(isListLoaded);
   // 토스트팝업 띄우기
   const getSetToastFrom = (postsId: number) => {
-    setToastStatus(!toastStatus);
+    appDispatch(setModalToggle(!toggle));
     setClickedPostId(postsId);
   };
 
@@ -137,7 +140,7 @@ const PostList = () => {
               </div>
             );
           })}
-          {toastStatus && <EditDelToastModal postsId={clickedPostId} />}
+          {toggle && <EditDelToastModal postsId={clickedPostId} />}
         </InfinityScroll>
       </div>
     </div>
