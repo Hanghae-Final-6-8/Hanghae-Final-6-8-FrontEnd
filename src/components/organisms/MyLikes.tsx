@@ -4,6 +4,8 @@ import { useAppDispatch } from '../../redux/configureStore';
 import { RootState } from '../../redux/configureStore';
 import { getPostsLikedDB } from '../../redux/modules/mypage';
 import { useNavigate } from 'react-router-dom';
+import { addLikeDB } from '../../redux/modules/posts';
+import { deleteLikeDB } from '../../redux/modules/posts';
 
 const MyLikes = () => {
   const navigate = useNavigate();
@@ -21,11 +23,20 @@ const MyLikes = () => {
     navigate(`/posts/${postsId}`);
   };
 
+  // 좋아요 추가
+  const handleAddLikes = (postsId: number) => {
+    appDispatch(addLikeDB(postsId));
+  };
+  // 좋아요 삭제
+  const handleDeleteLikes = (postsId: number) => {
+    appDispatch(deleteLikeDB(postsId));
+  };
+
   return (
     <div className='flex flex-wrap pb-24'>
       {listLiked.map((post, index) => {
         return (
-          <div className='ml-1 mr-1' key={index}>
+          <div className='ml-1 mr-1 relative' key={index}>
             <img
               className='w-24'
               src={
@@ -37,6 +48,25 @@ const MyLikes = () => {
                 handleMoveToDetailPage(post.postsId!);
               }}
             />
+            {post.isLikes === null ? (
+              <button
+                className='absolute top-1 right-1'
+                onClick={() => {
+                  handleAddLikes(post.postsId!);
+                }}
+              >
+                🤍
+              </button>
+            ) : (
+              <button
+                className='absolute top-1 right-1'
+                onClick={() => {
+                  handleDeleteLikes(post.postsId!);
+                }}
+              >
+                ❤️
+              </button>
+            )}
           </div>
         );
       })}
