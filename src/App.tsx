@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import { Main } from './pages/Main';
 import PostList from './pages/Post/PostList';
 import PostDetail from './pages/Post/PostDetail';
-import { Login, RedirectKakao } from './pages/LoginPage';
+import { Login, LoginRedirect } from './pages/LoginPage';
 import AddEditPost from './pages/Post/AddEditPost';
 import { BeansList, BeanDetail } from './pages/BeansList';
 import { Mypage } from './pages/MyPage';
@@ -45,10 +45,7 @@ function App() {
       <Routes>
         <Route path='/main' element={<Main />} />
         <Route path='/' element={<Login />} />
-        <Route
-          path='/api/user/login/kakao/callback/*'
-          element={<RedirectKakao />}
-        />
+        <Route path='/api/user/login/*' element={<LoginRedirect />} />
         <Route path='/beans/:beanId' element={<BeanDetail />} />
 
         <Route path='/map/:cafeName' element={<StoreLocation />} />

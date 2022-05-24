@@ -1,10 +1,13 @@
 import { naver } from '../../assets/icons';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../redux/configureStore';
+import { getNaverURL } from '../../redux/modules/user';
 
 const LoginBtnNaver = () => {
+  const navigate = useNavigate();
+  const appDispatch = useAppDispatch();
   const handleNotReadyToLogin = () => {
-    alert(
-      '네이버, 구글 로그인은 구현 중 입니다.\n(사이트 완성 후 검수를 받아야 합니다)'
-    );
+    appDispatch(getNaverURL());
   };
   return (
     <button

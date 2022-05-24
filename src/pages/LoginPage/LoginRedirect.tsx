@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/configureStore';
 import { loginKakao } from '../../redux/modules/user';
 
-const RedirectKakao = () => {
+const LoginRedirect = () => {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
 
@@ -25,4 +25,4 @@ const RedirectKakao = () => {
   return <Spinner />;
 };
 
-export default RedirectKakao;
+export default LoginRedirect;

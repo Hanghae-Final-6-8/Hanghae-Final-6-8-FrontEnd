@@ -1,4 +1,4 @@
 import Login from './Login';
-import RedirectKakao from './RedirectKakao';
+import LoginRedirect from './LoginRedirect';
 
-export { Login, RedirectKakao };
+export { Login, LoginRedirect };
