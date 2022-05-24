@@ -10,7 +10,7 @@ export const userApis = {
   },
   getNaverURL: () => instance.get('/api/user/login/naver'),
   loginNaver: (code: string) =>
-    instance.get('/api/user/login/kakao/callback', {
+    instance.get('/api/user/login/naver/callback', {
       params: { code },
     }),
   getGoogleURL: () => instance.get('/api/user/login/google'),
