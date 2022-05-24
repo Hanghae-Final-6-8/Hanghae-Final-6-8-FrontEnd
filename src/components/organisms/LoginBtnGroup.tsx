@@ -1,4 +1,4 @@
-import { KakaoLoginBtn, NaverLoginBtn, GoogleLoginBtn } from '../molecules';
+import { LoginBtnKakao, LoginBtnNaver, LoginBtnGoogle } from '../molecules';
 import { Hr } from '../atoms';
 
 interface LoginBtnGroupProps {
@@ -15,9 +15,9 @@ const LoginBtnGroup = (props: LoginBtnGroupProps) => {
       </p>
       <Hr type='main100' />
       <div className='mt-2.5'>
-        <KakaoLoginBtn />
-        <NaverLoginBtn />
-        <GoogleLoginBtn />
+        <LoginBtnKakao />
+        <LoginBtnNaver />
+        <LoginBtnGoogle />
       </div>
     </>
   );

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/configureStore';
 import { getKakaoURL } from '../../redux/modules/user';
 
-const KakaoLoginBtn = () => {
+const LoginBtnKakao = () => {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
   const handleLoginKakao = async () => {
@@ -23,4 +23,4 @@ const KakaoLoginBtn = () => {
   );
 };
 
-export default KakaoLoginBtn;
+export default LoginBtnKakao;
