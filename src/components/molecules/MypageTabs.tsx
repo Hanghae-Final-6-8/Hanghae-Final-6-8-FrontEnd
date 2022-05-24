@@ -20,7 +20,7 @@ const MypageTabs = () => {
   return (
     <div>
       <div className='tabs flex justify-around w-full h-full pb-6'>
-        <div onClick={handleToFacorites}>
+        <div className='cursor-pointer' onClick={handleToFacorites}>
           <Text
             className='block h-full leading-[46px]'
             type={toggleValue === 0 ? 'beansNavClicked' : 'beansNav'}
@@ -28,7 +28,7 @@ const MypageTabs = () => {
             즐겨찾기
           </Text>
         </div>
-        <div onClick={handleToMyLikes}>
+        <div className='cursor-pointer' onClick={handleToMyLikes}>
           <Text
             className='block h-full leading-[46px]'
             type={toggleValue === 1 ? 'beansNavClicked' : 'beansNav'}
@@ -36,7 +36,7 @@ const MypageTabs = () => {
             좋아요
           </Text>
         </div>
-        <div onClick={handleToMyActivity}>
+        <div className='cursor-pointer' onClick={handleToMyActivity}>
           <Text
             className='block h-full leading-[46px]'
             type={toggleValue === 2 ? 'beansNavClicked' : 'beansNav'}

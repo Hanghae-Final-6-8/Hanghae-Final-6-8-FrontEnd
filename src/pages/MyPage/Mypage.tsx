@@ -6,10 +6,13 @@ import MypageTabs from '../../components/molecules/MypageTabs';
 const Mypage = () => {
   return (
     <div>
-      마이 페이지 입니다.
+      <span className='font-bold'>마이</span>
       <LogoutBtn />
-      <MypageHeader />
-      <MypageOverviewActivity />
+      <div className='border-b-8 pb-9 mb-2'>
+        <MypageHeader />
+        <MypageOverviewActivity />
+      </div>
+
       <MypageTabs />
     </div>
   );
