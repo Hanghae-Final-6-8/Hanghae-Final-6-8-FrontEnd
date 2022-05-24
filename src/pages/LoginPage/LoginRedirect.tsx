@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
 import { Spinner } from '../../components/organisms';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/configureStore';
-import { loginKakao } from '../../redux/modules/user';
+import { loginKakao, loginNaver, loginGoogle } from '../../redux/modules/user';
+import queryString from 'query-string';
 
 const LoginRedirect = () => {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
-
-  const codeInput = new URL(location.href).searchParams.get('code')!;
+  const { search } = useLocation();
+  const codeInput: string = queryString.parse(search).code as string;
 
   useEffect(() => {
     const kakaoDispatch = async () => {
