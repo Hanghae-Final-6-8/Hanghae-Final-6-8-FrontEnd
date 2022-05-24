@@ -45,7 +45,7 @@ export const getBeansList = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       await beansApis.getBeansList().then((response) => {
-        thunkAPI.dispatch(saveBeansList(response.data.data));
+        thunkAPI.dispatch(saveBeansList(response.data.data.content));
         return;
       });
     } catch (err) {

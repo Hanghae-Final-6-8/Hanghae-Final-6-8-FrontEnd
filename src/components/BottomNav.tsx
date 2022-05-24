@@ -5,15 +5,17 @@ import {
   navCommunity,
   navUser,
 } from '../assets/icons/index';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ToastPopup from './ToastPopup';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/configureStore';
+import { Icon } from './atoms';
 
 const BottomNav = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const user = useSelector((state: RootState) => state.user);
-  //console.log(user);
+  const currentLocation = location.pathname.split('/')[1];
 
   const [isActivePopup, setIsActivePopup] = useState(false);
 
@@ -44,15 +46,7 @@ const BottomNav = () => {
   if (
     location.pathname === '/' ||
     location.pathname === '/map' ||
-    location.pathname === '/survey/main' ||
-    location.pathname === '/survey/01' ||
-    location.pathname === '/survey/02' ||
-    location.pathname === '/survey/03' ||
-    location.pathname === '/survey/04' ||
-    location.pathname === '/survey/05' ||
-    location.pathname === '/survey/06' ||
-    location.pathname === '/survey/needlogin' ||
-    location.pathname === '/survey/loading' ||
+    currentLocation === 'survey' ||
     location.pathname === '/app/user/login/kakao/callback'
   ) {
     return null;
@@ -62,22 +56,38 @@ const BottomNav = () => {
       {isActivePopup ? <ToastPopup onClick={handleClosePopup} /> : null}
       <nav className='fixed flex bottom-0 z-30 bg-slate-50 w-full h-84px shadow-toolbar'>
         <button className='flex-auto fill-slate-200' onClick={handleToMain}>
-          <img className='mx-auto w-30px -translate-y-7px' src={navHome} />
+          <Icon
+            isClicked={currentLocation === 'main'}
+            type='bottomNav'
+            src={navHome}
+          />
         </button>
         <button
           className='flex-auto fill-slate-200'
           onClick={handleToBeansList}
         >
-          <img className='mx-auto w-30px -translate-y-7px' src={navCoffee} />
+          <Icon
+            isClicked={currentLocation === 'beans'}
+            type='bottomNav'
+            src={navCoffee}
+          />
         </button>
         <button className='flex-auto fill-slate-200' onClick={handleToPostList}>
-          <img className='mx-auto w-30px -translate-y-7px' src={navCommunity} />
+          <Icon
+            isClicked={currentLocation === 'posts'}
+            type='bottomNav'
+            src={navCommunity}
+          />
         </button>
         <button
           className='flex-auto fill-slate-200'
           onClick={user.isLogin ? handleToMypage : handleIsActivePopup}
         >
-          <img className='mx-auto w-30px -translate-y-7px' src={navUser} />
+          <Icon
+            isClicked={currentLocation === 'mypage'}
+            type='bottomNav'
+            src={navUser}
+          />
         </button>
       </nav>
     </>

@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import {
   Chart as ChartJS,
   RadialLinearScale,
@@ -10,6 +9,7 @@ import {
 import { Radar } from 'react-chartjs-2';
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip);
+ChartJS.defaults.font.size = 14;
 
 interface ChartProps {
   children?: React.ReactNode;
@@ -28,10 +28,27 @@ const Chart = (props: ChartProps) => {
       },
     ],
   };
+  const options = {
+    scales: {
+      r: {
+        suggestedMin: 0,
+        suggestedMax: 3,
+        ticks: {
+          stepSize: 1,
+        },
+        pointLabels: {
+          font: {
+            size: 14,
+            family: 'sans',
+          },
+        },
+      },
+    },
+  };
 
   return (
     <div>
-      <Radar data={data} />
+      <Radar data={data} options={options} />
     </div>
   );
 };

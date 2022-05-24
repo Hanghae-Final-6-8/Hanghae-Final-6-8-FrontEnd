@@ -1,4 +1,4 @@
-import { bookmark, down, share, beans, right } from '../../assets/icons/';
+import { bookmark, down, up, share, beans, right } from '../../assets/icons/';
 import { coffee_default } from '../../assets/images';
 import {
   RoundBox,
@@ -14,8 +14,9 @@ import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../redux/configureStore';
 import { getTasteSurvey, getSimilarBeans } from '../../redux/modules/taste';
 import { detailBeans } from '../../redux/modules/beans';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { logoCopickSquare } from '../../assets/logo';
+import { addFavoriteList } from '../../redux/modules/favorite';
 
 const MainYesTasteSurvey = () => {
   const navigate = useNavigate();
@@ -24,9 +25,24 @@ const MainYesTasteSurvey = () => {
   const tasteList = !beanId
     ? useSelector((state: RootState) => state.taste)
     : useSelector((state: RootState) => state.beans.beansDetail);
+  const [randomBg, setRandomBg] = useState(0);
+  const [clickedDesc, setClickedDesc] = useState(false);
 
-  // console.log(beanId);
-  // console.log(tasteList);
+  // 배경 랜덤 함수
+  useEffect(() => {
+    setRandomBg(Math.floor(Math.random() * 5));
+  }, [setRandomBg]);
+  const selectRandomBg = (num: number) => {
+    const bgList = [
+      'bg-defaultBg01',
+      'bg-defaultBg02',
+      'bg-defaultBg03',
+      'bg-defaultBg04',
+      'bg-defaultBg05',
+    ];
+    return bgList[num];
+  };
+
   useEffect(() => {
     // 리덕스에 데이터가 null일 경우 API를 요청합니다.
     !tasteList.beanName && appDispatch(getTasteSurvey());
@@ -34,6 +50,7 @@ const MainYesTasteSurvey = () => {
       appDispatch(getSimilarBeans());
     }
   }, [tasteList.beanName, beanId, tasteList.isSimilarLoaded, appDispatch]);
+
   const handelShareByKakaotalk = () => {
     alert('아직 구현 중에 있습니다!');
   };
@@ -41,12 +58,25 @@ const MainYesTasteSurvey = () => {
   const handleToMap = (cafeName: string) => {
     navigate(`/map/${cafeName}`);
   };
-  const handleAddBookmark = () => {
-    alert('아직 구현 중에 있습니다!');
+
+  const handleAddBookmark = (e: {
+    currentTarget: { getAttribute: (arg0: string) => void };
+  }) => {
+    const currentTargetValue = Number(
+      e.currentTarget.getAttribute('data-beanid')
+    );
+    appDispatch(addFavoriteList(currentTargetValue));
+    alert('즐겨찾기 등록 완료!');
   };
+
   const handleShowDescription = () => {
-    alert('아직 구현 중에 있습니다!');
+    if (clickedDesc) {
+      setClickedDesc(false);
+    } else {
+      setClickedDesc(true);
+    }
   };
+
   const handleToClickBeans = (e: {
     currentTarget: { getAttribute: (arg0: string) => void };
   }) => {
@@ -56,6 +86,7 @@ const MainYesTasteSurvey = () => {
     appDispatch(detailBeans(currentTargetValue));
     navigate(`/beans/${currentTargetValue}`);
   };
+
   const handleToTasteSurvay = () => {
     navigate('/survey/main');
   };
@@ -81,21 +112,32 @@ const MainYesTasteSurvey = () => {
   }
 
   // 비슷한 원두 추천
-  const recommendFormdata = [];
+  const recommendFormdata: {
+    beanId: number;
+    beanName: string;
+    description: string;
+    beanImage: string;
+    type: number;
+  }[] = [];
   if (tasteList.similar) {
-    for (let i = 0; i < tasteList.similar.length; i++) {
-      recommendFormdata.push(tasteList.similar[i]);
-    }
+    tasteList.similar.forEach((el) => {
+      recommendFormdata.push(el);
+    });
   }
 
   return (
     <>
-      <main className='relative px-6 py-12 bg-defaultBg01 bg-contain bg-no-repeat bg-fixed w-full h-full'>
+      <main
+        className={`relative px-6 py-12 ${selectRandomBg(
+          randomBg
+        )} bg-contain bg-no-repeat bg-fixed w-full h-full`}
+      >
         <header className='relative'>
           <strong className='text-head font-500 text-white'>Copick</strong>
           <button
             className='absolute top-0 right-0 w-8'
             onClick={handleAddBookmark}
+            data-beanid={tasteList.beanId}
           >
             <img className='w-full' src={bookmark} />
           </button>
@@ -118,11 +160,11 @@ const MainYesTasteSurvey = () => {
                 </Text>
               </figcaption>
             </figure>
-            <p className='mt-3 text-body font-400 line-clamp-2 h-10 text-gray-400'>
+            <Text type={clickedDesc ? 'clickedDescription' : 'description'}>
               {tasteList.description}
-            </p>
+            </Text>
             <button className='block mx-auto' onClick={handleShowDescription}>
-              <img src={down} />
+              <img src={clickedDesc ? up : down} />
             </button>
             <RoundBox type='mainRoundBox'>
               <Text type='mainSubTitle'>

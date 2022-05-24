@@ -91,3 +91,9 @@ body::-webkit-scrollbar {
   overflow: hidden;
   clip-path: polygon(0 0, 0 0, 0 0);
 }
+
+/* filter */
+.filter-gray30 {
+  filter: invert(73%) sepia(71%) saturate(1%) hue-rotate(7deg) brightness(110%)
+    contrast(86%);
+}

@@ -50,7 +50,7 @@ instance.interceptors.response.use(
     console.log('response입니다 \n', response);
     return response;
   },
-  (error) => {
+  async (error) => {
     const {
       data: responseData,
       config: originalRequest,
@@ -62,19 +62,32 @@ instance.interceptors.response.use(
       return Promise.reject(error);
     }
 
+    // 441코드가 뜨면 refresh 토큰을 넣어서 access token을 재발급 받습니다.
     if (statusCode === 441) {
-      // const refreshToken = getRefreshTokenFromCookie();
-      // originalRequest.headers['Authorization'] = `Bearer ${refreshToken}`;
-      return axios(originalRequest);
-    }
-    if (statusCode === 442) {
-      const accessToken = getAccessTokenFromCookie();
-      originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
-      return axios(originalRequest);
-    }
-    if (statusCode === 443) {
-      removeCookies();
-      setMoveToLogin();
+      try {
+        const initialURL = originalRequest.url; // 기존 요청 변수에 저장
+        const refreshToken = getRefreshTokenFromCookie();
+        originalRequest.headers['Authorization'] = `Bearer ${refreshToken}`;
+        originalRequest.url = '/api/user/reissue'; // access token 재발급 요청
+        await axios(originalRequest).then(async (response) => {
+          const accessToken = response.headers.access_token;
+          const refreshToken = response.headers.refresh_token;
+          setAccessTokenToCookie(accessToken);
+          setRefreshTokenToCookie(refreshToken);
+          // 토큰을 재발급 받으면 다시 요청을 하게 됩니다.
+          originalRequest.url = initialURL;
+          originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
+          return await axios(originalRequest).then((response) => {
+            console.log('441 요청 response입니다 \n', response);
+          });
+        });
+      } catch (error) {
+        console.log(error);
+        return Promise.reject(error);
+      }
+
+      console.log(responseData, originalRequest, statusCode);
+
       return Promise.reject(error);
     }
 

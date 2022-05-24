@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { check } from '../../assets/icons';
 import { RootState, useAppDispatch } from '../../redux/configureStore';
 import { getBeansListByCafe, getCafeList } from '../../redux/modules/cafe';
@@ -12,6 +12,7 @@ interface BeansToastPopupProps {
 const BeansToastPopup = (props: BeansToastPopupProps) => {
   const appDispatch = useAppDispatch();
   const cafe = useSelector((state: RootState) => state.cafe);
+  const [isSelectedBtn, setIsSelectedBtn] = useState(0);
   useEffect(() => {
     !cafe.isLoaded && appDispatch(getCafeList());
   }, []);
@@ -32,20 +33,31 @@ const BeansToastPopup = (props: BeansToastPopupProps) => {
     appDispatch(getBeansListByCafe(currentTargetValue));
   };
 
+  // const handleIsSelectedBtn = (e: {
+  //   currentTarget: { getAttribute: (arg0: string) => void };
+  // }) => {
+  //   const currentTargetValue = Number(
+  //     e.currentTarget.getAttribute('data-cafeid')
+  //   );
+  //   setIsSelectedBtn(currentTargetValue);
+  // };
+
   return (
     <DarkWrapper onClick={props.onClick}>
-      <ToastPopupBox className='h-96' type='default'>
-        <div className='flex justify-between mb-30px'>
+      <ToastPopupBox className='h-96' type='scrollBox'>
+        <div className='flex justify-between px-30px mb-1'>
           <Text className='font-500 text-sub'>
             <Span type='strong'>찾으시는 카페</Span>를 선택해주세요!
           </Text>
           <img src={check} />
         </div>
 
-        <div className='h-[800px] flex flex-col'>
+        <div className='h-full pt-6 px-30px pb-36 overflow-y-auto no-scrollbar'>
           {cafeListFormdata.map((item) => (
             <Button
-              type='selectBtn'
+              type={
+                isSelectedBtn === item.cafeId ? 'clickedSelectBtn' : 'selectBtn'
+              }
               key={item.cafeId}
               onClick={handleGetBeansListByCafe}
               data={item.cafeId}

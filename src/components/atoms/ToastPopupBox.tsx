@@ -15,13 +15,16 @@ interface ToastPopupBoxProps {
 const ToastPopupBox = (props: ToastPopupBoxProps) => {
   const className = props.className;
   const defaultBox = props.type === 'default';
+  const scrollBox = props.type === 'scrollBox';
   const crossBtn = props.cross;
 
   return (
     <div
       className={classnames(`bg-white ${className}`, {
-        'absolute z-20 h-full w-full bottom-0 pb-84px px-30px rounded-t-40px pt-34px':
+        'absolute z-20 w-full bottom-0 pb-84px px-30px rounded-t-40px pt-34px':
           defaultBox,
+        'absolute z-20 h-full w-full bottom-0 pb-20 rounded-t-40px pt-34px':
+          scrollBox,
       })}
     >
       {crossBtn ? (
