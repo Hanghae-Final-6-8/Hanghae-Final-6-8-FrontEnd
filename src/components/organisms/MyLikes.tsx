@@ -6,6 +6,7 @@ import { getPostsLikedDB } from '../../redux/modules/mypage';
 import { useNavigate } from 'react-router-dom';
 import { addLikeDB } from '../../redux/modules/posts';
 import { deleteLikeDB } from '../../redux/modules/posts';
+import { heart, heart_full } from '../../assets/icons';
 
 const MyLikes = () => {
   const navigate = useNavigate();
@@ -55,7 +56,7 @@ const MyLikes = () => {
                   handleAddLikes(post.postsId!);
                 }}
               >
-                🤍
+                <img src={heart} />
               </button>
             ) : (
               <button
@@ -64,7 +65,7 @@ const MyLikes = () => {
                   handleDeleteLikes(post.postsId!);
                 }}
               >
-                ❤️
+                <img src={heart_full} />
               </button>
             )}
           </div>

@@ -9,6 +9,7 @@ import { getPostDB } from '../../redux/modules/posts';
 import Likes from '../../components/atoms/Likes';
 import { useNavigate } from 'react-router-dom';
 import postsSlice from '../../redux/modules/posts';
+import { left } from '../../assets/icons';
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -43,8 +44,8 @@ const PostDetail = () => {
         <p>로딩중</p>
       ) : (
         <>
-          <button className='m-2 block' onClick={handleBacktoPrev}>
-            ◀
+          <button className='m-2 p-2 block' onClick={handleBacktoPrev}>
+            <img src={left} />
           </button>
           <span>{post?.nickname}</span>
           <span>{post?.createdAt}</span>

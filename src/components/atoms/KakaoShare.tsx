@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 import { share } from '../../assets/icons';
-import { coffee_default } from '../../assets/images';
 
-const url = window.location.href;
+const url = 'url 입력';
 
 const KakaoShare = () => {
   useEffect(() => {
@@ -19,17 +18,13 @@ const KakaoShare = () => {
       content: {
         title: '나에게 맞는 원두는?',
         description: '#카페 #원두 #분위기 #커피',
-        imageUrl: 'https://t1.daumcdn.net/cfile/tistory/999BA7375B31990C20',
+        imageUrl:
+          'https://p1.pxfuel.com/preview/574/961/108/coffee-beans-roasted-brown-caffeine.jpg',
         link: {
           mobileWebUrl: url,
           webUrl: url,
         },
       },
-      // social: {
-      //   likeCount: 286,
-      //   commentCount: 45,
-      //   sharedCount: 845,
-      // },
       buttons: [
         {
           title: '웹으로 보기',

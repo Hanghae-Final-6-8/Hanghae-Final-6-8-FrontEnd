@@ -10,6 +10,7 @@ import { PostsItemDataParams } from '../../redux/modules/posts';
 import { PostsState } from '../../redux/modules/posts';
 import { addPostDB } from '../../redux/modules/posts';
 import { Button } from '../../components/atoms';
+import { left } from '../../assets/icons';
 const AddEditPost = () => {
   // 수정하려고 들어왔을 때
   const postsIdparams = useParams();
@@ -124,8 +125,8 @@ const AddEditPost = () => {
 
   return (
     <div>
-      <button className='m-2' onClick={handleBacktoPrev}>
-        ◀
+      <button className='m-2 p-2' onClick={handleBacktoPrev}>
+        <img src={left} />
       </button>
       {postsIdparams.postsId ? (
         <h1 className='text-center mb-5'>게시물 수정</h1>

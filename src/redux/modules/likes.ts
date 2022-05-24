@@ -27,21 +27,6 @@ const initialState: LikesState = {
     // },
   ],
 };
-// 좋아요 불러오기
-// export const axiosGetLike = createAsyncThunk(
-//   'likesReducer/axiosGetLike',
-//   async (data: number, thunkAPI) => {
-//     return await axios
-//       //URL 변경예정
-//       .get('http://110.46.158.168:8090/api/likes/mine')
-//       .then((res) => {
-//         console.log(res);
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//       });
-//   }
-// );
 
 // 좋아요 등록
 export const axiosAddLike = createAsyncThunk(
@@ -51,7 +36,7 @@ export const axiosAddLike = createAsyncThunk(
       posts_id: data.postsId,
     };
     return await axios({
-      url: 'https://copickserver.site/api/likes',
+      url: 'url',
       method: 'POST',
       data: _data,
     })
@@ -72,7 +57,7 @@ export const axiosDeleteLike = createAsyncThunk(
       posts_id: data,
     };
     return await axios({
-      url: 'https://copickserver.site/api/likes',
+      url: 'url',
       method: 'POST',
       data: _data,
     })

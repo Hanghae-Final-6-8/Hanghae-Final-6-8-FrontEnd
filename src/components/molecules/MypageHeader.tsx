@@ -1,3 +1,5 @@
+import { right } from '../../assets/icons';
+
 const MypageHeader = () => {
   return (
     <div className='flex justify-between mb-5'>
@@ -11,7 +13,9 @@ const MypageHeader = () => {
         </div>
       </div>
 
-      <button>▶</button>
+      <button>
+        <img src={right} />
+      </button>
     </div>
   );
 };

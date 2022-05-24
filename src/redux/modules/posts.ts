@@ -334,7 +334,6 @@ export const postsSlice = createSlice({
       // 라우팅처리
       action.payload.navi('/posts');
 
-      // return { ...state, list: [post_edited, ...new_list] };
       return {
         ...state,
         list: [post_edited, ...state.list],

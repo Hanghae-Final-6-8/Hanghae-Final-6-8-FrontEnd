@@ -11,7 +11,7 @@ import {
 import { setMoveToLogin } from '../utils/setMoveToLogin';
 import { useEffect } from 'react';
 
-const baseURL = process.env.REACT_APP_TEST_URL;
+const baseURL = process.env.REACT_APP_BASE_URL;
 
 const instance = axios.create({
   baseURL: baseURL,
@@ -38,9 +38,9 @@ instance.interceptors.request.use((config: AxiosRequestConfig) => {
  * 5. 이런 식으로 하면 됩니다.
  * 6. 임시적으로 로컬에서 작업을 하기 위해 이런식으로 하고 있습니다.
  ***************************************************************************/
-setAccessTokenToCookie(
-  'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMjQ4MTE1MDQ3IiwiaWF0IjoxNjUzMzYwMzk0LCJleHAiOjE2NTM0NDY3OTR9.OY5fmN5F1Hh0ejeLyy1vEe-_ya2y2AwTIZDH25HCxpQ'
-);
+// setAccessTokenToCookie(
+//   ''
+// );
 // setRefreshTokenToCookie(
 //   ''
 // );
