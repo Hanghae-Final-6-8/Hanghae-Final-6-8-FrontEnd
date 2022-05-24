@@ -63,16 +63,26 @@ instance.interceptors.response.use(
     }
 
     if (statusCode === 441) {
-      const refreshToken = getRefreshTokenFromCookie();
-      //originalRequest.headers['Authorization'] = `Bearer ${refreshToken}`;
-      //instance.headers[]
-
-      // const accessToken = response.headers.access_token;
-      // const refreshToken = response.headers.refresh_token;
-      // setAccessTokenToCookie(accessToken);
-      // setRefreshTokenToCookie(refreshToken);
-
-      //await axios(originalRequest)
+      try {
+        const initialURL = originalRequest.url;
+        const refreshToken = getRefreshTokenFromCookie();
+        originalRequest.headers['Authorization'] = `Bearer ${refreshToken}`;
+        originalRequest.url = '/api/user/reissue';
+        await axios(originalRequest).then(async (response) => {
+          const accessToken = response.headers.access_token;
+          const refreshToken = response.headers.refresh_token;
+          setAccessTokenToCookie(accessToken);
+          setRefreshTokenToCookie(refreshToken);
+          originalRequest.url = initialURL;
+          originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
+          return await axios(originalRequest).then((response) => {
+            console.log('441 요청 response입니다 \n', response);
+          });
+        });
+      } catch (error) {
+        console.log(error);
+        return Promise.reject(error);
+      }
 
       console.log(responseData, originalRequest, statusCode);
 
