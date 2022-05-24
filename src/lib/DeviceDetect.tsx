@@ -1,5 +1,5 @@
 import { isMobile } from 'react-device-detect';
-import { BgWeb } from '../components/organisms';
+import { BgWeb } from '../components/molecules';
 import BottomNav from '../components/BottomNav';
 
 interface Children {

@@ -5,7 +5,6 @@ import MyActivity from './MyActivity';
 import LoginBtnGroup from './LoginBtnGroup';
 import MainTopCarousel from './MainTopCarousel';
 import BeansToastPopup from './BeansToastPopup';
-import BgWeb from './BgWeb';
 
 export {
   Spinner,
@@ -15,5 +14,4 @@ export {
   LoginBtnGroup,
   MainTopCarousel,
   BeansToastPopup,
-  BgWeb,
 };
