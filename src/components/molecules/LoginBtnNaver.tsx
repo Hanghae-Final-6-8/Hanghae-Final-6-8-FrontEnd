@@ -6,13 +6,14 @@ import { getNaverURL } from '../../redux/modules/user';
 const LoginBtnNaver = () => {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
-  const handleNotReadyToLogin = () => {
-    appDispatch(getNaverURL());
+  const handleLoginNaver = async () => {
+    await appDispatch(getNaverURL());
+    navigate('/api/user/login/naver/callback', { replace: true });
   };
   return (
     <button
       className='w-50px h-50px  mr-7 rounded-full bg-white shadow-loginBtn'
-      onClick={handleNotReadyToLogin}
+      onClick={handleLoginNaver}
     >
       <img className='mx-auto' src={naver} />
     </button>

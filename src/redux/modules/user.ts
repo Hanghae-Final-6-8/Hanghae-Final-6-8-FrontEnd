@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { userApis } from '../../apis';
-import instance from '../../lib/axios';
 import {
   setAccessTokenToCookie,
   setRefreshTokenToCookie,
@@ -65,6 +64,8 @@ export const getNaverURL = createAsyncThunk(
   async () => {
     try {
       await userApis.getNaverURL().then((response) => {
+        const url: string = response.data;
+        location.href = url;
         return;
       });
     } catch (err) {
@@ -75,9 +76,16 @@ export const getNaverURL = createAsyncThunk(
 
 export const loginNaver = createAsyncThunk(
   'user/login/naver',
-  async (code: string) => {
+  async (data: Login) => {
     try {
+      const code = data.codeInput;
       await userApis.loginNaver(code).then((response) => {
+        const accessToken = response.headers.access_token;
+        const refreshToken = response.headers.refresh_token;
+        setAccessTokenToCookie(accessToken);
+        setRefreshTokenToCookie(refreshToken);
+
+        data.navigate('/main', { replace: true });
         return;
       });
     } catch (err) {
@@ -91,6 +99,8 @@ export const getGoogleURL = createAsyncThunk(
   async () => {
     try {
       await userApis.getGoogleURL().then((response) => {
+        const url: string = response.data;
+        location.href = url;
         return;
       });
     } catch (err) {
@@ -101,9 +111,16 @@ export const getGoogleURL = createAsyncThunk(
 
 export const loginGoogle = createAsyncThunk(
   'user/login/google',
-  async (code: string) => {
+  async (data: Login) => {
     try {
+      const code = data.codeInput;
       await userApis.loginGoogle(code).then((response) => {
+        const accessToken = response.headers.access_token;
+        const refreshToken = response.headers.refresh_token;
+        setAccessTokenToCookie(accessToken);
+        setRefreshTokenToCookie(refreshToken);
+
+        data.navigate('/main', { replace: true });
         return;
       });
     } catch (err) {
@@ -147,6 +164,12 @@ export const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(loginGoogle.fulfilled, (state, action) => {
+      state.isLogin = true;
+    });
+    builder.addCase(loginNaver.fulfilled, (state, action) => {
+      state.isLogin = true;
+    });
     builder.addCase(loginKakao.fulfilled, (state, action) => {
       state.isLogin = true;
     });

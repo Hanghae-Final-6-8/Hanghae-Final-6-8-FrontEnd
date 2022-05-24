@@ -8,8 +8,9 @@ import queryString from 'query-string';
 const LoginRedirect = () => {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
-  const { search } = useLocation();
-  const codeInput: string = queryString.parse(search).code as string;
+  const location = useLocation();
+  const codeInput: string = queryString.parse(location.search).code as string;
+  const pathChecker = location.pathname.split('/')[4];
 
   useEffect(() => {
     const kakaoDispatch = async () => {
@@ -20,7 +21,23 @@ const LoginRedirect = () => {
         console.log(err);
       }
     };
-    kakaoDispatch();
+    const naverDispatch = async () => {
+      try {
+        await appDispatch(loginNaver({ codeInput, navigate }));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    const googleDispatch = async () => {
+      try {
+        await appDispatch(loginGoogle({ codeInput, navigate }));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    pathChecker === 'kakao' ? kakaoDispatch() : null;
+    pathChecker === 'naver' ? naverDispatch() : null;
+    pathChecker === 'google' ? googleDispatch() : null;
   }, [appDispatch, navigate]);
 
   return <Spinner />;

@@ -1,16 +1,20 @@
 import { google } from '../../assets/icons';
-
-const handleNotReadyToLogin = () => {
-  alert(
-    '네이버, 구글 로그인은 구현 중 입니다.\n(사이트 완성 후 검수를 받아야 합니다)'
-  );
-};
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../redux/configureStore';
+import { getGoogleURL } from '../../redux/modules/user';
 
 const LoginBtnGoogle = () => {
+  const navigate = useNavigate();
+  const appDispatch = useAppDispatch();
+  const handleLoginGoogle = async () => {
+    await appDispatch(getGoogleURL());
+    navigate('/api/user/login/google/callback', { replace: true });
+  };
+
   return (
     <button
       className='w-50px h-50px rounded-full bg-white shadow-loginBtn'
-      onClick={handleNotReadyToLogin}
+      onClick={handleLoginGoogle}
     >
       <img className='mx-auto' src={google} />
     </button>
