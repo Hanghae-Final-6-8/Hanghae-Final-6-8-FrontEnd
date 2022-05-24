@@ -8,6 +8,7 @@ import { addCommentDB } from '../../redux/modules/comment';
 import { getPostDB } from '../../redux/modules/posts';
 import Likes from '../../components/atoms/Likes';
 import { useNavigate } from 'react-router-dom';
+import postsSlice from '../../redux/modules/posts';
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -17,9 +18,10 @@ const PostDetail = () => {
 
   // 포스트 디테일 가져오기
   useEffect(() => {
+    appDispatch(postsSlice.actions.isLoading(true));
     appDispatch(getPostDB(Number(postsId)));
   }, []);
-  const post = useSelector((store: RootState) => store.posts.post);
+  const { post, isLoading } = useSelector((store: RootState) => store.posts);
   // 코멘트 state
   const [comment, setComment] = useState<string>('');
   // 코멘트 state에 값넣기
@@ -36,39 +38,45 @@ const PostDetail = () => {
   };
 
   return (
-    <div>
-      <button className='m-2 block' onClick={handleBacktoPrev}>
-        ◀
-      </button>
-      <span>{post?.nickname}</span>
-      <span>{post?.createdAt}</span>
-
-      <img src={post?.postsImage.toString()} />
-      <Likes postsId={Number(postsId)} />
-      <p>{post?.title}</p>
-      <p>{post?.content}</p>
-      {post?.tagName.length !== 0 ? (
-        post?.tagName.map((tag, idx) => {
-          return (
-            <span
-              className='inline-block bg-orange-100 text-amber-800 mr-1 rounded-md text-sm font-bold p-1'
-              key={idx}
-            >
-              {tag}
-            </span>
-          );
-        })
+    <div className='pb-24'>
+      {isLoading ? (
+        <p>로딩중</p>
       ) : (
-        <></>
+        <>
+          <button className='m-2 block' onClick={handleBacktoPrev}>
+            ◀
+          </button>
+          <span>{post?.nickname}</span>
+          <span>{post?.createdAt}</span>
+
+          <img src={post?.postsImage.toString()} />
+          <Likes postsId={Number(postsId)} />
+          <p>{post?.title}</p>
+          <p>{post?.content}</p>
+          {post?.tagName.length !== 0 ? (
+            post?.tagName.map((tag, idx) => {
+              return (
+                <span
+                  className='inline-block bg-orange-100 text-amber-800 mr-1 rounded-md text-sm font-bold p-1'
+                  key={idx}
+                >
+                  {tag}
+                </span>
+              );
+            })
+          ) : (
+            <></>
+          )}
+          <hr />
+          <input
+            type='text'
+            placeholder='댓글 내용을 입력해주세요'
+            onChange={getInputCommentFrom}
+          />
+          <button onClick={handleAddComment}>등록</button>
+          <Comment postsId={Number(postsId)} />
+        </>
       )}
-      <hr />
-      <input
-        type='text'
-        placeholder='댓글 내용을 입력해주세요'
-        onChange={getInputCommentFrom}
-      />
-      <button onClick={handleAddComment}>등록</button>
-      <Comment postsId={Number(postsId)} />
     </div>
   );
 };

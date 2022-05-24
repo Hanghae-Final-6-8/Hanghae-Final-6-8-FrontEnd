@@ -98,9 +98,7 @@ export const getPostDB = createAsyncThunk(
   async (data: number, thunkAPI) => {
     try {
       await postApis.getPostDetail(data).then((res) => {
-        // console.log(res);
-        // 임시
-        console.log(res.data.data);
+        // console.log(res.data.data);
         let newTagStr = [];
         if (res.data.data.tag_name !== null) {
           const tagStr = res.data.data.tag_name.slice(
@@ -122,6 +120,7 @@ export const getPostDB = createAsyncThunk(
           likesCount: res.data.data.likes_count,
         };
         thunkAPI.dispatch(setPost(post));
+        thunkAPI.dispatch(isLoading(false));
       });
     } catch (error) {
       console.log(error);

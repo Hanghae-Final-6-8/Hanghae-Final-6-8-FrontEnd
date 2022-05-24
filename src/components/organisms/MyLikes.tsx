@@ -36,7 +36,7 @@ const MyLikes = () => {
     <div className='flex flex-wrap pb-24'>
       {listLiked.map((post, index) => {
         return (
-          <div className='ml-1 mr-1 relative' key={index}>
+          <div className='mb-1 ml-1 mr-1 relative' key={index}>
             <img
               className='w-24'
               src={
