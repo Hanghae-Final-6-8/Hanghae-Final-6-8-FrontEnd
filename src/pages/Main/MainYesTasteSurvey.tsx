@@ -32,6 +32,7 @@ const MainYesTasteSurvey = () => {
   const navigate = useNavigate();
   const { beanId } = useParams();
   const appDispatch = useAppDispatch();
+  const user = useSelector((state: RootState) => state.user);
   const tasteList = !beanId
     ? useSelector((state: RootState) => state.taste)
     : useSelector((state: RootState) => state.beans.beansDetail);
@@ -55,7 +56,7 @@ const MainYesTasteSurvey = () => {
 
   useEffect(() => {
     // 리덕스에 데이터가 null일 경우 API를 요청합니다.
-    !tasteList.beanName && appDispatch(getTasteSurvey());
+    user.isLogin && !tasteList.beanName && appDispatch(getTasteSurvey());
     if (!beanId) {
       appDispatch(getSimilarBeans());
     }

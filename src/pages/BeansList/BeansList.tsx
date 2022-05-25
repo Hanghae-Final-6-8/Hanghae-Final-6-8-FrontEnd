@@ -44,7 +44,6 @@ const BeansList = () => {
     const currentTargetValue = Number(
       e.currentTarget.getAttribute('data-beanid')
     );
-    appDispatch(detailBeans(currentTargetValue));
     navigate(`./${currentTargetValue}`);
   };
   return (
