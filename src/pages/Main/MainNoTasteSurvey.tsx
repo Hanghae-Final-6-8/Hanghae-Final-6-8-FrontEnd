@@ -10,15 +10,14 @@ import {
   Hr,
 } from '../../components/atoms';
 import { mainHeaderImg } from '../../assets/images';
-import { MainTopCarousel } from '../../components/organisms';
+import { MainTopCarousel, MainMidCarousel } from '../../components/molecules';
 import { useNavigate } from 'react-router-dom';
-import { coffee_default } from '../../assets/images';
+
 import { copick } from '../../assets/logo';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../redux/configureStore';
 import { useEffect } from 'react';
 import { getBeansListByCafeMain } from '../../redux/modules/cafe';
-import { getBeansListType } from '../../redux/modules/beans';
 
 const MainNoTasteSurvey = () => {
   const navigate = useNavigate();
@@ -26,27 +25,13 @@ const MainNoTasteSurvey = () => {
   const { cafeListMain, isMainLoaded } = useSelector(
     (state: RootState) => state.cafe
   );
-  const { beanlist } = useSelector((state: RootState) => state.beans);
 
   const handleToTasteSurvay = () => {
     navigate('../survey/main');
   };
   useEffect(() => {
-    appDispatch(getBeansListType(1));
     !isMainLoaded && appDispatch(getBeansListByCafeMain());
   }, [appDispatch]);
-
-  const beansByTypeFormdata: {
-    beanId: number;
-    beanName: string;
-    description: null;
-    type: number;
-    beanImage: null;
-  }[] = [];
-  beanlist.forEach((el) => {
-    beansByTypeFormdata.push(el);
-  });
-  console.log(beansByTypeFormdata);
 
   const beansNumByCafeFormdata: {
     beansCount: number;
@@ -110,24 +95,7 @@ const MainNoTasteSurvey = () => {
                 싱글 오리진
               </button>
             </div>
-            <div className='flex'>
-              {beansByTypeFormdata.map((item) => (
-                <RoundBox
-                  type='mainRoundBox'
-                  className='w-40'
-                  key={item.beanId}
-                >
-                  <div className='w-20 mx-auto'>
-                    <img
-                      className='h-90px mx-auto'
-                      src={item.beanImage ? item.beanImage : coffee_default}
-                      alt={item.beanName}
-                    />
-                    <Text type='mainRedcommendSimmilar'>{item.beanName}</Text>
-                  </div>
-                </RoundBox>
-              ))}
-            </div>
+            <MainMidCarousel />
             <Text type='main2header' className='mt-12'>
               111개의 브랜드 원두로
             </Text>

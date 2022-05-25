@@ -12,6 +12,8 @@ import BeansSearchForm from './BeansSearchForm';
 import BgWeb from './BgWeb';
 import BgWebFixed from './BgWebFixed';
 import NeedLoginToastPopup from './NeedLoginToastPopup';
+import MainTopCarousel from './MainTopCarousel';
+import MainMidCarousel from '../../pages/Main/MainMidCarousel';
 
 export {
   Comment,
@@ -28,4 +30,6 @@ export {
   BgWeb,
   BgWebFixed,
   NeedLoginToastPopup,
+  MainTopCarousel,
+  MainMidCarousel,
 };
