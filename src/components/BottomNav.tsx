@@ -6,7 +6,7 @@ import {
   navUser,
 } from '../assets/icons/index';
 import { useNavigate, useLocation } from 'react-router-dom';
-import ToastPopup from './ToastPopup';
+import { NeedLoginToastPopup } from './molecules';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/configureStore';
 import { Icon } from './atoms';
@@ -53,7 +53,9 @@ const BottomNav = () => {
   }
   return (
     <>
-      {isActivePopup ? <ToastPopup onClick={handleClosePopup} /> : null}
+      {isActivePopup ? (
+        <NeedLoginToastPopup onClick={handleClosePopup} />
+      ) : null}
       <nav className='fixed flex bottom-0 z-30 bg-slate-50 w-full h-84px shadow-toolbar'>
         <button className='flex-auto fill-slate-200' onClick={handleToMain}>
           <Icon
