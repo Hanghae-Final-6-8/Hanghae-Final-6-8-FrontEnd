@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { share } from '../../assets/icons';
-
-const url = 'url 입력';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/configureStore';
 
 const KakaoShare = () => {
   useEffect(() => {
@@ -9,17 +9,23 @@ const KakaoShare = () => {
       window.Kakao.init(process.env.REACT_APP_KAKAO_MAP_KEY);
     }
   }, []);
+  const tasteList = useSelector((state: RootState) => state.taste);
+  const { beanImage, beanId, beanName, type } = tasteList;
+
+  const coffType = type === 1 ? '[싱글 오리진]' : '블렌드';
+
+  const url = 'https://copick.site';
 
   //버튼을 누르면 실행되는 함수
-  const shareKakao = () => {
-    //이부분이 매우 헷갈림 여러 사이트를 참고했는데 이 sendDefault부분을 잘 봐야한다.
+  const handleShareKakao = () => {
     window.Kakao.Link.sendDefault({
       objectType: 'feed',
       content: {
-        title: '나에게 맞는 원두는?',
-        description: '#카페 #원두 #분위기 #커피',
-        imageUrl:
-          'https://p1.pxfuel.com/preview/574/961/108/coffee-beans-roasted-brown-caffeine.jpg',
+        title: `111개의 원두 중 내가 Pick한 원두 취향은?`,
+        description: `진한 맛과 향의 '${coffType} ${beanName}☕'`,
+        imageUrl: beanImage,
+        imageWidth: 100,
+        imageHeight: 200,
         link: {
           mobileWebUrl: url,
           webUrl: url,
@@ -27,17 +33,17 @@ const KakaoShare = () => {
       },
       buttons: [
         {
-          title: '웹으로 보기',
+          title: '자세히 보기',
           link: {
-            mobileWebUrl: url,
-            webUrl: url,
+            mobileWebUrl: `${url}/beans/${beanId}`,
+            webUrl: `${url}/beans/${beanId}`,
           },
         },
         {
-          title: '앱으로 보기',
+          title: '나의 원두 취향 테스트하기',
           link: {
-            mobileWebUrl: url,
-            webUrl: url,
+            mobileWebUrl: `${url}/survey/main`,
+            webUrl: `${url}/survey/main`,
           },
         },
       ],
@@ -45,11 +51,19 @@ const KakaoShare = () => {
   };
 
   return (
-    <div>
-      <div className='share-node cursor-pointer' onClick={shareKakao}>
-        <img src={share} alt='카카오공유' />
-      </div>
-    </div>
+    <button
+      className='fixed w-12 h-12 rounded-full z-10 bg-brownP bg-cover bg-right bottom-104px right-6 shadow-tasteBrown'
+      onClick={handleShareKakao}
+    >
+      <img
+        className='mx-auto '
+        src={share}
+        style={{
+          filter:
+            'invert(95%) sepia(0%) saturate(21%) hue-rotate(357deg) brightness(104%) contrast(108%)',
+        }}
+      />
+    </button>
   );
 };
 

@@ -7,15 +7,31 @@ const BeansSearchForm = () => {
   const appDispatch = useAppDispatch();
   const [inputValue, setInputValue] = useState('');
 
+  const checker = (str: string) => {
+    /* eslint-disable-next-line */
+    const regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+    if (regExp.test(str)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const handleInputValue: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setInputValue(e.target.value);
   };
+
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     if (inputValue === '') {
       alert('검색어를 입력해주세요!');
       return;
+    } else if (checker(inputValue)) {
+      alert('특수문자를 제거해주세요!');
+      setInputValue('');
+      return;
     }
+
     appDispatch(searchBeans(inputValue));
     setInputValue('');
   };

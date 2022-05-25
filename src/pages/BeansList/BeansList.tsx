@@ -16,7 +16,7 @@ const BeansList = () => {
 
   const beansFormdata: {
     beanId: number;
-    beanName: null;
+    beanName: string;
     description: null;
     type: number;
     beanImage: null;
@@ -44,7 +44,6 @@ const BeansList = () => {
     const currentTargetValue = Number(
       e.currentTarget.getAttribute('data-beanid')
     );
-    appDispatch(detailBeans(currentTargetValue));
     navigate(`./${currentTargetValue}`);
   };
   return (
@@ -93,6 +92,9 @@ const BeansList = () => {
             </div>
           </RoundBox>
         ))}
+        {beansFormdata.length === 0 ? (
+          <div className='text-gray90'>검색 결과가 없습니다.</div>
+        ) : null}
       </GridBox>
     </>
   );

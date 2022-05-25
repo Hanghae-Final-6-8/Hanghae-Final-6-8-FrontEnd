@@ -1,12 +1,12 @@
-import { Text, ToastPopupBox, Span } from './atoms';
-import { Button, DarkWrapper } from './atoms';
+import { Text, ToastPopupBox, Span } from '../atoms';
+import { Button, DarkWrapper } from '../atoms';
 import { useNavigate } from 'react-router-dom';
 
 interface ToastPopupProps {
   onClick: () => void;
 }
 
-const ToastPopup = (props: ToastPopupProps) => {
+const NeedLoginToastPopup = (props: ToastPopupProps) => {
   const navigate = useNavigate();
 
   const handleToLogin = () => {
@@ -36,4 +36,4 @@ const ToastPopup = (props: ToastPopupProps) => {
   );
 };
 
-export default ToastPopup;
+export default NeedLoginToastPopup;

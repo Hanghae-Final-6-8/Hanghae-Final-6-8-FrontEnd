@@ -6,6 +6,7 @@ import {
   beans,
   right,
   left,
+  bookmark_full,
 } from '../../assets/icons/';
 import { coffee_default } from '../../assets/images';
 import {
@@ -17,6 +18,7 @@ import {
   Image,
   Chart,
   PrevBtn,
+  KakaoShare,
 } from '../../components/atoms';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -31,11 +33,13 @@ const MainYesTasteSurvey = () => {
   const navigate = useNavigate();
   const { beanId } = useParams();
   const appDispatch = useAppDispatch();
+  const user = useSelector((state: RootState) => state.user);
   const tasteList = !beanId
     ? useSelector((state: RootState) => state.taste)
     : useSelector((state: RootState) => state.beans.beansDetail);
   const [randomBg, setRandomBg] = useState(0);
   const [clickedDesc, setClickedDesc] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   // 배경 랜덤 함수
   useEffect(() => {
@@ -54,15 +58,19 @@ const MainYesTasteSurvey = () => {
 
   useEffect(() => {
     // 리덕스에 데이터가 null일 경우 API를 요청합니다.
-    !tasteList.beanName && appDispatch(getTasteSurvey());
+    user.isLogin && !tasteList.beanName && appDispatch(getTasteSurvey());
     if (!beanId) {
       appDispatch(getSimilarBeans());
     }
   }, [tasteList.beanName, beanId, tasteList.isSimilarLoaded, appDispatch]);
 
-  const handelShareByKakaotalk = () => {
-    alert('아직 구현 중에 있습니다!');
-  };
+  useEffect(() => {
+    if (tasteList.favoritesId) {
+      setIsFavorite(true);
+    } else {
+      setIsFavorite(false);
+    }
+  }, [tasteList.favoritesId]);
 
   const handleToMap = (cafeName: string) => {
     navigate(`/map/${cafeName}`);
@@ -74,8 +82,16 @@ const MainYesTasteSurvey = () => {
     const currentTargetValue = Number(
       e.currentTarget.getAttribute('data-beanid')
     );
+    if (!user.isLogin) {
+      return;
+    }
+    if (isFavorite) {
+      setIsFavorite(false);
+    } else {
+      setIsFavorite(true);
+    }
+
     appDispatch(addFavoriteList(currentTargetValue));
-    alert('즐겨찾기 등록 완료!');
   };
 
   const handleShowDescription = () => {
@@ -152,7 +168,10 @@ const MainYesTasteSurvey = () => {
             onClick={handleAddBookmark}
             data-beanid={tasteList.beanId}
           >
-            <img className='w-full' src={bookmark} />
+            <img
+              className='w-full '
+              src={isFavorite ? bookmark_full : bookmark}
+            />
           </button>
         </header>
         <div className='absolute px-6 pb-6 left-0 top-56 rounded-t-40px bg-white w-full shadow-main'>
@@ -176,9 +195,11 @@ const MainYesTasteSurvey = () => {
             <Text type={clickedDesc ? 'clickedDescription' : 'description'}>
               {tasteList.description}
             </Text>
-            <button className='block mx-auto' onClick={handleShowDescription}>
-              <img src={clickedDesc ? up : down} />
-            </button>
+            {tasteList.description.length > 65 ? (
+              <button className='block mx-auto' onClick={handleShowDescription}>
+                <img src={clickedDesc ? up : down} />
+              </button>
+            ) : null}
             <RoundBox type='mainRoundBox'>
               <Text type='mainSubTitle'>
                 <img src={beans} />
@@ -237,6 +258,7 @@ const MainYesTasteSurvey = () => {
                       ? tasteList.cafeLogoImage
                       : logoCopickSquare
                   }
+                  alt={tasteList.cafeName}
                 />
                 <Text className='mt-1.5 text-gray90 font-500 text-body'>
                   {tasteList.cafeName}
@@ -292,23 +314,7 @@ const MainYesTasteSurvey = () => {
             ) : null}
           </article>
         </div>
-        {!beanId ? (
-          <>
-            <button
-              className='fixed w-12 h-12 rounded-full z-10 bg-brownP bg-cover bg-right bottom-104px right-6 shadow-tasteBrown'
-              onClick={handelShareByKakaotalk}
-            >
-              <img
-                className='mx-auto '
-                src={share}
-                style={{
-                  filter:
-                    'invert(95%) sepia(0%) saturate(21%) hue-rotate(357deg) brightness(104%) contrast(108%)',
-                }}
-              />
-            </button>
-          </>
-        ) : null}
+        {!beanId ? <KakaoShare /> : null}
       </main>
     </>
   );

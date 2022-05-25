@@ -48,8 +48,6 @@ export const loginKakao = createAsyncThunk(
         setAccessTokenToCookie(accessToken);
         setRefreshTokenToCookie(refreshToken);
 
-        data.navigate('/main', { replace: true });
-
         return;
       });
     } catch (err) {
@@ -84,8 +82,6 @@ export const loginNaver = createAsyncThunk(
         const refreshToken = response.headers.refresh_token;
         setAccessTokenToCookie(accessToken);
         setRefreshTokenToCookie(refreshToken);
-
-        data.navigate('/main', { replace: true });
         return;
       });
     } catch (err) {
@@ -119,8 +115,6 @@ export const loginGoogle = createAsyncThunk(
         const refreshToken = response.headers.refresh_token;
         setAccessTokenToCookie(accessToken);
         setRefreshTokenToCookie(refreshToken);
-
-        data.navigate('/main', { replace: true });
         return;
       });
     } catch (err) {

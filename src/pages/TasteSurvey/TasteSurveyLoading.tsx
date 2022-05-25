@@ -5,6 +5,8 @@ import { getObjLocalStorage } from '../../utils/localStorage';
 import { useAppDispatch } from '../../redux/configureStore';
 import { postTasteSurvey } from '../../redux/modules/taste';
 import { auth } from '../../redux/modules/user';
+import { testLoading } from '../../assets/images';
+import { GridBox, Text } from '../../components/atoms';
 
 const TasteSurveyLoading = () => {
   const navigate = useNavigate();
@@ -24,7 +26,17 @@ const TasteSurveyLoading = () => {
 
   return (
     <>
-      <Spinner />
+      <GridBox type='flexBasic' className='mt-28'>
+        <div className='mx-auto'>
+          <img src={testLoading} alt='취향을 분석하고 있어요' />
+        </div>
+        <div className='mx-auto text-center'>
+          <Text type='mainBodyTitle' className='mt-4'>
+            원두 취향을 분석하고 있어요!
+          </Text>
+          <Text type='clickedDescription'>과연 나에게 찰떡인 원두는..?!</Text>
+        </div>
+      </GridBox>
     </>
   );
 };
