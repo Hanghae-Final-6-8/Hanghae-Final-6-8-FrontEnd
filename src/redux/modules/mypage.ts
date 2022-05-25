@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { userApis } from '../../apis';
 import { postApis } from '../../apis/postApis';
+import { commentApis } from '../../apis/commentApis';
 import { likeApis } from '../../apis/likeApis';
 
 export interface PostsItemDataParams {
@@ -16,24 +17,35 @@ export interface PostsItemDataParams {
   likesCount?: number | null;
 }
 
+export interface CommentItemDataParams {
+  commentsId: number;
+  nickname?: string;
+  content: string;
+  createdAt: string;
+}
+
 interface mypageType {
   listLiked: Array<PostsItemDataParams>;
   listMyActivity: Array<PostsItemDataParams>;
+  myCommentList: Array<CommentItemDataParams>;
   favorite: number;
   likes: number;
   activity: number;
   isListLikedLoaded?: boolean;
   isListMyActivityLoaded?: boolean;
+  isMyCommentListLoaded?: boolean;
 }
 
 const initialState: mypageType = {
   listLiked: [],
   listMyActivity: [],
+  myCommentList: [],
   favorite: 0,
   likes: 0,
   activity: 0,
   isListLikedLoaded: false,
   isListMyActivityLoaded: false,
+  isMyCommentListLoaded: false,
 };
 
 // 유저 즐겨찾기, 좋아요, 게시글 카운트 set
@@ -57,11 +69,11 @@ export const getUserInfo = createAsyncThunk(
 
 // 좋아요 누른 게시물 조회
 export const getPostsLikedDB = createAsyncThunk(
-  'postsReducer/getPostsLikedDB',
+  'mypageReducer/getPostsLikedDB',
   async (data, thunkAPI) => {
     try {
       await likeApis.getPostsLiked().then((res) => {
-        console.log(res);
+        // console.log(res);
         const newList: Array<PostsItemDataParams> = [];
         res.data.data.content.map((post: any) => {
           let newTagStr = [];
@@ -90,12 +102,12 @@ export const getPostsLikedDB = createAsyncThunk(
 
 // 내가 쓴 게시글 불러오기
 export const getPostListMine = createAsyncThunk(
-  'postsReducer/getPostListMine',
+  'mypageReducer/getPostListMine',
   async (data, thunkAPI) => {
     try {
       await postApis.getPostListMine().then((res) => {
-        console.log(res);
-        console.log(res.data.data.content);
+        // console.log(res);
+        // console.log(res.data.data.content);
         const newList: Array<PostsItemDataParams> = [];
         res.data.data.content.map((post: any) => {
           let newTagStr = [];
@@ -115,6 +127,29 @@ export const getPostListMine = createAsyncThunk(
           });
         });
         thunkAPI.dispatch(setPostActivity(newList));
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+// 내 댓글 조회
+export const getMyCommentDB = createAsyncThunk(
+  'mypageReducer/getMyCommentDB',
+  async (data, thunkAPI) => {
+    try {
+      await commentApis.getMyComment().then((res) => {
+        // console.log(res.data.data.content);
+        const newList: Array<CommentItemDataParams> = [];
+        res.data.data.content.map((comment: any) => {
+          newList.push({
+            commentsId: comment.id,
+            content: comment.content,
+            createdAt: comment.createdAt,
+          });
+        });
+        thunkAPI.dispatch(setMyCommentList(newList));
       });
     } catch (error) {
       console.log(error);
@@ -156,9 +191,21 @@ export const mypageSlice = createSlice({
         listMyActivity: newListActivity,
       };
     },
+    setMyCommentList: (
+      state,
+      action: PayloadAction<Array<CommentItemDataParams>>
+    ) => {
+      const newMyCommentList = [...action.payload];
+      return {
+        ...state,
+        myCommentList: newMyCommentList,
+      };
+    },
+    // 삭제예정
     setIsListLikedLoaded: (state, action: PayloadAction<boolean>) => {
       state.isListLikedLoaded = action.payload;
     },
+    // 삭제예정
     setIsListMyActivityLoaded: (state, action: PayloadAction<boolean>) => {
       state.isListMyActivityLoaded = action.payload;
     },
@@ -174,6 +221,11 @@ export const mypageSlice = createSlice({
         state.isListMyActivityLoaded = true;
       }
     });
+    builder.addCase(getMyCommentDB.fulfilled, (state, action) => {
+      if (state.myCommentList.length !== 0) {
+        state.isMyCommentListLoaded = true;
+      }
+    });
   },
 });
 
@@ -183,6 +235,7 @@ export const {
   setFavorLikeActivity,
   setPostLiked,
   setPostActivity,
+  setMyCommentList,
   setIsListLikedLoaded,
   setIsListMyActivityLoaded,
 } = mypageSlice.actions;

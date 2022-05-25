@@ -42,19 +42,19 @@ export const getCommentListDB = createAsyncThunk(
     }
   }
 );
-// 내 댓글 조회
-export const getMyCommentDB = createAsyncThunk(
-  'commentReducer/getMyCommentDB',
-  async () => {
-    try {
-      await commentApis.getMyComment().then((res) => {
-        console.log(res);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-);
+// // 내 댓글 조회
+// export const getMyCommentDB = createAsyncThunk(
+//   'commentReducer/getMyCommentDB',
+//   async () => {
+//     try {
+//       await commentApis.getMyComment().then((res) => {
+//         console.log(res);
+//       });
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   }
+// );
 
 interface addCommentType {
   content: string;
@@ -139,7 +139,7 @@ export const { setCommentList, addComment, deleteComment } =
 const commentActionCreators = {
   addCommentDB,
   getCommentListDB,
-  getMyCommentDB,
+  // getMyCommentDB,
   deleteCommentDB,
 };
 
