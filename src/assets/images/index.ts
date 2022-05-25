@@ -13,6 +13,7 @@ import bean04 from './beans/beans04.png';
 import bean05 from './beans/beans05.png';
 import bean06 from './beans/beans06.png';
 import err from './err.png';
+import testLoading from './test_loading.png';
 
 export {
   imgExample,
@@ -30,4 +31,5 @@ export {
   bean05,
   bean06,
   err,
+  testLoading,
 };
