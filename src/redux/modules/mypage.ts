@@ -240,9 +240,12 @@ export const {
   setIsListMyActivityLoaded,
 } = mypageSlice.actions;
 
-const likeActionCreators = {
+const mypageActionCreators = {
   getUserInfo,
   setIsListLikedLoaded,
+  getPostsLikedDB,
+  getPostListMine,
+  getMyCommentDB,
 };
 
-export { likeActionCreators };
+export { mypageActionCreators };

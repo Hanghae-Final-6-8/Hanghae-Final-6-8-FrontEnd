@@ -156,6 +156,7 @@ const AddEditPost = () => {
                 className='hidden'
                 type='file'
                 onChange={getOnLoadFileFrom}
+                accept='image/*'
               />
             </div>
 
