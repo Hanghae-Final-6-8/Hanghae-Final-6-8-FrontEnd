@@ -93,6 +93,9 @@ const BeansList = () => {
             </div>
           </RoundBox>
         ))}
+        {beansFormdata.length === 0 ? (
+          <div className='text-gray90'>검색 결과가 없습니다.</div>
+        ) : null}
       </GridBox>
     </>
   );
