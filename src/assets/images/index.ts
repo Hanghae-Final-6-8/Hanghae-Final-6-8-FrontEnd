@@ -11,6 +11,7 @@ import bean02 from './beans/beans02.png';
 import bean03 from './beans/beans03.png';
 import bean04 from './beans/beans04.png';
 import bean05 from './beans/beans05.png';
+import bean06 from './beans/beans06.png';
 
 export {
   imgExample,
@@ -26,4 +27,5 @@ export {
   bean03,
   bean04,
   bean05,
+  bean06,
 };
