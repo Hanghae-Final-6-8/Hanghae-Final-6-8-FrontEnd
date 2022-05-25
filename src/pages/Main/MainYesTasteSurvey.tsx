@@ -195,9 +195,11 @@ const MainYesTasteSurvey = () => {
             <Text type={clickedDesc ? 'clickedDescription' : 'description'}>
               {tasteList.description}
             </Text>
-            <button className='block mx-auto' onClick={handleShowDescription}>
-              <img src={clickedDesc ? up : down} />
-            </button>
+            {tasteList.description.length > 65 ? (
+              <button className='block mx-auto' onClick={handleShowDescription}>
+                <img src={clickedDesc ? up : down} />
+              </button>
+            ) : null}
             <RoundBox type='mainRoundBox'>
               <Text type='mainSubTitle'>
                 <img src={beans} />

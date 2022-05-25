@@ -14,7 +14,7 @@ const initialState = {
   cafeBackGroundImage: null,
   cafeName: '',
   cocoaFlavor: 0,
-  description: null,
+  description: '',
   floral: 0,
   fruitFlavor: 0,
   nutty: 0,
