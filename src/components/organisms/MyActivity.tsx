@@ -27,10 +27,17 @@ const MyActivity = () => {
     navigate(`/posts/${postsId}`);
   };
 
+  const handleMoveToEditActivityPage = () => {
+    navigate('/editMyActivity');
+  };
+
   return (
     <div>
       <div className='flex flex-col'>
-        <div className='flex justify-between'>
+        <div
+          className='flex justify-between cursor-pointer'
+          onClick={handleMoveToEditActivityPage}
+        >
           <div className='mt-6 mb-6'>내가 작성한 글</div>
           <button>
             <img src={right} />
@@ -62,7 +69,10 @@ const MyActivity = () => {
         })}
       </div>
       <div className='flex flex-col pb-24'>
-        <div className='flex justify-between'>
+        <div
+          className='flex justify-between cursor-pointer'
+          onClick={handleMoveToEditActivityPage}
+        >
           <div className='mt-6 mb-6'>내가 작성한 댓글</div>
           <button>
             <img src={right} />

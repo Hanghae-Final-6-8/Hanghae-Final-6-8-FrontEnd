@@ -6,9 +6,7 @@ import { Login, LoginRedirect } from './pages/LoginPage';
 import AddEditPost from './pages/Post/AddEditPost';
 import { BeansList, BeanDetail } from './pages/BeansList';
 import { Mypage } from './pages/MyPage';
-import { MyFavorites } from './components/organisms';
-import { MyLikes } from './components/organisms';
-import { MyActivity } from './components/organisms';
+import { EditMyActivity } from './pages/MyPage';
 import StoreLocation from './pages/Map/StoreLocation';
 import {
   TasteSurvey,
@@ -55,6 +53,7 @@ function App() {
           <Route path='/posts/write' element={<AddEditPost />} />
           <Route path='/posts/write/:postsId' element={<AddEditPost />} />
           <Route path='/mypage' element={<Mypage />} />
+          <Route path='/editMyActivity' element={<EditMyActivity />} />
           <Route path='/survey' element={<TasteSurvey />}>
             <Route path='main' element={<TasteSurveyMain />} />
             <Route path='01' element={<TasteSurvey01 />} />

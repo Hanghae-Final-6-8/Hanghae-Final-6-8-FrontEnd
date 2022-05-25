@@ -1,3 +1,3 @@
 import Mypage from './Mypage';
-
-export { Mypage };
+import EditMyActivity from './EditMyActivity';
+export { Mypage, EditMyActivity };
