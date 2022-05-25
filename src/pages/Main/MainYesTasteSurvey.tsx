@@ -17,6 +17,7 @@ import {
   Image,
   Chart,
   PrevBtn,
+  KakaoShare,
 } from '../../components/atoms';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -59,10 +60,6 @@ const MainYesTasteSurvey = () => {
       appDispatch(getSimilarBeans());
     }
   }, [tasteList.beanName, beanId, tasteList.isSimilarLoaded, appDispatch]);
-
-  const handelShareByKakaotalk = () => {
-    alert('아직 구현 중에 있습니다!');
-  };
 
   const handleToMap = (cafeName: string) => {
     navigate(`/map/${cafeName}`);
@@ -292,23 +289,7 @@ const MainYesTasteSurvey = () => {
             ) : null}
           </article>
         </div>
-        {!beanId ? (
-          <>
-            <button
-              className='fixed w-12 h-12 rounded-full z-10 bg-brownP bg-cover bg-right bottom-104px right-6 shadow-tasteBrown'
-              onClick={handelShareByKakaotalk}
-            >
-              <img
-                className='mx-auto '
-                src={share}
-                style={{
-                  filter:
-                    'invert(95%) sepia(0%) saturate(21%) hue-rotate(357deg) brightness(104%) contrast(108%)',
-                }}
-              />
-            </button>
-          </>
-        ) : null}
+        {!beanId ? <KakaoShare /> : null}
       </main>
     </>
   );
