@@ -2,6 +2,7 @@ import { DarkWrapper, RoundBox } from './atoms';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Button, Span, Text } from './atoms';
+import { cross } from '../assets/icons';
 
 const MainModal = () => {
   const navigate = useNavigate();
@@ -23,6 +24,16 @@ const MainModal = () => {
       {isActivePopup ? (
         <DarkWrapper data='mainModal' onClick={handleClosePopup}>
           <RoundBox round='mainModal'>
+            <button className=' absolute right-10'>
+              <img
+                className='w-8'
+                style={{
+                  filter:
+                    'invert(64%) sepia(3%) saturate(20%) hue-rotate(14deg) brightness(102%) contrast(82%)',
+                }}
+                src={cross}
+              />
+            </button>
             <Text className='text-subH33 font-500'>
               자신의 원두 취향을 알아보고
               <br />
