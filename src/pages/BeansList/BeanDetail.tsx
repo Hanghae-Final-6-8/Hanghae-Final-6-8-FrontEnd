@@ -16,7 +16,13 @@ const BeanDetail = () => {
     appDispatch(detailBeans(beansNum));
   });
   return (
-    <>{isNaN(beansNum) || beansNum ? <NotFound /> : <MainYesTasteSurvey />}</>
+    <>
+      {isNaN(beansNum) || beansNum > 111 ? (
+        <NotFound />
+      ) : (
+        <MainYesTasteSurvey />
+      )}
+    </>
   );
 };
 
