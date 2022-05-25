@@ -14,6 +14,7 @@ import BgWebFixed from './BgWebFixed';
 import NeedLoginToastPopup from './NeedLoginToastPopup';
 import MainTopCarousel from './MainTopCarousel';
 import MainMidCarousel from '../../pages/Main/MainMidCarousel';
+import MainBottomCarousel from './MainBottomCarousel';
 
 export {
   Comment,
@@ -32,4 +33,5 @@ export {
   NeedLoginToastPopup,
   MainTopCarousel,
   MainMidCarousel,
+  MainBottomCarousel,
 };

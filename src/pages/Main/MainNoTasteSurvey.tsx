@@ -1,40 +1,22 @@
 import MainModal from '../../components/MainModal';
 import { right } from '../../assets/icons';
-import { RoundBox, Text, Image, Button, Hr } from '../../components/atoms';
+import { Text, Button, Hr } from '../../components/atoms';
 import { mainHeaderImg } from '../../assets/images';
-import { MainTopCarousel, MainMidCarousel } from '../../components/molecules';
+import {
+  MainTopCarousel,
+  MainMidCarousel,
+  MainBottomCarousel,
+} from '../../components/molecules';
 import { useNavigate } from 'react-router-dom';
 
 import { copick } from '../../assets/logo';
-import { useSelector } from 'react-redux';
-import { RootState, useAppDispatch } from '../../redux/configureStore';
-import { useEffect } from 'react';
-import { getBeansListByCafeMain } from '../../redux/modules/cafe';
 
 const MainNoTasteSurvey = () => {
   const navigate = useNavigate();
-  const appDispatch = useAppDispatch();
-  const { cafeListMain, isMainLoaded } = useSelector(
-    (state: RootState) => state.cafe
-  );
 
   const handleToTasteSurvay = () => {
     navigate('../survey/main');
   };
-  useEffect(() => {
-    !isMainLoaded && appDispatch(getBeansListByCafeMain());
-  }, [appDispatch]);
-
-  const beansNumByCafeFormdata: {
-    beansCount: number;
-    cafeBackGroundImage: string;
-    cafeId: number;
-    cafeLogoImage: string;
-    cafeName: string;
-  }[] = [];
-  cafeListMain.forEach((el) => {
-    beansNumByCafeFormdata.push(el);
-  });
 
   return (
     <>
@@ -90,35 +72,7 @@ const MainNoTasteSurvey = () => {
             <Text className='text-gray80 text-body mt-1.5'>
               뭘 좋아할지 몰라 다 준비했습니다!
             </Text>
-            <div className='mt-5'>
-              {beansNumByCafeFormdata.map((item) => (
-                <RoundBox
-                  key={item.cafeId}
-                  className={`relative items-center flex w-[280px] bg-slate-500 overflow-hidden`}
-                  type='main2RoundBox'
-                >
-                  <img
-                    className='object-cover w-full h-full absolute left-0 top-0 bottom-0 right-0'
-                    src={item.cafeBackGroundImage}
-                    alt={item.cafeName}
-                  />
-                  <Image
-                    className='shrink-0 mr-3  w-16 h-16'
-                    type='circle'
-                    src={item.cafeLogoImage}
-                    alt={item.cafeName}
-                  />
-                  <div className='z-10'>
-                    <Text className='text-white text-sub2 font-500 drop-shadow-[0_0_3px_rgba(17,17,17,0.7)]'>
-                      {item.cafeName}
-                    </Text>
-                    <Text className='text-white bg-brownS02/75 text-caption px-2.5 py-[3px] rounded-lg'>
-                      원두 종류 {item.beansCount}가지
-                    </Text>
-                  </div>
-                </RoundBox>
-              ))}
-            </div>
+            <MainBottomCarousel />
             <Button
               className='text-white font-500 text-sub2 mt-12'
               type='brownPType'
