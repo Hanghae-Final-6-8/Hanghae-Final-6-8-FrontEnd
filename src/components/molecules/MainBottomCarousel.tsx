@@ -41,13 +41,13 @@ const MainBottomCarousel = () => {
         effect={'cards'}
         grabCursor={true}
         slidesPerView={2}
-        spaceBetween={250}
+        spaceBetween={230}
         className='mySwiper'
       >
         {beansNumByCafeFormdata.map((item) => (
           <SwiperSlide key={item.cafeId}>
             <RoundBox
-              className={`relative items-center flex w-[280px] bg-slate-500 overflow-hidden h-[110px] select-none`}
+              className={`relative items-center flex w-[280px] bg-slate-500 overflow-hidden h-[110px] select-none ml-6`}
               type='main2RoundBox'
             >
               <img
@@ -74,7 +74,7 @@ const MainBottomCarousel = () => {
         ))}
         <SwiperSlide>
           <RoundBox
-            className={`relative items-center flex w-[280px] bg-brownS01bg overflow-hidden h-[110px] select-none`}
+            className={`relative items-center flex w-[280px] bg-brownS01bg overflow-hidden h-[110px] select-none ml-6`}
             type='main2RoundBox'
           >
             <div className='z-10 flex gap-8'>

@@ -36,21 +36,21 @@ const MainMidCarousel = () => {
 
   return (
     <>
-      <div className='flex mt-5'>
+      {/* <div className='flex mt-5'>
         <button className='bg-brownS02 mr-2 text-white rounded-xl px-2.5 py-[3px] font-700 text-body'>
           블렌드
         </button>
         <button className='bg-white mr-2 border text-brownS02 rounded-xl px-2.5 py-[3px] text-body'>
           싱글 오리진
         </button>
-      </div>
+      </div> */}
       <div className='flex'>
         <Swiper
           modules={[Navigation, Pagination, Scrollbar, A11y]}
           effect={'cards'}
           grabCursor={true}
           slidesPerView={2}
-          spaceBetween={80}
+          spaceBetween={20}
           className='mySwiper px-7 py-7'
         >
           {beansByTypeFormdata.map((item) => (
