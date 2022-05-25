@@ -6,6 +6,7 @@ import {
   beans,
   right,
   left,
+  bookmark_full,
 } from '../../assets/icons/';
 import { coffee_default } from '../../assets/images';
 import {
@@ -38,6 +39,8 @@ const MainYesTasteSurvey = () => {
     : useSelector((state: RootState) => state.beans.beansDetail);
   const [randomBg, setRandomBg] = useState(0);
   const [clickedDesc, setClickedDesc] = useState(false);
+
+  console.log(tasteList.favoritesId);
 
   // 배경 랜덤 함수
   useEffect(() => {
@@ -150,7 +153,10 @@ const MainYesTasteSurvey = () => {
             onClick={handleAddBookmark}
             data-beanid={tasteList.beanId}
           >
-            <img className='w-full' src={bookmark} />
+            <img
+              className='w-full '
+              src={tasteList.favoritesId ? bookmark_full : bookmark}
+            />
           </button>
         </header>
         <div className='absolute px-6 pb-6 left-0 top-56 rounded-t-40px bg-white w-full shadow-main'>

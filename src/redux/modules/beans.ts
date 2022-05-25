@@ -32,6 +32,7 @@ const initialState = {
     nuttyFlavor: 0,
     sweetness: 0,
     type: 0,
+    favoritesId: null,
     similar: [
       { beanId: 0, beanName: '', description: '', beanImage: '', type: 0 },
     ],
