@@ -22,7 +22,7 @@ const MainNoTasteSurvey = () => {
   };
   return (
     <>
-      <main className='relative px-6 py-12 bg-mainBrownBg bg-no-repeat bg-fixed w-full h-full '>
+      <main className='relative px-6 py-12 bg-mainBrownBg bg-cover bg-no-repeat bg-fixed w-full h-full '>
         <img className='absolute right-0 top-[27px]' src={mainHeaderImg} />
         <header className='relative h-60px'>
           <img className='h-3.5' src={copick} />
