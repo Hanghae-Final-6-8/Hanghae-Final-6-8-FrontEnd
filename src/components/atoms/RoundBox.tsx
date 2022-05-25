@@ -35,7 +35,7 @@ const RoundBox = (props: RoundBox) => {
           'relative rounded-30px px-5 py-5 shadow-con14': beansRoundBox,
         },
         {
-          'relative rounded-30px px-5 py-5 items-center flex w-[280px] bg-defaultBg03':
+          'relative rounded-30px px-5 py-5 items-center flex w-[280px]':
             main2RoundBox,
         }
       )}

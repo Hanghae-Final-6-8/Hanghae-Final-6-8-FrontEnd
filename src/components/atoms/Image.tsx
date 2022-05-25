@@ -6,6 +6,7 @@ interface ImageProps {
   className?: string;
   type?: string;
   onClick?: () => void;
+  alt: string;
 }
 
 const Image = (props: ImageProps) => {
@@ -22,7 +23,7 @@ const Image = (props: ImageProps) => {
         }
       )}
     >
-      <img className='mx-auto' src={props.src} />
+      <img className='mx-auto' src={props.src} alt={props.alt} />
     </div>
   );
 };

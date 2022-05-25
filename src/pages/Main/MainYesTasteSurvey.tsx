@@ -245,6 +245,7 @@ const MainYesTasteSurvey = () => {
                       ? tasteList.cafeLogoImage
                       : logoCopickSquare
                   }
+                  alt={tasteList.cafeName}
                 />
                 <Text className='mt-1.5 text-gray90 font-500 text-body'>
                   {tasteList.cafeName}

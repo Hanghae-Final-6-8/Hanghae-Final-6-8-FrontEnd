@@ -12,7 +12,7 @@ const initialState = {
   cafeId: 0,
   cafeLogoImage: null,
   cafeBackGroundImage: null,
-  cafeName: null,
+  cafeName: '',
   cocoaFlavor: 0,
   description: null,
   floral: 0,
