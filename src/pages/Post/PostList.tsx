@@ -37,7 +37,6 @@ const PostList = () => {
   );
 
   const user = useSelector((state: RootState) => state.user);
-  console.log(user);
 
   // 토스트팝업 띄우기
   const getSetToastFrom = (postsId: number) => {
@@ -91,10 +90,13 @@ const PostList = () => {
               >
                 <div className='flex justify-between p-1'>
                   <div className='flex items-center mb-4'>
-                    <img
+                    {/* <img
                       className='h-12 w-12 rounded-full mr-4'
                       src='https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg'
-                    />
+                    /> */}
+                    <div className='h-14 w-14 rounded-full bg-brownS03 mr-4 text-center leading-[56px] text-[28px]'>
+                      {post.nickname?.substring(0, 1)}
+                    </div>
                     <span>{post.nickname}</span>
                   </div>
                   {user.nickname === post.nickname ? (
