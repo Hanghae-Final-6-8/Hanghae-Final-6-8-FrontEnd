@@ -1,14 +1,13 @@
 import { useEffect } from 'react';
 import { share } from '../../assets/icons';
 
-const url = 'url 입력';
-
 const KakaoShare = () => {
   useEffect(() => {
     if (!window.Kakao.isInitialized()) {
       window.Kakao.init(process.env.REACT_APP_KAKAO_MAP_KEY);
     }
   }, []);
+  const url = 'url 입력';
 
   //버튼을 누르면 실행되는 함수
   const shareKakao = () => {
