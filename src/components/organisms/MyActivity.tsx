@@ -27,8 +27,8 @@ const MyActivity = () => {
     navigate(`/posts/${postsId}`);
   };
 
-  const handleMoveToEditActivityPage = () => {
-    navigate('/editMyActivity');
+  const handleMoveToEditActivityPage = (tabNum: number) => {
+    navigate(`/editMyActivity/${tabNum}`);
   };
 
   return (
@@ -36,7 +36,9 @@ const MyActivity = () => {
       <div className='flex flex-col'>
         <div
           className='flex justify-between cursor-pointer'
-          onClick={handleMoveToEditActivityPage}
+          onClick={() => {
+            handleMoveToEditActivityPage(0);
+          }}
         >
           <div className='mt-6 mb-6'>내가 작성한 글</div>
           <button>
@@ -71,7 +73,9 @@ const MyActivity = () => {
       <div className='flex flex-col pb-24'>
         <div
           className='flex justify-between cursor-pointer'
-          onClick={handleMoveToEditActivityPage}
+          onClick={() => {
+            handleMoveToEditActivityPage(1);
+          }}
         >
           <div className='mt-6 mb-6'>내가 작성한 댓글</div>
           <button>
