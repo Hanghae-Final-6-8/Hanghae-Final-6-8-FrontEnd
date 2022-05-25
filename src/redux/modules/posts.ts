@@ -51,6 +51,7 @@ const initialState: PostsState = {
 export const getPostListDB = createAsyncThunk(
   'postsReducer/getPostListDB',
   async (data: number, thunkAPI) => {
+    console.log(data);
     thunkAPI.dispatch(isLoading(true));
     try {
       await postApis.getPostList(data).then((res) => {
@@ -59,14 +60,16 @@ export const getPostListDB = createAsyncThunk(
         if (res.data.data.content.length !== 0) {
           thunkAPI.dispatch(setPageNum(++data));
         }
-        console.log(res.data.data.content);
+
+        // console.log(res.data.data.content);
         res.data.data.content.map((post: any) => {
           let newTagStr = [];
           if (post.tag_name !== null) {
-            const tagStr = post.tag_name.slice(1, post.tag_name.length - 1);
-            newTagStr = tagStr.split(',');
+            newTagStr = post.tag_name.split(',');
+          } else {
+            newTagStr.push('');
           }
-
+          console.log(newTagStr);
           postList.push({
             postsId: post.posts_id,
             title: post.title,
@@ -98,14 +101,10 @@ export const getPostDB = createAsyncThunk(
   async (data: number, thunkAPI) => {
     try {
       await postApis.getPostDetail(data).then((res) => {
-        // console.log(res.data.data);
+        console.log(res.data.data);
         let newTagStr = [];
         if (res.data.data.tag_name !== null) {
-          const tagStr = res.data.data.tag_name.slice(
-            1,
-            res.data.data.tag_name.length - 1
-          );
-          newTagStr = tagStr.split(',');
+          newTagStr = res.data.data.tag_name.split(',');
         }
         const post = {
           postsId: res.data.data.posts_id,
@@ -227,6 +226,7 @@ export const addLikeDB = createAsyncThunk(
   'postsReducer/addLikeDB',
   async (data: number, thunkAPI) => {
     try {
+      console.log(data);
       await likeApis.addLike(data).then((res) => {
         console.log(res);
         thunkAPI.dispatch(addLike(data));
@@ -243,6 +243,7 @@ export const deleteLikeDB = createAsyncThunk(
   'postsReducer/deleteLikeDB',
   async (data: number, thunkAPI) => {
     try {
+      console.log(data);
       await likeApis.deleteLike(data).then((res) => {
         console.log(res);
         thunkAPI.dispatch(deleteLike(data));
@@ -332,6 +333,7 @@ export const postsSlice = createSlice({
       };
 
       // 라우팅처리
+      // action.payload.navi('/posts');
       action.payload.navi('/posts');
 
       return {
@@ -387,3 +389,15 @@ export const {
 } = postsSlice.actions;
 
 export default postsSlice;
+
+const postActionCreators = {
+  getPostListDB,
+  getPostDB,
+  addPostDB,
+  editPostDB,
+  deletePostDB,
+  addLikeDB,
+  deleteLikeDB,
+};
+
+export { postActionCreators };
