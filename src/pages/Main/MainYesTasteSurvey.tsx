@@ -39,8 +39,7 @@ const MainYesTasteSurvey = () => {
     : useSelector((state: RootState) => state.beans.beansDetail);
   const [randomBg, setRandomBg] = useState(0);
   const [clickedDesc, setClickedDesc] = useState(false);
-
-  console.log(tasteList.favoritesId);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   // 배경 랜덤 함수
   useEffect(() => {
@@ -65,6 +64,14 @@ const MainYesTasteSurvey = () => {
     }
   }, [tasteList.beanName, beanId, tasteList.isSimilarLoaded, appDispatch]);
 
+  useEffect(() => {
+    if (tasteList.favoritesId) {
+      setIsFavorite(true);
+    } else {
+      setIsFavorite(false);
+    }
+  }, [tasteList.favoritesId]);
+
   const handleToMap = (cafeName: string) => {
     navigate(`/map/${cafeName}`);
   };
@@ -77,6 +84,11 @@ const MainYesTasteSurvey = () => {
     );
     if (!user.isLogin) {
       return;
+    }
+    if (isFavorite) {
+      setIsFavorite(false);
+    } else {
+      setIsFavorite(true);
     }
 
     appDispatch(addFavoriteList(currentTargetValue));
@@ -158,7 +170,7 @@ const MainYesTasteSurvey = () => {
           >
             <img
               className='w-full '
-              src={tasteList.favoritesId ? bookmark_full : bookmark}
+              src={isFavorite ? bookmark_full : bookmark}
             />
           </button>
         </header>
