@@ -1,4 +1,4 @@
-import { RoundBox, Text } from '../../components/atoms';
+import { RoundBox, Text } from '../atoms';
 import { coffee_default } from '../../assets/images';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/configureStore';
