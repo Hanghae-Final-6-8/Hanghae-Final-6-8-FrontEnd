@@ -24,9 +24,7 @@ const Comment = (props: postsIdProps) => {
   // const postComentList = commentList.filter((comment) => {
   //   return comment.postsId === Number(postsId);
   // });
-
-  //임시. 로그인 구현시 삭제
-  const nickname = 'test1';
+  const user = useSelector((state: RootState) => state.user);
 
   // 댓글 삭제
   const handleDeleteComment = (commentsId: number) => {
@@ -36,15 +34,18 @@ const Comment = (props: postsIdProps) => {
     <div className='flex flex-col'>
       {commentList.map((comment, index) => {
         return (
-          <div key={index}>
-            <img
-              className='h-14 w-14 rounded-full'
-              src='https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg'
-            />
-            <span>{comment.nickname}</span>
-            <p>{comment.content}</p>
-            <span>01-02 13:24</span>
-            {comment.nickname === nickname && (
+          <div key={index} className='flex items-center justify-between mb-3'>
+            <div>
+              <img
+                className='h-14 w-14 rounded-full mr-3'
+                src='https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg'
+              />
+              <span>{comment.nickname}</span>
+              <p>{comment.content}</p>
+            </div>
+
+            <span>{comment.createdAt}</span>
+            {comment.nickname === user.nickname && (
               <button
                 onClick={() => {
                   handleDeleteComment(comment.commentsId);

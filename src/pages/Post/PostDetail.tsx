@@ -47,10 +47,17 @@ const PostDetail = () => {
           <button className='m-2 p-2 block' onClick={handleBacktoPrev}>
             <img src={left} />
           </button>
-          <span>{post?.nickname}</span>
-          <span>{post?.createdAt}</span>
+          <div className='flex'>
+            <div className='h-14 w-14 rounded-full bg-brownS03 mr-4 text-center leading-[56px] text-[28px] mb-3'>
+              {post?.nickname?.substring(0, 1)}
+            </div>
+            <div className='flex flex-col'>
+              <span>{post?.nickname}</span>
+              <span>{post?.createdAt}</span>
+            </div>
+          </div>
 
-          <img src={post?.postsImage.toString()} />
+          <img className='w-full' src={post?.postsImage.toString()} />
           <Likes postsId={Number(postsId)} />
           <p>{post?.title}</p>
           <p>{post?.content}</p>
@@ -58,7 +65,7 @@ const PostDetail = () => {
             post?.tagName.map((tag, idx) => {
               return (
                 <span
-                  className='inline-block bg-orange-100 text-amber-800 mr-1 rounded-md text-sm font-bold p-1'
+                  className='inline-block bg-orange-100 text-amber-800 mt-4 mb-4 mr-1 rounded-md text-sm font-bold p-1'
                   key={idx}
                 >
                   {tag}
@@ -68,13 +75,22 @@ const PostDetail = () => {
           ) : (
             <></>
           )}
-          <hr />
-          <input
-            type='text'
-            placeholder='댓글 내용을 입력해주세요'
-            onChange={getInputCommentFrom}
-          />
-          <button onClick={handleAddComment}>등록</button>
+          <hr className='mb-4' />
+          <div className='fixed bottom-0 left-0 z-[100] w-full'>
+            <input
+              className='w-[70%] p-8 text-[14px] outline-none'
+              type='text'
+              placeholder='댓글 내용을 입력해주세요'
+              onChange={getInputCommentFrom}
+            />
+            <button
+              className='w-[30%] p-8 text-[14px] bg-white'
+              onClick={handleAddComment}
+            >
+              게시
+            </button>
+          </div>
+
           <Comment postsId={Number(postsId)} />
         </>
       )}
