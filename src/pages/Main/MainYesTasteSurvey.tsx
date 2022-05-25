@@ -80,7 +80,6 @@ const MainYesTasteSurvey = () => {
     }
 
     appDispatch(addFavoriteList(currentTargetValue));
-    alert('즐겨찾기 등록 완료!');
   };
 
   const handleShowDescription = () => {
