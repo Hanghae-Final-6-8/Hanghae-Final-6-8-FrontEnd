@@ -16,7 +16,7 @@ const LoginRedirect = () => {
     const kakaoDispatch = async () => {
       try {
         await appDispatch(loginKakao({ codeInput, navigate }));
-        //navigate('/main', { replace: true });
+        navigate('/main', { replace: true });
       } catch (err) {
         console.log(err);
       }
@@ -24,6 +24,7 @@ const LoginRedirect = () => {
     const naverDispatch = async () => {
       try {
         await appDispatch(loginNaver({ codeInput, navigate }));
+        navigate('/main', { replace: true });
       } catch (err) {
         console.log(err);
       }
@@ -31,6 +32,7 @@ const LoginRedirect = () => {
     const googleDispatch = async () => {
       try {
         await appDispatch(loginGoogle({ codeInput, navigate }));
+        navigate('/main', { replace: true });
       } catch (err) {
         console.log(err);
       }
