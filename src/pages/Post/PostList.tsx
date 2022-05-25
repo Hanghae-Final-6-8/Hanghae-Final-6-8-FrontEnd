@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../redux/configureStore';
@@ -35,7 +35,10 @@ const PostList = () => {
   const { paging, postsLoadedLen } = useSelector(
     (store: RootState) => store.posts
   );
-  console.log(isListLoaded);
+
+  const user = useSelector((state: RootState) => state.user);
+  console.log(user);
+
   // 토스트팝업 띄우기
   const getSetToastFrom = (postsId: number) => {
     appDispatch(setModalToggle(!toggle));
@@ -94,14 +97,18 @@ const PostList = () => {
                     />
                     <span>{post.nickname}</span>
                   </div>
-                  <button
-                    className='p-4'
-                    onClick={() => {
-                      getSetToastFrom(post.postsId!);
-                    }}
-                  >
-                    ···
-                  </button>
+                  {user.nickname === post.nickname ? (
+                    <button
+                      className='p-4'
+                      onClick={() => {
+                        getSetToastFrom(post.postsId!);
+                      }}
+                    >
+                      ···
+                    </button>
+                  ) : (
+                    <></>
+                  )}
                 </div>
                 <img
                   className='w-full'
