@@ -1,15 +1,14 @@
+import { Suspense, useEffect, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Main } from './pages/Main';
-import PostList from './pages/Post/PostList';
-import PostDetail from './pages/Post/PostDetail';
-import { Login, LoginRedirect } from './pages/LoginPage';
-import AddEditPost from './pages/Post/AddEditPost';
-import { BeansList, BeanDetail } from './pages/BeansList';
-import { Mypage } from './pages/MyPage';
-import { MyFavorites, Spinner } from './components/organisms';
-import { MyLikes } from './components/organisms';
-import { MyActivity } from './components/organisms';
-import StoreLocation from './pages/Map/StoreLocation';
+// import { Main } from './pages/Main';
+// import PostList from './pages/Post/PostList';
+// import PostDetail from './pages/Post/PostDetail';
+// import { Login, LoginRedirect } from './pages/LoginPage';
+// import AddEditPost from './pages/Post/AddEditPost';
+// import { BeansList, BeanDetail } from './pages/BeansList';
+// import { Mypage } from './pages/MyPage';
+// import StoreLocation from './pages/Map/StoreLocation';
+import { Spinner } from './components/organisms';
 import {
   TasteSurvey,
   TasteSurveyMain,
@@ -25,11 +24,21 @@ import {
 import { NotFound } from './pages/System';
 import { RootLayout } from './components/templates';
 
-import { Suspense, useEffect } from 'react';
 import { useAppDispatch } from './redux/configureStore';
 import { auth } from './redux/modules/user';
 import { getAccessTokenFromCookie } from './utils/cookie';
 import ScrollToTop from './utils/ScrollToTop';
+
+const Main = lazy(() => import('./pages/Main/Main'));
+const Login = lazy(() => import('./pages/LoginPage/Login'));
+const LoginRedirect = lazy(() => import('./pages/LoginPage/LoginRedirect'));
+const BeanDetail = lazy(() => import('./pages/BeansList/BeanDetail'));
+const BeansList = lazy(() => import('./pages/BeansList/BeansList'));
+const StoreLocation = lazy(() => import('./pages/Map/StoreLocation'));
+const PostList = lazy(() => import('./pages/Post/PostList'));
+const PostDetail = lazy(() => import('./pages/Post/PostDetail'));
+const AddEditPost = lazy(() => import('./pages/Post/AddEditPost'));
+const Mypage = lazy(() => import('./pages/MyPage/Mypage'));
 
 function App() {
   const appDispatch = useAppDispatch();
@@ -68,7 +77,6 @@ function App() {
               <Route path='needlogin' element={<TasteSurveyNeedLogin />} />
             </Route>
             <Route path='/beans' element={<BeansList />} />
-            {/* <Route path='cafe' element={<BeansByCafe />} /> */}
           </Route>
 
           <Route path='*' element={<NotFound />} />
