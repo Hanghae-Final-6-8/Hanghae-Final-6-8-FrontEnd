@@ -1,14 +1,6 @@
 import MainModal from '../../components/MainModal';
 import { right } from '../../assets/icons';
-import {
-  RoundBox,
-  Text,
-  GridBox,
-  Span,
-  Image,
-  Button,
-  Hr,
-} from '../../components/atoms';
+import { RoundBox, Text, Image, Button, Hr } from '../../components/atoms';
 import { mainHeaderImg } from '../../assets/images';
 import { MainTopCarousel, MainMidCarousel } from '../../components/molecules';
 import { useNavigate } from 'react-router-dom';
@@ -87,14 +79,7 @@ const MainNoTasteSurvey = () => {
             <Text className='text-gray80 text-body mt-1.5'>
               잠을 깨기 위한 처방약 같은 커피는 그만!
             </Text>
-            <div className='flex mt-5'>
-              <button className='bg-brownS02 mr-2 text-white rounded-xl px-2.5 py-[3px] font-700 text-body'>
-                블렌드
-              </button>
-              <button className='bg-white mr-2 border text-brownS02 rounded-xl px-2.5 py-[3px] text-body'>
-                싱글 오리진
-              </button>
-            </div>
+
             <MainMidCarousel />
             <Text type='main2header' className='mt-12'>
               111개의 브랜드 원두로
