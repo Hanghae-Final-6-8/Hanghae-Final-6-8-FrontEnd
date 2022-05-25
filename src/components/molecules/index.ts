@@ -11,7 +11,7 @@ import BeansCafeBtn from './BeansCafeBtn';
 import BeansSearchForm from './BeansSearchForm';
 import BgWeb from './BgWeb';
 import BgWebFixed from './BgWebFixed';
-import NeedLoginToastPopup from './ToastPopup';
+import NeedLoginToastPopup from './NeedLoginToastPopup';
 
 export {
   Comment,

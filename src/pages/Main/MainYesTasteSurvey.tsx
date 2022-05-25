@@ -75,6 +75,10 @@ const MainYesTasteSurvey = () => {
     const currentTargetValue = Number(
       e.currentTarget.getAttribute('data-beanid')
     );
+    if (!user.isLogin) {
+      return;
+    }
+
     appDispatch(addFavoriteList(currentTargetValue));
     alert('즐겨찾기 등록 완료!');
   };
