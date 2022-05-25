@@ -36,6 +36,19 @@ export const getBeansListByCafe = createAsyncThunk(
   }
 );
 
+export const getBeansListByCafeMain = createAsyncThunk(
+  'cafe/beans/total',
+  async (_, thunkAPI) => {
+    try {
+      await cafeApis.getBeansListByCafeMain().then((response) => {
+        return;
+      });
+    } catch (err) {
+      return;
+    }
+  }
+);
+
 export const cafeSlice = createSlice({
   name: 'cafeReducer',
   initialState,
