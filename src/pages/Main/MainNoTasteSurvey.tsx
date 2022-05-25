@@ -18,6 +18,7 @@ import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../redux/configureStore';
 import { useEffect } from 'react';
 import { getBeansListByCafeMain } from '../../redux/modules/cafe';
+import { getBeansListType } from '../../redux/modules/beans';
 
 const MainNoTasteSurvey = () => {
   const navigate = useNavigate();
@@ -25,13 +26,27 @@ const MainNoTasteSurvey = () => {
   const { cafeListMain, isMainLoaded } = useSelector(
     (state: RootState) => state.cafe
   );
+  const { beanlist } = useSelector((state: RootState) => state.beans);
 
   const handleToTasteSurvay = () => {
     navigate('../survey/main');
   };
   useEffect(() => {
+    appDispatch(getBeansListType(1));
     !isMainLoaded && appDispatch(getBeansListByCafeMain());
-  }, []);
+  }, [appDispatch]);
+
+  const beansByTypeFormdata: {
+    beanId: number;
+    beanName: string;
+    description: null;
+    type: number;
+    beanImage: null;
+  }[] = [];
+  beanlist.forEach((el) => {
+    beansByTypeFormdata.push(el);
+  });
+  console.log(beansByTypeFormdata);
 
   const beansNumByCafeFormdata: {
     beansCount: number;
@@ -44,7 +59,6 @@ const MainNoTasteSurvey = () => {
     beansNumByCafeFormdata.push(el);
   });
 
-  console.log(beansNumByCafeFormdata);
   return (
     <>
       <main className='relative px-6 py-12 bg-mainBrownBg bg-cover bg-no-repeat bg-fixed w-full h-full '>
@@ -88,22 +102,33 @@ const MainNoTasteSurvey = () => {
             <Text className='text-gray80 text-body mt-1.5'>
               잠을 깨기 위한 처방약 같은 커피는 그만!
             </Text>
+            <div className='flex mt-5'>
+              <button className='bg-brownS02 mr-2 text-white rounded-xl px-2.5 py-[3px] font-700 text-body'>
+                블렌드
+              </button>
+              <button className='bg-white mr-2 border text-brownS02 rounded-xl px-2.5 py-[3px] text-body'>
+                싱글 오리진
+              </button>
+            </div>
             <div className='flex'>
-              <RoundBox type='mainRoundBox' className='w-40'>
-                <div className='w-20 mx-auto'>
-                  <img className='h-90px mx-auto' src={coffee_default} />
-                  <Text type='mainRedcommendSimmilar'>커피</Text>
-                </div>
-              </RoundBox>
-              <RoundBox type='mainRoundBox' className='w-40'>
-                <div className='w-20 mx-auto'>
-                  <img className='h-90px mx-auto' src={coffee_default} />
-                  <Text type='mainRedcommendSimmilar'>커피</Text>
-                </div>
-              </RoundBox>
+              {beansByTypeFormdata.map((item) => (
+                <RoundBox
+                  type='mainRoundBox'
+                  className='w-40'
+                  key={item.beanId}
+                >
+                  <div className='w-20 mx-auto'>
+                    <img
+                      className='h-90px mx-auto'
+                      src={item.beanImage ? item.beanImage : coffee_default}
+                      alt={item.beanName}
+                    />
+                    <Text type='mainRedcommendSimmilar'>{item.beanName}</Text>
+                  </div>
+                </RoundBox>
+              ))}
             </div>
             <Text type='main2header' className='mt-12'>
-              {/* 111개 부분 상태관리 예정입니다. */}
               111개의 브랜드 원두로
             </Text>
             <Text type='main2header' className=''>

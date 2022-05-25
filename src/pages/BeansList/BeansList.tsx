@@ -16,7 +16,7 @@ const BeansList = () => {
 
   const beansFormdata: {
     beanId: number;
-    beanName: null;
+    beanName: string;
     description: null;
     type: number;
     beanImage: null;
