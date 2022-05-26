@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/configureStore';
 import Comment from '../../components/molecules/Comment';
@@ -7,12 +7,15 @@ import { useAppDispatch } from '../../redux/configureStore';
 import { addCommentDB } from '../../redux/modules/comment';
 import { getPostDB } from '../../redux/modules/posts';
 import Likes from '../../components/atoms/Likes';
-import { useNavigate } from 'react-router-dom';
 import postsSlice from '../../redux/modules/posts';
 import { left } from '../../assets/icons';
 
 const PostDetail = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const scrolly: any = location.state ? location.state : null;
+  const scrollyValue = scrolly !== null ? scrolly.scrolly : null;
+
   const appDispatch = useAppDispatch();
   // postsId는 App.tsx에서 라우팅 할때 정한 파라미터명이다.
   const postsId = useParams().postsId;
@@ -35,7 +38,9 @@ const PostDetail = () => {
   };
 
   const handleBacktoPrev = () => {
-    navigate(-1);
+    scrolly !== null
+      ? navigate('/posts', { state: { scrollyValue } })
+      : navigate(-1);
   };
 
   return (
