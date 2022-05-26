@@ -27,7 +27,7 @@ const MypageHeader = () => {
     <>
       <div className='flex justify-between mb-5'>
         <div className='flex'>
-          <div className='bg-brownS02 w-12 h-12 rounded-full mr-3 text-center leading-10 overflow-hidden'>
+          <div className='bg-white w-12 h-12 rounded-full mr-3 text-center leading-10 overflow-hidden'>
             <img
               className='w-full h-full'
               src={user.profile_url ? user.profile_url : logoCopickSquare}

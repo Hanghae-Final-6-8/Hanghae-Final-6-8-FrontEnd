@@ -165,7 +165,7 @@ export const update = createAsyncThunk(
   async (data: FormData, thunkAPI) => {
     try {
       await userApis.update(data).then((response) => {
-        //thunkAPI.dispatch(updateUserInfo(response));
+        thunkAPI.dispatch(setUserInfo(response.data.data));
         return;
       });
     } catch (err) {
@@ -182,13 +182,6 @@ export const userSlice = createSlice({
       state = action.payload;
       return state;
     },
-    updateUserInfo: (state, action: PayloadAction<any>) => {
-      const { nickname, profile_url } = action.payload;
-      console.log(profile_url);
-      state.nickname = nickname;
-      state.profile_url = profile_url;
-      return state;
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(loginGoogle.fulfilled, (state, action) => {
@@ -203,6 +196,9 @@ export const userSlice = createSlice({
     builder.addCase(auth.fulfilled, (state, action) => {
       state.isLogin = true;
     });
+    builder.addCase(update.fulfilled, (state, action) => {
+      state.isLogin = true;
+    });
     builder.addCase(logout.fulfilled, (state, action) => {
       state.isLogin = false;
       state.tasteId = '';
@@ -212,6 +208,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUserInfo, updateUserInfo } = userSlice.actions;
+export const { setUserInfo } = userSlice.actions;
 
 export default userSlice;
