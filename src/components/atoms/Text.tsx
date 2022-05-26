@@ -5,6 +5,7 @@ interface Text {
   btnClassName?: string;
   className?: string;
   type?: string;
+  onClick?: () => void;
 }
 
 const Text = (props: Text) => {
@@ -68,6 +69,7 @@ const Text = (props: Text) => {
             beansNavClicked,
         }
       )}
+      onClick={props.onClick}
     >
       {props.children}
     </p>

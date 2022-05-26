@@ -40,6 +40,7 @@ const PostDetail = lazy(() => import('./pages/Post/PostDetail'));
 const AddEditPost = lazy(() => import('./pages/Post/AddEditPost'));
 const Mypage = lazy(() => import('./pages/MyPage/Mypage'));
 const EditMyActivity = lazy(() => import('./pages/MyPage/EditMyActivity'));
+const EditProfile = lazy(() => import('./pages/MyPage/EditProfile'));
 
 function App() {
   const appDispatch = useAppDispatch();
@@ -70,6 +71,7 @@ function App() {
               path='/editMyActivity/:tabNum'
               element={<EditMyActivity />}
             />
+            <Route path='/mypage/profile' element={<EditProfile />} />
             <Route path='/survey' element={<TasteSurvey />}>
               <Route path='main' element={<TasteSurveyMain />} />
               <Route path='01' element={<TasteSurvey01 />} />
