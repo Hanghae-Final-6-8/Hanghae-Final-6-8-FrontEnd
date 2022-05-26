@@ -23,9 +23,9 @@ const MypageToastPopup = (props: MypageToastPopupProps) => {
       <ToastPopupBox className=' mb-34px' type='default' cross>
         <Text type='head'>어떤 것을 도와드릴까요?</Text>
         <LogoutBtn />
-        <Button className='mt-4' type='selectBtn' onClick={handleUserDelete}>
+        {/* <Button className='mt-4' type='selectBtn' onClick={handleUserDelete}>
           탈퇴하기
-        </Button>
+        </Button> */}
       </ToastPopupBox>
     </DarkWrapper>
   );
