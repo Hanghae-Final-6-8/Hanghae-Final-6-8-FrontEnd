@@ -34,6 +34,10 @@ const PostDetail = () => {
   };
   // 코멘트 추가
   const handleAddComment = () => {
+    if (comment === '') {
+      alert('댓글을 입력해 주세요');
+      return;
+    }
     appDispatch(addCommentDB({ posts_id: Number(postsId), content: comment }));
   };
 
