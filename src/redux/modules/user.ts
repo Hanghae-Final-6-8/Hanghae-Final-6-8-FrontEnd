@@ -203,6 +203,9 @@ export const userSlice = createSlice({
     });
     builder.addCase(logout.fulfilled, (state, action) => {
       state.isLogin = false;
+      state.tasteId = '';
+      state.nickname = '';
+      state.profile_url = '';
     });
   },
 });
