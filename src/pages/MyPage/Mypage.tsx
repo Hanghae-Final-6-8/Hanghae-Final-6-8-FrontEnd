@@ -6,7 +6,7 @@ import MypageTabs from '../../components/molecules/MypageTabs';
 const Mypage = () => {
   return (
     <div>
-      <span className='font-bold'>마이</span>
+      <span className='font-500 text-head'>마이</span>
       <LogoutBtn />
       <div className='border-b-8 pb-9 mb-2'>
         <MypageHeader />
