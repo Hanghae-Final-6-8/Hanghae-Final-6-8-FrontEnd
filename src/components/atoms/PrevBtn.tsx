@@ -15,8 +15,12 @@ const PrevBtn = (props: PrevBtnProps) => {
   const className = props.className;
 
   return (
-    <button className={classnames(`absolute left-0 ${className}`)}>
-      <img className='w-8' src={left} onClick={handleToPrevPage} />
+    <button
+      className={classnames(`absolute left-0 ${className}`)}
+      type='button'
+      onClick={handleToPrevPage}
+    >
+      <img className='w-8' src={left} />
     </button>
   );
 };
