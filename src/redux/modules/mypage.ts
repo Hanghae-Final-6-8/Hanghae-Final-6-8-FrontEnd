@@ -73,14 +73,13 @@ export const getPostsLikedDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       await likeApis.getPostsLiked().then((res) => {
-        // console.log(res);
+        console.log(res.data.data.content);
         const newList: Array<PostsItemDataParams> = [];
         res.data.data.content.map((post: any) => {
           let newTagStr = [];
-          if (post.tag_name !== null) {
-            const tagStr = post.tag_name.slice(1, post.tag_name.length - 1);
-            newTagStr = tagStr.split(',');
-          }
+
+          newTagStr = post.tag_name.split(',');
+
           newList.push({
             postsId: post.posts_id,
             nickname: post.nickname,
@@ -106,7 +105,7 @@ export const getPostListMine = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       await postApis.getPostListMine().then((res) => {
-        // console.log(res);
+        console.log(res);
         // console.log(res.data.data.content);
         const newList: Array<PostsItemDataParams> = [];
         res.data.data.content.map((post: any) => {
