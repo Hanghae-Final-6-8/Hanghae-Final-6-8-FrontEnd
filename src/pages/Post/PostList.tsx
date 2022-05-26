@@ -65,9 +65,9 @@ const PostList = () => {
   return (
     <div>
       <div className='flex justify-between'>
-        <div className='m-5'>커뮤니티</div>
+        <div className='m-5 text-[22px]'>커뮤니티</div>
         <button
-          className='bg-white shadow-lg rounded-full w-10 h-10 flex justify-center items-center'
+          className='bg-white shadow-lg rounded-full w-10 h-10 flex justify-center items-center fixed right-6'
           onClick={handleMoveToWritePage}
         >
           <img src={edit} />

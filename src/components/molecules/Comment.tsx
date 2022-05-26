@@ -35,12 +35,12 @@ const Comment = (props: postsIdProps) => {
       {commentList.map((comment, index) => {
         return (
           <div key={index} className='flex items-center justify-between mb-3'>
-            <div>
+            <div className='flex items-center'>
               <img
                 className='h-14 w-14 rounded-full mr-3'
                 src='https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg'
               />
-              <span>{comment.nickname}</span>
+
               <p>{comment.content}</p>
             </div>
 

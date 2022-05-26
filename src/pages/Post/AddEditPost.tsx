@@ -1,8 +1,10 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { editPostDB } from '../../redux/modules/posts';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/configureStore';
+import { useForm } from 'react-hook-form';
+import { camera } from '../../assets/icons';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/configureStore';
@@ -129,22 +131,15 @@ const AddEditPost = () => {
         <img src={left} />
       </button>
       {postsIdparams.postsId ? (
-        <h1 className='text-center mb-5'>게시물 수정</h1>
+        <h1 className='text-center mb-5 text-[18px]'>게시물 수정</h1>
       ) : (
-        <h1 className='text-center mb-5'>새 게시물</h1>
+        <h1 className='text-center mb-5 text-[18px]'>새 게시물</h1>
       )}
       <div className='bg-white shadow-xl rounded-30px pt-5 pb-5 pl-5 pr-5'>
         <div className='flex flex-col w-full border-b pt-5 pb-5 '>
           <div className='flex mb-5'>
             <div className='relative mr-3'>
-              <img
-                className='w-24 h-24'
-                src={
-                  prevImage
-                    ? prevImage
-                    : 'https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814052__340.png'
-                }
-              />
+              <img className='w-24 h-24' src={prevImage ? prevImage : camera} />
               <label
                 className='absolute top-0 left-0 w-24 h-24 opacity-0'
                 htmlFor='inputFile'
