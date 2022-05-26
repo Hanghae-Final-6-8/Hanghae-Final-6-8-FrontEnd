@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/configureStore';
 import { deletePostDB } from '../../redux/modules/posts';
-
 import { Button, Text, RoundBox } from '../atoms';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/configureStore';

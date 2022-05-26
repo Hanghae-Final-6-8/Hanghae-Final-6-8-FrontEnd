@@ -36,10 +36,9 @@ const Comment = (props: postsIdProps) => {
         return (
           <div key={index} className='flex items-center justify-between mb-3'>
             <div className='flex items-center'>
-              <img
-                className='h-14 w-14 rounded-full mr-3'
-                src='https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg'
-              />
+              <div className='h-14 w-14 rounded-full bg-brownS03 mr-4 text-center leading-[56px] text-[28px]'>
+                {comment.nickname?.substring(0, 1)}
+              </div>
 
               <p>{comment.content}</p>
             </div>

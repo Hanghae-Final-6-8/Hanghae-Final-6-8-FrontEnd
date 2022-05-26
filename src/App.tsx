@@ -68,7 +68,7 @@ function App() {
             <Route path='/posts/write/:postsId' element={<AddEditPost />} />
             <Route path='/mypage' element={<Mypage />} />
             <Route
-              path='/editMyActivity/:tabNum'
+              path='/mypage/activity/:tabNum'
               element={<EditMyActivity />}
             />
             <Route path='/mypage/profile' element={<EditProfile />} />

@@ -6,6 +6,8 @@ import { getPostListMine } from '../../redux/modules/mypage';
 import { getMyCommentDB } from '../../redux/modules/mypage';
 import { useNavigate } from 'react-router-dom';
 import { right } from '../../assets/icons';
+import { useState } from 'react';
+import { RoundBox, Text, Button } from '../atoms';
 
 const MyActivity = () => {
   const navigate = useNavigate();
@@ -22,13 +24,26 @@ const MyActivity = () => {
     isMyCommentListLoaded,
   } = useSelector((store: RootState) => store.mypage);
 
+  const [toggle, setToggle] = useState(false);
+  const [commentId, setCommentId] = useState(0);
+
   // 커뮤니티 상세페이지로 이동
   const handleMoveToDetailPage = (postsId: number) => {
     navigate(`/posts/${postsId}`);
   };
 
   const handleMoveToEditActivityPage = (tabNum: number) => {
-    navigate(`/editMyActivity/${tabNum}`);
+    navigate(`/mypage/activity/${tabNum}`);
+  };
+
+  const handleToggle = (commentsId: number) => {
+    setToggle(!toggle);
+    setCommentId(commentsId);
+  };
+
+  const handleDeleteComment = () => {
+    // code here
+    console.log(commentId);
   };
 
   return (
@@ -87,11 +102,42 @@ const MyActivity = () => {
             <div className='m-2 flex' key={index}>
               <div className='flex justify-between w-full'>
                 <p>{comment.content}</p>
-                <button>더보기</button>
+                <button
+                  onClick={() => {
+                    handleToggle(comment.commentsId);
+                  }}
+                >
+                  더보기
+                </button>
               </div>
             </div>
           );
         })}
+        {toggle === true ? (
+          <div className='fixed z-10 touch-none top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.3)]'>
+            <RoundBox round='mainModal' className='flex flex-col pb-36 mt-80'>
+              <Text className='text-subH33 font-500'>
+                어떤 작업을 하시겠어요?
+              </Text>
+              <Button
+                className='text-white font-500 text-body'
+                type='brownPType'
+                onClick={handleDeleteComment}
+              >
+                삭제하기
+              </Button>
+              <Button
+                className='mt-4 text-gray-400 shadow-lg'
+                type='bg-gray60'
+                onClick={handleToggle}
+              >
+                닫기
+              </Button>
+            </RoundBox>
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
