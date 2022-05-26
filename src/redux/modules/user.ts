@@ -15,11 +15,10 @@ interface Login {
 }
 
 const initialState = {
-  nickname: null,
+  nickname: '',
   isLogin: false,
-  profile_url: null,
-  //isLogin: true,
-  tasteId: null,
+  profile_url: '',
+  tasteId: '',
 };
 
 export const getKakaoURL = createAsyncThunk(
