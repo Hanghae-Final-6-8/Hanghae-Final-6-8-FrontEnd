@@ -15,7 +15,6 @@ export interface CommentState {
 
 const initialState: CommentState = {
   list: [],
-  // myCommentList:[]
 };
 // 댓글 조회
 export const getCommentListDB = createAsyncThunk(
@@ -23,7 +22,6 @@ export const getCommentListDB = createAsyncThunk(
   async (data: number, thunkAPI) => {
     try {
       await commentApis.getCommentList(data).then((res) => {
-        // 어떻게 넘어오는지 확인필요
         console.log(res);
 
         const newCommentList: Array<CommentItemDataParams> = [];
@@ -56,7 +54,7 @@ export const getCommentListDB = createAsyncThunk(
 
           newCommentList.push({
             commentsId: comment.id,
-            // nickname: comment.nickname,
+            nickname: comment.nickname,
             content: comment.content,
             createdAt: newDate,
           });
@@ -92,6 +90,7 @@ export const addCommentDB = createAsyncThunk(
   async (data: addCommentType, thunkAPI) => {
     try {
       await commentApis.addComment(data).then((res) => {
+        console.log(res);
         // 시간 계산
         const today = new Date();
         const commentedDay = new Date(res.data.data.createdAt);
