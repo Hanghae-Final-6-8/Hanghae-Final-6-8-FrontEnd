@@ -77,9 +77,9 @@ export const getPostsLikedDB = createAsyncThunk(
         const newList: Array<PostsItemDataParams> = [];
         res.data.data.content.map((post: any) => {
           let newTagStr = [];
-
-          newTagStr = post.tag_name.split(',');
-
+          if (post.tag_name !== null) {
+            newTagStr = post.tag_name.split(',');
+          }
           newList.push({
             postsId: post.posts_id,
             nickname: post.nickname,
