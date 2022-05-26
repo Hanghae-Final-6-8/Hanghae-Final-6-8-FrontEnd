@@ -22,28 +22,28 @@ const AddEditPost = () => {
   const appDispatch = useAppDispatch();
 
   const [title, setTitle] = useState<string>('');
+  const [content, setContent] = useState<string>('');
   // 커뮤니티 태그
   const [inputTag, setInputTag] = useState<string>('');
   const [tagName, setTagName] = useState<Array<string>>([]);
 
-  const [content, setContent] = useState<string>('');
   // 이미지 파일 전송용
-  const [file, setFiles] = useState<File[]>([]);
+  const [file, setFile] = useState<File[]>([]);
   // 이미지 미리보기용
-  const [prevImage, setPrevImage] = useState<any>();
+  const [previewImage, setPreviewImage] = useState<any>();
 
   const getOnLoadFileFrom = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.currentTarget.files;
 
     if (file && file.length) {
-      setFiles((existing) => existing.concat(Array.from(file)));
+      setFile((existing) => existing.concat(Array.from(file)));
     }
 
     const reader = new FileReader();
-    const toPrevFile = file![0];
-    reader.readAsDataURL(toPrevFile);
+    const toPreviewFile = file![0];
+    reader.readAsDataURL(toPreviewFile);
     reader.onloadend = () => {
-      setPrevImage(reader.result);
+      setPreviewImage(reader.result);
     };
   };
 
@@ -66,11 +66,12 @@ const AddEditPost = () => {
       return post.postsId === Number(postsIdparams.postsId);
     });
   }
+  console.log(post ? post : '!');
   useEffect(() => {
     setTitle(post ? post.title : '');
     setContent(post ? post.content : '');
     setTagName(post ? post.tagName : []);
-    setPrevImage(post ? post.postsImage : '');
+    setPreviewImage(post ? post.postsImage : '');
   }, []);
 
   // 커뮤니티 타이틀 set
@@ -136,19 +137,19 @@ const AddEditPost = () => {
     if (postsIdparams.postsId) {
       const formData = new FormData();
       formData.append('posts_id', post!.postsId!.toString());
-      formData.append('title', title);
-      formData.append('content', content);
+      formData.append('title', data.title);
+      formData.append('content', data.content);
       formData.append('tag_name', tagName.toString());
       formData.append('posts_image', file[0]);
-      appDispatch(editPostDB({ formData, navi: navigate, prevImage }));
+      appDispatch(editPostDB({ formData, navi: navigate, previewImage }));
     } else {
       // 게시물 등록
       const formData = new FormData();
-      formData.append('title', title);
-      formData.append('content', content);
+      formData.append('title', data.title);
+      formData.append('content', data.content);
       formData.append('tag_name', tagName.toString());
       formData.append('posts_image', file[0]);
-      appDispatch(addPostDB({ formData, navi: navigate, prevImage }));
+      appDispatch(addPostDB({ formData, navi: navigate, previewImage }));
     }
   };
 
@@ -169,7 +170,7 @@ const AddEditPost = () => {
               <div className='relative mr-3'>
                 <img
                   className='w-24 h-24'
-                  src={prevImage ? prevImage : camera}
+                  src={previewImage ? previewImage : camera}
                 />
                 <label
                   className='absolute top-0 left-0 w-24 h-24 opacity-0'
