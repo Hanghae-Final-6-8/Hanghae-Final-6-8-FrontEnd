@@ -14,6 +14,11 @@ interface Login {
   navigate: (to: string, state: Navigate) => void;
 }
 
+interface Update {
+  nickname: string;
+  profile_url: string;
+}
+
 const initialState = {
   nickname: '',
   isLogin: false,
@@ -143,6 +148,27 @@ export const logout = createAsyncThunk('user/logout', async () => {
     });
   } catch (err) {
     removeCookies();
+    return;
+  }
+});
+
+export const deleteUser = createAsyncThunk('user/delete', async () => {
+  try {
+    await userApis.delete().then((response) => {
+      location.href = '../';
+      return;
+    });
+  } catch (err) {
+    return;
+  }
+});
+
+export const update = createAsyncThunk('user/update', async (data: Update) => {
+  try {
+    await userApis.update(data).then((response) => {
+      return;
+    });
+  } catch (err) {
     return;
   }
 });
