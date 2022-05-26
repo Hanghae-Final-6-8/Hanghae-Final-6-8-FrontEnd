@@ -10,7 +10,9 @@ const LogoutBtn = () => {
 
   return (
     <>
-      <Button onClick={handleLogout}>로그아웃 테스트 버튼</Button>
+      <Button className='text-white' type='brownPType' onClick={handleLogout}>
+        로그아웃하기
+      </Button>
     </>
   );
 };

@@ -2,10 +2,11 @@ import { useNavigate } from 'react-router-dom';
 import { Text, GridBox, RoundBox } from '../../components/atoms';
 import { RootState, useAppDispatch } from '../../redux/configureStore';
 import { useEffect, useState } from 'react';
-import { detailBeans, getBeansList } from '../../redux/modules/beans';
+import { getBeansList } from '../../redux/modules/beans';
 import { useSelector } from 'react-redux';
 
-import { BeansCafeBtn, BeansSearchForm } from '../../components/molecules';
+import { BeansSearchForm } from '../../components/molecules';
+import { BeansCafeBtn } from '../../components/organisms';
 import { coffee_default } from '../../assets/images';
 
 const BeansList = () => {
