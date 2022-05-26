@@ -39,6 +39,7 @@ const PostList = lazy(() => import('./pages/Post/PostList'));
 const PostDetail = lazy(() => import('./pages/Post/PostDetail'));
 const AddEditPost = lazy(() => import('./pages/Post/AddEditPost'));
 const Mypage = lazy(() => import('./pages/MyPage/Mypage'));
+const EditMyActivity = lazy(() => import('./pages/MyPage/EditMyActivity'));
 
 function App() {
   const appDispatch = useAppDispatch();
@@ -65,6 +66,10 @@ function App() {
             <Route path='/posts/write' element={<AddEditPost />} />
             <Route path='/posts/write/:postsId' element={<AddEditPost />} />
             <Route path='/mypage' element={<Mypage />} />
+            <Route
+              path='/editMyActivity/:tabNum'
+              element={<EditMyActivity />}
+            />
             <Route path='/survey' element={<TasteSurvey />}>
               <Route path='main' element={<TasteSurveyMain />} />
               <Route path='01' element={<TasteSurvey01 />} />

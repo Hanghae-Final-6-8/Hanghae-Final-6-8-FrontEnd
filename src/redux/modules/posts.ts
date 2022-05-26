@@ -55,17 +55,33 @@ export const getPostListDB = createAsyncThunk(
     try {
       await postApis.getPostList(data).then((res) => {
         const postList: Array<PostsItemDataParams> = [];
+        console.log(res.data.data.content);
         // 페이징
         if (res.data.data.content.length !== 0) {
           thunkAPI.dispatch(setPageNum(++data));
         }
-        console.log(res.data.data.content);
+
+        // console.log(res.data.data.content);
         res.data.data.content.map((post: any) => {
           let newTagStr = [];
           if (post.tag_name !== null) {
-            const tagStr = post.tag_name.slice(1, post.tag_name.length - 1);
-            newTagStr = tagStr.split(',');
+            newTagStr = post.tag_name.split(',');
+          } else {
+            newTagStr.push('');
           }
+          // .subString(0, 10)
+          // const today = new Date();
+          // const postedDay = new Date(post.created_at);
+          // let newDate = '';
+          // let betweenTime = 0;
+          // betweenTime = Math.floor(today.getTime() - postedDay.getTime()) / 1000 / 60;
+          // if (betweenTime < 1) {
+          //   newDate = '방금전';
+          // } else if (betweenTime < 60) {
+          //   newDate = `${betweenTime}분전`;
+          // }
+
+          // console.log(newDate);
 
           postList.push({
             postsId: post.posts_id,
@@ -98,14 +114,9 @@ export const getPostDB = createAsyncThunk(
   async (data: number, thunkAPI) => {
     try {
       await postApis.getPostDetail(data).then((res) => {
-        // console.log(res.data.data);
         let newTagStr = [];
         if (res.data.data.tag_name !== null) {
-          const tagStr = res.data.data.tag_name.slice(
-            1,
-            res.data.data.tag_name.length - 1
-          );
-          newTagStr = tagStr.split(',');
+          newTagStr = res.data.data.tag_name.split(',');
         }
         const post = {
           postsId: res.data.data.posts_id,
@@ -227,8 +238,9 @@ export const addLikeDB = createAsyncThunk(
   'postsReducer/addLikeDB',
   async (data: number, thunkAPI) => {
     try {
+      // console.log(data);
       await likeApis.addLike(data).then((res) => {
-        console.log(res);
+        // console.log(res);
         thunkAPI.dispatch(addLike(data));
         // 좋아요누른 게시물 재랜더링위해
         thunkAPI.dispatch(setIsListLikedLoaded(false));
@@ -243,6 +255,7 @@ export const deleteLikeDB = createAsyncThunk(
   'postsReducer/deleteLikeDB',
   async (data: number, thunkAPI) => {
     try {
+      console.log(data);
       await likeApis.deleteLike(data).then((res) => {
         console.log(res);
         thunkAPI.dispatch(deleteLike(data));
@@ -332,6 +345,7 @@ export const postsSlice = createSlice({
       };
 
       // 라우팅처리
+      // action.payload.navi('/posts');
       action.payload.navi('/posts');
 
       return {
@@ -387,3 +401,15 @@ export const {
 } = postsSlice.actions;
 
 export default postsSlice;
+
+const postActionCreators = {
+  getPostListDB,
+  getPostDB,
+  addPostDB,
+  editPostDB,
+  deletePostDB,
+  addLikeDB,
+  deleteLikeDB,
+};
+
+export { postActionCreators };

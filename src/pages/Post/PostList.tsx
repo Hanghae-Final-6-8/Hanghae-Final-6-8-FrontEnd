@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../redux/configureStore';
@@ -9,18 +9,21 @@ import { EditDelToastModal } from '../../components/molecules/index';
 import { addLikeDB } from '../../redux/modules/posts';
 import { deleteLikeDB } from '../../redux/modules/posts';
 import { heart, heart_full, edit } from '../../assets/icons';
+import { setModalToggle } from '../../redux/modules/modalToggle';
 
 const PostList = () => {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
+
   // 토스트팝업 토글용 state
-  const [toastStatus, setToastStatus] = useState(false);
+  const toggle = useSelector(
+    (store: RootState) => store.modatToggle.modalToggle
+  );
   // ...클릭시 해당 게시물의 postsId 저장
   const [clickedPostId, setClickedPostId] = useState(0);
 
   // db에서 커뮤니티 리스트 가져오기
   useEffect(() => {
-    // if (list.length < 2) {}
     !isListLoaded && appDispatch(getPostListDB(0));
   }, []);
 
@@ -32,10 +35,12 @@ const PostList = () => {
   const { paging, postsLoadedLen } = useSelector(
     (store: RootState) => store.posts
   );
-  console.log(isListLoaded);
+
+  const user = useSelector((state: RootState) => state.user);
+
   // 토스트팝업 띄우기
   const getSetToastFrom = (postsId: number) => {
-    setToastStatus(!toastStatus);
+    appDispatch(setModalToggle(!toggle));
     setClickedPostId(postsId);
   };
 
@@ -60,9 +65,9 @@ const PostList = () => {
   return (
     <div>
       <div className='flex justify-between'>
-        <div className='m-5'>커뮤니티</div>
+        <div className='m-5 text-[22px]'>커뮤니티</div>
         <button
-          className='bg-white shadow-lg rounded-full w-10 h-10 flex justify-center items-center'
+          className='bg-white shadow-lg rounded-full w-10 h-10 flex justify-center items-center fixed right-6'
           onClick={handleMoveToWritePage}
         >
           <img src={edit} />
@@ -85,20 +90,27 @@ const PostList = () => {
               >
                 <div className='flex justify-between p-1'>
                   <div className='flex items-center mb-4'>
-                    <img
+                    {/* <img
                       className='h-12 w-12 rounded-full mr-4'
                       src='https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg'
-                    />
+                    /> */}
+                    <div className='h-14 w-14 rounded-full bg-brownS03 mr-4 text-center leading-[56px] text-[28px]'>
+                      {post.nickname?.substring(0, 1)}
+                    </div>
                     <span>{post.nickname}</span>
                   </div>
-                  <button
-                    className='p-4'
-                    onClick={() => {
-                      getSetToastFrom(post.postsId!);
-                    }}
-                  >
-                    ···
-                  </button>
+                  {user.nickname === post.nickname ? (
+                    <button
+                      className='p-4'
+                      onClick={() => {
+                        getSetToastFrom(post.postsId!);
+                      }}
+                    >
+                      ···
+                    </button>
+                  ) : (
+                    <></>
+                  )}
                 </div>
                 <img
                   className='w-full'
@@ -137,7 +149,7 @@ const PostList = () => {
               </div>
             );
           })}
-          {toastStatus && <EditDelToastModal postsId={clickedPostId} />}
+          {toggle && <EditDelToastModal postsId={clickedPostId} />}
         </InfinityScroll>
       </div>
     </div>

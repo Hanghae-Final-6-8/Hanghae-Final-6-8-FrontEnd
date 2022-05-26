@@ -10,6 +10,7 @@ import mypageSlice from './modules/mypage';
 import beansSlice from './modules/beans';
 import cafeSlice from './modules/cafe';
 import favoriteSlice from './modules/favorite';
+import modalToggleSlice from './modules/modalToggle';
 
 const rootReducer = combineReducers({
   posts: postsSlice.reducer,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   beans: beansSlice.reducer,
   cafe: cafeSlice.reducer,
   favorite: favoriteSlice.reducer,
+  modatToggle: modalToggleSlice.reducer,
 });
 
 export const store = configureStore({
