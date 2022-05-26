@@ -66,13 +66,11 @@ export const addCommentDB = createAsyncThunk(
   async (data: addCommentType, thunkAPI) => {
     try {
       await commentApis.addComment(data).then((res) => {
-        console.log(res.data);
-        // 커뮤니티처럼 댓글정보 다 와야함다고 요청
         thunkAPI.dispatch(
           addComment({
-            commentsId: res.data.id,
-            content: res.data.content,
-            createdAt: res.data.createdAt,
+            commentsId: res.data.data.id,
+            content: res.data.data.content,
+            createdAt: res.data.data.createdAt,
           })
         );
       });

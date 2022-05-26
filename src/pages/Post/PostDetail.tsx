@@ -47,13 +47,15 @@ const PostDetail = () => {
           <button className='m-2 p-2 block' onClick={handleBacktoPrev}>
             <img src={left} />
           </button>
-          <div className='flex'>
+          <div className='flex items-center'>
             <div className='h-14 w-14 rounded-full bg-brownS03 mr-4 text-center leading-[56px] text-[28px] mb-3'>
               {post?.nickname?.substring(0, 1)}
             </div>
             <div className='flex flex-col'>
               <span>{post?.nickname}</span>
-              <span>{post?.createdAt}</span>
+              <span className='text-[12px] text-gray-500'>
+                {post?.createdAt}
+              </span>
             </div>
           </div>
 
