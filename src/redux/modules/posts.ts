@@ -224,7 +224,7 @@ export const editPostDB = createAsyncThunk(
   async (data: formType, thunkAPI) => {
     try {
       await postApis.editPost(data.formData).then((res) => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         // 액션함수 타입맞추기
         const _tagName = res.data.data.tag_name.slice(
           1,
@@ -369,6 +369,9 @@ export const postsSlice = createSlice({
       return { ...state, list: new_postsList };
     },
     editPost: (state, action: PayloadAction<AddPostsType>) => {
+      const editList = state.list.filter((post) => {
+        return post.postsId !== action.payload.postsId;
+      });
       const post_edited = {
         postsId: action.payload.postsId,
         nickname: action.payload.nickname,
@@ -388,7 +391,7 @@ export const postsSlice = createSlice({
 
       return {
         ...state,
-        list: [post_edited, ...state.list],
+        list: [post_edited, ...editList],
       };
     },
     deletePost: (state, action: PayloadAction<number>) => {
