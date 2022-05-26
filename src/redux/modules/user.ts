@@ -15,11 +15,10 @@ interface Login {
 }
 
 const initialState = {
-  nickname: null,
+  nickname: '',
   isLogin: false,
-  profile_url: null,
-  //isLogin: true,
-  tasteId: null,
+  profile_url: '',
+  tasteId: '',
 };
 
 export const getKakaoURL = createAsyncThunk(
@@ -148,12 +147,44 @@ export const logout = createAsyncThunk('user/logout', async () => {
   }
 });
 
+export const deleteUser = createAsyncThunk('user/delete', async () => {
+  try {
+    await userApis.delete().then((response) => {
+      location.href = '../';
+      return;
+    });
+  } catch (err) {
+    return;
+  }
+});
+
+export const update = createAsyncThunk(
+  'user/update',
+  async (data: FormData, thunkAPI) => {
+    try {
+      await userApis.update(data).then((response) => {
+        //thunkAPI.dispatch(updateUserInfo(response));
+        return;
+      });
+    } catch (err) {
+      return;
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
     setUserInfo: (state, action: PayloadAction<any>) => {
       state = action.payload;
+      return state;
+    },
+    updateUserInfo: (state, action: PayloadAction<any>) => {
+      const { nickname, profile_url } = action.payload;
+      console.log(profile_url);
+      state.nickname = nickname;
+      state.profile_url = profile_url;
       return state;
     },
   },
@@ -176,6 +207,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUserInfo } = userSlice.actions;
+export const { setUserInfo, updateUserInfo } = userSlice.actions;
 
 export default userSlice;

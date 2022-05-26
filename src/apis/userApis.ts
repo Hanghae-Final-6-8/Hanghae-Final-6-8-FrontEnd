@@ -20,10 +20,13 @@ export const userApis = {
     }),
   logout: () => instance.get('/api/user/logout'),
   reissue: () => instance.get('/api/user/reissue'),
-  update: (userdata: { nickname: string; profile_url: string }) =>
-    instance.patch('/api/user/update', userdata),
+  update: (userdata: FormData) =>
+    instance.post('/api/user/update', userdata, {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    }),
   delete: () => instance.post('/api/user/delete'),
-  info: () => instance.get('/api/user/info', {}),
-  // 인증부분 API 완료하였으나 프로필url, nickname을 따로 저장해줘야 합니다.
+  info: () => instance.get('/api/user/info'),
   auth: () => instance.get('/api/user/auth'),
 };
