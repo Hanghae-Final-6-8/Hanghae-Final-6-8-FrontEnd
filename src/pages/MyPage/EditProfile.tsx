@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/configureStore';
 import { update } from '../../redux/modules/user';
+import { updateUserInfo } from '../../redux/modules/user';
 
 const EditProfile = () => {
   const appDispatch = useAppDispatch();
@@ -22,6 +23,13 @@ const EditProfile = () => {
     setInputNickname(user.nickname);
     setPreview(user.profile_url ? user.profile_url : logoCopickSquare);
   }, [user]);
+
+  interface UserData {
+    profile_url: any;
+    nickname: string;
+  }
+
+  // const userData: UserData = {}
 
   const handleEditProfileImg: React.ChangeEventHandler<HTMLInputElement> = (
     e
@@ -47,7 +55,7 @@ const EditProfile = () => {
     reader.onloadend = () => {
       setPreview(reader.result);
       const test = reader.result;
-      console.log(test);
+      //userData.profile_url = reader.result
     };
   };
 
@@ -57,14 +65,20 @@ const EditProfile = () => {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+    if (!regex.test(inputNickname)) {
+      alert('닉네임은 한글, 영문, 숫자만 가능합니다.');
+      return;
+    }
 
     const formData = new FormData();
     formData.append('nickname', inputNickname);
     formData.append('imageFile', file[0]);
-    console.log(file[0]);
     appDispatch(update(formData));
+    appDispatch(updateUserInfo(inputNickname));
     navigate('/mypage', { replace: true });
   };
+
+  const regex = /^[가-힣|a-z|A-Z|0-9|]+$/;
 
   return (
     <>
@@ -113,6 +127,7 @@ const EditProfile = () => {
             value={inputNickname}
             onChange={handleInputValue}
             maxLength={10}
+            type='text'
           />
           <div className='absolute right-0 bottom-2 text-gray60 text-body'>
             {inputNickname.length < 11 ? `${inputNickname.length}/10` : '10/10'}

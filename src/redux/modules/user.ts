@@ -163,6 +163,7 @@ export const update = createAsyncThunk(
   async (data: FormData, thunkAPI) => {
     try {
       await userApis.update(data).then((response) => {
+        //thunkAPI.dispatch(updateUserInfo(response));
         return;
       });
     } catch (err) {
@@ -180,9 +181,10 @@ export const userSlice = createSlice({
       return state;
     },
     updateUserInfo: (state, action: PayloadAction<any>) => {
-      const actions = action;
-      state.nickname = '';
-      state.profile_url = '';
+      const actions = action.payload;
+      console.log(actions);
+      // state.nickname = '';
+      // state.profile_url = '';
       return state;
     },
   },
@@ -205,6 +207,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUserInfo } = userSlice.actions;
+export const { setUserInfo, updateUserInfo } = userSlice.actions;
 
 export default userSlice;
