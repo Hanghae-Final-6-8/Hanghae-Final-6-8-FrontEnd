@@ -28,7 +28,7 @@ const MyActivity = () => {
   };
 
   const handleMoveToEditActivityPage = (tabNum: number) => {
-    navigate(`/editMyActivity/${tabNum}`);
+    navigate(`/mypage/activity/${tabNum}`);
   };
 
   return (
