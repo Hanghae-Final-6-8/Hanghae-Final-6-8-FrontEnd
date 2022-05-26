@@ -21,7 +21,7 @@ const EditProfile = () => {
   useEffect(() => {
     setInputNickname(user.nickname);
     setPreview(user.profile_url ? user.profile_url : logoCopickSquare);
-  }, []);
+  }, [user]);
 
   const handleEditProfileImg: React.ChangeEventHandler<HTMLInputElement> = (
     e

@@ -22,8 +22,7 @@ const MypageHeader = () => {
         <div className='flex flex-col'>
           <Text type='mainSubTitle'>{user.nickname}</Text>
           <Text
-            type='tasteCaption'
-            className='mt-0 underline underline-offset-1 cursor-pointer'
+            className='mt-0 underline underline-offset-1 cursor-pointer text-gray60 text-caption'
             onClick={handleToEditProfile}
           >
             내 정보 수정하기
