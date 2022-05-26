@@ -25,14 +25,40 @@ export const getCommentListDB = createAsyncThunk(
       await commentApis.getCommentList(data).then((res) => {
         // 어떻게 넘어오는지 확인필요
         console.log(res);
-        console.log(res.data.data.content);
+
         const newCommentList: Array<CommentItemDataParams> = [];
         res.data.data.content.map((comment: any) => {
+          // 시간계산
+          const today = new Date();
+          const commentedDay = new Date(comment.createdAt);
+          let newDate = '';
+          let betweenTime = 0;
+          betweenTime = Math.floor(
+            (today.getTime() - commentedDay.getTime()) / 1000 / 60
+          );
+          if (betweenTime < 1) {
+            newDate = '방금전';
+          } else if (betweenTime < 60) {
+            newDate = `${betweenTime}분전`;
+          }
+          if (betweenTime > 60) {
+            betweenTime = Math.floor(betweenTime / 60);
+            if (betweenTime < 24) {
+              newDate = `${betweenTime}시간전`;
+            } else if (betweenTime > 24) {
+              betweenTime = Math.floor(betweenTime / 60 / 24);
+              newDate = `${betweenTime}일전`;
+            } else if (betweenTime > 365) {
+              betweenTime = Math.floor(betweenTime / 365);
+              newDate = `${betweenTime}년전`;
+            }
+          }
+
           newCommentList.push({
             commentsId: comment.id,
             // nickname: comment.nickname,
             content: comment.content,
-            createdAt: comment.createdAt,
+            createdAt: newDate,
           });
         });
         thunkAPI.dispatch(setCommentList(newCommentList));
@@ -66,11 +92,36 @@ export const addCommentDB = createAsyncThunk(
   async (data: addCommentType, thunkAPI) => {
     try {
       await commentApis.addComment(data).then((res) => {
+        // 시간 계산
+        const today = new Date();
+        const commentedDay = new Date(res.data.data.createdAt);
+        let newDate = '';
+        let betweenTime = 0;
+        betweenTime = Math.floor(
+          (today.getTime() - commentedDay.getTime()) / 1000 / 60
+        );
+        if (betweenTime < 1) {
+          newDate = '방금전';
+        } else if (betweenTime < 60) {
+          newDate = `${betweenTime}분전`;
+        }
+        if (betweenTime > 60) {
+          betweenTime = Math.floor(betweenTime / 60);
+          if (betweenTime < 24) {
+            newDate = `${betweenTime}시간전`;
+          } else if (betweenTime > 24) {
+            betweenTime = Math.floor(betweenTime / 60 / 24);
+            newDate = `${betweenTime}일전`;
+          } else if (betweenTime > 365) {
+            betweenTime = Math.floor(betweenTime / 365);
+            newDate = `${betweenTime}년전`;
+          }
+        }
         thunkAPI.dispatch(
           addComment({
             commentsId: res.data.data.id,
             content: res.data.data.content,
-            createdAt: res.data.data.createdAt,
+            createdAt: newDate,
           })
         );
       });

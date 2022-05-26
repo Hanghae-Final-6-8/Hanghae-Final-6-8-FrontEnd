@@ -257,21 +257,13 @@ const AddEditPost = () => {
               )}
             </div>
           </div>
-          {postsIdparams.postsId ? (
-            <Button
-              className='text-white font-500 text-sub2 mt-12'
-              type='brownPType'
-            >
-              수정하기
-            </Button>
-          ) : (
-            <Button
-              className='text-white font-500 text-sub2 mt-12'
-              type='brownPType'
-            >
-              공유하기
-            </Button>
-          )}
+
+          <Button
+            className='text-white font-500 text-sub2 mt-12'
+            type='brownPType'
+          >
+            {postsIdparams.postsId ? '수정하기' : '등록하기'}
+          </Button>
         </div>
       </form>
     </div>
