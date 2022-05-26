@@ -136,8 +136,9 @@ export const getPostDB = createAsyncThunk(
         const postedDay = new Date(res.data.data.created_at);
         let newDate = '';
         let betweenTime = 0;
-        betweenTime =
-          Math.floor(today.getTime() - postedDay.getTime()) / 1000 / 60;
+        betweenTime = Math.floor(
+          (today.getTime() - postedDay.getTime()) / 1000 / 60
+        );
         if (betweenTime < 1) {
           newDate = '방금전';
         } else if (betweenTime < 60) {
