@@ -1,5 +1,5 @@
 import { up, down } from '../../assets/icons';
-import { BeansToastPopup } from '../../components/organisms';
+import { BeansToastPopup } from '../molecules';
 import { useState } from 'react';
 
 const BeansCafeBtn = () => {
