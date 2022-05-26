@@ -209,6 +209,12 @@ export const mypageSlice = createSlice({
     setIsMyCommentListLoaded: (state, action: PayloadAction<boolean>) => {
       state.isMyCommentListLoaded = action.payload;
     },
+    deleteMyComment: (state, action: PayloadAction<number>) => {
+      const newCommentList = state.myCommentList.filter((comment) => {
+        return comment.commentsId !== action.payload;
+      });
+      return { ...state, myCommentList: newCommentList };
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getPostsLikedDB.fulfilled, (state, action) => {
@@ -239,6 +245,7 @@ export const {
   setIsListLikedLoaded,
   setIsListMyActivityLoaded,
   setIsMyCommentListLoaded,
+  deleteMyComment,
 } = mypageSlice.actions;
 
 const mypageActionCreators = {

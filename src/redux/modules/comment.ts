@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { commentApis } from '../../apis/commentApis';
 import { setIsMyCommentListLoaded } from './mypage';
+import { deleteMyComment } from './mypage';
 
 export interface CommentItemDataParams {
   // postsId: number | null;
@@ -23,8 +24,6 @@ export const getCommentListDB = createAsyncThunk(
   async (data: number, thunkAPI) => {
     try {
       await commentApis.getCommentList(data).then((res) => {
-        console.log(res);
-
         const newCommentList: Array<CommentItemDataParams> = [];
         res.data.data.content.map((comment: any) => {
           // 시간계산
@@ -78,7 +77,6 @@ export const addCommentDB = createAsyncThunk(
   async (data: addCommentType, thunkAPI) => {
     try {
       await commentApis.addComment(data).then((res) => {
-        console.log(res);
         // 시간 계산
         const today = new Date();
         const commentedDay = new Date(res.data.data.createdAt);
@@ -126,6 +124,7 @@ export const deleteCommentDB = createAsyncThunk(
       await commentApis.deleteComment(data).then((res) => {
         thunkAPI.dispatch(deleteComment(data));
         thunkAPI.dispatch(setIsMyCommentListLoaded(false));
+        thunkAPI.dispatch(deleteMyComment(data));
       });
     } catch (error) {
       console.log(error);
