@@ -6,7 +6,7 @@ import { camera } from '../../assets/icons';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/configureStore';
-import { update } from '../../redux/modules/user';
+import { auth, update } from '../../redux/modules/user';
 import { updateUserInfo } from '../../redux/modules/user';
 
 const EditProfile = () => {
@@ -23,13 +23,6 @@ const EditProfile = () => {
     setInputNickname(user.nickname);
     setPreview(user.profile_url ? user.profile_url : logoCopickSquare);
   }, [user]);
-
-  interface UserData {
-    profile_url: any;
-    nickname: string;
-  }
-
-  // const userData: UserData = {}
 
   const handleEditProfileImg: React.ChangeEventHandler<HTMLInputElement> = (
     e
@@ -54,8 +47,6 @@ const EditProfile = () => {
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       setPreview(reader.result);
-      const test = reader.result;
-      //userData.profile_url = reader.result
     };
   };
 
@@ -66,15 +57,15 @@ const EditProfile = () => {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     if (!regex.test(inputNickname)) {
-      alert('닉네임은 한글, 영문, 숫자만 가능합니다.');
+      alert('닉네임은 한글, 영문, 숫자와 공백이 없어야 변경 가능합니다.');
       return;
     }
 
     const formData = new FormData();
     formData.append('nickname', inputNickname);
-    formData.append('imageFile', file[0]);
+    formData.append('profile_url', file[0]);
     appDispatch(update(formData));
-    appDispatch(updateUserInfo(inputNickname));
+    appDispatch(auth());
     navigate('/mypage', { replace: true });
   };
 
