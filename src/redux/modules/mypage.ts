@@ -209,6 +209,12 @@ export const mypageSlice = createSlice({
     setIsMyCommentListLoaded: (state, action: PayloadAction<boolean>) => {
       state.isMyCommentListLoaded = action.payload;
     },
+    deleteMyPost: (state, action: PayloadAction<number>) => {
+      const newPostList = state.listMyActivity.filter((post) => {
+        return post.postsId !== action.payload;
+      });
+      return { ...state, listMyActivity: newPostList };
+    },
     deleteMyComment: (state, action: PayloadAction<number>) => {
       const newCommentList = state.myCommentList.filter((comment) => {
         return comment.commentsId !== action.payload;
@@ -245,6 +251,7 @@ export const {
   setIsListLikedLoaded,
   setIsListMyActivityLoaded,
   setIsMyCommentListLoaded,
+  deleteMyPost,
   deleteMyComment,
 } = mypageSlice.actions;
 

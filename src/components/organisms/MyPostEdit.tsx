@@ -38,15 +38,6 @@ const MyPostEdit = () => {
     navigate(`/posts/${postsId}`);
   };
 
-  // 좋아요 추가
-  const handleAddLikes = (postsId: number) => {
-    appDispatch(postActionCreators.addLikeDB(postsId));
-  };
-  // 좋아요 삭제
-  const handleDeleteLikes = (postsId: number) => {
-    appDispatch(postActionCreators.deleteLikeDB(postsId));
-  };
-
   return (
     <div className='pb-24'>
       {listMyActivity.map((post, idx) => {
@@ -85,19 +76,11 @@ const MyPostEdit = () => {
             />
             <div className='p-4 flex items-center'>
               {post.isLikes === null ? (
-                <button
-                  onClick={() => {
-                    handleAddLikes(post.postsId!);
-                  }}
-                >
+                <button>
                   <img src={heart} />
                 </button>
               ) : (
-                <button
-                  onClick={() => {
-                    handleDeleteLikes(post.postsId!);
-                  }}
-                >
+                <button>
                   <img src={heart_full} />
                 </button>
               )}
