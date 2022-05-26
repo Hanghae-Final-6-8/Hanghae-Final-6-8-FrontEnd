@@ -56,8 +56,8 @@ export const getUserInfo = createAsyncThunk(
       await userApis.info().then((response) => {
         const userInfo = {
           favorite: response.data.data.favorites_count,
-          likes: response.data.data.posts_count,
-          activity: response.data.data.likes_count,
+          likes: response.data.data.likes_count,
+          activity: response.data.data.posts_count,
         };
         thunkAPI.dispatch(setFavorLikeActivity(userInfo));
       });
@@ -73,8 +73,8 @@ export const getPostsLikedDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       await likeApis.getPostsLiked().then((res) => {
-        console.log(res);
-        console.log(res.data.data.content);
+        // console.log(res);
+        // console.log(res.data.data.content);
         const newList: Array<PostsItemDataParams> = [];
         res.data.data.content.map((post: any) => {
           let newTagStr = [];
