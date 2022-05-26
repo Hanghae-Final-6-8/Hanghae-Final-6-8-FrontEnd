@@ -110,6 +110,7 @@ export const addCommentDB = createAsyncThunk(
             nickname: res.data.data.nickname,
           })
         );
+        thunkAPI.dispatch(setIsMyCommentListLoaded(false));
       });
     } catch (error) {
       console.log(error);
