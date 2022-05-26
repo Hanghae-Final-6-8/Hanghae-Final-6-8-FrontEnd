@@ -24,15 +24,6 @@ const MyLikes = () => {
     navigate(`/posts/${postsId}`);
   };
 
-  // 좋아요 추가
-  const handleAddLikes = (postsId: number) => {
-    appDispatch(addLikeDB(postsId));
-  };
-  // 좋아요 삭제
-  const handleDeleteLikes = (postsId: number) => {
-    appDispatch(deleteLikeDB(postsId));
-  };
-
   return (
     <div className='grid grid-cols-3 gap-0.5 pb-24'>
       {listLiked.map((post, index) => {
@@ -50,21 +41,11 @@ const MyLikes = () => {
               }}
             />
             {post.isLikes === null ? (
-              <button
-                className='absolute top-1 right-1'
-                onClick={() => {
-                  handleAddLikes(post.postsId!);
-                }}
-              >
+              <button className='absolute top-1 right-1'>
                 <img src={heart} />
               </button>
             ) : (
-              <button
-                className='absolute top-1 right-1'
-                onClick={() => {
-                  handleDeleteLikes(post.postsId!);
-                }}
-              >
+              <button className='absolute top-1 right-1'>
                 <img src={heart_full} />
               </button>
             )}
