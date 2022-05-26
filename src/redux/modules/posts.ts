@@ -55,7 +55,6 @@ export const getPostListDB = createAsyncThunk(
     try {
       await postApis.getPostList(data).then((res) => {
         const postList: Array<PostsItemDataParams> = [];
-        console.log(res.data.data.content);
         // 페이징
         if (res.data.data.content.length !== 0) {
           thunkAPI.dispatch(setPageNum(++data));
@@ -74,8 +73,9 @@ export const getPostListDB = createAsyncThunk(
           const postedDay = new Date(post.created_at);
           let newDate = '';
           let betweenTime = 0;
-          betweenTime =
-            Math.floor(today.getTime() - postedDay.getTime()) / 1000 / 60;
+          betweenTime = Math.floor(
+            (today.getTime() - postedDay.getTime()) / 1000 / 60
+          );
           if (betweenTime < 1) {
             newDate = '방금전';
           } else if (betweenTime < 60) {
@@ -329,7 +329,7 @@ export const postsSlice = createSlice({
       state.paging = action.payload;
     },
     setPostList: (state, action: PayloadAction<any>) => {
-      const newList = [...action.payload.postList];
+      const newList = [...state.list, ...action.payload.postList];
       return {
         ...state,
         list: newList,
