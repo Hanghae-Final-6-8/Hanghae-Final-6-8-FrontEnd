@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../redux/configureStore';
 import { RootState } from '../../redux/configureStore';
@@ -6,7 +6,6 @@ import { getPostListMine } from '../../redux/modules/mypage';
 import { getMyCommentDB } from '../../redux/modules/mypage';
 import { useNavigate } from 'react-router-dom';
 import { right } from '../../assets/icons';
-import { useState } from 'react';
 import { RoundBox, Text, Button } from '../atoms';
 import { commentActionCreators } from '../../redux/modules/comment';
 

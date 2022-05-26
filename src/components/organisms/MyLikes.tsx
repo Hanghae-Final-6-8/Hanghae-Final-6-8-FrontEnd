@@ -4,8 +4,6 @@ import { useAppDispatch } from '../../redux/configureStore';
 import { RootState } from '../../redux/configureStore';
 import { getPostsLikedDB } from '../../redux/modules/mypage';
 import { useNavigate } from 'react-router-dom';
-import { addLikeDB } from '../../redux/modules/posts';
-import { deleteLikeDB } from '../../redux/modules/posts';
 import { heart, heart_full } from '../../assets/icons';
 
 const MyLikes = () => {
