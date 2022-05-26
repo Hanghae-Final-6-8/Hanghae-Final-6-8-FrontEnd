@@ -37,7 +37,7 @@ const PostList = () => {
   );
 
   const user = useSelector((state: RootState) => state.user);
-
+  console.log(user);
   // 토스트팝업 띄우기
   const getSetToastFrom = (postsId: number) => {
     appDispatch(setModalToggle(!toggle));
@@ -66,12 +66,16 @@ const PostList = () => {
     <div>
       <div className='flex justify-between'>
         <div className='m-5 text-[22px]'>커뮤니티</div>
-        <button
-          className='bg-white shadow-lg rounded-full w-10 h-10 flex justify-center items-center fixed right-6'
-          onClick={handleMoveToWritePage}
-        >
-          <img src={edit} />
-        </button>
+        {!user.isLogin ? (
+          <></>
+        ) : (
+          <button
+            className='bg-white shadow-lg rounded-full w-10 h-10 flex justify-center items-center fixed right-6'
+            onClick={handleMoveToWritePage}
+          >
+            <img src={edit} />
+          </button>
+        )}
       </div>
 
       <div className='flex flex-col pb-24'>
