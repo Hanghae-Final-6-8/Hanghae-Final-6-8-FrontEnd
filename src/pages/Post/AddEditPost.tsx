@@ -66,7 +66,6 @@ const AddEditPost = () => {
       return post.postsId === Number(postsIdparams.postsId);
     });
   }
-
   useEffect(() => {
     setTitle(post ? post.title : '');
     setContent(post ? post.content : '');
@@ -83,11 +82,17 @@ const AddEditPost = () => {
     setInputTag(e.target.value);
   };
   // 태그 추가
-  const onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
-    if (inputTag.length !== 0 && e.key === 'Enter') {
-      setTagName([inputTag, ...tagName]);
-      setInputTag('');
+  const addTag = () => {
+    const text = document.getElementById('tagName') as HTMLInputElement;
+    if (text.value === '') {
+      (
+        document.getElementById('tagNameValid') as HTMLInputElement
+      ).style.display = 'block';
+      return;
     }
+    setInputTag(text.value);
+    setTagName([inputTag, ...tagName]);
+    setInputTag('');
   };
 
   // 태그 지우기
@@ -100,29 +105,51 @@ const AddEditPost = () => {
     setContent(e.target.value);
   };
 
-  // 커뮤니티 등록
-  const handleAddPosts = () => {
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('content', content);
-    formData.append('tag_name', tagName.toString());
-    formData.append('posts_image', file[0]);
-    appDispatch(addPostDB({ formData, navi: navigate, prevImage }));
-  };
-
-  //커뮤니티 수정
-  const handleEditpost = () => {
-    const formData = new FormData();
-    formData.append('posts_id', post!.postsId!.toString());
-    formData.append('title', title);
-    formData.append('content', content);
-    formData.append('tag_name', tagName.toString());
-    formData.append('posts_image', file[0]);
-    appDispatch(editPostDB({ formData, navi: navigate, prevImage }));
-  };
-
   const handleBacktoPrev = () => {
     navigate(-1);
+  };
+
+  // react-hool-form
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onValid = (data: any) => {
+    if (tagName.length === 0) {
+      (
+        document.getElementById('tagNameValid') as HTMLInputElement
+      ).style.display = 'block';
+      return;
+    }
+    // 수정의 경우, 이미지 안 바꿀 수 있어서 등록의 경우만 파일체크
+    if (!postsIdparams.postsId) {
+      if (file.length === 0) {
+        (
+          document.getElementById('fileValid') as HTMLInputElement
+        ).style.display = 'block';
+        return;
+      }
+    }
+
+    // 게시물 수정
+    if (postsIdparams.postsId) {
+      const formData = new FormData();
+      formData.append('posts_id', post!.postsId!.toString());
+      formData.append('title', title);
+      formData.append('content', content);
+      formData.append('tag_name', tagName.toString());
+      formData.append('posts_image', file[0]);
+      appDispatch(editPostDB({ formData, navi: navigate, prevImage }));
+    } else {
+      // 게시물 등록
+      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('content', content);
+      formData.append('tag_name', tagName.toString());
+      formData.append('posts_image', file[0]);
+      appDispatch(addPostDB({ formData, navi: navigate, prevImage }));
+    }
   };
 
   return (
@@ -135,91 +162,117 @@ const AddEditPost = () => {
       ) : (
         <h1 className='text-center mb-5 text-[18px]'>새 게시물</h1>
       )}
-      <div className='bg-white shadow-xl rounded-30px pt-5 pb-5 pl-5 pr-5'>
-        <div className='flex flex-col w-full border-b pt-5 pb-5 '>
-          <div className='flex mb-5'>
-            <div className='relative mr-3'>
-              <img className='w-24 h-24' src={prevImage ? prevImage : camera} />
-              <label
-                className='absolute top-0 left-0 w-24 h-24 opacity-0'
-                htmlFor='inputFile'
-              >
-                파일업로드
-              </label>
-              <input
-                id='inputFile'
-                className='hidden'
-                type='file'
-                onChange={getOnLoadFileFrom}
-                accept='image/*'
-              />
-            </div>
+      <form onSubmit={handleSubmit(onValid)}>
+        <div className='bg-white shadow-xl rounded-30px pt-5 pb-5 pl-5 pr-5'>
+          <div className='flex flex-col w-full border-b pt-5 pb-5 '>
+            <div className='flex mb-5'>
+              <div className='relative mr-3'>
+                <img
+                  className='w-24 h-24'
+                  src={prevImage ? prevImage : camera}
+                />
+                <label
+                  className='absolute top-0 left-0 w-24 h-24 opacity-0'
+                  htmlFor='inputFile'
+                >
+                  파일업로드
+                </label>
+                <input
+                  id='inputFile'
+                  className='hidden'
+                  type='file'
+                  onChange={getOnLoadFileFrom}
+                  accept='image/*'
+                />
+              </div>
+              <div className='w-48 h-24'>
+                <input
+                  {...register('title', { required: '제목을 입력해주세요' })}
+                  type='text'
+                  placeholder='제목을 입력해주세요'
+                  onChange={getInputTitleFrom}
+                  value={title}
+                />
+                {errors.title ? (
+                  <p className='text-[red]'>{errors.title.message}</p>
+                ) : (
+                  <></>
+                )}
 
-            <div className='w-48 h-24'>
+                <textarea
+                  {...register('content', { required: '내용을 입력해주세요' })}
+                  className='h-20 w-full resize-none outline-none'
+                  placeholder='당신의 커피를 보여주세요...'
+                  onChange={getInputContentFrom}
+                  value={content}
+                />
+                {errors.content ? (
+                  <p className='text-[red]'>{errors.content.message}</p>
+                ) : (
+                  <></>
+                )}
+              </div>
+            </div>
+            <p id='fileValid' style={{ display: 'none', color: 'red' }}>
+              이미지를 선택해주세요
+            </p>
+            <div className='HashWrapOuter flex justify-between mt-10'>
               <input
+                id='tagName'
                 type='text'
-                placeholder='제목을 입력해주세요'
-                onChange={getInputTitleFrom}
-                value={title}
+                className='HashInput outline-none mb-1'
+                placeholder='태그 입력 후 추가버튼'
+                onChange={getInputTagNameFrom}
+                value={inputTag}
               />
-              <textarea
-                className='h-full w-full resize-none outline-none'
-                placeholder='당신의 커피를 보여주세요...'
-                onChange={getInputContentFrom}
-                value={content}
-              />
+              <button
+                className='p-3 rounded-xl shadow-xl'
+                type='button'
+                onClick={addTag}
+              >
+                추가
+              </button>
+            </div>
+            <p id='tagNameValid' style={{ display: 'none', color: 'red' }}>
+              태그를 입력해 주세요
+            </p>
+            <div>
+              {tagName.length !== 0 ? (
+                tagName.map((tag, index) => {
+                  return (
+                    <span
+                      className='inline-block bg-lime-800 text-white mr-1 rounded-md text-sm font-bold p-1 cursor-pointer'
+                      key={index}
+                      onClick={() => {
+                        deleteTag(tag);
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  );
+                })
+              ) : (
+                <></>
+              )}
             </div>
           </div>
-          <div className='HashWrapOuter'>
-            <input
-              type='text'
-              className='HashInput outline-none mb-1'
-              placeholder='태그 입력후 Enter'
-              onChange={getInputTagNameFrom}
-              onKeyDown={onKeyDown}
-              value={inputTag}
-            />
-          </div>
-
-          <div>
-            {tagName.length !== 0 ? (
-              tagName.map((tag, index) => {
-                return (
-                  <span
-                    className='inline-block bg-lime-800 text-white mr-1 rounded-md text-sm font-bold p-1 cursor-pointer'
-                    key={index}
-                    onClick={() => {
-                      deleteTag(tag);
-                    }}
-                  >
-                    {tag}
-                  </span>
-                );
-              })
-            ) : (
-              <></>
-            )}
-          </div>
+          {postsIdparams.postsId ? (
+            <Button
+              className='text-white font-500 text-sub2 mt-12'
+              type='brownPType'
+            >
+              수정하기
+            </Button>
+          ) : (
+            <Button
+              className='text-white font-500 text-sub2 mt-12'
+              type='brownPType'
+            >
+              공유하기
+            </Button>
+          )}
         </div>
-
-        {postsIdparams.postsId ? (
-          <Button
-            className='text-white font-500 text-sub2 mt-12'
-            type='brownPType'
-            onClick={handleEditpost}
-          >
-            수정하기
-          </Button>
-        ) : (
-          <Button
-            className='text-white font-500 text-sub2 mt-12'
-            type='brownPType'
-            onClick={handleAddPosts}
-          >
-            공유하기
-          </Button>
-        )}
-      </div>
+      </form>
     </div>
   );
 };
