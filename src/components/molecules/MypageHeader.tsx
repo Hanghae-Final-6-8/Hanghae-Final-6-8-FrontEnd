@@ -17,7 +17,11 @@ const MypageHeader = () => {
     <div className='flex justify-between mb-5'>
       <div className='flex'>
         <div className='bg-brownS02 w-12 h-12 rounded-full mr-3 text-center leading-10 overflow-hidden'>
-          <img src={user.profile_url ? user.profile_url : logoCopickSquare} />
+          <img
+            className='w-full h-full'
+            src={user.profile_url ? user.profile_url : logoCopickSquare}
+            alt={'프로필 이미지'}
+          />
         </div>
         <div className='flex flex-col'>
           <Text type='mainSubTitle'>{user.nickname}</Text>
