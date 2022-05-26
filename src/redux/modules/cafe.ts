@@ -1,11 +1,20 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { cafeApis } from '../../apis';
 import { saveBeansList } from './beans';
-import { saveTasteList } from './taste';
 
 const initialState = {
   cafeList: [{ cafeId: 0, cafeName: '' }],
+  cafeListMain: [
+    {
+      beansCount: 0,
+      cafeBackGroundImage: '',
+      cafeId: 0,
+      cafeLogoImage: '',
+      cafeName: '',
+    },
+  ],
   isLoaded: false,
+  isMainLoaded: false,
 };
 
 export const getCafeList = createAsyncThunk(
@@ -36,6 +45,20 @@ export const getBeansListByCafe = createAsyncThunk(
   }
 );
 
+export const getBeansListByCafeMain = createAsyncThunk(
+  'cafe/beans/total',
+  async (_, thunkAPI) => {
+    try {
+      await cafeApis.getBeansListByCafeMain().then((response) => {
+        thunkAPI.dispatch(saveCafeListMain(response.data.data));
+        return;
+      });
+    } catch (err) {
+      return;
+    }
+  }
+);
+
 export const cafeSlice = createSlice({
   name: 'cafeReducer',
   initialState,
@@ -44,14 +67,21 @@ export const cafeSlice = createSlice({
       state.cafeList = action.payload;
       return state;
     },
+    saveCafeListMain: (state, action: PayloadAction<any>) => {
+      state.cafeListMain = action.payload;
+      return state;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getCafeList.fulfilled, (state, action) => {
       state.isLoaded = true;
     });
+    builder.addCase(getBeansListByCafeMain.fulfilled, (state, action) => {
+      state.isMainLoaded = true;
+    });
   },
 });
 
-export const { saveCafeList } = cafeSlice.actions;
+export const { saveCafeList, saveCafeListMain } = cafeSlice.actions;
 
 export default cafeSlice;

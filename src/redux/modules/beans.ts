@@ -7,7 +7,7 @@ const initialState = {
   beanlist: [
     {
       beanId: 0,
-      beanName: null,
+      beanName: '',
       description: null,
       type: 0,
       beanImage: null,
@@ -23,21 +23,23 @@ const initialState = {
     cafeId: 0,
     cafeLogoImage: null,
     cafeBackGroundImage: null,
-    cafeName: null,
+    cafeName: '',
     cocoaFlavor: 0,
-    description: null,
+    description: '',
     floral: 0,
     fruitFlavor: 0,
     nutty: 0,
     nuttyFlavor: 0,
     sweetness: 0,
     type: 0,
+    favoritesId: null,
     similar: [
       { beanId: 0, beanName: '', description: '', beanImage: '', type: 0 },
     ],
     isSimilarLoaded: false,
   },
   isLoaded: false,
+  isMainLoaded: false,
 };
 
 export const getBeansList = createAsyncThunk(
@@ -46,6 +48,20 @@ export const getBeansList = createAsyncThunk(
     try {
       await beansApis.getBeansList().then((response) => {
         thunkAPI.dispatch(saveBeansList(response.data.data.content));
+        return;
+      });
+    } catch (err) {
+      return;
+    }
+  }
+);
+
+export const getBeansListType = createAsyncThunk(
+  'beans/list/type',
+  async (type: number, thunkAPI) => {
+    try {
+      await beansApis.getBeansListType(type).then((response) => {
+        thunkAPI.dispatch(saveBeanseListByType(response.data.data.content));
         return;
       });
     } catch (err) {
@@ -92,6 +108,10 @@ export const beansSlice = createSlice({
       state.beanlist = action.payload;
       return state;
     },
+    saveBeanseListByType: (state, action: PayloadAction<any>) => {
+      state.beanlist = action.payload;
+      return state;
+    },
     saveBeansDetail: (state, action: PayloadAction<any>) => {
       state.beansDetail = action.payload;
       return;
@@ -110,6 +130,7 @@ export const beansSlice = createSlice({
   },
 });
 
-export const { saveBeansList, saveBeansDetail } = beansSlice.actions;
+export const { saveBeansList, saveBeansDetail, saveBeanseListByType } =
+  beansSlice.actions;
 
 export default beansSlice;

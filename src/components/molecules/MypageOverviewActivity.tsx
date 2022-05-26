@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { likeActionCreators } from '../../redux/modules/mypage';
+import { mypageActionCreators } from '../../redux/modules/mypage';
 import { useAppDispatch } from '../../redux/configureStore';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/configureStore';
@@ -8,7 +8,7 @@ import { Text } from '../atoms';
 const MypageOverviewActivity = () => {
   const appDispatch = useAppDispatch();
   useEffect(() => {
-    appDispatch(likeActionCreators.getUserInfo());
+    appDispatch(mypageActionCreators.getUserInfo());
   }, []);
   const userInfo = useSelector((store: RootState) => store.mypage);
 

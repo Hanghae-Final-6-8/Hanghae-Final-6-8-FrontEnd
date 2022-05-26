@@ -24,15 +24,15 @@ export const getCommentListDB = createAsyncThunk(
     try {
       await commentApis.getCommentList(data).then((res) => {
         // 어떻게 넘어오는지 확인필요
-        // console.log(res);
+        console.log(res);
         console.log(res.data.data.content);
         const newCommentList: Array<CommentItemDataParams> = [];
         res.data.data.content.map((comment: any) => {
           newCommentList.push({
-            commentsId: comment.comments_id,
-            nickname: comment.nickname,
+            commentsId: comment.id,
+            // nickname: comment.nickname,
             content: comment.content,
-            createdAt: comment.created_at,
+            createdAt: comment.createdAt,
           });
         });
         thunkAPI.dispatch(setCommentList(newCommentList));
@@ -42,19 +42,19 @@ export const getCommentListDB = createAsyncThunk(
     }
   }
 );
-// 내 댓글 조회
-export const getMyCommentDB = createAsyncThunk(
-  'commentReducer/getMyCommentDB',
-  async () => {
-    try {
-      await commentApis.getMyComment().then((res) => {
-        console.log(res);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-);
+// // 내 댓글 조회
+// export const getMyCommentDB = createAsyncThunk(
+//   'commentReducer/getMyCommentDB',
+//   async () => {
+//     try {
+//       await commentApis.getMyComment().then((res) => {
+//         console.log(res);
+//       });
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   }
+// );
 
 interface addCommentType {
   content: string;
@@ -139,7 +139,7 @@ export const { setCommentList, addComment, deleteComment } =
 const commentActionCreators = {
   addCommentDB,
   getCommentListDB,
-  getMyCommentDB,
+  // getMyCommentDB,
   deleteCommentDB,
 };
 

@@ -1,11 +1,4 @@
-import {
-  arrow,
-  bean01,
-  bean02,
-  bean03,
-  bean04,
-  bean05,
-} from '../../assets/images';
+import { arrow, bean01, bean04 } from '../../assets/images';
 import { pickYour, coffee } from '../../assets/logo';
 
 const BgWebFixed = () => {

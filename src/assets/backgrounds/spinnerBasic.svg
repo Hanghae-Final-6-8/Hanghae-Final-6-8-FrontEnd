@@ -1,53 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg"
-  xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: transparent; display: block;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-  <defs>
-    <filter id="ldio-u8lxuwiozfe-filter" x="-100%" y="-100%" width="300%" height="300%" color-interpolation-filters="sRGB">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="4.800000000000001"></feGaussianBlur>
-      <feComponentTransfer result="cutoff">
-        <feFuncA type="table" tableValues="0 0 0 0 0 0 1 1 1 1 1"></feFuncA>
-      </feComponentTransfer>
-    </filter>
-  </defs>
-  <g filter="url(#ldio-u8lxuwiozfe-filter)">
-    <g transform="translate(50 50)">
-      <g>
-        <circle cx="26" cy="0" r="5" fill="#290908">
-          <animate attributeName="r" keyTimes="0;0.5;1" values="7.199999999999999;16.799999999999997;7.199999999999999" dur="4s" repeatCount="indefinite" begin="-0.25s"></animate>
-        </circle>
-        <animateTransform attributeName="transform" type="rotate" keyTimes="0;1" values="0;360" dur="4s" repeatCount="indefinite" begin="0s"></animateTransform>
+<svg xml:space="preserve" style="height: 100%; width: 100%; background: none;" viewBox="0 0 283.46 283.46" y="0px" x="0px"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns="http://www.w3.org/2000/svg" id="레이어_1" version="1.1" width="266px" height="266px">
+  <g class="ldl-scale" style="transform-origin: 50% 50%; transform: rotate(0deg) scale(0.87, 0.87);">
+    <g class="ldl-ani" style="transform-origin: 141.73px 141.73px; transform: scale(1); animation: 1.1236s linear 1s infinite normal forwards running transform;">
+      <style type="text/css">
+	.st0{fill:#6D4937;}
+      </style>
+      <g class="ldl-layer">
+        <g class="ldl-ani">
+          <g>
+            <g class="ldl-layer">
+              <g class="ldl-ani">
+                <path d="M203.68,124.72c-1.06,7.02-3.21,13.76-6.46,19.82c-2.48,4.63-5.5,9.45-11.87,17.34
+		c-12.54,13.68-30.17,22.63-49.87,23.86c-1.6,0.1-3.19,0.15-4.77,0.15c-18.92,0-36.74-7.03-50.61-20.07
+		c-14.83-13.94-23.33-33.6-23.33-53.94h17.34c0,15.8,6.34,30.47,17.87,41.3c11.51,10.82,26.57,16.23,42.43,15.25
+		c27.94-1.73,51.19-24.98,52.92-52.92l0.51-8.13h16.54C204.42,116.54,204.33,120.43,203.68,124.72z" class="st0" style="fill: rgb(109, 73, 55);"></path>
+              </g>
+            </g>
+          </g>
+        </g>
       </g>
-    </g>
-    <g transform="translate(50 50)">
-      <g>
-        <circle cx="26" cy="0" r="5" fill="#491212">
-          <animate attributeName="r" keyTimes="0;0.5;1" values="7.199999999999999;16.799999999999997;7.199999999999999" dur="2s" repeatCount="indefinite" begin="-0.2s"></animate>
-        </circle>
-        <animateTransform attributeName="transform" type="rotate" keyTimes="0;1" values="0;360" dur="2s" repeatCount="indefinite" begin="-0.05s"></animateTransform>
-      </g>
-    </g>
-    <g transform="translate(50 50)">
-      <g>
-        <circle cx="26" cy="0" r="5" fill="#831a19">
-          <animate attributeName="r" keyTimes="0;0.5;1" values="7.199999999999999;16.799999999999997;7.199999999999999" dur="1.3333333333333333s" repeatCount="indefinite" begin="-0.15s"></animate>
-        </circle>
-        <animateTransform attributeName="transform" type="rotate" keyTimes="0;1" values="0;360" dur="1.3333333333333333s" repeatCount="indefinite" begin="-0.1s"></animateTransform>
-      </g>
-    </g>
-    <g transform="translate(50 50)">
-      <g>
-        <circle cx="26" cy="0" r="5" fill="#c24229">
-          <animate attributeName="r" keyTimes="0;0.5;1" values="7.199999999999999;16.799999999999997;7.199999999999999" dur="1s" repeatCount="indefinite" begin="-0.1s"></animate>
-        </circle>
-        <animateTransform attributeName="transform" type="rotate" keyTimes="0;1" values="0;360" dur="1s" repeatCount="indefinite" begin="-0.15s"></animateTransform>
-      </g>
-    </g>
-    <g transform="translate(50 50)">
-      <g>
-        <circle cx="26" cy="0" r="5" fill="#dd8437">
-          <animate attributeName="r" keyTimes="0;0.5;1" values="7.199999999999999;16.799999999999997;7.199999999999999" dur="0.8s" repeatCount="indefinite" begin="-0.05s"></animate>
-        </circle>
-        <animateTransform attributeName="transform" type="rotate" keyTimes="0;1" values="0;360" dur="0.8s" repeatCount="indefinite" begin="-0.2s"></animateTransform>
+      <g class="ldl-layer">
+        <g class="ldl-ani">
+          <path d="M209.84,107.37l-9.04,0c-2.85,0-5.24,2.11-5.61,4.94c-0.25,1.94-0.57,4.16-0.97,6.58
+	c-0.5,3.05,1.84,5.82,4.92,5.82l4.54,0l6.38,0c5.29,0,9.94,3.98,10.28,9.27c0.36,5.75-4.21,10.55-9.89,10.55h-6.77h-6.46h-5.29
+	c-2.52,0-4.81,1.47-5.83,3.77c-1.43,3.23-3.06,6.25-4.91,8.89c-1.35,1.94,0.03,4.59,2.39,4.6l26.87,0.08
+	c15.29,0,27.68-12.65,27.24-28.04C237.28,119,224.69,107.37,209.84,107.37z" class="st0" style="fill: rgb(109, 73, 55);"></path>
+        </g>
       </g>
     </g>
   </g>
+  <animateTransform attributeName="transform" type="scale" values="1.1; 1.25;1.3; 1.25; 1.35;1.4; 1.39; 1.35; 1.3; 1.2; 1.1;" dur="1.2s" repeatCount="indefinite" additive="sum">
+  </animateTransform>
+
 </svg>
+
+
