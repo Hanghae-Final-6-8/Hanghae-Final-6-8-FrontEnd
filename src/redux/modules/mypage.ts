@@ -73,6 +73,7 @@ export const getPostsLikedDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       await likeApis.getPostsLiked().then((res) => {
+        console.log(res);
         console.log(res.data.data.content);
         const newList: Array<PostsItemDataParams> = [];
         res.data.data.content.map((post: any) => {
