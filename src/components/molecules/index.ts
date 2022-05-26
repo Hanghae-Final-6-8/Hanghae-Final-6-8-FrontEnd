@@ -15,6 +15,7 @@ import MainTopCarousel from './MainTopCarousel';
 import MainMidCarousel from './MainMidCarousel';
 import MainBottomCarousel from './MainBottomCarousel';
 import BeansToastPopup from './BeansToastPopup';
+import MypageToastPopup from './MypageToastPopup';
 
 export {
   Comment,
@@ -34,4 +35,5 @@ export {
   MainMidCarousel,
   MainBottomCarousel,
   BeansToastPopup,
+  MypageToastPopup,
 };

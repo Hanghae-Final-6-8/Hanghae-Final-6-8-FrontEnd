@@ -150,10 +150,12 @@ export const logout = createAsyncThunk('user/logout', async () => {
 export const deleteUser = createAsyncThunk('user/delete', async () => {
   try {
     await userApis.delete().then((response) => {
+      removeCookies();
       location.href = '../';
       return;
     });
   } catch (err) {
+    removeCookies();
     return;
   }
 });
