@@ -105,8 +105,6 @@ export const getPostListMine = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       await postApis.getPostListMine().then((res) => {
-        console.log(res);
-        // console.log(res.data.data.content);
         const newList: Array<PostsItemDataParams> = [];
         res.data.data.content.map((post: any) => {
           let newTagStr = [];
@@ -123,6 +121,8 @@ export const getPostListMine = createAsyncThunk(
             createdAt: post.created_at,
             modifiedAt: post.modified_at,
             tagName: newTagStr,
+            isLikes: post.isLikes,
+            likesCount: post.likes_count,
           });
         });
         thunkAPI.dispatch(setPostActivity(newList));

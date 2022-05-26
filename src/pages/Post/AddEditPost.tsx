@@ -66,7 +66,6 @@ const AddEditPost = () => {
       return post.postsId === Number(postsIdparams.postsId);
     });
   }
-  console.log(post ? post : '!');
   useEffect(() => {
     setTitle(post ? post.title : '');
     setContent(post ? post.content : '');

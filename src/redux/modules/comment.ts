@@ -121,6 +121,7 @@ export const addCommentDB = createAsyncThunk(
             commentsId: res.data.data.id,
             content: res.data.data.content,
             createdAt: newDate,
+            nickname: res.data.data.nickname,
           })
         );
       });
