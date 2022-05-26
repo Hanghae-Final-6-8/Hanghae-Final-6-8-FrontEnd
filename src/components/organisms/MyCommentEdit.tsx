@@ -26,13 +26,14 @@ const MyCommentEdit = () => {
 
   const handleDeleteComment = () => {
     appDispatch(commentActionCreators.deleteCommentDB(commentsId));
+    setToggle(false);
   };
 
   return (
     <div>
       {myCommentList.map((comment, index) => {
         return (
-          <div className='m-2 flex' key={index}>
+          <div className='m-2 flex pb-4 border-b-2' key={index}>
             <div className='flex justify-between w-full'>
               <p>{comment.content}</p>
               <button
@@ -40,7 +41,7 @@ const MyCommentEdit = () => {
                   handleToggle(comment.commentsId);
                 }}
               >
-                더보기
+                ···
               </button>
             </div>
           </div>
