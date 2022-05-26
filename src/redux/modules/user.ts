@@ -181,10 +181,10 @@ export const userSlice = createSlice({
       return state;
     },
     updateUserInfo: (state, action: PayloadAction<any>) => {
-      const actions = action.payload;
-      console.log(actions);
-      // state.nickname = '';
-      // state.profile_url = '';
+      const { nickname, profile_url } = action.payload;
+      console.log(profile_url);
+      state.nickname = nickname;
+      state.profile_url = profile_url;
       return state;
     },
   },

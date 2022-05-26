@@ -12,15 +12,13 @@ const Main = () => {
   const isToken = getAccessTokenFromCookie();
   const user = useSelector((state: RootState) => state.user);
   useEffect(() => {
-    if (user.tasteId === null) {
+    if (user.tasteId === '') {
       isToken && appDispatch(auth());
     }
   }, []);
 
   return (
-    <>
-      {user.tasteId === null ? <MainNoTasteSurvey /> : <MainYesTasteSurvey />}
-    </>
+    <>{user.tasteId === '' ? <MainNoTasteSurvey /> : <MainYesTasteSurvey />}</>
   );
 };
 
