@@ -180,7 +180,7 @@ export const getPostDB = createAsyncThunk(
 interface formType {
   formData: FormData;
   navi: (to: string) => void;
-  prevImage: string;
+  previewImage: string;
 }
 
 // 커뮤니티 추가하기
@@ -189,13 +189,7 @@ export const addPostDB = createAsyncThunk(
   async (data: formType, thunkAPI) => {
     try {
       await postApis.addPost(data.formData).then((res) => {
-        console.log(res.data.data);
-        // 액션함수 타입맞추기
-        const _tagName = res.data.data.tag_name.slice(
-          1,
-          res.data.data.tag_name.length - 1
-        );
-        const newTagName = _tagName.split(',');
+        const newTagName = res.data.data.tag_name.split(',');
         const addedData = {
           postsId: res.data.data.posts_id,
           nickname: res.data.data.nickname,
