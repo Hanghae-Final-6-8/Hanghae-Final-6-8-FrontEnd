@@ -140,11 +140,10 @@ export const getMyCommentDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       await commentApis.getMyComment().then((res) => {
-        // console.log(res.data.data.content);
         const newList: Array<CommentItemDataParams> = [];
         res.data.data.content.map((comment: any) => {
           newList.push({
-            commentsId: comment.id,
+            commentsId: comment.comments_id,
             content: comment.content,
             createdAt: comment.createdAt,
           });
@@ -201,13 +200,14 @@ export const mypageSlice = createSlice({
         myCommentList: newMyCommentList,
       };
     },
-    // 삭제예정
     setIsListLikedLoaded: (state, action: PayloadAction<boolean>) => {
       state.isListLikedLoaded = action.payload;
     },
-    // 삭제예정
     setIsListMyActivityLoaded: (state, action: PayloadAction<boolean>) => {
       state.isListMyActivityLoaded = action.payload;
+    },
+    setIsMyCommentListLoaded: (state, action: PayloadAction<boolean>) => {
+      state.isMyCommentListLoaded = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -238,6 +238,7 @@ export const {
   setMyCommentList,
   setIsListLikedLoaded,
   setIsListMyActivityLoaded,
+  setIsMyCommentListLoaded,
 } = mypageSlice.actions;
 
 const mypageActionCreators = {

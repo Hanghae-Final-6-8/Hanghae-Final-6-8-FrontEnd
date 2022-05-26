@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { commentApis } from '../../apis/commentApis';
+import { setIsMyCommentListLoaded } from './mypage';
 
 export interface CommentItemDataParams {
   // postsId: number | null;
@@ -66,19 +67,6 @@ export const getCommentListDB = createAsyncThunk(
     }
   }
 );
-// // 내 댓글 조회
-// export const getMyCommentDB = createAsyncThunk(
-//   'commentReducer/getMyCommentDB',
-//   async () => {
-//     try {
-//       await commentApis.getMyComment().then((res) => {
-//         console.log(res);
-//       });
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   }
-// );
 
 interface addCommentType {
   content: string;
@@ -136,8 +124,8 @@ export const deleteCommentDB = createAsyncThunk(
   async (data: number, thunkAPI) => {
     try {
       await commentApis.deleteComment(data).then((res) => {
-        console.log(res);
         thunkAPI.dispatch(deleteComment(data));
+        thunkAPI.dispatch(setIsMyCommentListLoaded(false));
       });
     } catch (error) {
       console.log(error);

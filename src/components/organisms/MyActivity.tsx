@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { right } from '../../assets/icons';
 import { useState } from 'react';
 import { RoundBox, Text, Button } from '../atoms';
+import { commentActionCreators } from '../../redux/modules/comment';
 
 const MyActivity = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const MyActivity = () => {
   } = useSelector((store: RootState) => store.mypage);
 
   const [toggle, setToggle] = useState(false);
-  const [commentId, setCommentId] = useState(0);
+  const [commentsId, setCommentsId] = useState(0);
 
   // 커뮤니티 상세페이지로 이동
   const handleMoveToDetailPage = (postsId: number) => {
@@ -38,12 +39,11 @@ const MyActivity = () => {
 
   const handleToggle = (commentsId: number) => {
     setToggle(!toggle);
-    setCommentId(commentsId);
+    setCommentsId(commentsId);
   };
 
   const handleDeleteComment = () => {
-    // code here
-    console.log(commentId);
+    appDispatch(commentActionCreators.deleteCommentDB(commentsId));
   };
 
   return (
