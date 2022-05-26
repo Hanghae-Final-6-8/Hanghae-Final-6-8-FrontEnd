@@ -69,17 +69,30 @@ export const getPostListDB = createAsyncThunk(
           } else {
             newTagStr.push('');
           }
-          // .subString(0, 10)
-          // const today = new Date();
-          // const postedDay = new Date(post.created_at);
-          // let newDate = '';
-          // let betweenTime = 0;
-          // betweenTime = Math.floor(today.getTime() - postedDay.getTime()) / 1000 / 60;
-          // if (betweenTime < 1) {
-          //   newDate = '방금전';
-          // } else if (betweenTime < 60) {
-          //   newDate = `${betweenTime}분전`;
-          // }
+
+          const today = new Date();
+          const postedDay = new Date(post.created_at);
+          let newDate = '';
+          let betweenTime = 0;
+          betweenTime =
+            Math.floor(today.getTime() - postedDay.getTime()) / 1000 / 60;
+          if (betweenTime < 1) {
+            newDate = '방금전';
+          } else if (betweenTime < 60) {
+            newDate = `${betweenTime}분전`;
+          }
+          if (betweenTime > 60) {
+            betweenTime = Math.floor(betweenTime / 60);
+            if (betweenTime < 24) {
+              newDate = `${betweenTime}시간전`;
+            } else if (betweenTime > 24) {
+              betweenTime = Math.floor(betweenTime / 60 / 24);
+              newDate = `${betweenTime}일전`;
+            } else if (betweenTime > 365) {
+              betweenTime = Math.floor(betweenTime / 365);
+              newDate = `${betweenTime}년전`;
+            }
+          }
 
           // console.log(newDate);
 
@@ -90,7 +103,7 @@ export const getPostListDB = createAsyncThunk(
             tagName: newTagStr,
             postsImage: post.posts_image,
             nickname: post.nickname,
-            createdAt: post.created_at,
+            createdAt: newDate,
             modifiedAt: post.modified_at,
             isLikes: post.isLikes,
             likesCount: post.likes_count,
@@ -118,13 +131,38 @@ export const getPostDB = createAsyncThunk(
         if (res.data.data.tag_name !== null) {
           newTagStr = res.data.data.tag_name.split(',');
         }
+        // 날짜 계산
+        const today = new Date();
+        const postedDay = new Date(res.data.data.created_at);
+        let newDate = '';
+        let betweenTime = 0;
+        betweenTime =
+          Math.floor(today.getTime() - postedDay.getTime()) / 1000 / 60;
+        if (betweenTime < 1) {
+          newDate = '방금전';
+        } else if (betweenTime < 60) {
+          newDate = `${betweenTime}분전`;
+        }
+        if (betweenTime > 60) {
+          betweenTime = Math.floor(betweenTime / 60);
+          if (betweenTime < 24) {
+            newDate = `${betweenTime}시간전`;
+          } else if (betweenTime > 24) {
+            betweenTime = Math.floor(betweenTime / 60 / 24);
+            newDate = `${betweenTime}일전`;
+          } else if (betweenTime > 365) {
+            betweenTime = Math.floor(betweenTime / 365);
+            newDate = `${betweenTime}년전`;
+          }
+        }
+        // console.log(newDate);
         const post = {
           postsId: res.data.data.posts_id,
           nickname: res.data.data.nickname,
           postsImage: res.data.data.posts_image,
           title: res.data.data.title,
           content: res.data.data.content,
-          createdAt: res.data.data.created_at,
+          createdAt: newDate,
           modifiedAt: res.data.data.modified_at,
           tagName: newTagStr,
           isLikes: res.data.data.isLikes,
