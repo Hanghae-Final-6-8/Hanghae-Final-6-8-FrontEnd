@@ -53,7 +53,7 @@ export const getCommentListDB = createAsyncThunk(
           }
 
           newCommentList.push({
-            commentsId: comment.id,
+            commentsId: comment.comments_id,
             nickname: comment.nickname,
             content: comment.content,
             createdAt: newDate,
