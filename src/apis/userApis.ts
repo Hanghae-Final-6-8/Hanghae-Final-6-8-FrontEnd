@@ -20,8 +20,8 @@ export const userApis = {
     }),
   logout: () => instance.get('/api/user/logout'),
   reissue: () => instance.get('/api/user/reissue'),
-  update: (userdata: { nickname: string; profile_url: string }) =>
-    instance.patch('/api/user/update', userdata, {
+  update: (userdata: FormData) =>
+    instance.post('/api/user/update', userdata, {
       headers: {
         'content-type': 'multipart/form-data',
       },

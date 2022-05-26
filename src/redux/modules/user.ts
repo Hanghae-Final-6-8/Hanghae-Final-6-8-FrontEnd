@@ -14,11 +14,6 @@ interface Login {
   navigate: (to: string, state: Navigate) => void;
 }
 
-interface Update {
-  nickname: string;
-  profile_url: string;
-}
-
 const initialState = {
   nickname: '',
   isLogin: false,
@@ -163,15 +158,18 @@ export const deleteUser = createAsyncThunk('user/delete', async () => {
   }
 });
 
-export const update = createAsyncThunk('user/update', async (data: Update) => {
-  try {
-    await userApis.update(data).then((response) => {
+export const update = createAsyncThunk(
+  'user/update',
+  async (data: FormData, thunkAPI) => {
+    try {
+      await userApis.update(data).then((response) => {
+        return;
+      });
+    } catch (err) {
       return;
-    });
-  } catch (err) {
-    return;
+    }
   }
-});
+);
 
 export const userSlice = createSlice({
   name: 'user',
@@ -179,6 +177,12 @@ export const userSlice = createSlice({
   reducers: {
     setUserInfo: (state, action: PayloadAction<any>) => {
       state = action.payload;
+      return state;
+    },
+    updateUserInfo: (state, action: PayloadAction<any>) => {
+      const actions = action;
+      state.nickname = '';
+      state.profile_url = '';
       return state;
     },
   },
