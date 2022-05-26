@@ -54,7 +54,7 @@ const MyActivity = () => {
             handleMoveToEditActivityPage(0);
           }}
         >
-          <div className='mt-6 mb-6'>내가 작성한 글</div>
+          <div className='text-[20px] mt-6 mb-6'>내가 작성한 글</div>
           <button>
             <img src={right} />
           </button>
@@ -70,7 +70,7 @@ const MyActivity = () => {
               }}
             >
               <img
-                className='w-24'
+                className='w-24 h-24 object-cover rounded-30px mr-2'
                 src={
                   post.postsImage
                     ? post.postsImage.toString()
@@ -91,14 +91,16 @@ const MyActivity = () => {
             handleMoveToEditActivityPage(1);
           }}
         >
-          <div className='mt-6 mb-6'>내가 작성한 댓글</div>
+          <div className='mt-6 mb-6'>
+            <span className='text-[20px] mt-6 mb-6'>내가 작성한 댓글</span>
+          </div>
           <button>
             <img src={right} />
           </button>
         </div>
         {myCommentList.map((comment, index) => {
           return (
-            <div className='m-2 flex' key={index}>
+            <div className='m-2 flex pb-4 border-b-2' key={index}>
               <div className='flex justify-between w-full'>
                 <p>{comment.content}</p>
                 <button
@@ -106,7 +108,7 @@ const MyActivity = () => {
                     handleToggle(comment.commentsId);
                   }}
                 >
-                  더보기
+                  ···
                 </button>
               </div>
             </div>
