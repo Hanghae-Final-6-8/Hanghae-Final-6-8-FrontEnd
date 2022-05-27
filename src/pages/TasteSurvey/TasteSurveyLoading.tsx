@@ -17,7 +17,7 @@ const TasteSurveyLoading = () => {
   useEffect(() => {
     isLogin ?? appDispatch(postTasteSurvey({ surveyResult, navigate }));
     // user tasteId를 변경하기 위해 재요청
-  }, []);
+  }, [isLogin, appDispatch]);
   //console.log(surveyResult);
 
   // const navigate = useNavigate();
