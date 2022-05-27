@@ -12,13 +12,16 @@ const TasteSurveyLoading = () => {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
   const surveyResult = getObjLocalStorage('surveyResult');
-  const { isLogin } = useSelector((state: RootState) => state.user);
+  const user = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
-    isLogin ?? appDispatch(postTasteSurvey({ surveyResult, navigate }));
+    user.isLogin ?? appDispatch(postTasteSurvey({ surveyResult, navigate }));
     // user tasteId를 변경하기 위해 재요청
-  }, [isLogin, appDispatch]);
+  }, [user, appDispatch]);
   //console.log(surveyResult);
+  // setTimeout(() => {
+  //   appDispatch(postTasteSurvey({ surveyResult, navigate }));
+  // }, 1500);
 
   // const navigate = useNavigate();
   // const location = useLocation();
