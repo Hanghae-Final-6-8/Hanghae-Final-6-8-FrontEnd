@@ -83,7 +83,7 @@ const MyPostEdit = () => {
                 handleMoveToDetailPage(post.postsId!);
               }}
             />
-            <div className='p-4'>
+            <div className='p-4 flex items-center'>
               {post.isLikes === null ? (
                 <button
                   onClick={() => {
