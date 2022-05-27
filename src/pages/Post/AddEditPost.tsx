@@ -73,6 +73,25 @@ const AddEditPost = () => {
     setPreviewImage(post ? post.postsImage : '');
   }, []);
 
+  useEffect(() => {
+    if (tagName.length !== 0) {
+      (
+        document.getElementById('tagNameValid') as HTMLInputElement
+      ).style.display = 'none';
+    }
+  }, [tagName]);
+
+  useEffect(() => {
+    if (!postsIdparams.postsId) {
+      if (file.length !== 0) {
+        (
+          document.getElementById('fileValid') as HTMLInputElement
+        ).style.display = 'none';
+        return;
+      }
+    }
+  }, [file]);
+
   // 커뮤니티 타이틀 set
   const getInputTitleFrom = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);

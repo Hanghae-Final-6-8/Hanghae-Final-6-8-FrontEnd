@@ -86,11 +86,11 @@ export const getPostListDB = createAsyncThunk(
             betweenTime = Math.floor(betweenTime / 60);
             if (betweenTime < 24) {
               newDate = `${betweenTime}시간전`;
-            } else if (betweenTime > 24) {
-              betweenTime = Math.floor(betweenTime / 60 / 24);
+            } else if (betweenTime > 24 && betweenTime < 365) {
+              betweenTime = Math.ceil(betweenTime / 60 / 24);
               newDate = `${betweenTime}일전`;
-            } else if (betweenTime > 365) {
-              betweenTime = Math.floor(betweenTime / 365);
+            } else if (betweenTime >= 365) {
+              betweenTime = Math.ceil(betweenTime / 365);
               newDate = `${betweenTime}년전`;
             }
           }
@@ -147,11 +147,11 @@ export const getPostDB = createAsyncThunk(
           betweenTime = Math.floor(betweenTime / 60);
           if (betweenTime < 24) {
             newDate = `${betweenTime}시간전`;
-          } else if (betweenTime > 24) {
-            betweenTime = Math.floor(betweenTime / 60 / 24);
+          } else if (betweenTime > 24 && betweenTime < 365) {
+            betweenTime = Math.ceil(betweenTime / 60 / 24);
             newDate = `${betweenTime}일전`;
-          } else if (betweenTime > 365) {
-            betweenTime = Math.floor(betweenTime / 365);
+          } else if (betweenTime >= 365) {
+            betweenTime = Math.ceil(betweenTime / 365);
             newDate = `${betweenTime}년전`;
           }
         }
@@ -220,11 +220,7 @@ export const editPostDB = createAsyncThunk(
       await postApis.editPost(data.formData).then((res) => {
         // console.log(res.data.data);
         // 액션함수 타입맞추기
-        const _tagName = res.data.data.tag_name.slice(
-          1,
-          res.data.data.tag_name.length - 1
-        );
-        const newTagName = _tagName.split(',');
+        const newTagName = res.data.data.tag_name.split(',');
         const addedData = {
           postsId: res.data.data.posts_id,
           nickname: res.data.data.nickname,
