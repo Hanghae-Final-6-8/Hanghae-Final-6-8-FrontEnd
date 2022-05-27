@@ -8,7 +8,7 @@ import { Routes, Route } from 'react-router-dom';
 // import { BeansList, BeanDetail } from './pages/BeansList';
 // import { Mypage } from './pages/MyPage';
 // import StoreLocation from './pages/Map/StoreLocation';
-import { Spinner } from './components/organisms';
+import { Spinner, SpinnerSuspense } from './components/molecules';
 import {
   TasteSurvey,
   TasteSurveyMain,
@@ -79,7 +79,7 @@ function App() {
   return (
     <>
       <ScrollToTop />
-      <Suspense fallback={<Spinner />}>
+      <Suspense fallback={<SpinnerSuspense />}>
         <Spinner />
         <Routes>
           <Route path='/main' element={<Main />} />
