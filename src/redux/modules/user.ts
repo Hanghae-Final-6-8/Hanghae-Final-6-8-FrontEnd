@@ -180,6 +180,7 @@ export const userSlice = createSlice({
   reducers: {
     setUserInfo: (state, action: PayloadAction<any>) => {
       state = action.payload;
+      state.isLogin = true;
       return state;
     },
   },
