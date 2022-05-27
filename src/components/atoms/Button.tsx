@@ -36,7 +36,7 @@ const Button = (props: BtnProps) => {
             toastPopup,
         },
         {
-          'shadow-tasteBrown text-body mb-[3px] bg-white text-gray60':
+          'shadow-tasteBrown text-body mb-[3px] bg-white text-gray60 hover:bg-brownP hover:text-gray20 active:bg-brownP active:text-gray20':
             selectBtn,
           'shadow-tasteBrown text-body mb-[3px] bg-brownP text-white':
             clickedSelectBtn,
