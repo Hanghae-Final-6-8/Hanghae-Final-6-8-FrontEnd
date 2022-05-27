@@ -56,7 +56,7 @@ const EditProfile = () => {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     if (!regex.test(inputNickname)) {
-      alert('닉네임은 한글, 영문, 숫자와 공백이 없어야 변경 가능합니다.');
+      alert('닉네임은 한글, 영문, 숫자만 가능합니다.');
       return;
     }
 
@@ -68,7 +68,7 @@ const EditProfile = () => {
     navigate('/mypage', { replace: true });
   };
 
-  const regex = /^[가-힣|a-z|A-Z|0-9|]+$/;
+  const regex = /^[가-힣|a-z|A-Z|0-9| ]+$/;
 
   return (
     <>
@@ -116,11 +116,11 @@ const EditProfile = () => {
             placeholder='닉네임을 입력해주세요'
             value={inputNickname}
             onChange={handleInputValue}
-            maxLength={10}
+            maxLength={15}
             type='text'
           />
           <div className='absolute right-0 bottom-2 text-gray60 text-body'>
-            {inputNickname.length < 11 ? `${inputNickname.length}/10` : '10/10'}
+            {inputNickname.length < 16 ? `${inputNickname.length}/15` : '15/15'}
           </div>
         </div>
       </form>
