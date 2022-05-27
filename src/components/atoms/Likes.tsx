@@ -39,7 +39,10 @@ const Likes = (props: likesProps) => {
         </button>
       )}
 
-      <span className='ml-2'> {post?.likesCount}개</span>
+      <span className='ml-2'>
+        {' '}
+        {post?.likesCount ? post.likesCount : '0'}개
+      </span>
     </div>
   );
 };

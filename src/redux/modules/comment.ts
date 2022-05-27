@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { commentApis } from '../../apis/commentApis';
+import { setIsMyCommentListLoaded } from './mypage';
+import { deleteMyComment } from './mypage';
 
 export interface CommentItemDataParams {
   // postsId: number | null;
@@ -22,8 +24,6 @@ export const getCommentListDB = createAsyncThunk(
   async (data: number, thunkAPI) => {
     try {
       await commentApis.getCommentList(data).then((res) => {
-        console.log(res);
-
         const newCommentList: Array<CommentItemDataParams> = [];
         res.data.data.content.map((comment: any) => {
           // 시간계산
@@ -53,7 +53,7 @@ export const getCommentListDB = createAsyncThunk(
           }
 
           newCommentList.push({
-            commentsId: comment.id,
+            commentsId: comment.comments_id,
             nickname: comment.nickname,
             content: comment.content,
             createdAt: newDate,
@@ -66,19 +66,6 @@ export const getCommentListDB = createAsyncThunk(
     }
   }
 );
-// // 내 댓글 조회
-// export const getMyCommentDB = createAsyncThunk(
-//   'commentReducer/getMyCommentDB',
-//   async () => {
-//     try {
-//       await commentApis.getMyComment().then((res) => {
-//         console.log(res);
-//       });
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   }
-// );
 
 interface addCommentType {
   content: string;
@@ -90,7 +77,6 @@ export const addCommentDB = createAsyncThunk(
   async (data: addCommentType, thunkAPI) => {
     try {
       await commentApis.addComment(data).then((res) => {
-        console.log(res);
         // 시간 계산
         const today = new Date();
         const commentedDay = new Date(res.data.data.createdAt);
@@ -124,6 +110,7 @@ export const addCommentDB = createAsyncThunk(
             nickname: res.data.data.nickname,
           })
         );
+        thunkAPI.dispatch(setIsMyCommentListLoaded(false));
       });
     } catch (error) {
       console.log(error);
@@ -136,8 +123,9 @@ export const deleteCommentDB = createAsyncThunk(
   async (data: number, thunkAPI) => {
     try {
       await commentApis.deleteComment(data).then((res) => {
-        console.log(res);
         thunkAPI.dispatch(deleteComment(data));
+        thunkAPI.dispatch(setIsMyCommentListLoaded(false));
+        thunkAPI.dispatch(deleteMyComment(data));
       });
     } catch (error) {
       console.log(error);

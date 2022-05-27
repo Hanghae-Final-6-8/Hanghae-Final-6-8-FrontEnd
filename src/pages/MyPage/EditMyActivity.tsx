@@ -29,11 +29,11 @@ const EditMyActivity = () => {
       <button className='m-2 p-2 block' onClick={handleBacktoPrev}>
         <img src={left} />
       </button>
-      <div className='text-center'>내 활동</div>
+      <div className='text-center text-[20px]'>내 활동</div>
       <div className='tabs flex justify-around w-full h-full pb-6'>
         <div className='cursor-pointer' onClick={handleToFacorites}>
           <Text
-            className='block h-full leading-[46px]'
+            className='text-[16px] block h-full leading-[46px]'
             type={toggleValue === 0 ? 'beansNavClicked' : 'beansNav'}
           >
             게시글
@@ -41,7 +41,7 @@ const EditMyActivity = () => {
         </div>
         <div className='cursor-pointer' onClick={handleToMyLikes}>
           <Text
-            className='block h-full leading-[46px]'
+            className='text-[16px] block h-full leading-[46px]'
             type={toggleValue === 1 ? 'beansNavClicked' : 'beansNav'}
           >
             댓글
