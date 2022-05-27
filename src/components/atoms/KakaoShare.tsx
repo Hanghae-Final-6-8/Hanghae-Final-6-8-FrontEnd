@@ -41,7 +41,7 @@ const KakaoShare = () => {
           },
         },
         {
-          title: '나의 원두취향\n  테스트하기',
+          title: 'Pick해보기',
           link: {
             mobileWebUrl: `${url}/survey/main`,
             webUrl: `${url}/survey/main`,
