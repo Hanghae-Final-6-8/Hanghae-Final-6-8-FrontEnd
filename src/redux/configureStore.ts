@@ -11,6 +11,7 @@ import beansSlice from './modules/beans';
 import cafeSlice from './modules/cafe';
 import favoriteSlice from './modules/favorite';
 import modalToggleSlice from './modules/modalToggle';
+import globalSlice from './modules/global';
 
 const rootReducer = combineReducers({
   posts: postsSlice.reducer,
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   cafe: cafeSlice.reducer,
   favorite: favoriteSlice.reducer,
   modatToggle: modalToggleSlice.reducer,
+  global: globalSlice.reducer,
 });
 
 export const store = configureStore({
