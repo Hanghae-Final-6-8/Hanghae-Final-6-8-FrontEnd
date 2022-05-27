@@ -41,6 +41,7 @@ const AddEditPost = lazy(() => import('./pages/Post/AddEditPost'));
 const Mypage = lazy(() => import('./pages/MyPage/Mypage'));
 const EditMyActivity = lazy(() => import('./pages/MyPage/EditMyActivity'));
 const EditProfile = lazy(() => import('./pages/MyPage/EditProfile'));
+const Privacy = lazy(() => import('./pages/System/Privacy'));
 
 function App() {
   const appDispatch = useAppDispatch();
@@ -56,6 +57,7 @@ function App() {
       <Suspense fallback={<Spinner />}>
         <Routes>
           <Route path='/main' element={<Main />} />
+          <Route path='/main/privacy' element={<Privacy />} />
           <Route path='/' element={<Login />} />
           <Route path='/api/user/login/*' element={<LoginRedirect />} />
           <Route path='/beans/:beanId' element={<BeanDetail />} />
