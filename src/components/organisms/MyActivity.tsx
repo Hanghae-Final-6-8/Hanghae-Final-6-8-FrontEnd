@@ -43,6 +43,7 @@ const MyActivity = () => {
 
   const handleDeleteComment = () => {
     appDispatch(commentActionCreators.deleteCommentDB(commentsId));
+    setToggle(false);
   };
 
   return (
