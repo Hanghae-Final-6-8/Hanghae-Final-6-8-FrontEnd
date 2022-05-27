@@ -153,7 +153,7 @@ const MainYesTasteSurvey = () => {
   return (
     <>
       <main
-        className={`relative px-6 py-12 ${selectRandomBg(
+        className={`relative px-6 py-12 bg-brownS02 ${selectRandomBg(
           randomBg
         )} bg-contain bg-no-repeat bg-fixed w-full h-full`}
       >
