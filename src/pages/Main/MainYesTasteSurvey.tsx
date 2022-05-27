@@ -58,7 +58,8 @@ const MainYesTasteSurvey = () => {
 
   useEffect(() => {
     // 리덕스에 데이터가 null일 경우 API를 요청합니다.
-    user.isLogin && !tasteList.beanName && appDispatch(getTasteSurvey());
+    !tasteList.beanName && appDispatch(getTasteSurvey());
+    console.log(tasteList);
     if (!beanId) {
       appDispatch(getSimilarBeans());
     }
@@ -163,16 +164,18 @@ const MainYesTasteSurvey = () => {
           ) : (
             <PrevBtn className='filter-gray30' />
           )}
-          <button
-            className='absolute top-0 right-0 w-8'
-            onClick={handleAddBookmark}
-            data-beanid={tasteList.beanId}
-          >
-            <img
-              className='w-full '
-              src={isFavorite ? bookmark_full : bookmark}
-            />
-          </button>
+          {user.isLogin ? (
+            <button
+              className='absolute top-0 right-0 w-8'
+              onClick={handleAddBookmark}
+              data-beanid={tasteList.beanId}
+            >
+              <img
+                className='w-full '
+                src={isFavorite ? bookmark_full : bookmark}
+              />
+            </button>
+          ) : null}
         </header>
         <div className='absolute px-6 pb-6 left-0 top-56 rounded-t-40px bg-white w-full shadow-main'>
           <article className='relative -top-28'>
