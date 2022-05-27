@@ -62,7 +62,7 @@ const MainYesTasteSurvey = () => {
     if (!beanId) {
       appDispatch(getSimilarBeans());
     }
-  }, [tasteList.beanName, beanId, tasteList.isSimilarLoaded, appDispatch]);
+  }, [tasteList.beanName, beanId, appDispatch]);
 
   useEffect(() => {
     if (tasteList.favoritesId) {
