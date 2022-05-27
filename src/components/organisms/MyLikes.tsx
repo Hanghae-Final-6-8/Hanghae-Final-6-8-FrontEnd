@@ -38,15 +38,6 @@ const MyLikes = () => {
                 handleMoveToDetailPage(post.postsId!);
               }}
             />
-            {post.isLikes === null ? (
-              <button className='absolute top-1 right-1'>
-                <img src={heart} />
-              </button>
-            ) : (
-              <button className='absolute top-1 right-1'>
-                <img src={heart_full} />
-              </button>
-            )}
           </div>
         );
       })}
