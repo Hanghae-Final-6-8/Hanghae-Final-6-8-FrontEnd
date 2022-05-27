@@ -19,7 +19,7 @@ const LoginRedirect = () => {
       try {
         await appDispatch(loginKakao({ codeInput, navigate }));
         if (surveyResult) {
-          navigate('/taste/loading');
+          navigate('/survey/loading');
           return;
         }
         navigate('/main', { replace: true });
@@ -31,7 +31,7 @@ const LoginRedirect = () => {
       try {
         await appDispatch(loginNaver({ codeInput, navigate }));
         if (surveyResult) {
-          navigate('/taste/loading');
+          navigate('/survey/loading');
           return;
         }
         navigate('/main', { replace: true });
@@ -43,7 +43,7 @@ const LoginRedirect = () => {
       try {
         await appDispatch(loginGoogle({ codeInput, navigate }));
         if (surveyResult) {
-          navigate('/taste/loading');
+          navigate('/survey/loading');
           return;
         }
         navigate('/main', { replace: true });
