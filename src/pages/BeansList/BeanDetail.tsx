@@ -10,8 +10,6 @@ const BeanDetail = () => {
   const { pathname } = useLocation();
   const beansNum = Number(pathname.split('/')[2]);
 
-  console.log(typeof beansNum);
-
   useEffect(() => {
     appDispatch(detailBeans(beansNum));
   });

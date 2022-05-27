@@ -58,7 +58,7 @@ const MainYesTasteSurvey = () => {
 
   useEffect(() => {
     // 리덕스에 데이터가 null일 경우 API를 요청합니다.
-    !tasteList.beanName && appDispatch(getTasteSurvey());
+    user.isLogin && !tasteList.beanName && appDispatch(getTasteSurvey());
     console.log(tasteList);
     if (!beanId) {
       appDispatch(getSimilarBeans());
