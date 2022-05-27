@@ -12,7 +12,7 @@ const KakaoShare = () => {
   const tasteList = useSelector((state: RootState) => state.taste);
   const { beanImage, beanId, beanName, type } = tasteList;
 
-  const coffType = type === 1 ? '[싱글 오리진]' : '블렌드';
+  const coffType = type === 1 ? '[싱글 오리진]' : '[블렌드]';
 
   const url = 'https://copick.site';
 
@@ -22,10 +22,11 @@ const KakaoShare = () => {
       objectType: 'feed',
       content: {
         title: `111개의 원두 중 내가 Pick한 원두 취향은?`,
-        description: `진한 맛과 향의 '${coffType} ${beanName}☕'`,
-        imageUrl: beanImage,
-        imageWidth: 100,
-        imageHeight: 200,
+        description: `진한 맛과 향의 \n'${coffType} ${beanName}☕'`,
+        imageUrl:
+          'https://velog.velcdn.com/images/leejuhwan/post/8b6068de-0b93-410a-90c1-ea41802dd012/image.png',
+        imageWidth: 450,
+        imageHeight: 450,
         link: {
           mobileWebUrl: url,
           webUrl: url,
