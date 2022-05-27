@@ -16,6 +16,8 @@ import MainMidCarousel from './MainMidCarousel';
 import MainBottomCarousel from './MainBottomCarousel';
 import BeansToastPopup from './BeansToastPopup';
 import MypageToastPopup from './MypageToastPopup';
+import Spinner from './Spinner';
+import SpinnerSuspense from './SpinnerSuspense';
 
 export {
   Comment,
@@ -36,4 +38,6 @@ export {
   MainBottomCarousel,
   BeansToastPopup,
   MypageToastPopup,
+  Spinner,
+  SpinnerSuspense,
 };

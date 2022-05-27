@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Spinner } from '../../components/organisms';
+import { Spinner } from '../../components/molecules';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/configureStore';
 import { loginKakao, loginNaver, loginGoogle } from '../../redux/modules/user';
