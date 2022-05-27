@@ -39,6 +39,7 @@ const PostDetail = () => {
       return;
     }
     appDispatch(addCommentDB({ posts_id: Number(postsId), content: comment }));
+    setComment('');
   };
 
   const handleBacktoPrev = () => {
@@ -100,6 +101,7 @@ const PostDetail = () => {
               type='text'
               placeholder='댓글 내용을 입력해주세요'
               onChange={getInputCommentFrom}
+              value={comment}
             />
             <button
               className='w-[30%] p-8 text-[14px] bg-white'
