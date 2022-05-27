@@ -56,8 +56,8 @@ export const getUserInfo = createAsyncThunk(
       await userApis.info().then((response) => {
         const userInfo = {
           favorite: response.data.data.favorites_count,
-          likes: response.data.data.posts_count,
-          activity: response.data.data.likes_count,
+          likes: response.data.data.likes_count,
+          activity: response.data.data.posts_count,
         };
         thunkAPI.dispatch(setFavorLikeActivity(userInfo));
       });
@@ -73,8 +73,8 @@ export const getPostsLikedDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       await likeApis.getPostsLiked().then((res) => {
-        console.log(res);
-        console.log(res.data.data.content);
+        // console.log(res);
+        // console.log(res.data.data.content);
         const newList: Array<PostsItemDataParams> = [];
         res.data.data.content.map((post: any) => {
           let newTagStr = [];
@@ -140,11 +140,10 @@ export const getMyCommentDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       await commentApis.getMyComment().then((res) => {
-        // console.log(res.data.data.content);
         const newList: Array<CommentItemDataParams> = [];
         res.data.data.content.map((comment: any) => {
           newList.push({
-            commentsId: comment.id,
+            commentsId: comment.comments_id,
             content: comment.content,
             createdAt: comment.createdAt,
           });
@@ -201,13 +200,26 @@ export const mypageSlice = createSlice({
         myCommentList: newMyCommentList,
       };
     },
-    // 삭제예정
     setIsListLikedLoaded: (state, action: PayloadAction<boolean>) => {
       state.isListLikedLoaded = action.payload;
     },
-    // 삭제예정
     setIsListMyActivityLoaded: (state, action: PayloadAction<boolean>) => {
       state.isListMyActivityLoaded = action.payload;
+    },
+    setIsMyCommentListLoaded: (state, action: PayloadAction<boolean>) => {
+      state.isMyCommentListLoaded = action.payload;
+    },
+    deleteMyPost: (state, action: PayloadAction<number>) => {
+      const newPostList = state.listMyActivity.filter((post) => {
+        return post.postsId !== action.payload;
+      });
+      return { ...state, listMyActivity: newPostList };
+    },
+    deleteMyComment: (state, action: PayloadAction<number>) => {
+      const newCommentList = state.myCommentList.filter((comment) => {
+        return comment.commentsId !== action.payload;
+      });
+      return { ...state, myCommentList: newCommentList };
     },
   },
   extraReducers: (builder) => {
@@ -238,6 +250,9 @@ export const {
   setMyCommentList,
   setIsListLikedLoaded,
   setIsListMyActivityLoaded,
+  setIsMyCommentListLoaded,
+  deleteMyPost,
+  deleteMyComment,
 } = mypageSlice.actions;
 
 const mypageActionCreators = {

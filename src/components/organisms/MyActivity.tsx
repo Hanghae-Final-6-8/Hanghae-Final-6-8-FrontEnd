@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../redux/configureStore';
 import { RootState } from '../../redux/configureStore';
@@ -6,8 +6,8 @@ import { getPostListMine } from '../../redux/modules/mypage';
 import { getMyCommentDB } from '../../redux/modules/mypage';
 import { useNavigate } from 'react-router-dom';
 import { right } from '../../assets/icons';
-import { useState } from 'react';
 import { RoundBox, Text, Button } from '../atoms';
+import { commentActionCreators } from '../../redux/modules/comment';
 
 const MyActivity = () => {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ const MyActivity = () => {
   } = useSelector((store: RootState) => store.mypage);
 
   const [toggle, setToggle] = useState(false);
-  const [commentId, setCommentId] = useState(0);
+  const [commentsId, setCommentsId] = useState(0);
 
   // 커뮤니티 상세페이지로 이동
   const handleMoveToDetailPage = (postsId: number) => {
@@ -38,12 +38,11 @@ const MyActivity = () => {
 
   const handleToggle = (commentsId: number) => {
     setToggle(!toggle);
-    setCommentId(commentsId);
+    setCommentsId(commentsId);
   };
 
   const handleDeleteComment = () => {
-    // code here
-    console.log(commentId);
+    appDispatch(commentActionCreators.deleteCommentDB(commentsId));
   };
 
   return (
@@ -55,7 +54,7 @@ const MyActivity = () => {
             handleMoveToEditActivityPage(0);
           }}
         >
-          <div className='mt-6 mb-6'>내가 작성한 글</div>
+          <div className='text-[20px] mt-6 mb-6'>내가 작성한 글</div>
           <button>
             <img src={right} />
           </button>
@@ -71,7 +70,7 @@ const MyActivity = () => {
               }}
             >
               <img
-                className='w-24'
+                className='w-24 h-24 object-cover rounded-30px mr-2'
                 src={
                   post.postsImage
                     ? post.postsImage.toString()
@@ -92,14 +91,16 @@ const MyActivity = () => {
             handleMoveToEditActivityPage(1);
           }}
         >
-          <div className='mt-6 mb-6'>내가 작성한 댓글</div>
+          <div className='mt-6 mb-6'>
+            <span className='text-[20px] mt-6 mb-6'>내가 작성한 댓글</span>
+          </div>
           <button>
             <img src={right} />
           </button>
         </div>
         {myCommentList.map((comment, index) => {
           return (
-            <div className='m-2 flex' key={index}>
+            <div className='m-2 flex pb-4 border-b-2' key={index}>
               <div className='flex justify-between w-full'>
                 <p>{comment.content}</p>
                 <button
@@ -107,7 +108,7 @@ const MyActivity = () => {
                     handleToggle(comment.commentsId);
                   }}
                 >
-                  더보기
+                  ···
                 </button>
               </div>
             </div>

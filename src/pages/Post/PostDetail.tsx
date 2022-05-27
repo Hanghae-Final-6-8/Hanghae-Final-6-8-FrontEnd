@@ -34,6 +34,10 @@ const PostDetail = () => {
   };
   // 코멘트 추가
   const handleAddComment = () => {
+    if (comment === '') {
+      alert('댓글을 입력해 주세요');
+      return;
+    }
     appDispatch(addCommentDB({ posts_id: Number(postsId), content: comment }));
   };
 
@@ -64,7 +68,14 @@ const PostDetail = () => {
             </div>
           </div>
 
-          <img className='w-full' src={post?.postsImage.toString()} />
+          <img
+            className='w-full'
+            src={
+              post?.postsImage
+                ? post.postsImage.toString()
+                : 'https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814052__340.png'
+            }
+          />
           <Likes postsId={Number(postsId)} />
           <p>{post?.title}</p>
           <p>{post?.content}</p>

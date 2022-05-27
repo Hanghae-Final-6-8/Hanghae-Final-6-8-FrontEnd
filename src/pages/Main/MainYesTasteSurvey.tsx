@@ -153,7 +153,7 @@ const MainYesTasteSurvey = () => {
   return (
     <>
       <main
-        className={`relative px-6 py-12 ${selectRandomBg(
+        className={`relative px-6 py-12 bg-brownS02 ${selectRandomBg(
           randomBg
         )} bg-contain bg-no-repeat bg-fixed w-full h-full`}
       >
@@ -243,6 +243,7 @@ const MainYesTasteSurvey = () => {
               >
                 <div className='absolute top-0 left-0 right-0 h-72px bg-defaultBg01'>
                   <img
+                    className='w-full'
                     src={
                       tasteList.cafeBackGroundImage
                         ? tasteList.cafeBackGroundImage
@@ -265,11 +266,7 @@ const MainYesTasteSurvey = () => {
                 </Text>
                 <Text className='mt-1.5 text-gray80 text-caption'>
                   매장 위치 보러가기
-                  <img
-                    className='inline w-4'
-                    style={{ filter: '' }}
-                    src={right}
-                  />
+                  <img className='inline w-4' src={right} />
                 </Text>
               </RoundBox>
             </GridBox>

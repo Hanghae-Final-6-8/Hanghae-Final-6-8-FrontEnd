@@ -4,8 +4,6 @@ import { useAppDispatch } from '../../redux/configureStore';
 import { RootState } from '../../redux/configureStore';
 import { getPostsLikedDB } from '../../redux/modules/mypage';
 import { useNavigate } from 'react-router-dom';
-import { addLikeDB } from '../../redux/modules/posts';
-import { deleteLikeDB } from '../../redux/modules/posts';
 import { heart, heart_full } from '../../assets/icons';
 
 const MyLikes = () => {
@@ -22,15 +20,6 @@ const MyLikes = () => {
   // 커뮤니티 상세페이지로 이동
   const handleMoveToDetailPage = (postsId: number) => {
     navigate(`/posts/${postsId}`);
-  };
-
-  // 좋아요 추가
-  const handleAddLikes = (postsId: number) => {
-    appDispatch(addLikeDB(postsId));
-  };
-  // 좋아요 삭제
-  const handleDeleteLikes = (postsId: number) => {
-    appDispatch(deleteLikeDB(postsId));
   };
 
   return (
@@ -50,21 +39,11 @@ const MyLikes = () => {
               }}
             />
             {post.isLikes === null ? (
-              <button
-                className='absolute top-1 right-1'
-                onClick={() => {
-                  handleAddLikes(post.postsId!);
-                }}
-              >
+              <button className='absolute top-1 right-1'>
                 <img src={heart} />
               </button>
             ) : (
-              <button
-                className='absolute top-1 right-1'
-                onClick={() => {
-                  handleDeleteLikes(post.postsId!);
-                }}
-              >
+              <button className='absolute top-1 right-1'>
                 <img src={heart_full} />
               </button>
             )}

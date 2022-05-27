@@ -3,6 +3,7 @@ import { postApis } from '../../apis/postApis';
 import { likeApis } from '../../apis/likeApis';
 import { setIsListLikedLoaded } from './mypage';
 import { setIsListMyActivityLoaded } from './mypage';
+import { deleteMyPost } from './mypage';
 
 export interface PostsItemDataParams {
   postsId: number | undefined;
@@ -93,8 +94,6 @@ export const getPostListDB = createAsyncThunk(
               newDate = `${betweenTime}년전`;
             }
           }
-
-          // console.log(newDate);
 
           postList.push({
             postsId: post.posts_id,
@@ -258,6 +257,7 @@ export const deletePostDB = createAsyncThunk(
         console.log(res);
         thunkAPI.dispatch(deletePost(data));
         thunkAPI.dispatch(setIsListMyActivityLoaded(false));
+        thunkAPI.dispatch(deleteMyPost(data));
       });
     } catch (error) {
       console.log(error);

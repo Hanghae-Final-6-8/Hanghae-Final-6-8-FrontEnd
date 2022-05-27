@@ -28,6 +28,8 @@ import { useAppDispatch } from './redux/configureStore';
 import { auth } from './redux/modules/user';
 import { getAccessTokenFromCookie } from './utils/cookie';
 import ScrollToTop from './utils/ScrollToTop';
+import instance from './lib/axios';
+import { isLoaded, isLoading } from './redux/modules/global';
 
 const Main = lazy(() => import('./pages/Main/Main'));
 const Login = lazy(() => import('./pages/LoginPage/Login'));
@@ -41,6 +43,7 @@ const AddEditPost = lazy(() => import('./pages/Post/AddEditPost'));
 const Mypage = lazy(() => import('./pages/MyPage/Mypage'));
 const EditMyActivity = lazy(() => import('./pages/MyPage/EditMyActivity'));
 const EditProfile = lazy(() => import('./pages/MyPage/EditProfile'));
+const Privacy = lazy(() => import('./pages/System/Privacy'));
 
 function App() {
   const appDispatch = useAppDispatch();
@@ -50,12 +53,37 @@ function App() {
     isToken && appDispatch(auth());
   }, [isToken, appDispatch]);
 
+  useEffect(() => {
+    instance.interceptors.request.use(
+      function (config) {
+        appDispatch(isLoading());
+        return config;
+      },
+      function (error) {
+        appDispatch(isLoaded());
+        return Promise.reject(error);
+      }
+    );
+    instance.interceptors.response.use(
+      function (config) {
+        appDispatch(isLoaded());
+        return config;
+      },
+      function (error) {
+        appDispatch(isLoaded());
+        return Promise.reject(error);
+      }
+    );
+  });
+
   return (
     <>
       <ScrollToTop />
       <Suspense fallback={<Spinner />}>
+        <Spinner />
         <Routes>
           <Route path='/main' element={<Main />} />
+          <Route path='/main/privacy' element={<Privacy />} />
           <Route path='/' element={<Login />} />
           <Route path='/api/user/login/*' element={<LoginRedirect />} />
           <Route path='/beans/:beanId' element={<BeanDetail />} />

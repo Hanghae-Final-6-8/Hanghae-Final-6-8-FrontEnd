@@ -16,7 +16,6 @@ const Main = () => {
       isToken && appDispatch(auth());
     }
   }, []);
-
   return (
     <>
       {user.tasteId === '' || user.tasteId === null ? (
@@ -27,5 +26,4 @@ const Main = () => {
     </>
   );
 };
-
 export default Main;

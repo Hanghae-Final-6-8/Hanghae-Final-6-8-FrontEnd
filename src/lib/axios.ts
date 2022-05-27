@@ -9,7 +9,6 @@ import {
   removeCookies,
 } from '../utils/cookie';
 import { setMoveToLogin } from '../utils/setMoveToLogin';
-import { useEffect } from 'react';
 
 const baseURL = process.env.REACT_APP_BASE_URL;
 
