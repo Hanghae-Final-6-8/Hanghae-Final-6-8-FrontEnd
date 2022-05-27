@@ -43,11 +43,11 @@ export const getCommentListDB = createAsyncThunk(
             betweenTime = Math.floor(betweenTime / 60);
             if (betweenTime < 24) {
               newDate = `${betweenTime}시간전`;
-            } else if (betweenTime > 24) {
-              betweenTime = Math.floor(betweenTime / 60 / 24);
+            } else if (betweenTime > 24 && betweenTime < 365) {
+              betweenTime = Math.ceil(betweenTime / 60 / 24);
               newDate = `${betweenTime}일전`;
-            } else if (betweenTime > 365) {
-              betweenTime = Math.floor(betweenTime / 365);
+            } else if (betweenTime >= 365) {
+              betweenTime = Math.ceil(betweenTime / 365);
               newDate = `${betweenTime}년전`;
             }
           }
@@ -94,11 +94,11 @@ export const addCommentDB = createAsyncThunk(
           betweenTime = Math.floor(betweenTime / 60);
           if (betweenTime < 24) {
             newDate = `${betweenTime}시간전`;
-          } else if (betweenTime > 24) {
-            betweenTime = Math.floor(betweenTime / 60 / 24);
+          } else if (betweenTime > 24 && betweenTime < 365) {
+            betweenTime = Math.ceil(betweenTime / 60 / 24);
             newDate = `${betweenTime}일전`;
-          } else if (betweenTime > 365) {
-            betweenTime = Math.floor(betweenTime / 365);
+          } else if (betweenTime >= 365) {
+            betweenTime = Math.ceil(betweenTime / 365);
             newDate = `${betweenTime}년전`;
           }
         }
