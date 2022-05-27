@@ -4,6 +4,7 @@ import { saveBeansList } from './beans';
 
 const initialState = {
   cafeList: [{ cafeId: 0, cafeName: '' }],
+  currentCafeName: '',
   cafeListMain: [
     {
       beansCount: 0,
@@ -67,6 +68,10 @@ export const cafeSlice = createSlice({
       state.cafeList = action.payload;
       return state;
     },
+    saveCurrentCafename: (state, action: PayloadAction<any>) => {
+      state.currentCafeName = action.payload;
+      return state;
+    },
     saveCafeListMain: (state, action: PayloadAction<any>) => {
       state.cafeListMain = action.payload;
       return state;
@@ -82,6 +87,7 @@ export const cafeSlice = createSlice({
   },
 });
 
-export const { saveCafeList, saveCafeListMain } = cafeSlice.actions;
+export const { saveCafeList, saveCafeListMain, saveCurrentCafename } =
+  cafeSlice.actions;
 
 export default cafeSlice;

@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { check } from '../../assets/icons';
 import { RootState, useAppDispatch } from '../../redux/configureStore';
-import { getBeansListByCafe, getCafeList } from '../../redux/modules/cafe';
+import {
+  getBeansListByCafe,
+  getCafeList,
+  saveCurrentCafename,
+} from '../../redux/modules/cafe';
 import { ToastPopupBox, DarkWrapper, Text, Span, Button } from '../atoms';
 import { useSelector } from 'react-redux';
 
@@ -17,8 +21,6 @@ const BeansToastPopup = (props: BeansToastPopupProps) => {
     !cafe.isLoaded && appDispatch(getCafeList());
   }, []);
 
-  //console.log(cafe);
-
   const cafeListFormdata: { cafeId: number; cafeName: string }[] = [];
   cafe.cafeList.forEach((el) => {
     cafeListFormdata.push(el);
@@ -26,11 +28,14 @@ const BeansToastPopup = (props: BeansToastPopupProps) => {
 
   const handleGetBeansListByCafe = (e: {
     currentTarget: { getAttribute: (arg0: string) => void };
+    target: { innerText: string };
   }) => {
     const currentTargetValue = Number(
       e.currentTarget.getAttribute('data-cafeid')
     );
     appDispatch(getBeansListByCafe(currentTargetValue));
+
+    appDispatch(saveCurrentCafename(e.target.innerText));
   };
 
   // const handleIsSelectedBtn = (e: {

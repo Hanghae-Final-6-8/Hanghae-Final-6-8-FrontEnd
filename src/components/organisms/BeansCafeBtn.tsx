@@ -1,9 +1,12 @@
-import { up, down } from '../../assets/icons';
+import { down } from '../../assets/icons';
 import { BeansToastPopup } from '../molecules';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/configureStore';
 
 const BeansCafeBtn = () => {
   const [isActivePopup, setIsActivePopup] = useState(false);
+  const { currentCafeName } = useSelector((state: RootState) => state.cafe);
   const handleClosePopup = () => {
     setIsActivePopup(false);
   };
@@ -13,11 +16,10 @@ const BeansCafeBtn = () => {
   return (
     <>
       <button
-        placeholder='모든 카페 보기'
         className='relative w-full bg-brownP h-[43px] bg-transparent text-white placeholder-inherit rounded-full px-5 text-left'
         onClick={handleIsActivePopup}
       >
-        모든 카페 보기
+        {currentCafeName ? currentCafeName : '모든 카페 보기'}
         <div className='absolute right-4 top-2'>
           <img
             style={{
