@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/configureStore';
 import Comment from '../../components/molecules/Comment';
@@ -7,12 +7,15 @@ import { useAppDispatch } from '../../redux/configureStore';
 import { addCommentDB } from '../../redux/modules/comment';
 import { getPostDB } from '../../redux/modules/posts';
 import Likes from '../../components/atoms/Likes';
-import { useNavigate } from 'react-router-dom';
 import postsSlice from '../../redux/modules/posts';
 import { left } from '../../assets/icons';
 
 const PostDetail = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const scrolly: any = location.state ? location.state : null;
+  const scrollyValue = scrolly !== null ? scrolly.scrolly : null;
+
   const appDispatch = useAppDispatch();
   // postsId는 App.tsx에서 라우팅 할때 정한 파라미터명이다.
   const postsId = useParams().postsId;
@@ -35,7 +38,9 @@ const PostDetail = () => {
   };
 
   const handleBacktoPrev = () => {
-    navigate(-1);
+    scrolly !== null
+      ? navigate('/posts', { state: { scrollyValue } })
+      : navigate(-1);
   };
 
   return (
@@ -47,13 +52,15 @@ const PostDetail = () => {
           <button className='m-2 p-2 block' onClick={handleBacktoPrev}>
             <img src={left} />
           </button>
-          <div className='flex'>
+          <div className='flex items-center'>
             <div className='h-14 w-14 rounded-full bg-brownS03 mr-4 text-center leading-[56px] text-[28px] mb-3'>
               {post?.nickname?.substring(0, 1)}
             </div>
             <div className='flex flex-col'>
               <span>{post?.nickname}</span>
-              <span>{post?.createdAt}</span>
+              <span className='text-[12px] text-gray-500'>
+                {post?.createdAt}
+              </span>
             </div>
           </div>
 

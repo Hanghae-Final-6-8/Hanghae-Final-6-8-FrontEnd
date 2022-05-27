@@ -55,7 +55,6 @@ export const getPostListDB = createAsyncThunk(
     try {
       await postApis.getPostList(data).then((res) => {
         const postList: Array<PostsItemDataParams> = [];
-        console.log(res.data.data.content);
         // 페이징
         if (res.data.data.content.length !== 0) {
           thunkAPI.dispatch(setPageNum(++data));
@@ -69,17 +68,31 @@ export const getPostListDB = createAsyncThunk(
           } else {
             newTagStr.push('');
           }
-          // .subString(0, 10)
-          // const today = new Date();
-          // const postedDay = new Date(post.created_at);
-          // let newDate = '';
-          // let betweenTime = 0;
-          // betweenTime = Math.floor(today.getTime() - postedDay.getTime()) / 1000 / 60;
-          // if (betweenTime < 1) {
-          //   newDate = '방금전';
-          // } else if (betweenTime < 60) {
-          //   newDate = `${betweenTime}분전`;
-          // }
+
+          const today = new Date();
+          const postedDay = new Date(post.created_at);
+          let newDate = '';
+          let betweenTime = 0;
+          betweenTime = Math.floor(
+            (today.getTime() - postedDay.getTime()) / 1000 / 60
+          );
+          if (betweenTime < 1) {
+            newDate = '방금전';
+          } else if (betweenTime < 60) {
+            newDate = `${betweenTime}분전`;
+          }
+          if (betweenTime > 60) {
+            betweenTime = Math.floor(betweenTime / 60);
+            if (betweenTime < 24) {
+              newDate = `${betweenTime}시간전`;
+            } else if (betweenTime > 24) {
+              betweenTime = Math.floor(betweenTime / 60 / 24);
+              newDate = `${betweenTime}일전`;
+            } else if (betweenTime > 365) {
+              betweenTime = Math.floor(betweenTime / 365);
+              newDate = `${betweenTime}년전`;
+            }
+          }
 
           // console.log(newDate);
 
@@ -90,7 +103,7 @@ export const getPostListDB = createAsyncThunk(
             tagName: newTagStr,
             postsImage: post.posts_image,
             nickname: post.nickname,
-            createdAt: post.created_at,
+            createdAt: newDate,
             modifiedAt: post.modified_at,
             isLikes: post.isLikes,
             likesCount: post.likes_count,
@@ -118,13 +131,39 @@ export const getPostDB = createAsyncThunk(
         if (res.data.data.tag_name !== null) {
           newTagStr = res.data.data.tag_name.split(',');
         }
+        // 날짜 계산
+        const today = new Date();
+        const postedDay = new Date(res.data.data.created_at);
+        let newDate = '';
+        let betweenTime = 0;
+        betweenTime = Math.floor(
+          (today.getTime() - postedDay.getTime()) / 1000 / 60
+        );
+        if (betweenTime < 1) {
+          newDate = '방금전';
+        } else if (betweenTime < 60) {
+          newDate = `${betweenTime}분전`;
+        }
+        if (betweenTime > 60) {
+          betweenTime = Math.floor(betweenTime / 60);
+          if (betweenTime < 24) {
+            newDate = `${betweenTime}시간전`;
+          } else if (betweenTime > 24) {
+            betweenTime = Math.floor(betweenTime / 60 / 24);
+            newDate = `${betweenTime}일전`;
+          } else if (betweenTime > 365) {
+            betweenTime = Math.floor(betweenTime / 365);
+            newDate = `${betweenTime}년전`;
+          }
+        }
+        // console.log(newDate);
         const post = {
           postsId: res.data.data.posts_id,
           nickname: res.data.data.nickname,
           postsImage: res.data.data.posts_image,
           title: res.data.data.title,
           content: res.data.data.content,
-          createdAt: res.data.data.created_at,
+          createdAt: newDate,
           modifiedAt: res.data.data.modified_at,
           tagName: newTagStr,
           isLikes: res.data.data.isLikes,
@@ -142,7 +181,7 @@ export const getPostDB = createAsyncThunk(
 interface formType {
   formData: FormData;
   navi: (to: string) => void;
-  prevImage: string;
+  previewImage: string;
 }
 
 // 커뮤니티 추가하기
@@ -151,13 +190,7 @@ export const addPostDB = createAsyncThunk(
   async (data: formType, thunkAPI) => {
     try {
       await postApis.addPost(data.formData).then((res) => {
-        console.log(res.data.data);
-        // 액션함수 타입맞추기
-        const _tagName = res.data.data.tag_name.slice(
-          1,
-          res.data.data.tag_name.length - 1
-        );
-        const newTagName = _tagName.split(',');
+        const newTagName = res.data.data.tag_name.split(',');
         const addedData = {
           postsId: res.data.data.posts_id,
           nickname: res.data.data.nickname,
@@ -186,7 +219,7 @@ export const editPostDB = createAsyncThunk(
   async (data: formType, thunkAPI) => {
     try {
       await postApis.editPost(data.formData).then((res) => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         // 액션함수 타입맞추기
         const _tagName = res.data.data.tag_name.slice(
           1,
@@ -296,7 +329,7 @@ export const postsSlice = createSlice({
       state.paging = action.payload;
     },
     setPostList: (state, action: PayloadAction<any>) => {
-      const newList = [...action.payload.postList];
+      const newList = [...state.list, ...action.payload.postList];
       return {
         ...state,
         list: newList,
@@ -331,6 +364,9 @@ export const postsSlice = createSlice({
       return { ...state, list: new_postsList };
     },
     editPost: (state, action: PayloadAction<AddPostsType>) => {
+      const editList = state.list.filter((post) => {
+        return post.postsId !== action.payload.postsId;
+      });
       const post_edited = {
         postsId: action.payload.postsId,
         nickname: action.payload.nickname,
@@ -350,7 +386,7 @@ export const postsSlice = createSlice({
 
       return {
         ...state,
-        list: [post_edited, ...state.list],
+        list: [post_edited, ...editList],
       };
     },
     deletePost: (state, action: PayloadAction<number>) => {

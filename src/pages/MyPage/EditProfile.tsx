@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/configureStore';
 import { auth, update } from '../../redux/modules/user';
-import { updateUserInfo } from '../../redux/modules/user';
 
 const EditProfile = () => {
   const appDispatch = useAppDispatch();

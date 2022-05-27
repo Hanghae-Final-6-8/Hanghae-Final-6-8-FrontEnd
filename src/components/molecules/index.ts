@@ -7,7 +7,6 @@ import EditDelToastModal from './EditDelToastModal';
 import MypageHeader from './MypageHeader';
 import MypageOverviewActivity from './MypageOverviewActivity';
 import MypageTabs from './MypageTabs';
-import BeansCafeBtn from './BeansCafeBtn';
 import BeansSearchForm from './BeansSearchForm';
 import BgWeb from './BgWeb';
 import BgWebFixed from './BgWebFixed';
@@ -15,6 +14,8 @@ import NeedLoginToastPopup from './NeedLoginToastPopup';
 import MainTopCarousel from './MainTopCarousel';
 import MainMidCarousel from './MainMidCarousel';
 import MainBottomCarousel from './MainBottomCarousel';
+import BeansToastPopup from './BeansToastPopup';
+import MypageToastPopup from './MypageToastPopup';
 
 export {
   Comment,
@@ -26,7 +27,6 @@ export {
   MypageTabs,
   LoginBtnNaver,
   LoginBtnGoogle,
-  BeansCafeBtn,
   BeansSearchForm,
   BgWeb,
   BgWebFixed,
@@ -34,4 +34,6 @@ export {
   MainTopCarousel,
   MainMidCarousel,
   MainBottomCarousel,
+  BeansToastPopup,
+  MypageToastPopup,
 };

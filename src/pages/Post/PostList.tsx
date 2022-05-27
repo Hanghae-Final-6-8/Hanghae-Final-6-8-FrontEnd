@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { RootState } from '../../redux/configureStore';
 import { getPostListDB } from '../../redux/modules/posts';
 import { useAppDispatch } from '../../redux/configureStore';
@@ -14,6 +14,7 @@ import { setModalToggle } from '../../redux/modules/modalToggle';
 const PostList = () => {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
+  const { state }: any = useLocation();
 
   // 토스트팝업 토글용 state
   const toggle = useSelector(
@@ -25,6 +26,11 @@ const PostList = () => {
   // db에서 커뮤니티 리스트 가져오기
   useEffect(() => {
     !isListLoaded && appDispatch(getPostListDB(0));
+    if (state) {
+      document
+        .getElementsByClassName('infinityScroll')[0]
+        .scrollTo(0, state.scrollyValue);
+    }
   }, []);
 
   // 커뮤니티 리스트, 로딩
@@ -50,7 +56,10 @@ const PostList = () => {
   };
   // 커뮤니티 상세페이지로 이동
   const handleMoveToDetailPage = (postsId: number) => {
-    navigate(`/posts/${postsId}`);
+    const scrolly =
+      document.getElementsByClassName('infinityScroll')[0].scrollTop;
+
+    navigate(`/posts/${postsId}`, { state: { scrolly } });
   };
 
   // 좋아요 추가
@@ -66,12 +75,16 @@ const PostList = () => {
     <div>
       <div className='flex justify-between'>
         <div className='m-5 text-[22px]'>커뮤니티</div>
-        <button
-          className='bg-white shadow-lg rounded-full w-10 h-10 flex justify-center items-center fixed right-6'
-          onClick={handleMoveToWritePage}
-        >
-          <img src={edit} />
-        </button>
+        {!user.isLogin ? (
+          <></>
+        ) : (
+          <button
+            className='bg-white shadow-lg rounded-full w-10 h-10 flex justify-center items-center fixed right-6'
+            onClick={handleMoveToWritePage}
+          >
+            <img src={edit} />
+          </button>
+        )}
       </div>
 
       <div className='flex flex-col pb-24'>
