@@ -68,7 +68,14 @@ const PostDetail = () => {
             </div>
           </div>
 
-          <img className='w-full' src={post?.postsImage.toString()} />
+          <img
+            className='w-full'
+            src={
+              post?.postsImage
+                ? post.postsImage.toString()
+                : 'https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814052__340.png'
+            }
+          />
           <Likes postsId={Number(postsId)} />
           <p>{post?.title}</p>
           <p>{post?.content}</p>
