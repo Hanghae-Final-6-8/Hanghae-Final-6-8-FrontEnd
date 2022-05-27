@@ -14,7 +14,7 @@ import bean05 from './beans/beans05.png';
 import bean06 from './beans/beans06.png';
 import err from './err.png';
 import testLoading from './test_loading.png';
-import kakaoShareImg from './kakaoSharImg.png';
+import kakaoShareImg from './kakaoShareImg.png';
 import mobileBanner from './banners/mobileBanner.png';
 import webBanner from './banners/webBanner.png';
 
