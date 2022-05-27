@@ -28,7 +28,7 @@ export const getCommentListDB = createAsyncThunk(
         res.data.data.content.map((comment: any) => {
           // 시간계산
           const today = new Date();
-          const commentedDay = new Date(comment.createdAt);
+          const commentedDay = new Date(comment.created_at);
           let newDate = '';
           let betweenTime = 0;
           betweenTime = Math.floor(
@@ -79,7 +79,7 @@ export const addCommentDB = createAsyncThunk(
       await commentApis.addComment(data).then((res) => {
         // 시간 계산
         const today = new Date();
-        const commentedDay = new Date(res.data.data.createdAt);
+        const commentedDay = new Date(res.data.data.created_at);
         let newDate = '';
         let betweenTime = 0;
         betweenTime = Math.floor(
@@ -104,7 +104,7 @@ export const addCommentDB = createAsyncThunk(
         }
         thunkAPI.dispatch(
           addComment({
-            commentsId: res.data.data.id,
+            commentsId: res.data.data.comments_id,
             content: res.data.data.content,
             createdAt: newDate,
             nickname: res.data.data.nickname,
