@@ -1,19 +1,21 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { getObjLocalStorage } from '../../utils/localStorage';
-import { useAppDispatch } from '../../redux/configureStore';
+import { RootState, useAppDispatch } from '../../redux/configureStore';
 import { postTasteSurvey } from '../../redux/modules/taste';
 import { auth } from '../../redux/modules/user';
 import { testLoading } from '../../assets/images';
 import { GridBox, Text } from '../../components/atoms';
+import { useSelector } from 'react-redux';
 
 const TasteSurveyLoading = () => {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
   const surveyResult = getObjLocalStorage('surveyResult');
+  const { isLogin } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
-    appDispatch(postTasteSurvey({ surveyResult, navigate }));
+    isLogin ?? appDispatch(postTasteSurvey({ surveyResult, navigate }));
     // user tasteId를 변경하기 위해 재요청
   }, []);
   //console.log(surveyResult);
