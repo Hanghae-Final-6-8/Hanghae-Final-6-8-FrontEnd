@@ -177,7 +177,7 @@ const MainYesTasteSurvey = () => {
             </button>
           ) : null}
         </header>
-        <div className='absolute px-6 pb-6 left-0 top-56 rounded-t-40px bg-white w-full shadow-main'>
+        <div className='absolute px-6 pb-6 left-0 top-56 rounded-t-40px bg-white w-full shadow-main animate-scrollUp3'>
           <article className='relative -top-28'>
             <figure className='relative'>
               <div>
@@ -237,7 +237,7 @@ const MainYesTasteSurvey = () => {
               </Text>
               <Text type='mainBodyTitle'>맛볼 수 있는 카페는?</Text>
               <RoundBox
-                className='text-center relative overflow-hidden mt-5'
+                className='text-center relative overflow-hidden mt-5 transition hover:scale-[1.02] active:scale-[1.02] ease-in'
                 type='mainRoundBox'
                 cafeId={tasteList.cafeId}
                 onClick={() => {
@@ -284,6 +284,7 @@ const MainYesTasteSurvey = () => {
                     {recommendFormdata.map((item) => (
                       <RoundBox
                         key={item.beanId}
+                        className='transition hover:bg-brownS03 active:bg-brownS03 ease-in'
                         type='mainRoundBox'
                         onClick={handleToClickBeans}
                         data={item.beanId}
@@ -305,7 +306,7 @@ const MainYesTasteSurvey = () => {
                 </GridBox>
                 <Button
                   className='text-white font-500 text-sub2 mt-12'
-                  type='brownPType'
+                  type='bgBrownP'
                   onClick={handleToTasteSurvay}
                 >
                   테스트 다시하기

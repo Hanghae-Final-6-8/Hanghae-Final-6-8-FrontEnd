@@ -43,7 +43,7 @@ const MyFavorites = () => {
         <RoundBox
           key={item.beanId}
           type='mainRoundBox'
-          className='w-40 mb-2.5'
+          className='w-40 mb-2.5 hover:bg-brownS03 transition active:bg-brownS03 ease-in'
           onClick={handleToBeansDetail}
           data={item.beanId}
         >

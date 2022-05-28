@@ -98,6 +98,25 @@ module.exports = {
       brightness: {
         bg: '.40',
       },
+      animation: {
+        fadeIn: 'fadeIn 0.8s',
+        scrollUp: 'scrollUp 0.6s',
+        scrollUp3: 'scrollUp3 0.6s',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: 0.8, transform: 'translate3d(0, 20%, 0)' },
+          '100%': { opacity: 1, transform: 'translateZ(0)' },
+        },
+        scrollUp: {
+          '0%': { opacity: 1, transform: 'translate3d(0, 100%, 0)' },
+          '100%': { opacity: 1, transform: 'translateZ(0)' },
+        },
+        scrollUp3: {
+          '0%': { opacity: 1, transform: 'translate3d(0, 3%, 0)' },
+          '100%': { opacity: 1, transform: 'translateZ(0)' },
+        },
+      },
     },
   },
   plugins: [require('@tailwindcss/line-clamp')],

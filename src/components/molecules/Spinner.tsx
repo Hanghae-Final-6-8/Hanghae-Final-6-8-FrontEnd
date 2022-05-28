@@ -13,7 +13,7 @@ const Spinner = () => {
           className='fixed w-full  h-full z-50 touch-none'
           type='flexBasic'
         >
-          <div className='bg-white absolute opacity-60 h-full w-full'>
+          <div className='hover:bg-white active::bg-white absolute opacity-60 h-full w-full transition'>
             {/*  */}
           </div>
           <div className='m-auto z-10 bg-brownS01bg rounded-full shadow-contents'>
