@@ -5,7 +5,7 @@ const SpinnerSuspense = () => {
   return (
     <>
       <GridBox
-        className='fixed w-full  h-full z-50 touch-none'
+        className='fixed w-full top-0 left-0 h-full z-50 touch-none'
         type='flexBasic'
       >
         <div className='bg-white absolute opacity-60 h-full w-full'>

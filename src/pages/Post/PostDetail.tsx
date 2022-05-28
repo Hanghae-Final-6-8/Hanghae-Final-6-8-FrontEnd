@@ -9,6 +9,7 @@ import { getPostDB } from '../../redux/modules/posts';
 import Likes from '../../components/atoms/Likes';
 import postsSlice from '../../redux/modules/posts';
 import { left } from '../../assets/icons';
+import { SpinnerSuspense } from '../../components/molecules';
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -49,11 +50,11 @@ const PostDetail = () => {
   };
 
   return (
-    <div className='pb-24'>
+    <>
       {isLoading ? (
-        <p>로딩중</p>
+        <SpinnerSuspense />
       ) : (
-        <>
+        <div className='pb-24'>
           <button className='m-2 p-2 block' onClick={handleBacktoPrev}>
             <img src={left} />
           </button>
@@ -112,9 +113,9 @@ const PostDetail = () => {
           </div>
 
           <Comment postsId={Number(postsId)} />
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 
