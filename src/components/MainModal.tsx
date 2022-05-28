@@ -23,17 +23,7 @@ const MainModal = () => {
     <>
       {isActivePopup ? (
         <DarkWrapper data='mainModal' onClick={handleClosePopup}>
-          <RoundBox round='mainModal'>
-            <button className=' absolute right-10'>
-              <img
-                className='w-8'
-                style={{
-                  filter:
-                    'invert(64%) sepia(3%) saturate(20%) hue-rotate(14deg) brightness(102%) contrast(82%)',
-                }}
-                src={cross}
-              />
-            </button>
+          <RoundBox className='animate-fadeIn' round='mainModal'>
             <Text className='text-subH33 font-500'>
               자신의 원두 취향을 알아보고
               <br />

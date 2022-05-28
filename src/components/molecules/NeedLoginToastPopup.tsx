@@ -15,7 +15,12 @@ const NeedLoginToastPopup = (props: ToastPopupProps) => {
   return (
     <>
       <DarkWrapper onClick={props.onClick}>
-        <ToastPopupBox crossOnClick={props.onClick} cross={true} type='default'>
+        <ToastPopupBox
+          crossOnClick={props.onClick}
+          className='animate-scrollUp'
+          cross={true}
+          type='default'
+        >
           <div>
             <Text type='head'>잠깐, 로그인 완료 후</Text>
             <Text type='head'>
