@@ -29,11 +29,12 @@ const BeansList = () => {
 
   useEffect(() => {
     !beans.isLoaded && appDispatch(getBeansList());
+    !beans.isLoaded && appDispatch(saveCurrentCafename(''));
   }, [appDispatch]);
 
   const handleToSearchBtn = () => {
     setClickedSearchBtn(true);
-    appDispatch(saveCurrentCafename(''));
+
     !beans.isLoaded && appDispatch(getBeansList());
   };
 
