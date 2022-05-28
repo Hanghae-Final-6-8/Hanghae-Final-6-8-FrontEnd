@@ -237,7 +237,7 @@ const MainYesTasteSurvey = () => {
               </Text>
               <Text type='mainBodyTitle'>맛볼 수 있는 카페는?</Text>
               <RoundBox
-                className='text-center relative overflow-hidden mt-5'
+                className='text-center relative overflow-hidden mt-5 transition hover:scale-[1.02] active:scale-[1.02] ease-in'
                 type='mainRoundBox'
                 cafeId={tasteList.cafeId}
                 onClick={() => {
@@ -284,6 +284,7 @@ const MainYesTasteSurvey = () => {
                     {recommendFormdata.map((item) => (
                       <RoundBox
                         key={item.beanId}
+                        className='transition hover:bg-brownS03 active:bg-brownS03 ease-in'
                         type='mainRoundBox'
                         onClick={handleToClickBeans}
                         data={item.beanId}

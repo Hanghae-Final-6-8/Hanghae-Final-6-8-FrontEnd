@@ -53,7 +53,7 @@ const KakaoShare = () => {
 
   return (
     <button
-      className='fixed w-12 h-12 rounded-full z-10 bg-brownP bg-cover bg-right bottom-104px right-6 shadow-tasteBrown'
+      className='fixed w-12 h-12 rounded-full z-10 bg-brownP bg-cover bg-right bottom-104px right-6 shadow-tasteBrown animate-bounce'
       onClick={handleShareKakao}
     >
       <img

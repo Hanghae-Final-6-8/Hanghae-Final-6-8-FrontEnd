@@ -89,7 +89,7 @@ const BeansList = () => {
             <RoundBox
               key={item.beanId}
               data={item.beanId}
-              className='items-center flex'
+              className='items-center flex transition hover:bg-brownS03 active:bg-brownS03 ease-in'
               type='beansRoundBox'
               onClick={handleToBeansDetail}
             >
