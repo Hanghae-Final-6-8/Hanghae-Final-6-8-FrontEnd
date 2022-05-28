@@ -21,6 +21,7 @@ const EditDelToastModal = (props: postsIdType) => {
   // 커뮤니티 글 삭제
   const handleDeletePost = (postsId: number) => {
     appDispatch(deletePostDB(postsId));
+    navigate(-1);
   };
 
   const toggle = useSelector(
