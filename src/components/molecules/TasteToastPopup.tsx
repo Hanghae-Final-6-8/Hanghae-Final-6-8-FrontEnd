@@ -7,7 +7,7 @@ interface TasteToastPopupProps {
 const TasteToastPopup = (props: TasteToastPopupProps) => {
   return (
     <DarkWrapper onClick={props.onClick}>
-      <ToastPopupBox className='pb-26px' type='default'>
+      <ToastPopupBox className='pb-26px animate-scrollUp' type='default'>
         <Text type='head'>
           <Span type='strong'>바디감</Span>이란?
         </Text>

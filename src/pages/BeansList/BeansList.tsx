@@ -77,7 +77,10 @@ const BeansList = () => {
       </div>
       {clickedSearchBtn ? <BeansSearchForm /> : <BeansCafeBtn />}
 
-      <GridBox className='gap-2.5 mt-5 pb-32' type='flexBasic'>
+      <GridBox
+        className='gap-2.5 mt-5 pb-32 animate-scrollUp3'
+        type='flexBasic'
+      >
         <InfinityScroll
           callNext={() => {
             appDispatch(getBeansList(paging));

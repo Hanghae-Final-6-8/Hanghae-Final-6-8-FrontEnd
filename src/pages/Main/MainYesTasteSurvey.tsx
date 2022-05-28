@@ -177,7 +177,7 @@ const MainYesTasteSurvey = () => {
             </button>
           ) : null}
         </header>
-        <div className='absolute px-6 pb-6 left-0 top-56 rounded-t-40px bg-white w-full shadow-main'>
+        <div className='absolute px-6 pb-6 left-0 top-56 rounded-t-40px bg-white w-full shadow-main animate-scrollUp3'>
           <article className='relative -top-28'>
             <figure className='relative'>
               <div>

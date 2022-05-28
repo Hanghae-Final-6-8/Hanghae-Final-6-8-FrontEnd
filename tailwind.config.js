@@ -101,6 +101,7 @@ module.exports = {
       animation: {
         fadeIn: 'fadeIn 0.8s',
         scrollUp: 'scrollUp 0.6s',
+        scrollUp3: 'scrollUp3 0.6s',
       },
       keyframes: {
         fadeIn: {
@@ -109,6 +110,10 @@ module.exports = {
         },
         scrollUp: {
           '0%': { opacity: 1, transform: 'translate3d(0, 100%, 0)' },
+          '100%': { opacity: 1, transform: 'translateZ(0)' },
+        },
+        scrollUp3: {
+          '0%': { opacity: 1, transform: 'translate3d(0, 3%, 0)' },
           '100%': { opacity: 1, transform: 'translateZ(0)' },
         },
       },
