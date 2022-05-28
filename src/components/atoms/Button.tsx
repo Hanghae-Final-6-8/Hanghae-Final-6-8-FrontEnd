@@ -19,6 +19,8 @@ const Button = (props: BtnProps) => {
   const selectBtn = props.type === 'selectBtn';
   const clickedSelectBtn = props.type === 'clickedSelectBtn';
 
+  const loginBtn = props.type === 'loginBtn';
+
   return (
     <button
       className={classnames(
@@ -40,6 +42,10 @@ const Button = (props: BtnProps) => {
             selectBtn,
           'shadow-tasteBrown text-body mb-[3px] bg-brownP text-white':
             clickedSelectBtn,
+        },
+        {
+          'w-50px h-50px mr-7 rounded-full bg-white shadow-loginBtn hover:brightness-90 active:brightness-90 transition ease-in':
+            loginBtn,
         }
       )}
       onClick={props.onClick}

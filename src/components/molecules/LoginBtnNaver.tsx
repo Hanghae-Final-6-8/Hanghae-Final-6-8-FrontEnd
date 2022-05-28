@@ -2,6 +2,7 @@ import { naver } from '../../assets/icons';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/configureStore';
 import { getNaverURL } from '../../redux/modules/user';
+import { Button } from '../atoms';
 
 const LoginBtnNaver = () => {
   const navigate = useNavigate();
@@ -11,12 +12,9 @@ const LoginBtnNaver = () => {
     navigate('/api/user/login/naver/callback', { replace: true });
   };
   return (
-    <button
-      className='w-50px h-50px  mr-7 rounded-full bg-white shadow-loginBtn'
-      onClick={handleLoginNaver}
-    >
+    <Button type='loginBtn' onClick={handleLoginNaver}>
       <img className='mx-auto' src={naver} />
-    </button>
+    </Button>
   );
 };
 
