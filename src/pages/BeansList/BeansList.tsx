@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { BeansSearchForm } from '../../components/molecules';
 import { BeansCafeBtn } from '../../components/organisms';
 import { coffee_default } from '../../assets/images';
+import { saveCurrentCafename } from '../../redux/modules/cafe';
 
 const BeansList = () => {
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ const BeansList = () => {
 
   const handleToSearchBtn = () => {
     setClickedSearchBtn(true);
+    appDispatch(saveCurrentCafename(''));
     !beans.isLoaded && appDispatch(getBeansList());
   };
 
