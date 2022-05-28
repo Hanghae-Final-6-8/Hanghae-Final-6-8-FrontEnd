@@ -1,15 +1,14 @@
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/configureStore';
+import { RootState, useAppDispatch } from '../../redux/configureStore';
 import Comment from '../../components/molecules/Comment';
 import { useEffect, useState } from 'react';
-import { useAppDispatch } from '../../redux/configureStore';
 import { addCommentDB } from '../../redux/modules/comment';
-import { getPostDB } from '../../redux/modules/posts';
 import Likes from '../../components/atoms/Likes';
-import postsSlice from '../../redux/modules/posts';
+import postsSlice, { getPostDB } from '../../redux/modules/posts';
 import { left } from '../../assets/icons';
-import { SpinnerSuspense } from '../../components/molecules';
+import { SpinnerSuspense, EditDelToastModal } from '../../components/molecules';
+import { setModalToggle } from '../../redux/modules/modalToggle';
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -26,7 +25,25 @@ const PostDetail = () => {
     appDispatch(postsSlice.actions.isLoading(true));
     appDispatch(getPostDB(Number(postsId)));
   }, []);
+
   const { post, isLoading } = useSelector((store: RootState) => store.posts);
+
+  const user = useSelector((state: RootState) => state.user);
+
+  // 토스트팝업 토글용 state
+  const toggle = useSelector(
+    (store: RootState) => store.modatToggle.modalToggle
+  );
+
+  // ...클릭시 해당 게시물의 postsId 저장
+  const [clickedPostId, setClickedPostId] = useState(0);
+
+  // 토스트팝업 띄우기
+  const getSetToastFrom = (postsId: number) => {
+    appDispatch(setModalToggle(!toggle));
+    setClickedPostId(postsId);
+  };
+
   // 코멘트 state
   const [comment, setComment] = useState<string>('');
   // 코멘트 state에 값넣기
@@ -56,21 +73,36 @@ const PostDetail = () => {
       ) : (
         <div className='pb-24'>
           <button
-            className='fixed top-0 left-2 bg-white  rounded-full w-8 h-8 m-2 p-2 block'
+            className=' bg-white  rounded-full h-12 w-12 m-2 p-2 block'
             onClick={handleBacktoPrev}
           >
-            <img src={left} />
+            <img src={left} className='w-full' />
           </button>
-          <div className='flex items-center'>
-            <div className='h-14 w-14 rounded-full bg-brownS03 mr-4 text-center leading-[56px] text-[28px] mb-3'>
-              {post?.nickname?.substring(0, 1).toUpperCase()}
+          <div className='flex justify-between items-center'>
+            <div>
+              <div className='h-14 w-14 rounded-full bg-brownS03 mr-4 text-center leading-[56px] text-[28px] mb-3'>
+                {post?.nickname?.substring(0, 1).toUpperCase()}
+              </div>
+              <div className='flex flex-col'>
+                <span>{post?.nickname}</span>
+                <span className='text-[12px] text-gray-500'>
+                  {post?.createdAt}
+                </span>
+              </div>
             </div>
-            <div className='flex flex-col'>
-              <span>{post?.nickname}</span>
-              <span className='text-[12px] text-gray-500'>
-                {post?.createdAt}
-              </span>
-            </div>
+
+            {user.nickname === post!.nickname ? (
+              <button
+                className='p-4'
+                onClick={() => {
+                  getSetToastFrom(post!.postsId!);
+                }}
+              >
+                ···
+              </button>
+            ) : (
+              <></>
+            )}
           </div>
 
           <img
@@ -114,8 +146,8 @@ const PostDetail = () => {
               게시
             </button>
           </div>
-
           <Comment postsId={Number(postsId)} />
+          {toggle && <EditDelToastModal postsId={clickedPostId} />}
         </div>
       )}
     </>

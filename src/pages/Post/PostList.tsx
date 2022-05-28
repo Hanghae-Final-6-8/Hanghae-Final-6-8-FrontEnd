@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { RootState } from '../../redux/configureStore';
-import { getPostListDB } from '../../redux/modules/posts';
-import { useAppDispatch } from '../../redux/configureStore';
+import { RootState, useAppDispatch } from '../../redux/configureStore';
 import { InfinityScroll } from '../../components/atoms/index';
 import { EditDelToastModal } from '../../components/molecules/index';
-import { addLikeDB } from '../../redux/modules/posts';
-import { deleteLikeDB } from '../../redux/modules/posts';
+import {
+  addLikeDB,
+  deleteLikeDB,
+  getPostListDB,
+} from '../../redux/modules/posts';
 import { heart, heart_full, edit } from '../../assets/icons';
 import { setModalToggle } from '../../redux/modules/modalToggle';
 
