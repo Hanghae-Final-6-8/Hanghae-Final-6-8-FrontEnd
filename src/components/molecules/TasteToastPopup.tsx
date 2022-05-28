@@ -1,22 +1,10 @@
 import { DarkWrapper, ToastPopupBox, Text, Button, Span } from '../atoms';
-import { useAppDispatch } from '../../redux/configureStore';
-import { deleteUser } from '../../redux/modules/user';
 
 interface TasteToastPopupProps {
   onClick: () => void;
 }
 
 const TasteToastPopup = (props: TasteToastPopupProps) => {
-  const appDispatch = useAppDispatch();
-
-  const handleUserDelete = () => {
-    if (confirm('정말로 탈퇴하시겠습니까?')) {
-      appDispatch(deleteUser());
-    } else {
-      return;
-    }
-  };
-
   return (
     <DarkWrapper onClick={props.onClick}>
       <ToastPopupBox className='pb-26px' type='default'>
