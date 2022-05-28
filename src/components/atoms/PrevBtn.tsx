@@ -9,13 +9,11 @@ interface PrevBtnProps {
 
 const PrevBtn = (props: PrevBtnProps) => {
   const navigate = useNavigate();
-
   const className = props.className;
 
   const handleToPrevPage = () => {
-    if (document.referrer) {
-      navigate(-1);
-    } else {
+    navigate(-1);
+    if (!document.referrer) {
       navigate('/beans');
     }
   };
