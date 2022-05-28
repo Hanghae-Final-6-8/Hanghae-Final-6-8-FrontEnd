@@ -1,11 +1,18 @@
 import { useNavigate } from 'react-router-dom';
-
 import { Button } from '../../components/atoms';
 import { logoCopick, pickYourCoffee } from '../../assets/logo';
 import { LoginBtnGroup } from '../../components/organisms';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/configureStore';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { isLogin } = useSelector((state: RootState) => state.user);
+
+  useEffect(() => {
+    isLogin && navigate('/main');
+  }, [isLogin, navigate]);
 
   const handleToMain = () => {
     navigate('../main');
