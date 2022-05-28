@@ -32,7 +32,6 @@ export const addFavoriteList = createAsyncThunk(
   async (data: number) => {
     try {
       await favoriteApis.addFavoriteList(data).then((response) => {
-        alert(`즐겨찾기 ${response.data.msg}`);
         return;
       });
     } catch (err) {
