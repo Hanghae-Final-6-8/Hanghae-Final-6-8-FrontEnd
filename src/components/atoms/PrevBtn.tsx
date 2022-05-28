@@ -11,14 +11,13 @@ const PrevBtn = (props: PrevBtnProps) => {
   const navigate = useNavigate();
 
   const className = props.className;
-  const toList = props.type === 'toList';
 
   const handleToPrevPage = () => {
-    if (toList) {
+    if (document.referrer) {
+      navigate(-1);
+    } else {
       navigate('/beans');
-      return;
     }
-    navigate(-1);
   };
 
   return (

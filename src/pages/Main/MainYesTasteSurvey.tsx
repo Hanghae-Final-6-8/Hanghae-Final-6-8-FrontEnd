@@ -162,7 +162,7 @@ const MainYesTasteSurvey = () => {
           {!beanId ? (
             <img className='h-3.5' src={copick} />
           ) : (
-            <PrevBtn type='toList' className='filter-gray30' />
+            <PrevBtn className='filter-gray30' />
           )}
           {user.isLogin ? (
             <button
