@@ -11,7 +11,7 @@ interface BtnProps {
 
 const Button = (props: BtnProps) => {
   const className = props.className;
-  const bgBrownP = props.type === 'brownPType';
+  const bgBrownP = props.type === 'bgBrownP';
   const tasteSurvey = props.type === 'tasteSurvey';
   const tasteSurveyNoneActive = props.type === 'tasteSurveyNoneActive';
   const toastPopup = props.type === 'toastPopup';
@@ -29,12 +29,13 @@ const Button = (props: BtnProps) => {
           'mt-4': className === undefined && props.type === undefined,
           'bg-brownP bg-cover': className && props.type === undefined,
           'bg-gray60 text-gray20': className && props.type === undefined,
-          'bg-brownP bg-cover mt-30px': bgBrownP,
-          'absolute font-500 text-sub2 bottom-2 ext-white bg-brownP bg-cover shadow-tasteBrown text-white':
+          'bg-brownP bg-cover mt-30px hover:brightness-75 active:brightness-75 transition ease-in select-none':
+            bgBrownP,
+          'absolute font-500 text-sub2 bottom-2 ext-white bg-brownP bg-cover shadow-tasteBrown text-white hover:brightness-75 active:brightness-75 transition ease-in select-none':
             tasteSurvey,
           'absolute font-500 text-sub2 bottom-2 text-white bg-gray30 shadow-tasteBrown':
             tasteSurveyNoneActive,
-          'bg-brownP bg-cover mt-30px mb-34px  shadow-tasteBrown text-body font-500 text-white':
+          'bg-brownP bg-cover mt-30px mb-34px  shadow-tasteBrown text-body font-500 text-white hover:brightness-75 active:brightness-75 transition ease-in select-none':
             toastPopup,
         },
         {
@@ -44,7 +45,7 @@ const Button = (props: BtnProps) => {
             clickedSelectBtn,
         },
         {
-          'w-50px h-50px mr-7 rounded-full bg-white shadow-loginBtn hover:brightness-90 active:brightness-90 transition ease-in':
+          'w-50px h-50px mr-7 rounded-full bg-white shadow-loginBtn hover:brightness-90 active:brightness-90 transition ease-in select-none':
             loginBtn,
         }
       )}

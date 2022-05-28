@@ -58,7 +58,7 @@ const BottomNav = () => {
         <NeedLoginToastPopup onClick={handleClosePopup} />
       ) : null}
       <nav className='fixed flex bottom-0 z-30 bg-slate-50 w-full h-84px shadow-toolbar'>
-        <button className='flex-auto fill-slate-200' onClick={handleToMain}>
+        <button className='flex-auto ' onClick={handleToMain}>
           <Icon
             isClicked={currentLocation === 'main'}
             type='bottomNav'

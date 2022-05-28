@@ -45,7 +45,7 @@ const MainModal = () => {
             </Text>
             <Button
               className='text-white font-500 text-body'
-              type='brownPType'
+              type='bgBrownP'
               onClick={handleToTasteSurvey}
             >
               원두 취향 테스트 하러가기
