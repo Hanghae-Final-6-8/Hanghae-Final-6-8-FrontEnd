@@ -1,19 +1,25 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
-import { editPostDB } from '../../redux/modules/posts';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import {
+  editPostDB,
+  PostsState,
+  addPostDB,
+  PostsItemDataParams,
+} from '../../redux/modules/posts';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/configureStore';
 import { useForm } from 'react-hook-form';
-import { camera } from '../../assets/icons';
-import { useParams } from 'react-router-dom';
+import { camera, left } from '../../assets/icons';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/configureStore';
-import { PostsItemDataParams } from '../../redux/modules/posts';
-import { PostsState } from '../../redux/modules/posts';
-import { addPostDB } from '../../redux/modules/posts';
 import { Button } from '../../components/atoms';
-import { left } from '../../assets/icons';
+import { setMoveToLogin } from '../../utils/setMoveToLogin';
+
 const AddEditPost = () => {
+  const { isLogin } = useSelector((state: RootState) => state.user);
+  useEffect(() => {
+    !isLogin && setMoveToLogin();
+  }, []);
+
   // 수정하려고 들어왔을 때
   const postsIdparams = useParams();
 

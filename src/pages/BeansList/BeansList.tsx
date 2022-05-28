@@ -9,6 +9,7 @@ import { BeansSearchForm } from '../../components/molecules';
 import { BeansCafeBtn } from '../../components/organisms';
 import { coffee_default } from '../../assets/images';
 import { InfinityScroll } from '../../components/atoms';
+import { saveCurrentCafename } from '../../redux/modules/cafe';
 
 const BeansList = () => {
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ const BeansList = () => {
 
   useEffect(() => {
     !beans.isLoaded && appDispatch(getBeansList(0));
+    !beans.isLoaded && appDispatch(saveCurrentCafename(''));
   }, [appDispatch]);
 
   const handleToSearchBtn = () => {

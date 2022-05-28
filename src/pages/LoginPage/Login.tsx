@@ -29,7 +29,7 @@ const Login = () => {
         </div>
         <LoginBtnGroup className='pt-3' />
         <Button
-          className='mt-10 bg-brownP text-white font-500 text-sub2'
+          className='mt-10 bg-brownP text-white font-500 text-sub2  hover:brightness-75 active:brightness-75 shadow-tasteBrown  transition ease-in'
           onClick={handleToMain}
         >
           둘러보기

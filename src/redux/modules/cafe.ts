@@ -68,7 +68,7 @@ export const cafeSlice = createSlice({
       state.cafeList = action.payload;
       return state;
     },
-    saveCurrentCafename: (state, action: PayloadAction<any>) => {
+    saveCurrentCafename: (state, action: PayloadAction<string>) => {
       state.currentCafeName = action.payload;
       return state;
     },
