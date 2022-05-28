@@ -8,11 +8,16 @@ import { useSelector } from 'react-redux';
 import { BeansSearchForm } from '../../components/molecules';
 import { BeansCafeBtn } from '../../components/organisms';
 import { coffee_default } from '../../assets/images';
+import { InfinityScroll } from '../../components/atoms';
 
 const BeansList = () => {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
   const beans = useSelector((state: RootState) => state.beans);
+  const { isLoading, paging, beanListLoadedLength } = useSelector(
+    (state: RootState) => state.beans
+  );
+
   const [clickedSearchBtn, setClickedSearchBtn] = useState(true);
 
   const beansFormdata: {
@@ -27,12 +32,12 @@ const BeansList = () => {
   });
 
   useEffect(() => {
-    !beans.isLoaded && appDispatch(getBeansList());
+    !beans.isLoaded && appDispatch(getBeansList(0));
   }, [appDispatch]);
 
   const handleToSearchBtn = () => {
     setClickedSearchBtn(true);
-    !beans.isLoaded && appDispatch(getBeansList());
+    !beans.isLoaded && appDispatch(getBeansList(0));
   };
 
   const handleToCafeBtn = () => {
@@ -71,28 +76,36 @@ const BeansList = () => {
       {clickedSearchBtn ? <BeansSearchForm /> : <BeansCafeBtn />}
 
       <GridBox className='gap-2.5 mt-5 pb-32' type='flexBasic'>
-        {beansFormdata.map((item) => (
-          <RoundBox
-            key={item.beanId}
-            data={item.beanId}
-            className='items-center flex'
-            type='beansRoundBox'
-            onClick={handleToBeansDetail}
-          >
-            <div className='shrink-0 mr-7  w-16 h-16'>
-              <img
-                className='h-16 mx-auto'
-                src={item.beanImage ? item.beanImage : coffee_default}
-              />
-            </div>
-            <div>
-              <Text className='text-gray90 text-body'>{item.beanName}</Text>
-              <Text className='line-clamp-1 text-caption text-gray80'>
-                {item.description}
-              </Text>
-            </div>
-          </RoundBox>
-        ))}
+        <InfinityScroll
+          callNext={() => {
+            appDispatch(getBeansList(paging));
+          }}
+          loading={isLoading}
+          isNext={beanListLoadedLength === 20 ? true : false}
+        >
+          {beansFormdata.map((item) => (
+            <RoundBox
+              key={item.beanId}
+              data={item.beanId}
+              className='items-center flex'
+              type='beansRoundBox'
+              onClick={handleToBeansDetail}
+            >
+              <div className='shrink-0 mr-7  w-16 h-16'>
+                <img
+                  className='h-16 mx-auto'
+                  src={item.beanImage ? item.beanImage : coffee_default}
+                />
+              </div>
+              <div>
+                <Text className='text-gray90 text-body'>{item.beanName}</Text>
+                <Text className='line-clamp-1 text-caption text-gray80'>
+                  {item.description}
+                </Text>
+              </div>
+            </RoundBox>
+          ))}
+        </InfinityScroll>
         {beansFormdata.length === 0 ? (
           <div className='text-gray90'>검색 결과가 없습니다.</div>
         ) : null}

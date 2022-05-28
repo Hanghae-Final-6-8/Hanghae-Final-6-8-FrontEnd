@@ -24,7 +24,7 @@ const InfinityScroll: React.FC<LayoutProps> = (props) => {
     const scrollTop = domEl[0].scrollTop;
 
     if (scrollHeight - clientHeight - scrollTop < 200) {
-      console.log('!callNext!');
+      // console.log('!callNext!');
       callNext();
     }
   }, 300);

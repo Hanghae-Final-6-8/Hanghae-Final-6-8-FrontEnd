@@ -54,7 +54,10 @@ const PostDetail = () => {
         <p>로딩중</p>
       ) : (
         <>
-          <button className='m-2 p-2 block' onClick={handleBacktoPrev}>
+          <button
+            className='fixed top-0 left-2 bg-white  rounded-full w-8 h-8 m-2 p-2 block'
+            onClick={handleBacktoPrev}
+          >
             <img src={left} />
           </button>
           <div className='flex items-center'>
