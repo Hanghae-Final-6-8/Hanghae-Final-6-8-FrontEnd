@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { RootState } from '../../redux/configureStore';
-import { getPostListDB } from '../../redux/modules/posts';
-import { useAppDispatch } from '../../redux/configureStore';
+import { RootState, useAppDispatch } from '../../redux/configureStore';
 import { InfinityScroll } from '../../components/atoms/index';
 import { EditDelToastModal } from '../../components/molecules/index';
-import { addLikeDB } from '../../redux/modules/posts';
-import { deleteLikeDB } from '../../redux/modules/posts';
+import {
+  addLikeDB,
+  deleteLikeDB,
+  getPostListDB,
+} from '../../redux/modules/posts';
 import { heart, heart_full, edit } from '../../assets/icons';
 import { setModalToggle } from '../../redux/modules/modalToggle';
 
@@ -104,7 +105,7 @@ const PostList = () => {
                 <div className='flex justify-between p-1'>
                   <div className='flex items-center mb-4'>
                     <div className='h-14 w-14 rounded-full bg-brownS03 mr-4 text-center leading-[56px] text-[28px]'>
-                      {post.nickname?.substring(0, 1)}
+                      {post.nickname?.substring(0, 1).toUpperCase()}
                     </div>
                     <span>{post.nickname}</span>
                   </div>
@@ -122,7 +123,7 @@ const PostList = () => {
                   )}
                 </div>
                 <img
-                  className='w-full'
+                  className='w-full cursor-pointer'
                   src={
                     post.postsImage
                       ? post.postsImage.toString()

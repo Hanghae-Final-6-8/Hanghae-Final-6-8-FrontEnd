@@ -37,7 +37,7 @@ const Comment = (props: postsIdProps) => {
           <div key={index} className='flex items-center justify-between mb-3'>
             <div className='flex items-center'>
               <div className='h-14 w-14 rounded-full bg-brownS03 mr-4 text-center leading-[56px] text-[28px]'>
-                {comment.nickname?.substring(0, 1)}
+                {comment.nickname?.substring(0, 1).toUpperCase()}
               </div>
 
               <p>{comment.content}</p>

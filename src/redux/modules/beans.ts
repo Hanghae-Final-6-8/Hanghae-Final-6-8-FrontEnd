@@ -93,7 +93,8 @@ export const searchBeans = createAsyncThunk(
   async (data: string, thunkAPI) => {
     try {
       await beansApis.searchBeans(data).then((response) => {
-        thunkAPI.dispatch(saveBeansList(response.data.data));
+        const beanList = response.data.data;
+        thunkAPI.dispatch(saveBeansList({ beanList, page: 0 }));
         return;
       });
     } catch (err) {
@@ -148,6 +149,10 @@ export const beansSlice = createSlice({
     setBeanListLoadedLength: (state, action: PayloadAction<any>) => {
       state.beanListLoadedLength = action.payload;
     },
+    setLoadedAndLengthZero: (state) => {
+      state.paging = 0;
+      state.beanListLoadedLength = 0;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getBeansList.fulfilled, (state, action) => {
@@ -155,6 +160,8 @@ export const beansSlice = createSlice({
     });
     builder.addCase(searchBeans.fulfilled, (state, action) => {
       state.isLoaded = false;
+      state.paging = 0;
+      state.beanListLoadedLength = 0;
     });
     builder.addCase(getBeansListByCafe.fulfilled, (state, action) => {
       state.isLoaded = false;
@@ -169,6 +176,7 @@ export const {
   isLoading,
   setPageNum,
   setBeanListLoadedLength,
+  setLoadedAndLengthZero,
 } = beansSlice.actions;
 
 export default beansSlice;
