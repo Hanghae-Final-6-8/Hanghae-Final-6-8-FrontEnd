@@ -40,7 +40,7 @@ const EditDelToastModal = (props: postsIdType) => {
           <Text className='text-subH33 font-500'>어떤 작업을 하시겠어요?</Text>
           <Button
             className='text-white font-500 text-body'
-            type='brownPType'
+            type='bgBrownP'
             onClick={() => {
               handleMoveToEditPage(props.postsId);
             }}
