@@ -1,7 +1,8 @@
 import instance from '../lib/axios';
 
 export const beansApis = {
-  getBeansList: () => instance.get('/api/beans/list'),
+  getBeansList: (page: number) =>
+    instance.get('/api/beans/list', { params: { page } }),
   getBeansListType: (type: number) =>
     instance.get('/api/beans/list', {
       params: { type },

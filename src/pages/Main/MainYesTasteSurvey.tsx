@@ -146,7 +146,7 @@ const MainYesTasteSurvey = () => {
     type: number;
   }[] = [];
   if (tasteList.similar) {
-    tasteList.similar.forEach((el) => {
+    tasteList.similar.forEach((el: any) => {
       recommendFormdata.push(el);
     });
   }
