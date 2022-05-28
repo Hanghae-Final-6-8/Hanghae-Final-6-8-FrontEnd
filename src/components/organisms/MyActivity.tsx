@@ -64,7 +64,7 @@ const MyActivity = () => {
         {listMyActivity.map((post, index) => {
           return (
             <div
-              className='m-2 flex'
+              className='m-2 flex cursor-pointer'
               key={index}
               onClick={() => {
                 handleMoveToDetailPage(post.postsId!);

@@ -122,7 +122,7 @@ const PostList = () => {
                   )}
                 </div>
                 <img
-                  className='w-full'
+                  className='w-full cursor-pointer'
                   src={
                     post.postsImage
                       ? post.postsImage.toString()
