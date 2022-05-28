@@ -74,8 +74,8 @@ const PostList = () => {
 
   return (
     <div>
-      <div className='flex justify-between'>
-        <div className='m-5 text-[22px]'>커뮤니티</div>
+      <div className='flex justify-between items-center'>
+        <div className='font-500 m-5 text-[22px]'>커뮤니티</div>
         {!user.isLogin ? (
           <></>
         ) : (
