@@ -63,7 +63,7 @@ const PostDetail = () => {
           </button>
           <div className='flex items-center'>
             <div className='h-14 w-14 rounded-full bg-brownS03 mr-4 text-center leading-[56px] text-[28px] mb-3'>
-              {post?.nickname?.substring(0, 1)}
+              {post?.nickname?.substring(0, 1).toUpperCase()}
             </div>
             <div className='flex flex-col'>
               <span>{post?.nickname}</span>

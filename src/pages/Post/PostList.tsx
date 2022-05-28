@@ -104,7 +104,7 @@ const PostList = () => {
                 <div className='flex justify-between p-1'>
                   <div className='flex items-center mb-4'>
                     <div className='h-14 w-14 rounded-full bg-brownS03 mr-4 text-center leading-[56px] text-[28px]'>
-                      {post.nickname?.substring(0, 1)}
+                      {post.nickname?.substring(0, 1).toUpperCase()}
                     </div>
                     <span>{post.nickname}</span>
                   </div>

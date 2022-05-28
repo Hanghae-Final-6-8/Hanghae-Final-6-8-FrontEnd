@@ -241,11 +241,11 @@ const AddEditPost = () => {
             <p id='fileValid' style={{ display: 'none', color: 'red' }}>
               이미지를 선택해주세요
             </p>
-            <div className='HashWrapOuter flex justify-between mt-10'>
+            <div className='HashWrapOuter flex justify-around items-center mt-10'>
               <input
                 id='tagName'
                 type='text'
-                className='HashInput outline-none mb-1'
+                className='HashInput outline-none '
                 placeholder='태그 입력 후 추가버튼'
                 onChange={getInputTagNameFrom}
                 value={inputTag}
@@ -284,7 +284,7 @@ const AddEditPost = () => {
 
           <Button
             className='text-white font-500 text-sub2 mt-12'
-            type='brownPType'
+            type='bgBrownP'
           >
             {postsIdparams.postsId ? '수정하기' : '등록하기'}
           </Button>
