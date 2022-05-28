@@ -2,6 +2,7 @@ import { Button, Text, Span, Label, GridBox } from '../../components/atoms';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { TasteToastPopup } from '../../components/molecules';
 
 const TasteSurvey02 = () => {
   const location = useLocation();
@@ -20,12 +21,27 @@ const TasteSurvey02 = () => {
     });
   };
 
+  const [isActivePopup, setIsActivePopup] = useState(false);
+  const handleClosePopup = () => {
+    setIsActivePopup(false);
+  };
+  const handleIsActivePopup = () => {
+    setIsActivePopup(true);
+  };
+
   return (
     <>
       <GridBox type='flexBasic'>
         <Text type='tasteNumber'>02</Text>
         <Text className='font-500 text-sub'>
           <Span fc='strong'>바디감</Span>이 있는 것을 좋아하시나요?
+        </Text>
+        <Text
+          type='tasteCaption'
+          className='underline underline-offset-1 cursor-pointer'
+          onClick={handleIsActivePopup}
+        >
+          바디감이 뭐예요?
         </Text>
         <GridBox type='flexTasteSurvey'>
           <Label
@@ -86,6 +102,7 @@ const TasteSurvey02 = () => {
       >
         다음
       </Button>
+      {isActivePopup ? <TasteToastPopup onClick={handleClosePopup} /> : null}
     </>
   );
 };

@@ -18,6 +18,7 @@ import BeansToastPopup from './BeansToastPopup';
 import MypageToastPopup from './MypageToastPopup';
 import Spinner from './Spinner';
 import SpinnerSuspense from './SpinnerSuspense';
+import TasteToastPopup from './TasteToastPopup';
 
 export {
   Comment,
@@ -40,4 +41,5 @@ export {
   MypageToastPopup,
   Spinner,
   SpinnerSuspense,
+  TasteToastPopup,
 };
