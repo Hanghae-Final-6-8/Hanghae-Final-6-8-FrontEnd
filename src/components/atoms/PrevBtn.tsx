@@ -4,15 +4,22 @@ import classnames from 'classnames';
 
 interface PrevBtnProps {
   className?: string;
+  type?: string;
 }
 
 const PrevBtn = (props: PrevBtnProps) => {
   const navigate = useNavigate();
-  const handleToPrevPage = () => {
-    navigate(-1);
-  };
 
   const className = props.className;
+  const toList = props.type === 'toList';
+
+  const handleToPrevPage = () => {
+    if (toList) {
+      navigate('/beans');
+      return;
+    }
+    navigate(-1);
+  };
 
   return (
     <button
