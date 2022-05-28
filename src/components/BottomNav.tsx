@@ -47,7 +47,8 @@ const BottomNav = () => {
     location.pathname === '/' ||
     location.pathname === '/map' ||
     currentLocation === 'survey' ||
-    location.pathname === '/app/user/login/kakao/callback'
+    location.pathname === '/app/user/login/kakao/callback' ||
+    (location.pathname.split('/')[2] && currentLocation === 'posts')
   ) {
     return null;
   }

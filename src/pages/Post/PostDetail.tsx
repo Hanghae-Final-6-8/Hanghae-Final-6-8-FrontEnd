@@ -96,7 +96,7 @@ const PostDetail = () => {
             <></>
           )}
           <hr className='mb-4' />
-          <div className='fixed bottom-0 left-0 z-[100] w-full'>
+          <div className='fixed bottom-0 left-0 w-full'>
             <input
               className='w-[70%] p-8 text-[14px] outline-none'
               type='text'
