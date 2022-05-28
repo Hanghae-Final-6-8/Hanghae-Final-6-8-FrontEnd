@@ -305,7 +305,7 @@ const MainYesTasteSurvey = () => {
                 </GridBox>
                 <Button
                   className='text-white font-500 text-sub2 mt-12'
-                  type='brownPType'
+                  type='bgBrownP'
                   onClick={handleToTasteSurvay}
                 >
                   테스트 다시하기
