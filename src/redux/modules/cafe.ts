@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { cafeApis } from '../../apis';
-import { saveBeansList } from './beans';
+import { saveBeansList, setLoadedAndLengthZero } from './beans';
 
 const initialState = {
   cafeList: [{ cafeId: 0, cafeName: '' }],
@@ -37,7 +37,10 @@ export const getBeansListByCafe = createAsyncThunk(
   async (data: number, thunkAPI) => {
     try {
       await cafeApis.getBeansListByCafe(data).then((response) => {
-        thunkAPI.dispatch(saveBeansList(response.data.data));
+        const beanList = response.data.data;
+        thunkAPI.dispatch(saveBeansList({ beanList, page: 0 }));
+        thunkAPI.dispatch(setLoadedAndLengthZero());
+        // thunkAPI.dispatch(saveBeansList(response.data.data));
         return;
       });
     } catch (err) {

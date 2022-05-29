@@ -186,11 +186,11 @@ const StoreLocation = () => {
 
         // 마커 클릭 이벤트 부분
         const iwContent =
-            '<div style="padding:25px;">' +
+            '<div style="padding:25px; padding-bottom:50px;font-weight:700;font-size:20px;">' +
             title +
             '<br><a href="' +
             url +
-            '" style="color:blue;" target="_blank">링크 바로가기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+            '" style="color:blue;text-decoration:none;color:#964b00;font-weight:500" target="_blank">링크 바로가기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
           iwPosition = new window.kakao.maps.LatLng(33.450701, 126.570667); //인포윈도우 표시 위치입니다
 
         // 인포윈도우에 닫기 x버튼 추가

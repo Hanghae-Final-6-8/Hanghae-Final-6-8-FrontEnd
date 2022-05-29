@@ -64,7 +64,7 @@ const MyActivity = () => {
         {listMyActivity.map((post, index) => {
           return (
             <div
-              className='m-2 flex'
+              className='m-2 flex cursor-pointer'
               key={index}
               onClick={() => {
                 handleMoveToDetailPage(post.postsId!);
@@ -123,7 +123,7 @@ const MyActivity = () => {
               </Text>
               <Button
                 className='text-white font-500 text-body'
-                type='brownPType'
+                type='bgBrownP'
                 onClick={handleDeleteComment}
               >
                 삭제하기

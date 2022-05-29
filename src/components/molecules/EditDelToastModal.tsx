@@ -21,6 +21,7 @@ const EditDelToastModal = (props: postsIdType) => {
   // 커뮤니티 글 삭제
   const handleDeletePost = (postsId: number) => {
     appDispatch(deletePostDB(postsId));
+    navigate(-1);
   };
 
   const toggle = useSelector(
@@ -40,7 +41,7 @@ const EditDelToastModal = (props: postsIdType) => {
           <Text className='text-subH33 font-500'>어떤 작업을 하시겠어요?</Text>
           <Button
             className='text-white font-500 text-body'
-            type='brownPType'
+            type='bgBrownP'
             onClick={() => {
               handleMoveToEditPage(props.postsId);
             }}

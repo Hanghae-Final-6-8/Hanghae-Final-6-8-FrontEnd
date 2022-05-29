@@ -26,7 +26,7 @@ const MyLikes = () => {
     <div className='grid grid-cols-3 gap-0.5 pb-24'>
       {listLiked.map((post, index) => {
         return (
-          <div className='relative' key={index}>
+          <div className='relative cursor-pointer' key={index}>
             <img
               className='w-full object-cover'
               src={

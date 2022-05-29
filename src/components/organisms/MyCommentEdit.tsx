@@ -55,7 +55,7 @@ const MyCommentEdit = () => {
             </Text>
             <Button
               className='text-white font-500 text-body'
-              type='brownPType'
+              type='bgBrownP'
               onClick={handleDeleteComment}
             >
               삭제하기
