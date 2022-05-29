@@ -28,7 +28,7 @@ const MyLikes = () => {
         return (
           <div className='relative cursor-pointer' key={index}>
             <img
-              className='w-full object-cover'
+              className='h-full object-cover'
               src={
                 post.postsImage
                   ? post.postsImage.toString()
