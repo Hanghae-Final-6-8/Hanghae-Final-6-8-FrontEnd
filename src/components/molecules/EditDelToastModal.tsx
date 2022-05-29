@@ -37,7 +37,10 @@ const EditDelToastModal = (props: postsIdType) => {
         className='fixed z-10 touch-none top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.3)]'
         onClick={handleClosePopup}
       >
-        <RoundBox round='mainModal' className='flex flex-col pb-40 mt-80'>
+        <RoundBox
+          round='mainModal'
+          className='flex flex-col pb-40 mt-80 animate-fadeIn'
+        >
           <Text className='text-subH33 font-500'>어떤 작업을 하시겠어요?</Text>
           <Button
             className='text-white font-500 text-body'

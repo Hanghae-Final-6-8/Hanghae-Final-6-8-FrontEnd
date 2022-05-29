@@ -99,7 +99,7 @@ const PostList = () => {
           {list.map((post, idx) => {
             return (
               <div
-                className='bg-white w-full mb-3 shadow-lg rounded-30px'
+                className='bg-white w-full mb-3 shadow-lg rounded-30px transition hover:bg-brownS03 active:bg-brownS03 ease-in'
                 key={idx}
               >
                 <div className='flex justify-between p-1'>

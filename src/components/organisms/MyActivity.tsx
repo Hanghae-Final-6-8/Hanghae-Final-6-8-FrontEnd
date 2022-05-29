@@ -64,7 +64,7 @@ const MyActivity = () => {
         {listMyActivity.map((post, index) => {
           return (
             <div
-              className='m-2 flex cursor-pointer'
+              className='m-2 p-1 flex items-center shadow-md rounded-xl cursor-pointer transition hover:bg-brownS03 active:bg-brownS03 ease-in'
               key={index}
               onClick={() => {
                 handleMoveToDetailPage(post.postsId!);
@@ -101,7 +101,10 @@ const MyActivity = () => {
         </div>
         {myCommentList.map((comment, index) => {
           return (
-            <div className='m-2 flex pb-4 border-b-2' key={index}>
+            <div
+              className='m-2 flex pt-2 pb-2 pl-1 pr-1 drop-shadow-xl rounded-md transition hover:bg-brownS03 active:bg-brownS03 ease-in'
+              key={index}
+            >
               <div className='flex justify-between w-full'>
                 <p>{comment.content}</p>
                 <button
@@ -117,7 +120,11 @@ const MyActivity = () => {
         })}
         {toggle === true ? (
           <div className='fixed z-10 touch-none top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.3)]'>
-            <RoundBox round='mainModal' className='flex flex-col pb-36 mt-80'>
+            <RoundBox
+              round='mainModal'
+              className='flex flex-col pb-36 mt-80 animate-fadeIn'
+              onClick={handleToggle}
+            >
               <Text className='text-subH33 font-500'>
                 어떤 작업을 하시겠어요?
               </Text>
