@@ -62,6 +62,15 @@ const PostDetail = () => {
     appDispatch(addCommentDB({ posts_id: Number(postsId), content: comment }));
     setComment('');
   };
+  // 엔터키 경우 추가
+  const onKeydown = (e: React.KeyboardEvent<HTMLElement>) => {
+    if (comment.length !== 0 && e.key === 'Enter') {
+      appDispatch(
+        addCommentDB({ posts_id: Number(postsId), content: comment })
+      );
+      setComment('');
+    }
+  };
 
   const handleBacktoPrev = () => {
     scrolly !== null
@@ -147,6 +156,7 @@ const PostDetail = () => {
                 placeholder={`${user.nickname}(으)로 댓글 달기...`}
                 onChange={getInputCommentFrom}
                 value={comment}
+                onKeyDown={onKeydown}
               />
               <div className='flex justify-center items-center'>
                 <button
