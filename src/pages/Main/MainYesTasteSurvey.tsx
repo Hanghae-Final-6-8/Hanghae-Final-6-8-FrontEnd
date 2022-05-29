@@ -28,6 +28,13 @@ import { detailBeans } from '../../redux/modules/beans';
 import { useEffect, useState } from 'react';
 import { logoCopickSquare, copick } from '../../assets/logo';
 import { addFavoriteList } from '../../redux/modules/favorite';
+import {
+  defaultBg01,
+  defaultBg02,
+  defaultBg03,
+  defaultBg04,
+  defaultBg05,
+} from '../../assets/backgrounds';
 
 const MainYesTasteSurvey = () => {
   const navigate = useNavigate();
@@ -47,11 +54,11 @@ const MainYesTasteSurvey = () => {
   }, [setRandomBg]);
   const selectRandomBg = (num: number) => {
     const bgList = [
-      'bg-defaultBg01',
-      'bg-defaultBg02',
-      'bg-defaultBg03',
-      'bg-defaultBg04',
-      'bg-defaultBg05',
+      defaultBg01,
+      defaultBg02,
+      defaultBg03,
+      defaultBg04,
+      defaultBg05,
     ];
     return bgList[num];
   };
@@ -154,10 +161,9 @@ const MainYesTasteSurvey = () => {
   return (
     <>
       <main
-        className={`relative px-6 py-12 bg-brownS02 ${selectRandomBg(
-          randomBg
-        )} bg-contain bg-no-repeat bg-fixed w-full h-full`}
+        className={`relative px-6 py-12 bg-brownS02 bg-contain bg-no-repeat bg-fixed w-full h-full`}
       >
+        <img className='absolute left-0 top-0' src={selectRandomBg(randomBg)} />
         <header className={!beanId ? 'relative pt-2' : 'relative'}>
           {!beanId ? (
             <img className='h-3.5' src={copick} />

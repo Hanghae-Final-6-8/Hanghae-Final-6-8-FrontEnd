@@ -46,7 +46,6 @@ export const loginKakao = createAsyncThunk(
         const refreshToken = response.headers.refresh_token;
         setAccessTokenToCookie(accessToken);
         setRefreshTokenToCookie(refreshToken);
-
         return;
       });
     } catch (err) {
