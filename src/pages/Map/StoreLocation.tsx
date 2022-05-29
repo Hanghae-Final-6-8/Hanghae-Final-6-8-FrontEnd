@@ -1,10 +1,14 @@
 import { useEffect } from 'react';
 import useCurrentLocation from '../../utils/useCurrentPosition';
 import { useParams, useNavigate } from 'react-router-dom';
+import { PrevBtn, Span } from '../../components/atoms';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/configureStore';
 
 const StoreLocation = () => {
   const cafeName = useParams().cafeName;
   const navigate = useNavigate();
+  const user = useSelector((state: RootState) => state.user);
 
   const { location, error } = useCurrentLocation();
   // 마커를 클릭하면 장소명을 표출할 인포윈도우
@@ -16,7 +20,6 @@ const StoreLocation = () => {
 
   useEffect(() => {
     const container = document.getElementById('map');
-    /////
     let markers: any = [];
 
     if (!error) {
@@ -125,9 +128,10 @@ const StoreLocation = () => {
             places.place_name +
             '</a>';
 
-        el.style.marginBottom = '10px';
+        el.style.marginBottom = '';
         el.style.borderBottom = '1px solid #e5e5e5';
-        el.style.padding = '15px';
+        el.style.paddingBottom = '15px';
+        el.style.paddingTop = '15px';
 
         if (places.road_address_name) {
           itemStr +=
@@ -186,11 +190,11 @@ const StoreLocation = () => {
 
         // 마커 클릭 이벤트 부분
         const iwContent =
-            '<div style="padding:25px; padding-bottom:50px;font-weight:700;font-size:20px;">' +
+            '<div class="kakaoMapShowInfo">' +
             title +
             '<br><a href="' +
             url +
-            '" style="color:blue;text-decoration:none;color:#964b00;font-weight:500" target="_blank">링크 바로가기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+            '" style="color:blue;text-decoration:none;color:#964b00;font-weight:500;" target="_blank">링크 바로가기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
           iwPosition = new window.kakao.maps.LatLng(33.450701, 126.570667); //인포윈도우 표시 위치입니다
 
         // 인포윈도우에 닫기 x버튼 추가
@@ -271,29 +275,28 @@ const StoreLocation = () => {
       <div
         className='w-full'
         id='map'
-        style={{ height: '915px', backgroundColor: 'grey' }}
+        style={{ height: '700px', backgroundColor: 'grey' }}
       >
         지도
       </div>
-
-      <div
-        id='menu_wrap'
-        className='bg_white no-scrollbar w-full h-72 fixed bottom-0 overflow-y-auto bg-[rgba(255,255,255,1)] text-black rounded-t-30px pt-5 pl-4 pr-4 z-[100]'
-      >
-        <div>
+      <div className='bg-white'>
+        <div
+          id='menu_wrap'
+          className='bg-white no-scrollbar w-full h-72 fixed bottom-0 overflow-y-auto bg-[rgba(255,255,255,1)] text-black rounded-t-30px pt-5 px-6 z-[100]'
+        >
           <div>
-            {/* <p style={{ fontWeight: 'bold' }}>USER님 주변에 있는</p> */}
-            <p className='mb-5 font-[700]'>
-              <span className='text-[#964B00]'>{cafeName}</span> 매장 정보예요
-            </p>
+            <div className='mb-5 font-500 text-sub'>
+              {user.nickname ? <p>{`${user.nickname}님 주변에 있는`}</p> : null}
+              <p>
+                <Span type='strong'>{cafeName}</Span> 매장 정보예요
+              </p>
+            </div>
+            <hr />
+            <ul id='placesList'>목록</ul>
           </div>
-          <hr className='mb-3' />
-          <ul id='placesList'>목록</ul>
         </div>
       </div>
-      <button className='fixed top-3 left-3 z-[1000]' onClick={goBack}>
-        뒤로가기
-      </button>
+      <PrevBtn className='z-10 top-14 left-6' />
     </div>
   );
 };
