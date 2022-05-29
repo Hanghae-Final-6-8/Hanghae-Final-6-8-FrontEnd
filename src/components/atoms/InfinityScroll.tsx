@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import _ from 'lodash';
+import { isMobile } from 'react-device-detect';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -24,16 +25,31 @@ const InfinityScroll: React.FC<LayoutProps> = (props) => {
 
     const scrollTop = domEl[0].scrollTop;
 
-    if (
-      scrollHeight - clientHeight - scrollTop < 200 ||
-      l_docElement.scrollHeight -
-        l_docElement.clientHeight -
-        l_docElement.scrollTop <
+    if (isMobile) {
+      if (
+        l_docElement.scrollHeight -
+          l_docElement.clientHeight -
+          l_docElement.scrollTop <
         200
-    ) {
-      // console.log('!callNext!');
-      callNext();
+      ) {
+        callNext();
+      }
+    } else {
+      if (scrollHeight - clientHeight - scrollTop < 200) {
+        callNext();
+      }
     }
+
+    // if (
+    //   scrollHeight - clientHeight - scrollTop < 200 ||
+    //   l_docElement.scrollHeight -
+    //     l_docElement.clientHeight -
+    //     l_docElement.scrollTop <
+    //     200
+    // ) {
+    //   // console.log('!callNext!');
+    //   callNext();
+    // }
   }, 300);
 
   const handleScroll = useCallback(_handleScroll, [loading]);

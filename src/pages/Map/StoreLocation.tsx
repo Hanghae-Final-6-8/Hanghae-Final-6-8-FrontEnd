@@ -269,37 +269,25 @@ const StoreLocation = () => {
   return (
     <div style={{ position: 'relative' }}>
       <div
+        className='w-full'
         id='map'
-        style={{ width: '375px', height: '812px', backgroundColor: 'grey' }}
+        style={{ height: '915px', backgroundColor: 'grey' }}
       >
         지도
       </div>
 
       <div
         id='menu_wrap'
-        className='bg_white no-scrollbar'
-        style={{
-          position: 'absolute',
-          bottom: '0',
-          zIndex: '1000',
-          width: '375px',
-          height: '320px',
-          overflowY: 'auto',
-          backgroundColor: 'rgba(255,255,255,1)',
-          color: '#111',
-          padding: '20px 15px',
-          borderTopLeftRadius: '10%',
-          borderTopRightRadius: '10%',
-        }}
+        className='bg_white no-scrollbar w-full h-72 fixed bottom-0 overflow-y-auto bg-[rgba(255,255,255,1)] text-black rounded-t-30px pt-5 pl-4 pr-4 z-[100]'
       >
         <div>
           <div>
             {/* <p style={{ fontWeight: 'bold' }}>USER님 주변에 있는</p> */}
-            <p style={{ marginBottom: '20px', fontWeight: 'bold' }}>
-              <span style={{ color: '#964B00' }}>{cafeName}</span> 매장 정보예요
+            <p className='mb-5 font-[700]'>
+              <span className='text-[#964B00]'>{cafeName}</span> 매장 정보예요
             </p>
           </div>
-          <hr className='mb-5' />
+          <hr className='mb-3' />
           <ul id='placesList'>목록</ul>
         </div>
       </div>

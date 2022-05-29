@@ -40,7 +40,7 @@ const Comment = (props: postsIdProps) => {
                 {comment.nickname?.substring(0, 1).toUpperCase()}
               </div>
 
-              <p>{comment.content}</p>
+              <p className='w-44'>{comment.content}</p>
             </div>
 
             <span>{comment.createdAt}</span>

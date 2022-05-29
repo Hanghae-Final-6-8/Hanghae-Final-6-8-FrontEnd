@@ -74,8 +74,8 @@ const PostList = () => {
 
   return (
     <div>
-      <div className='flex justify-between'>
-        <div className='m-5 text-[22px]'>커뮤니티</div>
+      <div className='flex justify-between items-center'>
+        <div className='font-500 m-5 text-[22px]'>커뮤니티</div>
         {!user.isLogin ? (
           <></>
         ) : (
@@ -99,8 +99,11 @@ const PostList = () => {
           {list.map((post, idx) => {
             return (
               <div
-                className='bg-white w-full mb-3 shadow-lg rounded-30px'
+                className='bg-white w-full cursor-pointer mb-3 shadow-lg rounded-30px transition hover:bg-brownS03 active:bg-brownS03 ease-in'
                 key={idx}
+                onClick={() => {
+                  handleMoveToDetailPage(post.postsId!);
+                }}
               >
                 <div className='flex justify-between p-1'>
                   <div className='flex items-center mb-4'>
@@ -112,7 +115,8 @@ const PostList = () => {
                   {user.nickname === post.nickname ? (
                     <button
                       className='p-4'
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         getSetToastFrom(post.postsId!);
                       }}
                     >
@@ -123,20 +127,18 @@ const PostList = () => {
                   )}
                 </div>
                 <img
-                  className='w-full cursor-pointer'
+                  className='w-full h-80 object-cover'
                   src={
                     post.postsImage
                       ? post.postsImage.toString()
                       : 'https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814052__340.png'
                   }
-                  onClick={() => {
-                    handleMoveToDetailPage(post.postsId!);
-                  }}
                 />
                 <div className='p-4'>
                   {post.isLikes === null ? (
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         handleAddLikes(post.postsId!);
                       }}
                     >
@@ -144,7 +146,8 @@ const PostList = () => {
                     </button>
                   ) : (
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         handleDeleteLikes(post.postsId!);
                       }}
                     >

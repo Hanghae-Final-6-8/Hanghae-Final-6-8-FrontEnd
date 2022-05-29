@@ -20,11 +20,7 @@ const AddEditPost = () => {
     !isLogin && setMoveToLogin();
   }, []);
 
-  // 수정하려고 들어왔을 때
-  const postsIdparams = useParams();
-
   const navigate = useNavigate();
-
   const appDispatch = useAppDispatch();
 
   const [title, setTitle] = useState<string>('');
@@ -32,7 +28,6 @@ const AddEditPost = () => {
   // 커뮤니티 태그
   const [inputTag, setInputTag] = useState<string>('');
   const [tagName, setTagName] = useState<Array<string>>([]);
-
   // 이미지 파일 전송용
   const [file, setFile] = useState<File[]>([]);
   // 이미지 미리보기용
@@ -40,7 +35,6 @@ const AddEditPost = () => {
 
   const getOnLoadFileFrom = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.currentTarget.files;
-
     if (file && file.length) {
       setFile((existing) => existing.concat(Array.from(file)));
     }
@@ -66,12 +60,15 @@ const AddEditPost = () => {
     modifiedAt: '',
   };
   // 게시글수정 url경우
+  // 수정하려고 들어왔을 때
+  const postsIdparams = useParams();
   if (postsIdparams.postsId) {
     postList.list = useSelector((store: RootState) => store.posts.list);
     post = postList.list.find((post: PostsItemDataParams) => {
       return post.postsId === Number(postsIdparams.postsId);
     });
   }
+  // 수정인경우(게시물있음) 각value 넣어줌
   useEffect(() => {
     setTitle(post ? post.title : '');
     setContent(post ? post.content : '');
@@ -179,8 +176,11 @@ const AddEditPost = () => {
 
   return (
     <div>
-      <button className='m-2 p-2' onClick={handleBacktoPrev}>
-        <img src={left} />
+      <button
+        className='bg-white  rounded-full h-12 w-12 m-2 p-2 block transition hover:shadow-lg ease-in'
+        onClick={handleBacktoPrev}
+      >
+        <img src={left} className='w-full' />
       </button>
       {postsIdparams.postsId ? (
         <h1 className='text-center mb-5 text-[18px]'>게시물 수정</h1>
@@ -190,10 +190,10 @@ const AddEditPost = () => {
       <form onSubmit={handleSubmit(onValid)}>
         <div className='bg-white shadow-xl rounded-30px pt-5 pb-5 pl-5 pr-5'>
           <div className='flex flex-col w-full border-b pt-5 pb-5 '>
-            <div className='flex mb-5'>
+            <div className='flex justify-between mb-5'>
               <div className='relative mr-3'>
                 <img
-                  className='w-24 h-24'
+                  className='w-28 h-28'
                   src={previewImage ? previewImage : camera}
                 />
                 <label
@@ -210,13 +210,14 @@ const AddEditPost = () => {
                   accept='image/*'
                 />
               </div>
-              <div className='w-48 h-24'>
+              <div className='w-44 h-56 flex flex-col justify-center items-center'>
                 <input
                   {...register('title', { required: '제목을 입력해주세요' })}
                   type='text'
                   placeholder='제목을 입력해주세요'
                   onChange={getInputTitleFrom}
                   value={title}
+                  className='w-full outline-none m-1 p-2 shadow-lg rounded-lg'
                 />
                 {errors.title ? (
                   <p className='text-[red]'>{errors.title.message}</p>
@@ -226,10 +227,11 @@ const AddEditPost = () => {
 
                 <textarea
                   {...register('content', { required: '내용을 입력해주세요' })}
-                  className='h-20 w-full resize-none outline-none'
-                  placeholder='당신의 커피를 보여주세요...'
+                  className='h-full w-full resize-none outline-none no-scrollbar shadow-lg rounded-lg p-1'
+                  placeholder='당신의 커피를 보여주세요'
                   onChange={getInputContentFrom}
                   value={content}
+                  maxLength={200}
                 />
                 {errors.content ? (
                   <p className='text-[red]'>{errors.content.message}</p>
@@ -241,7 +243,7 @@ const AddEditPost = () => {
             <p id='fileValid' style={{ display: 'none', color: 'red' }}>
               이미지를 선택해주세요
             </p>
-            <div className='HashWrapOuter flex justify-around items-center mt-10'>
+            <div className='HashWrapOuter flex justify-around items-center mt-2'>
               <input
                 id='tagName'
                 type='text'
@@ -283,7 +285,7 @@ const AddEditPost = () => {
           </div>
 
           <Button
-            className='text-white font-500 text-sub2 mt-12'
+            className='text-white font-500 text-sub2 mt-6'
             type='bgBrownP'
           >
             {postsIdparams.postsId ? '수정하기' : '등록하기'}

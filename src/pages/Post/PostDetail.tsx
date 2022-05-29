@@ -73,7 +73,7 @@ const PostDetail = () => {
       ) : (
         <div className='pb-24'>
           <button
-            className=' bg-white  rounded-full h-12 w-12 m-2 p-2 block'
+            className=' bg-white  rounded-full h-12 w-12 m-2 p-2 block transition hover:shadow-lg ease-in'
             onClick={handleBacktoPrev}
           >
             <img src={left} className='w-full' />
@@ -131,20 +131,23 @@ const PostDetail = () => {
             <></>
           )}
           <hr className='mb-4' />
-          <div className='fixed bottom-0 left-0 w-full'>
+          <div className='fixed bottom-0 left-0 w-full flex justify-between'>
             <input
-              className='w-[70%] p-8 text-[14px] outline-none'
+              className='w-[70%] p-8 text-[18px] outline-none'
               type='text'
+              maxLength={120}
               placeholder='댓글 내용을 입력해주세요'
               onChange={getInputCommentFrom}
               value={comment}
             />
-            <button
-              className='w-[30%] p-8 text-[14px] bg-white'
-              onClick={handleAddComment}
-            >
-              게시
-            </button>
+            <div className='w-[30%] flex justify-center items-center'>
+              <button
+                className=' p-4 text-[18px] rounded-xl bg-white transition hover:shadow-md ease-in'
+                onClick={handleAddComment}
+              >
+                게시
+              </button>
+            </div>
           </div>
           <Comment postsId={Number(postsId)} />
           {toggle && <EditDelToastModal postsId={clickedPostId} />}
