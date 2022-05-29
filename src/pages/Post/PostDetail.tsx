@@ -93,7 +93,7 @@ const PostDetail = () => {
                 <div>
                   <Text type='mainSubTitle'>{post?.nickname}</Text>
                   <Text className='mt-0' type='caption'>
-                    {post?.createdAt}
+                    {post?.modifiedAt}
                   </Text>
                 </div>
                 {user.nickname === post!.nickname ? (

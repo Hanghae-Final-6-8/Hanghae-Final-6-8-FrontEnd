@@ -71,7 +71,7 @@ export const getPostListDB = createAsyncThunk(
           }
 
           const today = new Date();
-          const postedDay = new Date(post.created_at);
+          const postedDay = new Date(post.modified_at);
           let newDate = '';
           let betweenTime = 0;
           betweenTime = Math.floor(
@@ -81,16 +81,15 @@ export const getPostListDB = createAsyncThunk(
             newDate = '방금전';
           } else if (betweenTime < 60) {
             newDate = `${betweenTime}분전`;
-          }
-          if (betweenTime > 60) {
+          } else if (betweenTime >= 60) {
             betweenTime = Math.floor(betweenTime / 60);
             if (betweenTime < 24) {
               newDate = `${betweenTime}시간전`;
-            } else if (betweenTime > 24 && betweenTime < 365) {
-              betweenTime = Math.ceil(betweenTime / 60 / 24);
+            } else if (betweenTime >= 24 && betweenTime < 8760) {
+              betweenTime = Math.floor(betweenTime / 24);
               newDate = `${betweenTime}일전`;
-            } else if (betweenTime >= 365) {
-              betweenTime = Math.ceil(betweenTime / 365);
+            } else if (betweenTime >= 8760) {
+              betweenTime = Math.floor(betweenTime / 8760);
               newDate = `${betweenTime}년전`;
             }
           }
@@ -102,8 +101,8 @@ export const getPostListDB = createAsyncThunk(
             tagName: newTagStr,
             postsImage: post.posts_image,
             nickname: post.nickname,
-            createdAt: newDate,
-            modifiedAt: post.modified_at,
+            createdAt: post.created_at,
+            modifiedAt: newDate,
             isLikes: post.isLikes,
             likesCount: post.likes_count,
           });
@@ -132,7 +131,7 @@ export const getPostDB = createAsyncThunk(
         }
         // 날짜 계산
         const today = new Date();
-        const postedDay = new Date(res.data.data.created_at);
+        const postedDay = new Date(res.data.data.modified_at);
         let newDate = '';
         let betweenTime = 0;
         betweenTime = Math.floor(
@@ -142,16 +141,15 @@ export const getPostDB = createAsyncThunk(
           newDate = '방금전';
         } else if (betweenTime < 60) {
           newDate = `${betweenTime}분전`;
-        }
-        if (betweenTime > 60) {
+        } else if (betweenTime >= 60) {
           betweenTime = Math.floor(betweenTime / 60);
           if (betweenTime < 24) {
             newDate = `${betweenTime}시간전`;
-          } else if (betweenTime > 24 && betweenTime < 365) {
-            betweenTime = Math.ceil(betweenTime / 60 / 24);
+          } else if (betweenTime >= 24 && betweenTime < 8760) {
+            betweenTime = Math.floor(betweenTime / 24);
             newDate = `${betweenTime}일전`;
-          } else if (betweenTime >= 365) {
-            betweenTime = Math.ceil(betweenTime / 365);
+          } else if (betweenTime >= 8760) {
+            betweenTime = Math.floor(betweenTime / 8760);
             newDate = `${betweenTime}년전`;
           }
         }
@@ -162,8 +160,8 @@ export const getPostDB = createAsyncThunk(
           postsImage: res.data.data.posts_image,
           title: res.data.data.title,
           content: res.data.data.content,
-          createdAt: newDate,
-          modifiedAt: res.data.data.modified_at,
+          createdAt: res.data.data.created_at,
+          modifiedAt: newDate,
           tagName: newTagStr,
           isLikes: res.data.data.isLikes,
           likesCount: res.data.data.likes_count,
