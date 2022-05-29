@@ -114,7 +114,7 @@ const PostDetail = () => {
             }
           />
           <Likes postsId={Number(postsId)} />
-          <p>{post?.title}</p>
+          {/* <p>{post?.title}</p> */}
           <p>{post?.content}</p>
           {post?.tagName.length !== 0 ? (
             post?.tagName.map((tag, idx) => {
