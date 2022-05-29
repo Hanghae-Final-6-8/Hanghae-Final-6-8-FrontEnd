@@ -115,7 +115,8 @@ const PostList = () => {
                   {user.nickname === post.nickname ? (
                     <button
                       className='p-4'
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         getSetToastFrom(post.postsId!);
                       }}
                     >
