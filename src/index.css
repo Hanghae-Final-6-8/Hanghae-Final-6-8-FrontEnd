@@ -100,3 +100,11 @@ body::-webkit-scrollbar {
   filter: invert(73%) sepia(71%) saturate(1%) hue-rotate(7deg) brightness(110%)
     contrast(86%);
 }
+
+/* 카카오 맵 */
+.kakaoMapShowInfo {
+  white-space: nowrap;
+  padding: 25px;
+  font-weight: 500;
+  font-size: 18px;
+}
