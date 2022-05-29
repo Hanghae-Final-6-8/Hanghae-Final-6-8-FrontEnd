@@ -9,11 +9,11 @@ const BeansSearchForm = () => {
 
   const checker = (str: string) => {
     /* eslint-disable-next-line */
-    const regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
-    if (regExp.test(str)) {
-      return true;
-    } else {
+    const regex = /^[가-힣|a-z|A-Z|0-9|]+$/;
+    if (regex.test(str)) {
       return false;
+    } else {
+      return true;
     }
   };
 
@@ -27,7 +27,7 @@ const BeansSearchForm = () => {
       alert('검색어를 입력해주세요!');
       return;
     } else if (checker(inputValue)) {
-      alert('특수문자를 제거해주세요!');
+      alert('특수문자와 공백을 제거해주세요!');
       setInputValue('');
       return;
     }
