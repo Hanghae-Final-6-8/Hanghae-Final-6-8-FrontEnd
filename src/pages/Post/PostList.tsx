@@ -99,7 +99,7 @@ const PostList = () => {
           {list.map((post, idx) => {
             return (
               <div
-                className='bg-white w-full cursor-pointer mb-3 shadow-lg rounded-30px pt-5 transition hover:scale-[1.02] active:scale-[1.02] ease-in'
+                className='bg-white w-full cursor-pointer mb-3 shadow-contents rounded-30px pt-5 transition hover:scale-[1.02] active:scale-[1.02] ease-in'
                 key={idx}
                 onClick={() => {
                   handleMoveToDetailPage(post.postsId!);
@@ -113,24 +113,21 @@ const PostList = () => {
                     <div>
                       <Text type='mainSubTitle'>{post.nickname}</Text>
                       <Text className='mt-0' type='caption'>
-                        몇일 전
+                        {post?.createdAt}
                       </Text>
                     </div>
-                    <img className='absolute right-[19px]' src={more} />
+                    {user.nickname === post.nickname ? (
+                      <button
+                        className='p-4'
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          getSetToastFrom(post.postsId!);
+                        }}
+                      >
+                        <img className='absolute right-[19px]' src={more} />
+                      </button>
+                    ) : null}
                   </div>
-                  {user.nickname === post.nickname ? (
-                    <button
-                      className='p-4'
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        getSetToastFrom(post.postsId!);
-                      }}
-                    >
-                      ···
-                    </button>
-                  ) : (
-                    <></>
-                  )}
                 </div>
                 <img
                   className='w-full h-80 object-cover'

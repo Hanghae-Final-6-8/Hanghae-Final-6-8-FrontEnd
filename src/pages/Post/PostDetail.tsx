@@ -1,13 +1,16 @@
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../redux/configureStore';
-import Comment from '../../components/molecules/Comment';
 import { useEffect, useState } from 'react';
 import { addCommentDB } from '../../redux/modules/comment';
-import Likes from '../../components/atoms/Likes';
+import { Likes, Text } from '../../components/atoms';
 import postsSlice, { getPostDB } from '../../redux/modules/posts';
-import { left } from '../../assets/icons';
-import { SpinnerSuspense, EditDelToastModal } from '../../components/molecules';
+import { left, more } from '../../assets/icons';
+import {
+  SpinnerSuspense,
+  EditDelToastModal,
+  Comment,
+} from '../../components/molecules';
 import { setModalToggle } from '../../redux/modules/modalToggle';
 
 const PostDetail = () => {
@@ -71,86 +74,90 @@ const PostDetail = () => {
       {isLoading ? (
         <SpinnerSuspense />
       ) : (
-        <div className='pb-24'>
-          <button
-            className=' bg-white  rounded-full h-12 w-12 m-2 p-2 block transition hover:shadow-lg ease-in'
-            onClick={handleBacktoPrev}
-          >
-            <img src={left} className='w-full' />
-          </button>
-          <div className='flex justify-between items-center'>
-            <div>
-              <div className='h-14 w-14 rounded-full bg-brownS03 mr-4 text-center leading-[56px] text-[28px] mb-3'>
-                {post?.nickname?.substring(0, 1).toUpperCase()}
-              </div>
-              <div className='flex flex-col'>
-                <span>{post?.nickname}</span>
-                <span className='text-[12px] text-gray-500'>
-                  {post?.createdAt}
-                </span>
+        <div className='pb-24 relative'>
+          <div className='relative text-center'>
+            <button
+              className='absolute top-0 h-8 w-8 block'
+              onClick={handleBacktoPrev}
+            >
+              <img src={left} className='w-full' />
+            </button>
+            <Text className='text-sub font-500'>더 보기...</Text>
+          </div>
+          <div className='bg-white w-full mb-3 shadow-contents rounded-30px'>
+            <div className='flex justify-between mt-9 items-center'>
+              <div className='flex items-center mb-4'>
+                <div className='relative h-12 w-12 ml-[19px] rounded-full  bg-brownS03 mr-3.5 text-center leading-[48px] text-head'>
+                  {post?.nickname?.substring(0, 1).toUpperCase()}
+                </div>
+                <div>
+                  <Text type='mainSubTitle'>{post?.nickname}</Text>
+                  <Text className='mt-0' type='caption'>
+                    {post?.createdAt}
+                  </Text>
+                </div>
+                {user.nickname === post!.nickname ? (
+                  <button
+                    onClick={() => {
+                      getSetToastFrom(post!.postsId!);
+                    }}
+                  >
+                    <img className='absolute right-[19px]' src={more} />
+                  </button>
+                ) : null}
               </div>
             </div>
 
-            {user.nickname === post!.nickname ? (
-              <button
-                className='p-4'
-                onClick={() => {
-                  getSetToastFrom(post!.postsId!);
-                }}
-              >
-                ···
-              </button>
-            ) : (
-              <></>
-            )}
-          </div>
-
-          <img
-            className='w-full'
-            src={
-              post?.postsImage
-                ? post.postsImage.toString()
-                : 'https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814052__340.png'
-            }
-          />
-          <Likes postsId={Number(postsId)} />
-          <p>{post?.title}</p>
-          <p>{post?.content}</p>
-          {post?.tagName.length !== 0 ? (
-            post?.tagName.map((tag, idx) => {
-              return (
-                <span
-                  className='inline-block bg-orange-100 text-amber-800 mt-4 mb-4 mr-1 rounded-md text-sm font-bold p-1'
-                  key={idx}
-                >
-                  {tag}
-                </span>
-              );
-            })
-          ) : (
-            <></>
-          )}
-          <hr className='mb-4' />
-          <div className='fixed bottom-0 left-0 w-full flex justify-between'>
-            <input
-              className='w-[70%] p-8 text-[18px] outline-none'
-              type='text'
-              maxLength={120}
-              placeholder='댓글 내용을 입력해주세요'
-              onChange={getInputCommentFrom}
-              value={comment}
+            <img
+              className='w-full'
+              src={
+                post?.postsImage
+                  ? post.postsImage.toString()
+                  : 'https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814052__340.png'
+              }
             />
-            <div className='w-[30%] flex justify-center items-center'>
-              <button
-                className=' p-4 text-[18px] rounded-xl bg-white transition hover:shadow-md ease-in'
-                onClick={handleAddComment}
-              >
-                게시
-              </button>
+            <Likes postsId={Number(postsId)} />
+            <div className='px-5'>
+              <p className='text-body font-500'>{post?.content}</p>
+              {post?.tagName.length !== 0
+                ? post?.tagName.map((tag, idx) => {
+                    return (
+                      <span
+                        className='inline-block bg-orange-100 text-brownS02 font-500 text-caption mt-4 mb-4 mr-1 rounded-full text-sm font-bold px-2 py-1 cursor-default'
+                        key={idx}
+                      >
+                        {tag}
+                      </span>
+                    );
+                  })
+                : null}
+            </div>
+            <hr className='mb-4' />
+            <div className='px-5'>
+              <Comment postsId={Number(postsId)} />
+              {toggle && <EditDelToastModal postsId={clickedPostId} />}
             </div>
           </div>
-          <Comment postsId={Number(postsId)} />
-          {toggle && <EditDelToastModal postsId={clickedPostId} />}
+          <div className='fixed bg-white bottom-0 left-0 w-full h-[90px'>
+            <div className='shadow-toolbar flex px-6'>
+              <input
+                className='text-body py-3 px-6 pr-50px mt-5 mb-[21px] w-full outline-none rounded-full shadow-contents'
+                type='text'
+                maxLength={120}
+                placeholder={`${user.nickname}(으)로 댓글 달기...`}
+                onChange={getInputCommentFrom}
+                value={comment}
+              />
+              <div className='flex justify-center items-center'>
+                <button
+                  className='absolute right-[44px] text-body rounded-xl text-gray80 '
+                  onClick={handleAddComment}
+                >
+                  게시
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </>
