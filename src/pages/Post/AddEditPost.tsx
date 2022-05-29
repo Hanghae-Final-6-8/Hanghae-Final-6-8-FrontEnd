@@ -180,8 +180,11 @@ const AddEditPost = () => {
 
   return (
     <div>
-      <button className='m-2 p-2' onClick={handleBacktoPrev}>
-        <img src={left} />
+      <button
+        className='bg-white  rounded-full h-12 w-12 m-2 p-2 block transition hover:shadow-lg ease-in'
+        onClick={handleBacktoPrev}
+      >
+        <img src={left} className='w-full' />
       </button>
       {postsIdparams.postsId ? (
         <h1 className='text-center mb-5 text-[18px]'>게시물 수정</h1>
@@ -211,7 +214,7 @@ const AddEditPost = () => {
                   accept='image/*'
                 />
               </div>
-              <div className='w-48 h-24'>
+              <div className='w-48 h-36'>
                 <input
                   {...register('title', { required: '제목을 입력해주세요' })}
                   type='text'
@@ -227,10 +230,11 @@ const AddEditPost = () => {
 
                 <textarea
                   {...register('content', { required: '내용을 입력해주세요' })}
-                  className='h-20 w-full resize-none outline-none'
+                  className='h-full w-full resize-none outline-none no-scrollbar'
                   placeholder='당신의 커피를 보여주세요...'
                   onChange={getInputContentFrom}
                   value={content}
+                  maxLength={200}
                 />
                 {errors.content ? (
                   <p className='text-[red]'>{errors.content.message}</p>
