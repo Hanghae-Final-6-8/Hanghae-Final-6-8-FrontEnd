@@ -96,9 +96,9 @@ const AddEditPost = () => {
   }, [file]);
 
   // 커뮤니티 타이틀 set
-  const getInputTitleFrom = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
-  };
+  // const getInputTitleFrom = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setTitle(e.target.value);
+  // };
   // 커뮤니티 태그 set
   const getInputTagNameFrom = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputTag(e.target.value);
@@ -124,7 +124,9 @@ const AddEditPost = () => {
 
   // 커뮤니티 내용 set
   const getInputContentFrom = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.target.value);
+    const content = e.target.value.replace('<br>', '\r\n');
+    setContent(content);
+    // setContent(e.target.value);
   };
 
   const handleBacktoPrev = () => {
@@ -158,7 +160,7 @@ const AddEditPost = () => {
     if (postsIdparams.postsId) {
       const formData = new FormData();
       formData.append('posts_id', post!.postsId!.toString());
-      formData.append('title', data.title);
+      formData.append('title', 'defaultTitle');
       formData.append('content', data.content);
       formData.append('tag_name', tagName.toString());
       formData.append('posts_image', file[0]);
@@ -176,24 +178,28 @@ const AddEditPost = () => {
 
   return (
     <div>
-      <button
-        className='bg-white  rounded-full h-12 w-12 m-2 p-2 block transition hover:shadow-lg ease-in'
-        onClick={handleBacktoPrev}
-      >
-        <img src={left} className='w-full' />
-      </button>
-      {postsIdparams.postsId ? (
-        <h1 className='text-center mb-5 text-[18px]'>게시물 수정</h1>
-      ) : (
-        <h1 className='text-center mb-5 text-[18px]'>새 게시물</h1>
-      )}
+      <div className='flex items-center justify-between'>
+        <button
+          className='bg-white  rounded-full h-12 w-12 m-2 p-2 block transition hover:shadow-lg ease-in'
+          onClick={handleBacktoPrev}
+        >
+          <img src={left} className='w-full' />
+        </button>
+        {postsIdparams.postsId ? (
+          <h1 className='text-center text-[18px]'>게시글 수정</h1>
+        ) : (
+          <h1 className='text-center text-[18px]'>새 게시물</h1>
+        )}
+        <div className='bg-transparent h-12 w-12' />
+      </div>
+
       <form onSubmit={handleSubmit(onValid)}>
         <div className='bg-white shadow-xl rounded-30px pt-5 pb-5 pl-5 pr-5'>
           <div className='flex flex-col w-full border-b pt-5 pb-5 '>
             <div className='flex justify-between mb-5'>
               <div className='relative mr-3'>
                 <img
-                  className='w-28 h-28'
+                  className='w-28 h-28 rounded-30px object-cover'
                   src={previewImage ? previewImage : camera}
                 />
                 <label
@@ -210,21 +216,7 @@ const AddEditPost = () => {
                   accept='image/*'
                 />
               </div>
-              <div className='w-44 h-56 flex flex-col justify-center items-center'>
-                <input
-                  {...register('title', { required: '제목을 입력해주세요' })}
-                  type='text'
-                  placeholder='제목을 입력해주세요'
-                  onChange={getInputTitleFrom}
-                  value={title}
-                  className='w-full outline-none m-1 p-2 shadow-lg rounded-lg'
-                />
-                {errors.title ? (
-                  <p className='text-[red]'>{errors.title.message}</p>
-                ) : (
-                  <></>
-                )}
-
+              <div className='w-44 h-28 flex flex-col justify-center items-center'>
                 <textarea
                   {...register('content', { required: '내용을 입력해주세요' })}
                   className='h-full w-full resize-none outline-none no-scrollbar shadow-lg rounded-lg p-1'
@@ -232,6 +224,7 @@ const AddEditPost = () => {
                   onChange={getInputContentFrom}
                   value={content}
                   maxLength={200}
+                  autoFocus
                 />
                 {errors.content ? (
                   <p className='text-[red]'>{errors.content.message}</p>
@@ -268,7 +261,7 @@ const AddEditPost = () => {
                 tagName.map((tag, index) => {
                   return (
                     <span
-                      className='inline-block bg-lime-800 text-white mr-1 rounded-md text-sm font-bold p-1 cursor-pointer'
+                      className='inline-block bg-brownS03 text-brownS02 mr-1 rounded-md text-sm font-bold p-1 cursor-pointer'
                       key={index}
                       onClick={() => {
                         deleteTag(tag);
@@ -284,11 +277,8 @@ const AddEditPost = () => {
             </div>
           </div>
 
-          <Button
-            className='text-white font-500 text-sub2 mt-6'
-            type='bgBrownP'
-          >
-            {postsIdparams.postsId ? '수정하기' : '등록하기'}
+          <Button className='text-white text-sub2 mt-5' type='bgBrownP'>
+            {postsIdparams.postsId ? '수정 완료' : '공유하기'}
           </Button>
         </div>
       </form>
