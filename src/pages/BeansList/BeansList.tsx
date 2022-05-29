@@ -40,6 +40,7 @@ const BeansList = () => {
   const handleToSearchBtn = () => {
     setClickedSearchBtn(true);
     !beans.isLoaded && appDispatch(getBeansList(0));
+    !beans.isLoaded && appDispatch(saveCurrentCafename(''));
   };
 
   const handleToCafeBtn = () => {
