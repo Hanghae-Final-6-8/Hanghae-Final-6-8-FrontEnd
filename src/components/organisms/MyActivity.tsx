@@ -79,7 +79,11 @@ const MyActivity = () => {
                 }
               />
               <div>
-                <p>{post.content}</p>
+                <p>
+                  {post.content.length > 20
+                    ? post.content.substring(0, 15) + '...'
+                    : post.content}
+                </p>
               </div>
             </div>
           );
