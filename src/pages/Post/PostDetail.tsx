@@ -73,7 +73,7 @@ const PostDetail = () => {
       ) : (
         <div className='pb-24'>
           <button
-            className=' bg-white  rounded-full h-12 w-12 m-2 p-2 block'
+            className=' bg-white  rounded-full h-12 w-12 m-2 p-2 block transition hover:shadow-lg ease-in'
             onClick={handleBacktoPrev}
           >
             <img src={left} className='w-full' />

@@ -63,7 +63,7 @@ const MyPostEdit = () => {
               </button>
             </div>
             <img
-              className='w-full'
+              className='w-full h-80 object-cover cursor-pointer'
               src={
                 post.postsImage
                   ? post.postsImage.toString()

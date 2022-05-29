@@ -72,6 +72,7 @@ const AddEditPost = () => {
       return post.postsId === Number(postsIdparams.postsId);
     });
   }
+  // 수정인경우(게시물있음) 각value 넣어줌
   useEffect(() => {
     setTitle(post ? post.title : '');
     setContent(post ? post.content : '');

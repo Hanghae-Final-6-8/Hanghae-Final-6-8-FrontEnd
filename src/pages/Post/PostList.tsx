@@ -99,8 +99,11 @@ const PostList = () => {
           {list.map((post, idx) => {
             return (
               <div
-                className='bg-white w-full mb-3 shadow-lg rounded-30px transition hover:bg-brownS03 active:bg-brownS03 ease-in'
+                className='bg-white w-full cursor-pointer mb-3 shadow-lg rounded-30px transition hover:bg-brownS03 active:bg-brownS03 ease-in'
                 key={idx}
+                onClick={() => {
+                  handleMoveToDetailPage(post.postsId!);
+                }}
               >
                 <div className='flex justify-between p-1'>
                   <div className='flex items-center mb-4'>
@@ -123,20 +126,18 @@ const PostList = () => {
                   )}
                 </div>
                 <img
-                  className='w-full cursor-pointer'
+                  className='w-full h-80 object-cover'
                   src={
                     post.postsImage
                       ? post.postsImage.toString()
                       : 'https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814052__340.png'
                   }
-                  onClick={() => {
-                    handleMoveToDetailPage(post.postsId!);
-                  }}
                 />
                 <div className='p-4'>
                   {post.isLikes === null ? (
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         handleAddLikes(post.postsId!);
                       }}
                     >
@@ -144,7 +145,8 @@ const PostList = () => {
                     </button>
                   ) : (
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         handleDeleteLikes(post.postsId!);
                       }}
                     >
