@@ -124,9 +124,7 @@ const AddEditPost = () => {
 
   // 커뮤니티 내용 set
   const getInputContentFrom = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const content = e.target.value.replace('<br>', '\r\n');
-    setContent(content);
-    // setContent(e.target.value);
+    setContent(e.target.value);
   };
 
   const handleBacktoPrev = () => {
@@ -220,7 +218,7 @@ const AddEditPost = () => {
                 <textarea
                   {...register('content', { required: '내용을 입력해주세요' })}
                   className='h-full w-full resize-none outline-none no-scrollbar shadow-lg rounded-lg p-1'
-                  placeholder='당신의 커피를 보여주세요'
+                  placeholder='당신의 커피를 보여주세요...'
                   onChange={getInputContentFrom}
                   value={content}
                   maxLength={200}
