@@ -135,6 +135,7 @@ const PostDetail = () => {
             <input
               className='w-[70%] p-8 text-[14px] outline-none'
               type='text'
+              maxLength={120}
               placeholder='댓글 내용을 입력해주세요'
               onChange={getInputCommentFrom}
               value={comment}
