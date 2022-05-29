@@ -10,7 +10,7 @@ const Spinner = () => {
     <>
       {loading ? (
         <GridBox
-          className='fixed w-full h-full z-50 touch-none'
+          className='fixed w-full h-full top-0 left-0 z-50 touch-none'
           type='flexBasic'
         >
           <div className='bg-white absolute opacity-60 h-full w-full transition animate-fadeInZeroTo60'>

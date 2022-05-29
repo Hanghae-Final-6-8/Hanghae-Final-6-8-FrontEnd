@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { RootState, useAppDispatch } from '../../redux/configureStore';
-import { InfinityScroll } from '../../components/atoms/index';
+import { InfinityScroll, Text } from '../../components/atoms';
 import { EditDelToastModal } from '../../components/molecules/index';
 import {
   addLikeDB,
   deleteLikeDB,
   getPostListDB,
 } from '../../redux/modules/posts';
-import { heart, heart_full, edit } from '../../assets/icons';
+import { heart, heart_full, edit, more } from '../../assets/icons';
 import { setModalToggle } from '../../redux/modules/modalToggle';
 
 const PostList = () => {
@@ -75,12 +75,12 @@ const PostList = () => {
   return (
     <div>
       <div className='flex justify-between items-center'>
-        <div className='font-500 m-5 text-[22px]'>커뮤니티</div>
+        <div className='font-500 text-head mb-9'>커뮤니티</div>
         {!user.isLogin ? (
           <></>
         ) : (
           <button
-            className='bg-white shadow-lg rounded-full w-10 h-10 flex justify-center items-center fixed right-6'
+            className='bg-white shadow-lg rounded-full w-10 h-10 flex justify-center items-center fixed top-12 right-6 z-10'
             onClick={handleMoveToWritePage}
           >
             <img src={edit} />
@@ -99,32 +99,35 @@ const PostList = () => {
           {list.map((post, idx) => {
             return (
               <div
-                className='bg-white w-full cursor-pointer mb-3 shadow-lg rounded-30px transition hover:bg-brownS03 active:bg-brownS03 ease-in'
+                className='bg-white w-full cursor-pointer mb-3 shadow-contents rounded-30px pt-5 transition hover:scale-[1.02] active:scale-[1.02] ease-in'
                 key={idx}
                 onClick={() => {
                   handleMoveToDetailPage(post.postsId!);
                 }}
               >
-                <div className='flex justify-between p-1'>
+                <div className='relative flex justify-between p-1'>
                   <div className='flex items-center mb-4'>
-                    <div className='h-14 w-14 rounded-full bg-brownS03 mr-4 text-center leading-[56px] text-[28px]'>
+                    <div className='relative h-12 w-12 ml-[19px] rounded-full  bg-brownS03 mr-3.5 text-center leading-[48px] text-head'>
                       {post.nickname?.substring(0, 1).toUpperCase()}
                     </div>
-                    <span>{post.nickname}</span>
+                    <div>
+                      <Text type='mainSubTitle'>{post.nickname}</Text>
+                      <Text className='mt-0' type='caption'>
+                        {post?.createdAt}
+                      </Text>
+                    </div>
+                    {user.nickname === post.nickname ? (
+                      <button
+                        className='p-4'
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          getSetToastFrom(post.postsId!);
+                        }}
+                      >
+                        <img className='absolute right-[19px]' src={more} />
+                      </button>
+                    ) : null}
                   </div>
-                  {user.nickname === post.nickname ? (
-                    <button
-                      className='p-4'
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        getSetToastFrom(post.postsId!);
-                      }}
-                    >
-                      ···
-                    </button>
-                  ) : (
-                    <></>
-                  )}
                 </div>
                 <img
                   className='w-full h-80 object-cover'
@@ -134,7 +137,7 @@ const PostList = () => {
                       : 'https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814052__340.png'
                   }
                 />
-                <div className='p-4'>
+                <div className='relative p-4 flex gap-1 text-caption leading-6'>
                   {post.isLikes === null ? (
                     <button
                       onClick={(e) => {
@@ -155,9 +158,10 @@ const PostList = () => {
                     </button>
                   )}
 
-                  <span>
-                    {post.likesCount !== null ? post.likesCount : '0'}개
-                  </span>
+                  <p>{post.likesCount !== null ? post.likesCount : '0'}개</p>
+                  <Text className='absolute text-caption right-6'>
+                    더 보기...
+                  </Text>
                 </div>
               </div>
             );

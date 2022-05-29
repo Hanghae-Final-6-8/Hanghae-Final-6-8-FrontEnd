@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/configureStore';
 import { deletePostDB } from '../../redux/modules/posts';
-import { Button, Text, RoundBox } from '../atoms';
+import { Button, Text, RoundBox, ToastPopupBox } from '../atoms';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/configureStore';
 import { setModalToggle } from '../../redux/modules/modalToggle';
@@ -37,9 +37,10 @@ const EditDelToastModal = (props: postsIdType) => {
         className='fixed z-10 touch-none top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.3)]'
         onClick={handleClosePopup}
       >
-        <RoundBox
-          round='mainModal'
-          className='flex flex-col pb-40 mt-80 animate-fadeIn'
+        <ToastPopupBox
+          type='default'
+          cross
+          className='flex flex-col pb-24 mt-80 animate-scrollUp'
         >
           <Text className='text-subH33 font-500'>어떤 작업을 하시겠어요?</Text>
           <Button
@@ -60,7 +61,7 @@ const EditDelToastModal = (props: postsIdType) => {
           >
             삭제하기
           </Button>
-        </RoundBox>
+        </ToastPopupBox>
       </div>
     </>
   );

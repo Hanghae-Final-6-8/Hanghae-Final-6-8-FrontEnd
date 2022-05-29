@@ -15,6 +15,7 @@ import Icon from './Icon';
 import BgVideo from './BgVideo';
 import PrevBtn from './PrevBtn';
 import KakaoShare from './KakaoShare';
+import Likes from './Likes';
 
 export {
   Button,
@@ -34,4 +35,5 @@ export {
   BgVideo,
   PrevBtn,
   KakaoShare,
+  Likes,
 };
