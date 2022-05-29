@@ -4,7 +4,10 @@ import { GridBox } from '../atoms';
 const SpinnerSuspense = () => {
   return (
     <>
-      <GridBox className='fixed w-full h-full z-50 touch-none' type='flexBasic'>
+      <GridBox
+        className='fixed top-0 left-0 w-full h-full z-50 touch-none'
+        type='flexBasic'
+      >
         <div className='bg-white absolute opacity-60 h-full w-full transition animate-fadeInZeroTo60'>
           {/*  */}
         </div>
