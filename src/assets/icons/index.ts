@@ -28,6 +28,7 @@ import setting from './setting.svg';
 import share from './share.svg';
 import star from './star.svg';
 import trash from './trash.svg';
+import more from './more.svg';
 
 import navCommunity from './nav/navCommunity.svg';
 import navHome from './nav/navHome.svg';
@@ -83,4 +84,5 @@ export {
   google,
   kakao,
   naver,
+  more,
 };
