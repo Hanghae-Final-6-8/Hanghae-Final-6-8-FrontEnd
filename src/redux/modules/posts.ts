@@ -55,7 +55,77 @@ const initialState: PostsState = {
 };
 
 // * 커뮤니티 *
-// 커뮤니티 리스트 불러오기
+// 커뮤니티 리스트 처음 가져오기
+export const getFirstPostListDB = createAsyncThunk(
+  'postsReducer/getPostListDB',
+  async (data: number, thunkAPI) => {
+    thunkAPI.dispatch(isLoading(true));
+    try {
+      await postApis.getPostList(data).then((res) => {
+        const postList: Array<PostsItemDataParams> = [];
+        // 페이징
+        if (res.data.data.content.length !== 0) {
+          thunkAPI.dispatch(setPageNum(++data));
+        }
+        res.data.data.content.map((post: any) => {
+          let newTagStr = [];
+          if (post.tag_name !== null) {
+            newTagStr = post.tag_name.split(',');
+          } else {
+            newTagStr.push('');
+          }
+
+          const today = new Date();
+          const postedDay = new Date(post.modified_at);
+          let newDate = '';
+          let betweenTime = 0;
+          betweenTime = Math.floor(
+            (today.getTime() - postedDay.getTime()) / 1000 / 60
+          );
+          if (betweenTime < 1) {
+            newDate = '방금전';
+          } else if (betweenTime < 60) {
+            newDate = `${betweenTime}분전`;
+          } else if (betweenTime >= 60) {
+            betweenTime = Math.floor(betweenTime / 60);
+            if (betweenTime < 24) {
+              newDate = `${betweenTime}시간전`;
+            } else if (betweenTime >= 24 && betweenTime < 8760) {
+              betweenTime = Math.floor(betweenTime / 24);
+              newDate = `${betweenTime}일전`;
+            } else if (betweenTime >= 8760) {
+              betweenTime = Math.floor(betweenTime / 8760);
+              newDate = `${betweenTime}년전`;
+            }
+          }
+
+          postList.push({
+            postsId: post.posts_id,
+            title: post.title,
+            profileUrl: post.profile_url,
+            content: post.content,
+            tagName: newTagStr,
+            postsImage: post.posts_image,
+            nickname: post.nickname,
+            createdAt: post.created_at,
+            modifiedAt: newDate,
+            isLikes: post.isLikes,
+            likesCount: post.likes_count,
+          });
+        });
+
+        const postsLoadedLen = res.data.data.content.length;
+        thunkAPI.dispatch(isLoading(false));
+        thunkAPI.dispatch(setPostListClean());
+        thunkAPI.dispatch(setPostList({ postList, postsLoadedLen }));
+      });
+    } catch (error) {
+      thunkAPI.dispatch(isLoading(false));
+      console.log(error);
+    }
+  }
+);
+// 커뮤니티 리스트 추가 불러오기
 export const getPostListDB = createAsyncThunk(
   'postsReducer/getPostListDB',
   async (data: number, thunkAPI) => {
@@ -382,6 +452,9 @@ export const postsSlice = createSlice({
     setPageNum: (state, action: PayloadAction<number>) => {
       state.paging = action.payload;
     },
+    setPostListClean: (state) => {
+      state.list = [];
+    },
     setPostList: (state, action: PayloadAction<any>) => {
       const newList = [...state.list, ...action.payload.postList];
       return {
@@ -479,6 +552,7 @@ export const postsSlice = createSlice({
 });
 
 export const {
+  setPostListClean,
   setPostList,
   setPost,
   setPageNum,
@@ -493,6 +567,7 @@ export const {
 export default postsSlice;
 
 const postActionCreators = {
+  getFirstPostListDB,
   getPostListDB,
   getPostDB,
   addPostDB,
