@@ -44,9 +44,8 @@ const AddEditPost = () => {
 
   // 수정하려고 들어왔을 때
   const postsIdparams = useParams();
-
   useEffect(() => {
-    if (postsIdparams) {
+    if (postsIdparams.postsId) {
       appDispatch(getPostDB(Number(postsIdparams.postsId)));
     }
   }, []);
@@ -55,9 +54,9 @@ const AddEditPost = () => {
 
   // 수정인경우(게시물있음) 각value 넣어줌
   useEffect(() => {
-    setContent(post ? post.content : '');
-    setTagName(post ? post.tagName : []);
-    setPreviewImage(post ? post.postsImage : '');
+    setContent(postsIdparams.postsId ? post!.content : '');
+    setTagName(postsIdparams.postsId ? post!.tagName : []);
+    setPreviewImage(postsIdparams.postsId ? post!.postsImage : '');
   }, [post]);
 
   useEffect(() => {
