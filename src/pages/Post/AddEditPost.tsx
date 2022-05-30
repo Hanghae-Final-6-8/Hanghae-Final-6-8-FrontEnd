@@ -9,6 +9,7 @@ import { RootState } from '../../redux/configureStore';
 import { Button } from '../../components/atoms';
 import { setMoveToLogin } from '../../utils/setMoveToLogin';
 import classnames from 'classnames';
+import fileCheck from '../../utils/fileCheck';
 
 const AddEditPost = () => {
   const { isLogin } = useSelector((state: RootState) => state.user);
@@ -34,6 +35,12 @@ const AddEditPost = () => {
     setFile([]);
     const file = e.currentTarget.files;
     if (file && file.length) {
+      const result = fileCheck(file[0]);
+
+      if (!result) {
+        alert('8MB이하의 이미지 파일을 선택해 주세요');
+        return;
+      }
       setFile((existing) => existing.concat(Array.from(file)));
     }
 
