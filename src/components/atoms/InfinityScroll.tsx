@@ -39,17 +39,6 @@ const InfinityScroll: React.FC<LayoutProps> = (props) => {
         callNext();
       }
     }
-
-    // if (
-    //   scrollHeight - clientHeight - scrollTop < 200 ||
-    //   l_docElement.scrollHeight -
-    //     l_docElement.clientHeight -
-    //     l_docElement.scrollTop <
-    //     200
-    // ) {
-    //   // console.log('!callNext!');
-    //   callNext();
-    // }
   }, 300);
 
   const handleScroll = useCallback(_handleScroll, [loading]);
