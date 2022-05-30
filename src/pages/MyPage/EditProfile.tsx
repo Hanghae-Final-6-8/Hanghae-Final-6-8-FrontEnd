@@ -62,7 +62,10 @@ const EditProfile = () => {
 
     const formData = new FormData();
     formData.append('nickname', inputNickname);
-    formData.append('profile_url', file[0]);
+
+    if (file[0]) {
+      formData.append('profile_url', file[0]);
+    }
     appDispatch(update(formData));
     appDispatch(auth());
     navigate('/mypage', { replace: true });
