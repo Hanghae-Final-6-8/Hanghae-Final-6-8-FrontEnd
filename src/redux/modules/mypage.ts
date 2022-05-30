@@ -235,6 +235,12 @@ export const mypageSlice = createSlice({
       });
       state.listLiked = newList;
     },
+    deleteMyCommentList: (state, action: PayloadAction<number>) => {
+      const newList = state.myCommentList.filter((post) => {
+        return post.postsId !== action.payload;
+      });
+      state.myCommentList = newList;
+    },
     changeStatusLike: (state, action: PayloadAction<number>) => {
       state.listMyActivity.map((post) => {
         if (post.postsId === action.payload) {
@@ -284,6 +290,7 @@ export const {
   changeStatusLike,
   changeStatusDislike,
   deleteListLiked,
+  deleteMyCommentList,
 } = mypageSlice.actions;
 
 const mypageActionCreators = {
