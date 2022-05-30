@@ -6,7 +6,10 @@ import { getMyCommentDB } from '../../redux/modules/mypage';
 import { commentActionCreators } from '../../redux/modules/comment';
 import { RoundBox, Text, Button } from '../atoms';
 import { more } from '../../assets/icons';
+import { useNavigate } from 'react-router-dom';
+
 const MyCommentEdit = () => {
+  const navigate = useNavigate();
   const appDispatch = useAppDispatch();
   useEffect(() => {
     !isMyCommentListLoaded && appDispatch(getMyCommentDB());
@@ -29,6 +32,10 @@ const MyCommentEdit = () => {
     setToggle(false);
   };
 
+  const handleMoveToDetailFromComment = (postsId: number) => {
+    navigate(`/posts/${postsId}`);
+  };
+
   return (
     <div>
       {myCommentList.map((comment, index) => {
@@ -36,6 +43,9 @@ const MyCommentEdit = () => {
           <div
             className='m-2 flex pt-2 pb-2 pl-1 pr-1 drop-shadow-xl rounded-md transition hover:scale-[1.02] active:scale-[1.02] ease-in'
             key={index}
+            onClick={() => {
+              handleMoveToDetailFromComment(comment.postsId);
+            }}
           >
             <div className='flex justify-between w-full'>
               <div>
@@ -45,7 +55,8 @@ const MyCommentEdit = () => {
                 </Text>
               </div>
               <button
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   handleToggle(comment.commentsId);
                 }}
               >

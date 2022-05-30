@@ -46,6 +46,10 @@ const MyActivity = () => {
     setToggle(false);
   };
 
+  const handleMoveToDetailFromComment = (postsId: number) => {
+    navigate(`/posts/${postsId}`);
+  };
+
   return (
     <div>
       <div className='flex flex-col'>
@@ -120,25 +124,30 @@ const MyActivity = () => {
         </div>
         {myCommentList.map((comment, index) => {
           return (
-            <Link key={index} to={`/posts/${comment.postsId}`}>
-              <div className='m-2 flex pt-2 pb-2 pl-1 pr-1 drop-shadow-xl rounded-md transition hover:scale-[1.02] active:scale-[1.02] ease-in'>
-                <div className='flex justify-between w-full'>
-                  <div>
-                    <p>{comment.content}</p>
-                    <Text className='mt-0' type='caption'>
-                      {comment.createdAt}
-                    </Text>
-                  </div>
-                  <button
-                    onClick={() => {
-                      handleToggle(comment.commentsId);
-                    }}
-                  >
-                    <img src={more} />
-                  </button>
+            <div
+              key={index}
+              className='m-2 flex pt-2 pb-2 pl-1 pr-1 drop-shadow-xl rounded-md transition hover:scale-[1.02] active:scale-[1.02] ease-in'
+              onClick={() => {
+                handleMoveToDetailFromComment(comment.postsId);
+              }}
+            >
+              <div className='flex justify-between w-full'>
+                <div>
+                  <p>{comment.content}</p>
+                  <Text className='mt-0' type='caption'>
+                    {comment.createdAt}
+                  </Text>
                 </div>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleToggle(comment.commentsId);
+                  }}
+                >
+                  <img src={more} />
+                </button>
               </div>
-            </Link>
+            </div>
           );
         })}
         {toggle === true ? (
