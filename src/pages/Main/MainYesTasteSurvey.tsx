@@ -2,10 +2,8 @@ import {
   bookmark,
   down,
   up,
-  share,
   beans,
   right,
-  left,
   bookmark_full,
 } from '../../assets/icons/';
 import { coffee_default } from '../../assets/images';
@@ -65,7 +63,8 @@ const MainYesTasteSurvey = () => {
 
   useEffect(() => {
     // 리덕스에 데이터가 null일 경우 API를 요청합니다.
-    user.isLogin && !tasteList.beanName && appDispatch(getTasteSurvey());
+    user.isLogin && appDispatch(getTasteSurvey());
+    // 즐겨찾기부분 오류 때문에 '&& !tasteList.beanName'을 뺐습니다.
 
     if (!beanId) {
       appDispatch(getSimilarBeans());
