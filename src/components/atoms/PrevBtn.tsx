@@ -12,12 +12,12 @@ const PrevBtn = (props: PrevBtnProps) => {
   const location = useLocation();
   const className = props.className;
 
-  const scrolly: any = location.state ? location.state : null;
-  const scrollyValue = scrolly !== null ? scrolly.scrolly : null;
+  const scrollY: any = location.state ? location.state : null;
+  const scrollYValue = scrollY !== null ? scrollY.scroll : null;
 
   const handleToPrevPage = () => {
-    scrolly !== null
-      ? navigate('/beans', { state: { scrollyValue } })
+    scrollYValue
+      ? navigate('/beans', { state: { scroll: scrollYValue } })
       : navigate(-1);
 
     if (document.referrer) {

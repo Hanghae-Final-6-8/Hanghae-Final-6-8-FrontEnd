@@ -40,7 +40,7 @@ const BeansList = () => {
     if (state) {
       document
         .getElementsByClassName('infinityScroll')[0]
-        .scrollTo(0, state.scrollyValue);
+        .scrollTo(0, state.scroll);
     }
   }, [appDispatch]);
 
@@ -60,10 +60,10 @@ const BeansList = () => {
     const currentTargetValue = Number(
       e.currentTarget.getAttribute('data-beanid')
     );
-    const scrolly =
+    const scrollY =
       document.getElementsByClassName('infinityScroll')[0].scrollTop;
 
-    navigate(`./${currentTargetValue}`, { state: { scrolly } });
+    navigate(`./${currentTargetValue}`, { state: { scroll: scrollY } });
   };
   return (
     <>
