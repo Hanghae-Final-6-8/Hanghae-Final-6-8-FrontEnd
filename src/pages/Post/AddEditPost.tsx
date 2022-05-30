@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/configureStore';
 import { Button } from '../../components/atoms';
 import { setMoveToLogin } from '../../utils/setMoveToLogin';
+import classnames from 'classnames';
 
 const AddEditPost = () => {
   const { isLogin } = useSelector((state: RootState) => state.user);
@@ -18,13 +19,13 @@ const AddEditPost = () => {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
 
-  // const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
   // 커뮤니티 태그
   const [inputTag, setInputTag] = useState<string>('');
   const [tagName, setTagName] = useState<Array<string>>([]);
   // 이미지 파일 전송용
   const [file, setFile] = useState<File[]>([]);
+  const [isHidden, setIsHidden] = useState<boolean>(true);
   // 이미지 미리보기용
   const [previewImage, setPreviewImage] = useState<any>();
 
@@ -59,40 +60,14 @@ const AddEditPost = () => {
     setPreviewImage(postsIdparams.postsId ? post!.postsImage : '');
   }, [post]);
 
-  useEffect(() => {
-    if (tagName.length !== 0) {
-      (
-        document.getElementById('tagNameValid') as HTMLInputElement
-      ).style.display = 'none';
-    }
-  }, [tagName]);
-
-  useEffect(() => {
-    if (!postsIdparams.postsId) {
-      if (file.length !== 0) {
-        (
-          document.getElementById('fileValid') as HTMLInputElement
-        ).style.display = 'none';
-        return;
-      }
-    }
-  }, [file]);
-
-  // 커뮤니티 타이틀 set
-  // const getInputTitleFrom = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setTitle(e.target.value);
-  // };
-  // 커뮤니티 태그 set
   const getInputTagNameFrom = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputTag(e.target.value);
   };
   // 태그 추가
-  const addTag = () => {
+  const handleAddTag = () => {
     const text = document.getElementById('tagName') as HTMLInputElement;
     if (text.value === '') {
-      (
-        document.getElementById('tagNameValid') as HTMLInputElement
-      ).style.display = 'block';
+      alert('태그 내용을 입력해주세요');
       return;
     }
     setInputTag(text.value);
@@ -101,7 +76,7 @@ const AddEditPost = () => {
   };
 
   // 태그 지우기
-  const deleteTag = (tag: string) => {
+  const handleDeleteTag = (tag: string) => {
     setTagName(tagName.filter((t) => t !== tag));
   };
 
@@ -121,19 +96,13 @@ const AddEditPost = () => {
     formState: { errors },
   } = useForm();
   const onValid = (data: any) => {
-    if (tagName.length === 0) {
-      (
-        document.getElementById('tagNameValid') as HTMLInputElement
-      ).style.display = 'block';
-      return;
-    }
     // 수정의 경우, 이미지 안 바꿀 수 있어서 등록의 경우만 파일체크
     if (!postsIdparams.postsId) {
       if (file.length === 0) {
-        (
-          document.getElementById('fileValid') as HTMLInputElement
-        ).style.display = 'block';
+        setIsHidden(false);
         return;
+      } else {
+        setIsHidden(true);
       }
     }
 
@@ -143,15 +112,19 @@ const AddEditPost = () => {
       formData.append('posts_id', post!.postsId!.toString());
       formData.append('title', 'defaultTitle');
       formData.append('content', data.content);
-      formData.append('tag_name', tagName.toString());
+      if (tagName.length !== 0) {
+        formData.append('tag_name', tagName.toString());
+      }
       formData.append('posts_image', file[0]);
       appDispatch(editPostDB({ formData, navi: navigate, previewImage }));
     } else {
       // 게시물 등록
       const formData = new FormData();
-      formData.append('title', data.title);
+      formData.append('title', 'defaultTitle');
       formData.append('content', data.content);
-      formData.append('tag_name', tagName.toString());
+      if (tagName.length !== 0) {
+        formData.append('tag_name', tagName.toString());
+      }
       formData.append('posts_image', file[0]);
       appDispatch(addPostDB({ formData, navi: navigate, previewImage }));
     }
@@ -161,7 +134,7 @@ const AddEditPost = () => {
     <div>
       <div className='flex items-center justify-between'>
         <button
-          className='bg-white  rounded-full h-12 w-12 m-2 p-2 block transition hover:shadow-lg ease-in'
+          className='bg-white  rounded-full h-12 w-12 m-2 p-2 block '
           onClick={handleBacktoPrev}
         >
           <img src={left} className='w-full' />
@@ -200,7 +173,7 @@ const AddEditPost = () => {
               <div className='w-44 h-28 flex flex-col justify-center items-center'>
                 <textarea
                   {...register('content', { required: '내용을 입력해주세요' })}
-                  className='h-full w-full resize-none outline-none no-scrollbar shadow-lg rounded-lg p-1'
+                  className='h-full w-full resize-none outline-none no-scrollbar text-body rounded-lg p-1'
                   placeholder='당신의 커피를 보여주세요...'
                   onChange={getInputContentFrom}
                   value={content}
@@ -208,13 +181,16 @@ const AddEditPost = () => {
                   autoFocus
                 />
                 {errors.content ? (
-                  <p className='text-[red]'>{errors.content.message}</p>
+                  <p className='text-red60'>{errors.content.message}</p>
                 ) : (
                   <></>
                 )}
               </div>
             </div>
-            <p id='fileValid' style={{ display: 'none', color: 'red' }}>
+            <p
+              id='fileValid'
+              className={classnames('text-red60', { hidden: isHidden })}
+            >
               이미지를 선택해주세요
             </p>
             <div className='HashWrapOuter flex justify-around items-center mt-2'>
@@ -229,14 +205,11 @@ const AddEditPost = () => {
               <button
                 className='p-3 rounded-xl shadow-xl whitespace-nowrap'
                 type='button'
-                onClick={addTag}
+                onClick={handleAddTag}
               >
                 추가
               </button>
             </div>
-            <p id='tagNameValid' style={{ display: 'none', color: 'red' }}>
-              태그를 입력해 주세요
-            </p>
             <div>
               {tagName.length !== 0 ? (
                 tagName.map((tag, index) => {
@@ -245,7 +218,7 @@ const AddEditPost = () => {
                       className='inline-block bg-brownS03 text-brownS02 mr-1 rounded-md text-sm font-bold p-1 cursor-pointer'
                       key={index}
                       onClick={() => {
-                        deleteTag(tag);
+                        handleDeleteTag(tag);
                       }}
                     >
                       {tag}
