@@ -9,6 +9,7 @@ import {
   changeStatusLike,
   deleteListLiked,
 } from './mypage';
+import dateCalculator from '../../utils/dateCalculator';
 
 export interface PostsItemDataParams {
   postsId: number | undefined;
@@ -74,30 +75,8 @@ export const getFirstPostListDB = createAsyncThunk(
           } else {
             newTagStr.push('');
           }
-
-          const today = new Date();
-          const postedDay = new Date(post.modified_at);
-          let newDate = '';
-          let betweenTime = 0;
-          betweenTime = Math.floor(
-            (today.getTime() - postedDay.getTime()) / 1000 / 60
-          );
-          if (betweenTime < 1) {
-            newDate = '방금전';
-          } else if (betweenTime < 60) {
-            newDate = `${betweenTime}분전`;
-          } else if (betweenTime >= 60) {
-            betweenTime = Math.floor(betweenTime / 60);
-            if (betweenTime < 24) {
-              newDate = `${betweenTime}시간전`;
-            } else if (betweenTime >= 24 && betweenTime < 8760) {
-              betweenTime = Math.floor(betweenTime / 24);
-              newDate = `${betweenTime}일전`;
-            } else if (betweenTime >= 8760) {
-              betweenTime = Math.floor(betweenTime / 8760);
-              newDate = `${betweenTime}년전`;
-            }
-          }
+          // 날짜 계산
+          const newDate = dateCalculator(post.modified_at);
 
           postList.push({
             postsId: post.posts_id,
@@ -145,29 +124,7 @@ export const getPostListDB = createAsyncThunk(
             newTagStr.push('');
           }
 
-          const today = new Date();
-          const postedDay = new Date(post.modified_at);
-          let newDate = '';
-          let betweenTime = 0;
-          betweenTime = Math.floor(
-            (today.getTime() - postedDay.getTime()) / 1000 / 60
-          );
-          if (betweenTime < 1) {
-            newDate = '방금전';
-          } else if (betweenTime < 60) {
-            newDate = `${betweenTime}분전`;
-          } else if (betweenTime >= 60) {
-            betweenTime = Math.floor(betweenTime / 60);
-            if (betweenTime < 24) {
-              newDate = `${betweenTime}시간전`;
-            } else if (betweenTime >= 24 && betweenTime < 8760) {
-              betweenTime = Math.floor(betweenTime / 24);
-              newDate = `${betweenTime}일전`;
-            } else if (betweenTime >= 8760) {
-              betweenTime = Math.floor(betweenTime / 8760);
-              newDate = `${betweenTime}년전`;
-            }
-          }
+          const newDate = dateCalculator(post.modified_at);
 
           postList.push({
             postsId: post.posts_id,
@@ -206,30 +163,8 @@ export const getPostDB = createAsyncThunk(
           newTagStr = res.data.data.tag_name.split(',');
         }
         // 날짜 계산
-        const today = new Date();
-        const postedDay = new Date(res.data.data.modified_at);
-        let newDate = '';
-        let betweenTime = 0;
-        betweenTime = Math.floor(
-          (today.getTime() - postedDay.getTime()) / 1000 / 60
-        );
-        if (betweenTime < 1) {
-          newDate = '방금전';
-        } else if (betweenTime < 60) {
-          newDate = `${betweenTime}분전`;
-        } else if (betweenTime >= 60) {
-          betweenTime = Math.floor(betweenTime / 60);
-          if (betweenTime < 24) {
-            newDate = `${betweenTime}시간전`;
-          } else if (betweenTime >= 24 && betweenTime < 8760) {
-            betweenTime = Math.floor(betweenTime / 24);
-            newDate = `${betweenTime}일전`;
-          } else if (betweenTime >= 8760) {
-            betweenTime = Math.floor(betweenTime / 8760);
-            newDate = `${betweenTime}년전`;
-          }
-        }
-        // console.log(newDate);
+        const newDate = dateCalculator(res.data.data.modified_at);
+
         const post = {
           postsId: res.data.data.posts_id,
           nickname: res.data.data.nickname,
@@ -269,29 +204,8 @@ export const addPostDB = createAsyncThunk(
           newTagName = res.data.data.tag_name.split(',');
         }
 
-        const today = new Date();
-        const postedDay = new Date(res.data.data.modified_at);
-        let newDate = '';
-        let betweenTime = 0;
-        betweenTime = Math.floor(
-          (today.getTime() - postedDay.getTime()) / 1000 / 60
-        );
-        if (betweenTime < 1) {
-          newDate = '방금전';
-        } else if (betweenTime < 60) {
-          newDate = `${betweenTime}분전`;
-        } else if (betweenTime >= 60) {
-          betweenTime = Math.floor(betweenTime / 60);
-          if (betweenTime < 24) {
-            newDate = `${betweenTime}시간전`;
-          } else if (betweenTime >= 24 && betweenTime < 8760) {
-            betweenTime = Math.floor(betweenTime / 24);
-            newDate = `${betweenTime}일전`;
-          } else if (betweenTime >= 8760) {
-            betweenTime = Math.floor(betweenTime / 8760);
-            newDate = `${betweenTime}년전`;
-          }
-        }
+        const newDate = dateCalculator(res.data.data.modified_at);
+
         const addedData = {
           postsId: res.data.data.posts_id,
           nickname: res.data.data.nickname,
@@ -326,29 +240,7 @@ export const editPostDB = createAsyncThunk(
           newTagName = res.data.data.tag_name.split(',');
         }
 
-        const today = new Date();
-        const postedDay = new Date(res.data.data.modified_at);
-        let newDate = '';
-        let betweenTime = 0;
-        betweenTime = Math.floor(
-          (today.getTime() - postedDay.getTime()) / 1000 / 60
-        );
-        if (betweenTime < 1) {
-          newDate = '방금전';
-        } else if (betweenTime < 60) {
-          newDate = `${betweenTime}분전`;
-        } else if (betweenTime >= 60) {
-          betweenTime = Math.floor(betweenTime / 60);
-          if (betweenTime < 24) {
-            newDate = `${betweenTime}시간전`;
-          } else if (betweenTime >= 24 && betweenTime < 8760) {
-            betweenTime = Math.floor(betweenTime / 24);
-            newDate = `${betweenTime}일전`;
-          } else if (betweenTime >= 8760) {
-            betweenTime = Math.floor(betweenTime / 8760);
-            newDate = `${betweenTime}년전`;
-          }
-        }
+        const newDate = dateCalculator(res.data.data.modified_at);
 
         const addedData = {
           postsId: res.data.data.posts_id,
