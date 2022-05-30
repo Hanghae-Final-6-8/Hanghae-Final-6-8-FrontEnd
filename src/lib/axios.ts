@@ -23,8 +23,7 @@ instance.interceptors.request.use((config: AxiosRequestConfig) => {
   config.headers!['Access-Control-Allow-Origin'] = '*';
   config.headers!['Access-Control-Allow-Credentials'] = true;
   config.headers!['Authorization'] = `Bearer ${accessToken}`;
-  (config.headers!.withCredentials = true),
-    console.log('request config입니다 \n', config);
+  config.headers!.withCredentials = true;
   return config;
 });
 
@@ -46,7 +45,6 @@ instance.interceptors.request.use((config: AxiosRequestConfig) => {
 
 instance.interceptors.response.use(
   (response: AxiosResponse) => {
-    console.log('response입니다 \n', response);
     return response;
   },
   async (error) => {
@@ -77,20 +75,20 @@ instance.interceptors.response.use(
           originalRequest.url = initialURL;
           originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
           return await axios(originalRequest).then((response) => {
-            console.log('441 요청 response입니다 \n', response);
+            //console.log('441 요청 response입니다 \n', response);
           });
         });
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         return Promise.reject(error);
       }
 
-      console.log(responseData, originalRequest, statusCode);
+      //console.log(responseData, originalRequest, statusCode);
 
       return Promise.reject(error);
     }
 
-    console.log(responseData, originalRequest, statusCode);
+    //console.log(responseData, originalRequest, statusCode);
 
     return error;
   }
