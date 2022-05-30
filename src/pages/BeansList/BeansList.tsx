@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Text, GridBox, RoundBox } from '../../components/atoms';
 import { RootState, useAppDispatch } from '../../redux/configureStore';
 import { useEffect, useState } from 'react';
@@ -18,7 +18,9 @@ const BeansList = () => {
   const { isLoading, paging, beanListLoadedLength } = useSelector(
     (state: RootState) => state.beans
   );
+  const { state }: any = useLocation();
 
+  console.log(state);
   const [clickedSearchBtn, setClickedSearchBtn] = useState(true);
 
   const beansFormdata: {
@@ -35,6 +37,12 @@ const BeansList = () => {
   useEffect(() => {
     !beans.isLoaded && appDispatch(getBeansList(0));
     !beans.isLoaded && appDispatch(saveCurrentCafename(''));
+
+    if (state) {
+      document
+        .getElementsByClassName('infinityScroll')[0]
+        .scrollTo(0, state.scrollyValue);
+    }
   }, [appDispatch]);
 
   const handleToSearchBtn = () => {
@@ -53,7 +61,10 @@ const BeansList = () => {
     const currentTargetValue = Number(
       e.currentTarget.getAttribute('data-beanid')
     );
-    navigate(`./${currentTargetValue}`);
+    const scrolly =
+      document.getElementsByClassName('infinityScroll')[0].scrollTop;
+
+    navigate(`./${currentTargetValue}`, { state: { scrolly } });
   };
   return (
     <>
@@ -78,10 +89,7 @@ const BeansList = () => {
       </div>
       {clickedSearchBtn ? <BeansSearchForm /> : <BeansCafeBtn />}
 
-      <GridBox
-        className='gap-2.5 mt-5 pb-32 animate-scrollUp3'
-        type='flexBasic'
-      >
+      <GridBox className='gap-2.5 mt-5 pb-32' type='flexBasic'>
         <InfinityScroll
           callNext={() => {
             appDispatch(getBeansList(paging));

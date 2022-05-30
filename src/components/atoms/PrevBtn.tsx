@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { left } from '../../assets/icons';
 import classnames from 'classnames';
 
@@ -9,11 +9,18 @@ interface PrevBtnProps {
 
 const PrevBtn = (props: PrevBtnProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const className = props.className;
 
+  const scrolly: any = location.state ? location.state : null;
+  const scrollyValue = scrolly !== null ? scrolly.scrolly : null;
+
   const handleToPrevPage = () => {
-    navigate(-1);
-    if (!document.referrer) {
+    scrolly !== null
+      ? navigate('/beans', { state: { scrollyValue } })
+      : navigate('');
+
+    if (document.referrer) {
       navigate('/beans');
     }
   };
