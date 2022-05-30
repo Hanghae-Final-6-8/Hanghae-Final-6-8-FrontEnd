@@ -19,6 +19,7 @@ export interface PostsItemDataParams {
 }
 
 export interface CommentItemDataParams {
+  postsId: number;
   commentsId: number;
   nickname?: string;
   content: string;
@@ -189,6 +190,7 @@ export const getMyCommentDB = createAsyncThunk(
           }
 
           newList.push({
+            postsId: comment.posts_id,
             commentsId: comment.comments_id,
             content: comment.content,
             createdAt: newDate,

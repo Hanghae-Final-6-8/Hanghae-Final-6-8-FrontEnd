@@ -4,7 +4,7 @@ import { useAppDispatch } from '../../redux/configureStore';
 import { RootState } from '../../redux/configureStore';
 import { getPostListMine } from '../../redux/modules/mypage';
 import { getMyCommentDB } from '../../redux/modules/mypage';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { right, heart, heart_full, more } from '../../assets/icons';
 import { RoundBox, Text, Button } from '../atoms';
 import { commentActionCreators } from '../../redux/modules/comment';
@@ -120,26 +120,25 @@ const MyActivity = () => {
         </div>
         {myCommentList.map((comment, index) => {
           return (
-            <div
-              className='m-2 flex pt-2 pb-2 pl-1 pr-1 drop-shadow-xl rounded-md transition hover:scale-[1.02] active:scale-[1.02] ease-in'
-              key={index}
-            >
-              <div className='flex justify-between w-full'>
-                <div>
-                  <p>{comment.content}</p>
-                  <Text className='mt-0' type='caption'>
-                    {comment.createdAt}
-                  </Text>
+            <Link key={index} to={`/posts/${comment.postsId}`}>
+              <div className='m-2 flex pt-2 pb-2 pl-1 pr-1 drop-shadow-xl rounded-md transition hover:scale-[1.02] active:scale-[1.02] ease-in'>
+                <div className='flex justify-between w-full'>
+                  <div>
+                    <p>{comment.content}</p>
+                    <Text className='mt-0' type='caption'>
+                      {comment.createdAt}
+                    </Text>
+                  </div>
+                  <button
+                    onClick={() => {
+                      handleToggle(comment.commentsId);
+                    }}
+                  >
+                    <img src={more} />
+                  </button>
                 </div>
-                <button
-                  onClick={() => {
-                    handleToggle(comment.commentsId);
-                  }}
-                >
-                  <img src={more} />
-                </button>
               </div>
-            </div>
+            </Link>
           );
         })}
         {toggle === true ? (
