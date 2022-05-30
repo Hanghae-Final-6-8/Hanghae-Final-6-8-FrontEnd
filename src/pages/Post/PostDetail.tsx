@@ -91,7 +91,7 @@ const PostDetail = () => {
             >
               <img src={left} className='w-full' />
             </button>
-            <Text className='text-sub font-500'>더 보기...</Text>
+            <Text className='text-sub font-500'>게시글</Text>
           </div>
           <div className='bg-white w-full mb-3 shadow-contents rounded-30px'>
             <div className='flex justify-between mt-9 items-center'>

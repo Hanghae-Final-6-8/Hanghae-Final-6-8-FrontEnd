@@ -184,7 +184,7 @@ const AddEditPost = () => {
                   src={previewImage ? previewImage : camera}
                 />
                 <label
-                  className='absolute top-0 left-0 w-24 h-24 opacity-0'
+                  className='absolute top-0 left-0 w-24 h-24 opacity-0 cursor-pointer'
                   htmlFor='inputFile'
                 >
                   파일업로드
