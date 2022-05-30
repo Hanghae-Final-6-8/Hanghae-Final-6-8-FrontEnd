@@ -8,6 +8,7 @@ import {
   addLikeDB,
   deleteLikeDB,
   getPostListDB,
+  getFirstPostListDB,
 } from '../../redux/modules/posts';
 import { heart, heart_full, edit, more } from '../../assets/icons';
 import { setModalToggle } from '../../redux/modules/modalToggle';
@@ -27,7 +28,8 @@ const PostList = () => {
 
   // db에서 커뮤니티 리스트 가져오기
   useEffect(() => {
-    !isListLoaded && appDispatch(getPostListDB(0));
+    // !isListLoaded && appDispatch(getPostListDB(0));
+    appDispatch(getFirstPostListDB(0));
     if (state) {
       document
         .getElementsByClassName('infinityScroll')[0]

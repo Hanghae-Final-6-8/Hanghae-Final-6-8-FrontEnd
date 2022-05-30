@@ -2,6 +2,7 @@ import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { commentApis } from '../../apis/commentApis';
 import { setIsMyCommentListLoaded } from './mypage';
 import { deleteMyComment } from './mypage';
+import dateCalculator from '../../utils/dateCalculator';
 
 export interface CommentItemDataParams {
   // postsId: number | null;
@@ -26,30 +27,8 @@ export const getCommentListDB = createAsyncThunk(
       await commentApis.getCommentList(data).then((res) => {
         const newCommentList: Array<CommentItemDataParams> = [];
         res.data.data.content.map((comment: any) => {
-          // 시간계산
-          const today = new Date();
-          const commentedDay = new Date(comment.created_at);
-          let newDate = '';
-          let betweenTime = 0;
-          betweenTime = Math.floor(
-            (today.getTime() - commentedDay.getTime()) / 1000 / 60
-          );
-          if (betweenTime < 1) {
-            newDate = '방금전';
-          } else if (betweenTime < 60) {
-            newDate = `${betweenTime}분전`;
-          } else if (betweenTime >= 60) {
-            betweenTime = Math.floor(betweenTime / 60);
-            if (betweenTime < 24) {
-              newDate = `${betweenTime}시간전`;
-            } else if (betweenTime >= 24 && betweenTime < 8760) {
-              betweenTime = Math.floor(betweenTime / 24);
-              newDate = `${betweenTime}일전`;
-            } else if (betweenTime >= 8760) {
-              betweenTime = Math.floor(betweenTime / 8760);
-              newDate = `${betweenTime}년전`;
-            }
-          }
+          // 날짜계산
+          const newDate = dateCalculator(comment.created_at);
 
           newCommentList.push({
             commentsId: comment.comments_id,
@@ -76,30 +55,9 @@ export const addCommentDB = createAsyncThunk(
   async (data: addCommentType, thunkAPI) => {
     try {
       await commentApis.addComment(data).then((res) => {
-        // 시간 계산
-        const today = new Date();
-        const commentedDay = new Date(res.data.data.created_at);
-        let newDate = '';
-        let betweenTime = 0;
-        betweenTime = Math.floor(
-          (today.getTime() - commentedDay.getTime()) / 1000 / 60
-        );
-        if (betweenTime < 1) {
-          newDate = '방금전';
-        } else if (betweenTime < 60) {
-          newDate = `${betweenTime}분전`;
-        } else if (betweenTime >= 60) {
-          betweenTime = Math.floor(betweenTime / 60);
-          if (betweenTime < 24) {
-            newDate = `${betweenTime}시간전`;
-          } else if (betweenTime >= 24 && betweenTime < 8760) {
-            betweenTime = Math.floor(betweenTime / 24);
-            newDate = `${betweenTime}일전`;
-          } else if (betweenTime >= 8760) {
-            betweenTime = Math.floor(betweenTime / 8760);
-            newDate = `${betweenTime}년전`;
-          }
-        }
+        // 날짜 계산
+        const newDate = dateCalculator(res.data.data.created_at);
+
         thunkAPI.dispatch(
           addComment({
             commentsId: res.data.data.comments_id,
@@ -140,8 +98,6 @@ export const commentSlice = createSlice({
       state,
       action: PayloadAction<Array<CommentItemDataParams>>
     ) => {
-      // const newList = [...state.list,action.payload];
-      // return {...state, list:newList};
       return { list: action.payload };
     },
     addComment: (state, action: PayloadAction<CommentItemDataParams>) => {
@@ -174,7 +130,6 @@ export const { setCommentList, addComment, deleteComment } =
 const commentActionCreators = {
   addCommentDB,
   getCommentListDB,
-  // getMyCommentDB,
   deleteCommentDB,
 };
 
