@@ -5,7 +5,7 @@ import { RootState } from '../../redux/configureStore';
 import { getMyCommentDB } from '../../redux/modules/mypage';
 import { commentActionCreators } from '../../redux/modules/comment';
 import { RoundBox, Text, Button } from '../atoms';
-
+import { more } from '../../assets/icons';
 const MyCommentEdit = () => {
   const appDispatch = useAppDispatch();
   useEffect(() => {
@@ -34,17 +34,22 @@ const MyCommentEdit = () => {
       {myCommentList.map((comment, index) => {
         return (
           <div
-            className='m-2 flex pt-2 pb-2 pl-1 pr-1 drop-shadow-xl rounded-md transition hover:bg-brownS03 active:bg-brownS03 ease-in'
+            className='m-2 flex pt-2 pb-2 pl-1 pr-1 drop-shadow-xl rounded-md transition hover:scale-[1.02] active:scale-[1.02] ease-in'
             key={index}
           >
             <div className='flex justify-between w-full'>
-              <p>{comment.content}</p>
+              <div>
+                <p>{comment.content}</p>
+                <Text className='mt-0' type='caption'>
+                  {comment.createdAt}
+                </Text>
+              </div>
               <button
                 onClick={() => {
                   handleToggle(comment.commentsId);
                 }}
               >
-                ···
+                <img src={more} />
               </button>
             </div>
           </div>
