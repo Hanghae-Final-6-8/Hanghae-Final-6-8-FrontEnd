@@ -227,7 +227,7 @@ const AddEditPost = () => {
                 value={inputTag}
               />
               <button
-                className='p-3 rounded-xl shadow-xl'
+                className='p-3 rounded-xl shadow-xl whitespace-nowrap'
                 type='button'
                 onClick={addTag}
               >
