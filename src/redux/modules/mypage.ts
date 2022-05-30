@@ -110,8 +110,30 @@ export const getPostListMine = createAsyncThunk(
         res.data.data.content.map((post: any) => {
           let newTagStr = [];
           if (post.tag_name !== null) {
-            const tagStr = post.tag_name.slice(1, post.tag_name.length - 1);
-            newTagStr = tagStr.split(',');
+            newTagStr = post.tag_name.split(',');
+          }
+          const today = new Date();
+          const postedDay = new Date(post.modified_at);
+          let newDate = '';
+          let betweenTime = 0;
+          betweenTime = Math.floor(
+            (today.getTime() - postedDay.getTime()) / 1000 / 60
+          );
+          if (betweenTime < 1) {
+            newDate = '방금전';
+          } else if (betweenTime < 60) {
+            newDate = `${betweenTime}분전`;
+          } else if (betweenTime >= 60) {
+            betweenTime = Math.floor(betweenTime / 60);
+            if (betweenTime < 24) {
+              newDate = `${betweenTime}시간전`;
+            } else if (betweenTime >= 24 && betweenTime < 8760) {
+              betweenTime = Math.floor(betweenTime / 24);
+              newDate = `${betweenTime}일전`;
+            } else if (betweenTime >= 8760) {
+              betweenTime = Math.floor(betweenTime / 8760);
+              newDate = `${betweenTime}년전`;
+            }
           }
           newList.push({
             postsId: post.posts_id,
@@ -120,7 +142,7 @@ export const getPostListMine = createAsyncThunk(
             title: post.title,
             content: post.content,
             createdAt: post.created_at,
-            modifiedAt: post.modified_at,
+            modifiedAt: newDate,
             tagName: newTagStr,
             isLikes: post.isLikes,
             likesCount: post.likes_count,
