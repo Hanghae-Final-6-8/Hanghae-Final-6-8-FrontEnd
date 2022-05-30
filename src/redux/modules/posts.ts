@@ -1,13 +1,18 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { postApis } from '../../apis/postApis';
 import { likeApis } from '../../apis/likeApis';
-import { setIsListLikedLoaded } from './mypage';
-import { setIsListMyActivityLoaded } from './mypage';
-import { deleteMyPost } from './mypage';
+import {
+  setIsListLikedLoaded,
+  deleteMyPost,
+  setIsListMyActivityLoaded,
+  changeStatusDislike,
+  changeStatusLike,
+} from './mypage';
 
 export interface PostsItemDataParams {
   postsId: number | undefined;
   nickname: string;
+  profileUrl?: string;
   postsImage: File | string;
   title: string;
   content: string;
@@ -32,6 +37,7 @@ const initialState: PostsState = {
   post: {
     postsId: 0,
     nickname: '',
+    profileUrl: '',
     postsImage: '',
     title: '',
     content: '',
@@ -60,8 +66,6 @@ export const getPostListDB = createAsyncThunk(
         if (res.data.data.content.length !== 0) {
           thunkAPI.dispatch(setPageNum(++data));
         }
-
-        // console.log(res.data.data.content);
         res.data.data.content.map((post: any) => {
           let newTagStr = [];
           if (post.tag_name !== null) {
@@ -97,6 +101,7 @@ export const getPostListDB = createAsyncThunk(
           postList.push({
             postsId: post.posts_id,
             title: post.title,
+            profileUrl: post.profile_url,
             content: post.content,
             tagName: newTagStr,
             postsImage: post.posts_image,
@@ -157,6 +162,7 @@ export const getPostDB = createAsyncThunk(
         const post = {
           postsId: res.data.data.posts_id,
           nickname: res.data.data.nickname,
+          profileUrl: res.data.data.profile_url,
           postsImage: res.data.data.posts_image,
           title: res.data.data.title,
           content: res.data.data.content,
@@ -187,7 +193,10 @@ export const addPostDB = createAsyncThunk(
   async (data: formType, thunkAPI) => {
     try {
       await postApis.addPost(data.formData).then((res) => {
-        const newTagName = res.data.data.tag_name.split(',');
+        let newTagName = [];
+        if (res.data.data.tag_name) {
+          newTagName = res.data.data.tag_name.split(',');
+        }
 
         const today = new Date();
         const postedDay = new Date(res.data.data.modified_at);
@@ -217,7 +226,7 @@ export const addPostDB = createAsyncThunk(
           nickname: res.data.data.nickname,
           title: res.data.data.title,
           content: res.data.data.content,
-          tagName: newTagName,
+          tagName: newTagName.length !== 0 ? newTagName : null,
           postsImage: res.data.data.posts_image,
           createdAt: res.data.data.created_at,
           modifiedAt: newDate,
@@ -240,9 +249,11 @@ export const editPostDB = createAsyncThunk(
   async (data: formType, thunkAPI) => {
     try {
       await postApis.editPost(data.formData).then((res) => {
-        // console.log(res.data.data);
         // 액션함수 타입맞추기
-        const newTagName = res.data.data.tag_name.split(',');
+        let newTagName = [];
+        if (res.data.data.tag_name) {
+          newTagName = res.data.data.tag_name.split(',');
+        }
 
         const today = new Date();
         const postedDay = new Date(res.data.data.modified_at);
@@ -273,7 +284,7 @@ export const editPostDB = createAsyncThunk(
           nickname: res.data.data.nickname,
           title: res.data.data.title,
           content: res.data.data.content,
-          tagName: newTagName,
+          tagName: newTagName.length !== 0 ? newTagName : null,
           postsImage: res.data.data.posts_image,
           createdAt: res.data.data.created_at,
           modifiedAt: newDate,
@@ -297,7 +308,6 @@ export const deletePostDB = createAsyncThunk(
   async (data: number, thunkAPI) => {
     try {
       await postApis.deletePost(data).then((res) => {
-        console.log(res);
         thunkAPI.dispatch(deletePost(data));
         thunkAPI.dispatch(setIsListMyActivityLoaded(false));
         thunkAPI.dispatch(deleteMyPost(data));
@@ -314,12 +324,11 @@ export const addLikeDB = createAsyncThunk(
   'postsReducer/addLikeDB',
   async (data: number, thunkAPI) => {
     try {
-      // console.log(data);
       await likeApis.addLike(data).then((res) => {
-        // console.log(res);
         thunkAPI.dispatch(addLike(data));
         // 좋아요누른 게시물 재랜더링위해
         thunkAPI.dispatch(setIsListLikedLoaded(false));
+        thunkAPI.dispatch(changeStatusLike(data));
       });
     } catch (error) {
       console.log(error);
@@ -333,10 +342,10 @@ export const deleteLikeDB = createAsyncThunk(
     try {
       console.log(data);
       await likeApis.deleteLike(data).then((res) => {
-        console.log(res);
         thunkAPI.dispatch(deleteLike(data));
         // 좋아요누른 게시물 재랜더링위해
         thunkAPI.dispatch(setIsListLikedLoaded(false));
+        thunkAPI.dispatch(changeStatusDislike(data));
       });
     } catch (error) {
       console.log(error);

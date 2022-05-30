@@ -8,6 +8,7 @@ import { mypageActionCreators } from '../../redux/modules/mypage';
 import { heart, heart_full, more } from '../../assets/icons';
 import { setModalToggle } from '../../redux/modules/modalToggle';
 import { Text } from '../atoms';
+import { logoCopickSquare } from '../../assets/logo';
 
 const MyPostEdit = () => {
   const navigate = useNavigate();
@@ -51,9 +52,10 @@ const MyPostEdit = () => {
           >
             <div className='relative flex justify-between p-1'>
               <div className='flex items-center mb-4'>
-                <div className='relative h-12 w-12 ml-[19px] rounded-full  bg-brownS03 mr-3.5 text-center leading-[48px] text-head'>
-                  {post.nickname?.substring(0, 1).toUpperCase()}
-                </div>
+                <img
+                  className='relative h-12 w-12 ml-[19px] rounded-full mr-3.5 text-center leading-[48px] text-head'
+                  src={post.profileUrl ? post.profileUrl : logoCopickSquare}
+                />
                 <div>
                   <Text type='mainSubTitle'>{post.nickname}</Text>
                   <Text className='mt-0' type='caption'>

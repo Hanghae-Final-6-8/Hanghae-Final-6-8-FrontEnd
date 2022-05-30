@@ -7,6 +7,7 @@ import { likeApis } from '../../apis/likeApis';
 export interface PostsItemDataParams {
   postsId: number | undefined;
   nickname: string;
+  profileUrl?: string;
   postsImage: File | string;
   title: string;
   content: string;
@@ -73,8 +74,6 @@ export const getPostsLikedDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       await likeApis.getPostsLiked().then((res) => {
-        // console.log(res);
-        // console.log(res.data.data.content);
         const newList: Array<PostsItemDataParams> = [];
         res.data.data.content.map((post: any) => {
           let newTagStr = [];
@@ -138,6 +137,7 @@ export const getPostListMine = createAsyncThunk(
           newList.push({
             postsId: post.posts_id,
             nickname: post.nickname,
+            profileUrl: post.profile_url,
             postsImage: post.posts_image,
             title: post.title,
             content: post.content,
@@ -267,6 +267,20 @@ export const mypageSlice = createSlice({
       });
       return { ...state, myCommentList: newCommentList };
     },
+    changeStatusLike: (state, action: PayloadAction<number>) => {
+      state.listMyActivity.map((post) => {
+        if (post.postsId === action.payload) {
+          post.isLikes = 10;
+        }
+      });
+    },
+    changeStatusDislike: (state, action: PayloadAction<number>) => {
+      state.listMyActivity.map((post) => {
+        if (post.postsId === action.payload) {
+          post.isLikes = null;
+        }
+      });
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getPostsLikedDB.fulfilled, (state, action) => {
@@ -299,6 +313,8 @@ export const {
   setIsMyCommentListLoaded,
   deleteMyPost,
   deleteMyComment,
+  changeStatusLike,
+  changeStatusDislike,
 } = mypageSlice.actions;
 
 const mypageActionCreators = {
