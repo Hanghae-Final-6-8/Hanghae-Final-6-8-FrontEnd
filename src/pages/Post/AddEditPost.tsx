@@ -1,10 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  editPostDB,
-  PostsState,
-  addPostDB,
-  PostsItemDataParams,
-} from '../../redux/modules/posts';
+import { editPostDB, addPostDB, getPostDB } from '../../redux/modules/posts';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/configureStore';
 import { useForm } from 'react-hook-form';
@@ -23,7 +18,7 @@ const AddEditPost = () => {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
 
-  const [title, setTitle] = useState<string>('');
+  // const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
   // 커뮤니티 태그
   const [inputTag, setInputTag] = useState<string>('');
@@ -47,34 +42,23 @@ const AddEditPost = () => {
     };
   };
 
-  // 수정용 포스트
-  const postList: PostsState = { list: [] };
-  let post: PostsItemDataParams | undefined = {
-    postsId: 0,
-    nickname: '',
-    postsImage: '',
-    title: '',
-    content: '',
-    tagName: [],
-    createdAt: '',
-    modifiedAt: '',
-  };
-  // 게시글수정 url경우
   // 수정하려고 들어왔을 때
   const postsIdparams = useParams();
-  if (postsIdparams.postsId) {
-    postList.list = useSelector((store: RootState) => store.posts.list);
-    post = postList.list.find((post: PostsItemDataParams) => {
-      return post.postsId === Number(postsIdparams.postsId);
-    });
-  }
+
+  useEffect(() => {
+    if (postsIdparams) {
+      appDispatch(getPostDB(Number(postsIdparams.postsId)));
+    }
+  }, []);
+
+  const post = useSelector((store: RootState) => store.posts.post);
+
   // 수정인경우(게시물있음) 각value 넣어줌
   useEffect(() => {
-    setTitle(post ? post.title : '');
     setContent(post ? post.content : '');
     setTagName(post ? post.tagName : []);
     setPreviewImage(post ? post.postsImage : '');
-  }, []);
+  }, [post]);
 
   useEffect(() => {
     if (tagName.length !== 0) {
