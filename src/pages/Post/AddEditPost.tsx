@@ -29,7 +29,9 @@ const AddEditPost = () => {
   // 이미지 미리보기용
   const [previewImage, setPreviewImage] = useState<any>();
 
+  // 파일 set
   const getOnLoadFileFrom = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFile([]);
     const file = e.currentTarget.files;
     if (file && file.length) {
       setFile((existing) => existing.concat(Array.from(file)));
