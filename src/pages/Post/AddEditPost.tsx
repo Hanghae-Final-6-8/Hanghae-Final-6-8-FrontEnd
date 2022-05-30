@@ -79,6 +79,16 @@ const AddEditPost = () => {
       alert('태그 내용을 입력해주세요');
       return;
     }
+    console.log(tagName.length);
+    if (tagName.length > 9) {
+      alert('태그는 10개까지 작성 가능합니다');
+      return;
+    }
+    // 태그 중복체크
+    if (tagName.find((t) => t === text.value)) {
+      alert('이미 입력한 태그입니다.');
+      return;
+    }
     setInputTag(text.value);
     setTagName([inputTag, ...tagName]);
     setInputTag('');
@@ -210,6 +220,7 @@ const AddEditPost = () => {
                 placeholder='태그 입력 후 추가버튼'
                 onChange={getInputTagNameFrom}
                 value={inputTag}
+                maxLength={10}
               />
               <button
                 className='p-3 rounded-xl shadow-xl whitespace-nowrap'
