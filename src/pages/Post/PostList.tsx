@@ -113,7 +113,7 @@ const PostList = () => {
                     <div>
                       <Text type='mainSubTitle'>{post.nickname}</Text>
                       <Text className='mt-0' type='caption'>
-                        {post?.createdAt}
+                        {post?.modifiedAt}
                       </Text>
                     </div>
                     {user.nickname === post.nickname ? (
@@ -166,7 +166,9 @@ const PostList = () => {
               </div>
             );
           })}
-          {toggle && <EditDelToastModal postsId={clickedPostId} />}
+          {toggle && (
+            <EditDelToastModal postsId={clickedPostId} location={true} />
+          )}
         </InfinityScroll>
       </div>
     </div>
