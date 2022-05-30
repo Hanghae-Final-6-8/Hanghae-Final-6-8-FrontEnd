@@ -98,6 +98,7 @@ module.exports = {
         scrollUp: 'scrollUp 0.6s',
         scrollUp3: 'scrollUp3 0.6s',
         fadeInZeroTo60: 'fadeInZeroTo60 0.6s',
+        moveHorizontal: 'moveHorizontal 2s infinite',
       },
       keyframes: {
         fadeIn: {
@@ -115,6 +116,11 @@ module.exports = {
         fadeInZeroTo60: {
           '0%': { opacity: 0 },
           '100%': { opacity: 0.6 },
+        },
+        moveHorizontal: {
+          '0%': { transform: 'translateZ(0)' },
+          '50%': { transform: 'translate3d(3%, 0, 0)' },
+          '100%': { transform: 'translateZ(0)' },
         },
       },
     },
