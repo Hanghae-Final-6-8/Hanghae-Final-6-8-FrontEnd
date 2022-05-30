@@ -79,7 +79,6 @@ const AddEditPost = () => {
       alert('태그 내용을 입력해주세요');
       return;
     }
-    console.log(tagName.length);
     if (tagName.length > 9) {
       alert('태그는 10개까지 작성 가능합니다');
       return;
