@@ -7,6 +7,7 @@ import {
   setIsListMyActivityLoaded,
   changeStatusDislike,
   changeStatusLike,
+  deleteListLiked,
 } from './mypage';
 
 export interface PostsItemDataParams {
@@ -311,6 +312,7 @@ export const deletePostDB = createAsyncThunk(
         thunkAPI.dispatch(deletePost(data));
         thunkAPI.dispatch(setIsListMyActivityLoaded(false));
         thunkAPI.dispatch(deleteMyPost(data));
+        thunkAPI.dispatch(deleteListLiked(data));
       });
     } catch (error) {
       console.log(error);
