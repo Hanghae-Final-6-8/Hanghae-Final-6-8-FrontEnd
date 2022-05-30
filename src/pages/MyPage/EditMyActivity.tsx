@@ -26,10 +26,16 @@ const EditMyActivity = () => {
 
   return (
     <div>
-      <button className='m-2 p-2 block' onClick={handleBacktoPrev}>
-        <img src={left} />
-      </button>
-      <div className='text-center text-[20px]'>내 활동</div>
+      <div className='relative text-center mb-3'>
+        <button
+          className='absolute top-0 h-8 w-8 block'
+          onClick={handleBacktoPrev}
+        >
+          <img src={left} className='w-full' />
+        </button>
+        <Text className='text-sub font-500'>내 활동</Text>
+      </div>
+
       <div className='tabs flex justify-around w-full h-full pb-6'>
         <div className='cursor-pointer' onClick={handleToFacorites}>
           <Text
