@@ -18,7 +18,7 @@ const PrevBtn = (props: PrevBtnProps) => {
   const handleToPrevPage = () => {
     scrolly !== null
       ? navigate('/beans', { state: { scrollyValue } })
-      : navigate('');
+      : navigate(-1);
 
     if (document.referrer) {
       navigate('/beans');

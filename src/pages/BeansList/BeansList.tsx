@@ -20,7 +20,6 @@ const BeansList = () => {
   );
   const { state }: any = useLocation();
 
-  console.log(state);
   const [clickedSearchBtn, setClickedSearchBtn] = useState(true);
 
   const beansFormdata: {
