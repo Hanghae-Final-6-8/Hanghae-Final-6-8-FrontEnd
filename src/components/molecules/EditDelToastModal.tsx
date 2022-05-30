@@ -8,7 +8,8 @@ import { setModalToggle } from '../../redux/modules/modalToggle';
 
 interface postsIdType {
   postsId: number;
-  location?: boolean;
+  fromList?: boolean;
+  fromMyPostEdit?: boolean;
 }
 
 const EditDelToastModal = (props: postsIdType) => {
@@ -23,8 +24,10 @@ const EditDelToastModal = (props: postsIdType) => {
   const handleDeletePost = (postsId: number) => {
     appDispatch(deletePostDB(postsId));
     // 커뮤니티 게시물 목록페이지인 경우
-    if (props.location) {
+    if (props.fromList) {
       navigate('/posts');
+    } else if (props.fromMyPostEdit) {
+      return;
     }
     navigate(-1);
   };

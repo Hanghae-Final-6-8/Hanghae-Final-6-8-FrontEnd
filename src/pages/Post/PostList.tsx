@@ -167,7 +167,7 @@ const PostList = () => {
             );
           })}
           {toggle && (
-            <EditDelToastModal postsId={clickedPostId} location={true} />
+            <EditDelToastModal postsId={clickedPostId} fromList={true} />
           )}
         </InfinityScroll>
       </div>

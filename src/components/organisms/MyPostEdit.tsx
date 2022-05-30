@@ -96,7 +96,9 @@ const MyPostEdit = () => {
           </div>
         );
       })}
-      {toggle && <EditDelToastModal postsId={clickedPostId} />}
+      {toggle && (
+        <EditDelToastModal postsId={clickedPostId} fromMyPostEdit={true} />
+      )}
     </div>
   );
 };
