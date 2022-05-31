@@ -162,7 +162,10 @@ const MainYesTasteSurvey = () => {
       <main
         className={`relative px-6 py-12 bg-brownS02 bg-contain bg-no-repeat bg-fixed w-full h-full`}
       >
-        <img className='absolute left-0 top-0' src={selectRandomBg(randomBg)} />
+        <img
+          className='absolute left-0 top-0 w-full'
+          src={selectRandomBg(randomBg)}
+        />
         <header className={!beanId ? 'relative pt-2' : 'relative'}>
           {!beanId ? (
             <img className='h-3.5' src={copick} />
