@@ -85,7 +85,6 @@ const AddEditPost = () => {
     // 태그 중복체크
     const tagText = text.value;
     const newText = tagText.replace(/(\s*)/g, '');
-    console.log(newText);
     if (tagName.find((t) => t === newText)) {
       alert('이미 입력한 태그입니다.');
       return;
