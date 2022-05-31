@@ -27,7 +27,7 @@ const TasteSurvey = () => {
 
   return (
     <>
-      <div className='relative h-full touch-none'>
+      <div className='relative h-[570px] touch-none'>
         {!isUselessPath ? (
           <>
             <PrevBtn />
