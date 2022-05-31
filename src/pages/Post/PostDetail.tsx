@@ -149,27 +149,46 @@ const PostDetail = () => {
               {toggle && <EditDelToastModal postsId={clickedPostId} />}
             </div>
           </div>
-          <div className='fixed bg-white bottom-0 left-0 w-full h-[90px'>
-            <div className='shadow-toolbar flex px-6'>
-              <input
-                className='text-body py-3 px-6 pr-50px mt-5 mb-[21px] w-full outline-none rounded-full shadow-contents'
-                type='text'
-                maxLength={120}
-                placeholder={`${user.nickname}(으)로 댓글 달기...`}
-                onChange={getInputCommentFrom}
-                value={comment}
-                onKeyDown={onKeydown}
-              />
-              <div className='flex justify-center items-center'>
-                <button
-                  className='absolute right-[44px] text-body rounded-xl text-gray80 '
-                  onClick={handleAddComment}
-                >
-                  게시
-                </button>
+          {user.isLogin ? (
+            <div className='fixed bg-white bottom-0 left-0 w-full h-[90px'>
+              <div className='shadow-toolbar flex px-6'>
+                <input
+                  className='text-body py-3 px-6 pr-50px mt-5 mb-[21px] w-full outline-none rounded-full shadow-contents'
+                  type='text'
+                  maxLength={120}
+                  placeholder={`${user.nickname}(으)로 댓글 달기...`}
+                  onChange={getInputCommentFrom}
+                  value={comment}
+                  onKeyDown={onKeydown}
+                />
+                <div className='flex justify-center items-center'>
+                  <button
+                    className='absolute right-[44px] text-body rounded-xl text-gray80 '
+                    onClick={handleAddComment}
+                  >
+                    게시
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <div className='fixed bg-white bottom-0 left-0 w-full h-[90px'>
+              <div className='shadow-toolbar flex px-6'>
+                <input
+                  className='text-body py-3 px-6 pr-50px mt-5 mb-[21px] w-full outline-none rounded-full shadow-contents select-none cursor-default'
+                  type='text'
+                  maxLength={120}
+                  readOnly
+                  value={'로그인 하셔야 이용가능합니다'}
+                />
+                <div className='flex justify-center items-center'>
+                  <button className='absolute right-[44px] text-body rounded-xl text-gray80 '>
+                    게시
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </>
