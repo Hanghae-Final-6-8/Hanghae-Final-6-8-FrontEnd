@@ -26,6 +26,7 @@ const EditProfile = () => {
   const handleEditProfileImg: React.ChangeEventHandler<HTMLInputElement> = (
     e
   ) => {
+    setFile([]);
     const file = e.currentTarget.files;
 
     if (file && file.length) {
