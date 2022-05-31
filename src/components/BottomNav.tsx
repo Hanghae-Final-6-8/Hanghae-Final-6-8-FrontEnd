@@ -47,7 +47,8 @@ const BottomNav = () => {
     location.pathname === '/' ||
     location.pathname === '/map' ||
     currentLocation === 'survey' ||
-    location.pathname === '/app/user/login/kakao/callback'
+    location.pathname === '/app/user/login/kakao/callback' ||
+    (location.pathname.split('/')[2] && currentLocation === 'posts')
   ) {
     return null;
   }
@@ -56,40 +57,45 @@ const BottomNav = () => {
       {isActivePopup ? (
         <NeedLoginToastPopup onClick={handleClosePopup} />
       ) : null}
-      <nav className='fixed flex bottom-0 z-30 bg-slate-50 w-full h-84px shadow-toolbar'>
-        <button className='flex-auto fill-slate-200' onClick={handleToMain}>
-          <Icon
-            isClicked={currentLocation === 'main'}
-            type='bottomNav'
-            src={navHome}
-          />
+      <nav className='fixed flex bottom-0 z-30 bg-slate-50 w-full h-84px shadow-toolbar '>
+        <button className='flex-auto' onClick={handleToMain}>
+          <div className='h-full w-full transition ease-in active:scale-75'>
+            <Icon
+              isClicked={currentLocation === 'main'}
+              type='bottomNav'
+              src={navHome}
+            />
+          </div>
+        </button>
+        <button className='flex-auto' onClick={handleToBeansList}>
+          <div className='h-full w-full transition ease-in active:scale-75'>
+            <Icon
+              isClicked={currentLocation === 'beans'}
+              type='bottomNav'
+              src={navCoffee}
+            />
+          </div>
+        </button>
+        <button className='flex-auto' onClick={handleToPostList}>
+          <div className='h-full w-full transition ease-in active:scale-75'>
+            <Icon
+              isClicked={currentLocation === 'posts'}
+              type='bottomNav'
+              src={navCommunity}
+            />
+          </div>
         </button>
         <button
-          className='flex-auto fill-slate-200'
-          onClick={handleToBeansList}
-        >
-          <Icon
-            isClicked={currentLocation === 'beans'}
-            type='bottomNav'
-            src={navCoffee}
-          />
-        </button>
-        <button className='flex-auto fill-slate-200' onClick={handleToPostList}>
-          <Icon
-            isClicked={currentLocation === 'posts'}
-            type='bottomNav'
-            src={navCommunity}
-          />
-        </button>
-        <button
-          className='flex-auto fill-slate-200'
+          className='flex-auto'
           onClick={user.isLogin ? handleToMypage : handleIsActivePopup}
         >
-          <Icon
-            isClicked={currentLocation === 'mypage'}
-            type='bottomNav'
-            src={navUser}
-          />
+          <div className='h-full w-full transition ease-in active:scale-75'>
+            <Icon
+              isClicked={currentLocation === 'mypage'}
+              type='bottomNav'
+              src={navUser}
+            />
+          </div>
         </button>
       </nav>
     </>

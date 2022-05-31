@@ -21,9 +21,7 @@ const Comment = (props: postsIdProps) => {
 
   // 코멘트 리스트 리덕스에서 불러오기
   const commentList = useSelector((store: RootState) => store.comment.list);
-  // const postComentList = commentList.filter((comment) => {
-  //   return comment.postsId === Number(postsId);
-  // });
+
   const user = useSelector((state: RootState) => state.user);
 
   // 댓글 삭제
@@ -31,21 +29,23 @@ const Comment = (props: postsIdProps) => {
     appDispatch(commentActionCreators.deleteCommentDB(commentsId));
   };
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col text-body'>
       {commentList.map((comment, index) => {
         return (
-          <div key={index} className='flex items-center justify-between mb-3'>
+          <div
+            key={index}
+            className='flex items-center relative justify-between py-5'
+          >
+            <p className='text-body font-700 text-gray90 mr-3'>
+              {comment.nickname}
+            </p>
             <div className='flex items-center'>
-              <div className='h-14 w-14 rounded-full bg-brownS03 mr-4 text-center leading-[56px] text-[28px]'>
-                {comment.nickname?.substring(0, 1)}
-              </div>
-
-              <p>{comment.content}</p>
+              <p className='w-48'>{comment.content}</p>
             </div>
-
-            <span>{comment.createdAt}</span>
+            <span className='caption text-gray30'>{comment.createdAt}</span>
             {comment.nickname === user.nickname && (
               <button
+                className='absolute text-caption right-3 text-red60 bottom-1'
                 onClick={() => {
                   handleDeleteComment(comment.commentsId);
                 }}
@@ -53,6 +53,9 @@ const Comment = (props: postsIdProps) => {
                 삭제
               </button>
             )}
+            <div className='absolute w-full bottom-0 bg-gray20 h-px'>
+              {/*  */}
+            </div>
           </div>
         );
       })}

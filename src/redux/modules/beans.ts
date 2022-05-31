@@ -3,16 +3,18 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { beansApis } from '../../apis';
 import { useNavigate } from 'react-router-dom';
 
-const initialState = {
-  beanlist: [
-    {
-      beanId: 0,
-      beanName: '',
-      description: null,
-      type: 0,
-      beanImage: null,
-    },
-  ],
+export interface beansType {
+  beanlist: Array<any>;
+  beansDetail: any;
+  isLoaded: boolean;
+  isMainLoaded: boolean;
+  paging: number;
+  isLoading: boolean;
+  beanListLoadedLength: number;
+}
+
+const initialState: beansType = {
+  beanlist: [],
   beansDetail: {
     acidity: 0,
     beanId: 0,
@@ -40,14 +42,30 @@ const initialState = {
   },
   isLoaded: false,
   isMainLoaded: false,
+  paging: 0,
+  isLoading: false,
+  beanListLoadedLength: 0,
 };
 
 export const getBeansList = createAsyncThunk(
   'beans/list',
-  async (_, thunkAPI) => {
+  async (page: number, thunkAPI) => {
+    thunkAPI.dispatch(isLoading(true));
     try {
-      await beansApis.getBeansList().then((response) => {
-        thunkAPI.dispatch(saveBeansList(response.data.data.content));
+      await beansApis.getBeansList(page).then((response) => {
+        const beanList = response.data.data.content;
+        thunkAPI.dispatch(saveBeansList({ beanList, page }));
+
+        if (response.data.data.content.length !== 0) {
+          thunkAPI.dispatch(setPageNum(++page));
+        }
+
+        thunkAPI.dispatch(isLoading(false));
+
+        const beanListLoadedLength = response.data.data.content.length;
+
+        thunkAPI.dispatch(setBeanListLoadedLength(beanListLoadedLength));
+
         return;
       });
     } catch (err) {
@@ -75,7 +93,8 @@ export const searchBeans = createAsyncThunk(
   async (data: string, thunkAPI) => {
     try {
       await beansApis.searchBeans(data).then((response) => {
-        thunkAPI.dispatch(saveBeansList(response.data.data));
+        const beanList = response.data.data;
+        thunkAPI.dispatch(saveBeansList({ beanList, page: 0 }));
         return;
       });
     } catch (err) {
@@ -105,16 +124,34 @@ export const beansSlice = createSlice({
   initialState,
   reducers: {
     saveBeansList: (state, action: PayloadAction<any>) => {
-      state.beanlist = action.payload;
+      if (action.payload.page === 0) {
+        state.beanlist = [];
+      }
+      state.beanlist = [...state.beanlist, ...action.payload.beanList];
       return state;
     },
     saveBeanseListByType: (state, action: PayloadAction<any>) => {
+      state.isLoaded = false;
+      state.paging = 0;
       state.beanlist = action.payload;
       return state;
     },
     saveBeansDetail: (state, action: PayloadAction<any>) => {
       state.beansDetail = action.payload;
       return;
+    },
+    isLoading: (state, action: PayloadAction<any>) => {
+      state.isLoading = action.payload;
+    },
+    setPageNum: (state, action: PayloadAction<any>) => {
+      state.paging = action.payload;
+    },
+    setBeanListLoadedLength: (state, action: PayloadAction<any>) => {
+      state.beanListLoadedLength = action.payload;
+    },
+    setLoadedAndLengthZero: (state) => {
+      state.paging = 0;
+      state.beanListLoadedLength = 0;
     },
   },
   extraReducers: (builder) => {
@@ -123,6 +160,8 @@ export const beansSlice = createSlice({
     });
     builder.addCase(searchBeans.fulfilled, (state, action) => {
       state.isLoaded = false;
+      state.paging = 0;
+      state.beanListLoadedLength = 0;
     });
     builder.addCase(getBeansListByCafe.fulfilled, (state, action) => {
       state.isLoaded = false;
@@ -130,7 +169,14 @@ export const beansSlice = createSlice({
   },
 });
 
-export const { saveBeansList, saveBeansDetail, saveBeanseListByType } =
-  beansSlice.actions;
+export const {
+  saveBeansList,
+  saveBeansDetail,
+  saveBeanseListByType,
+  isLoading,
+  setPageNum,
+  setBeanListLoadedLength,
+  setLoadedAndLengthZero,
+} = beansSlice.actions;
 
 export default beansSlice;

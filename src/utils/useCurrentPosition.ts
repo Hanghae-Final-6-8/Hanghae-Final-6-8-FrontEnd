@@ -1,4 +1,5 @@
 import { useState, useEffect, SetStateAction } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface LatLonType {
   latitude: number;
@@ -6,6 +7,7 @@ interface LatLonType {
 }
 
 const useCurrentLocation = (options = {}) => {
+  const navigate = useNavigate();
   // location 정보 저장
   const [location, setLocation] = useState<LatLonType>();
   // 에러 메세지 저장
@@ -24,6 +26,8 @@ const useCurrentLocation = (options = {}) => {
   // Geolocation의 `getCurrentPosition` 메소드에 대한 실패 callback 핸들러
   const handleError = (error: { message: SetStateAction<string> }) => {
     setError(error.message);
+    alert('설정에서 위치를 허용해 주세요');
+    navigate(-1);
   };
 
   useEffect(() => {

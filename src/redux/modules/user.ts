@@ -46,7 +46,6 @@ export const loginKakao = createAsyncThunk(
         const refreshToken = response.headers.refresh_token;
         setAccessTokenToCookie(accessToken);
         setRefreshTokenToCookie(refreshToken);
-
         return;
       });
     } catch (err) {
@@ -180,6 +179,7 @@ export const userSlice = createSlice({
   reducers: {
     setUserInfo: (state, action: PayloadAction<any>) => {
       state = action.payload;
+      state.isLogin = true;
       return state;
     },
   },

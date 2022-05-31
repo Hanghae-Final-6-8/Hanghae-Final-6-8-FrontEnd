@@ -26,9 +26,9 @@ const MyLikes = () => {
     <div className='grid grid-cols-3 gap-0.5 pb-24'>
       {listLiked.map((post, index) => {
         return (
-          <div className='relative' key={index}>
+          <div className='relative cursor-pointer' key={index}>
             <img
-              className='w-full object-cover'
+              className='w-full h-28 object-cover'
               src={
                 post.postsImage
                   ? post.postsImage.toString()
@@ -38,15 +38,6 @@ const MyLikes = () => {
                 handleMoveToDetailPage(post.postsId!);
               }}
             />
-            {post.isLikes === null ? (
-              <button className='absolute top-1 right-1'>
-                <img src={heart} />
-              </button>
-            ) : (
-              <button className='absolute top-1 right-1'>
-                <img src={heart_full} />
-              </button>
-            )}
           </div>
         );
       })}

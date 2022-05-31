@@ -79,7 +79,7 @@ const MainNoTasteSurvey = () => {
             <div className='px-6 mb-3'>
               <Button
                 className='text-white font-500 text-sub2 mt-12'
-                type='brownPType'
+                type='bgBrownP'
                 onClick={handleToTasteSurvay}
               >
                 원두 취향 테스트 하기

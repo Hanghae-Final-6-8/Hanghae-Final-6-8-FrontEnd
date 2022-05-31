@@ -16,7 +16,7 @@ const Icon = (props: IconProps) => {
     <>
       <img
         className={classnames(`${className}`, {
-          'mx-auto w-30px -translate-y-7px': bottomNav,
+          'mx-auto w-30px pt-5': bottomNav,
           'filter-gray30': !isClicked,
         })}
         src={props.src}

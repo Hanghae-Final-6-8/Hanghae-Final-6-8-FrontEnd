@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Spinner } from '../../components/molecules';
+import { SpinnerSuspense } from '../../components/molecules';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/configureStore';
 import { loginKakao, loginNaver, loginGoogle } from '../../redux/modules/user';
@@ -56,7 +56,7 @@ const LoginRedirect = () => {
     pathChecker === 'google' ? googleDispatch() : null;
   }, [appDispatch, navigate]);
 
-  return <Spinner />;
+  return <SpinnerSuspense />;
 };
 
 export default LoginRedirect;

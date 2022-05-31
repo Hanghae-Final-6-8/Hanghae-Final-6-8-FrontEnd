@@ -1,15 +1,18 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { RootState } from '../../redux/configureStore';
-import { getPostListDB } from '../../redux/modules/posts';
-import { useAppDispatch } from '../../redux/configureStore';
-import { InfinityScroll } from '../../components/atoms/index';
+import { RootState, useAppDispatch } from '../../redux/configureStore';
+import { InfinityScroll, Text } from '../../components/atoms';
 import { EditDelToastModal } from '../../components/molecules/index';
-import { addLikeDB } from '../../redux/modules/posts';
-import { deleteLikeDB } from '../../redux/modules/posts';
-import { heart, heart_full, edit } from '../../assets/icons';
+import {
+  addLikeDB,
+  deleteLikeDB,
+  getPostListDB,
+  getFirstPostListDB,
+} from '../../redux/modules/posts';
+import { heart, heart_full, edit, more } from '../../assets/icons';
 import { setModalToggle } from '../../redux/modules/modalToggle';
+import { logoCopickSquare } from '../../assets/logo';
 
 const PostList = () => {
   const navigate = useNavigate();
@@ -25,7 +28,8 @@ const PostList = () => {
 
   // db에서 커뮤니티 리스트 가져오기
   useEffect(() => {
-    !isListLoaded && appDispatch(getPostListDB(0));
+    // !isListLoaded && appDispatch(getPostListDB(0));
+    appDispatch(getFirstPostListDB(0));
     if (state) {
       document
         .getElementsByClassName('infinityScroll')[0]
@@ -73,13 +77,13 @@ const PostList = () => {
 
   return (
     <div>
-      <div className='flex justify-between'>
-        <div className='m-5 text-[22px]'>커뮤니티</div>
+      <div className='flex justify-between items-center'>
+        <div className='font-500 text-head mb-9'>커뮤니티</div>
         {!user.isLogin ? (
           <></>
         ) : (
           <button
-            className='bg-white shadow-lg rounded-full w-10 h-10 flex justify-center items-center fixed right-6'
+            className='bg-white shadow-lg rounded-full w-10 h-10 flex justify-center items-center fixed top-12 right-6 z-10'
             onClick={handleMoveToWritePage}
           >
             <img src={edit} />
@@ -98,44 +102,50 @@ const PostList = () => {
           {list.map((post, idx) => {
             return (
               <div
-                className='bg-white w-full mb-3 shadow-lg rounded-30px'
+                className='bg-white w-full cursor-pointer mb-3 shadow-contents rounded-30px pt-5 transition hover:scale-[1.02] active:scale-[1.02] ease-in'
                 key={idx}
+                onClick={() => {
+                  handleMoveToDetailPage(post.postsId!);
+                }}
               >
-                <div className='flex justify-between p-1'>
+                <div className='relative flex justify-between p-1'>
                   <div className='flex items-center mb-4'>
-                    <div className='h-14 w-14 rounded-full bg-brownS03 mr-4 text-center leading-[56px] text-[28px]'>
-                      {post.nickname?.substring(0, 1)}
+                    <img
+                      className='relative h-12 w-12 ml-[19px] rounded-full mr-3.5 text-center leading-[48px] text-head'
+                      src={post.profileUrl ? post.profileUrl : logoCopickSquare}
+                    />
+                    <div>
+                      <Text type='mainSubTitle'>{post.nickname}</Text>
+                      <Text className='mt-0' type='caption'>
+                        {post?.modifiedAt}
+                      </Text>
                     </div>
-                    <span>{post.nickname}</span>
+                    {user.nickname === post.nickname ? (
+                      <button
+                        className='p-4'
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          getSetToastFrom(post.postsId!);
+                        }}
+                      >
+                        <img className='absolute right-[19px]' src={more} />
+                      </button>
+                    ) : null}
                   </div>
-                  {user.nickname === post.nickname ? (
-                    <button
-                      className='p-4'
-                      onClick={() => {
-                        getSetToastFrom(post.postsId!);
-                      }}
-                    >
-                      ···
-                    </button>
-                  ) : (
-                    <></>
-                  )}
                 </div>
                 <img
-                  className='w-full'
+                  className='w-full h-80 object-cover'
                   src={
                     post.postsImage
                       ? post.postsImage.toString()
                       : 'https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814052__340.png'
                   }
-                  onClick={() => {
-                    handleMoveToDetailPage(post.postsId!);
-                  }}
                 />
-                <div className='p-4'>
+                <div className='relative p-4 flex gap-1 text-caption leading-6'>
                   {post.isLikes === null ? (
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         handleAddLikes(post.postsId!);
                       }}
                     >
@@ -143,7 +153,8 @@ const PostList = () => {
                     </button>
                   ) : (
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         handleDeleteLikes(post.postsId!);
                       }}
                     >
@@ -151,14 +162,17 @@ const PostList = () => {
                     </button>
                   )}
 
-                  <span>
-                    {post.likesCount !== null ? post.likesCount : '0'}개
-                  </span>
+                  <p>{post.likesCount !== null ? post.likesCount : '0'}개</p>
+                  <Text className='absolute text-caption right-6'>
+                    더 보기...
+                  </Text>
                 </div>
               </div>
             );
           })}
-          {toggle && <EditDelToastModal postsId={clickedPostId} />}
+          {toggle && (
+            <EditDelToastModal postsId={clickedPostId} fromList={true} />
+          )}
         </InfinityScroll>
       </div>
     </div>

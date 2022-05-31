@@ -3,10 +3,12 @@ import { userApis } from '../../apis';
 import { postApis } from '../../apis/postApis';
 import { commentApis } from '../../apis/commentApis';
 import { likeApis } from '../../apis/likeApis';
+import dateCalculator from '../../utils/dateCalculator';
 
 export interface PostsItemDataParams {
   postsId: number | undefined;
   nickname: string;
+  profileUrl?: string;
   postsImage: File | string;
   title: string;
   content: string;
@@ -18,6 +20,7 @@ export interface PostsItemDataParams {
 }
 
 export interface CommentItemDataParams {
+  postsId: number;
   commentsId: number;
   nickname?: string;
   content: string;
@@ -34,6 +37,7 @@ interface mypageType {
   isListLikedLoaded?: boolean;
   isListMyActivityLoaded?: boolean;
   isMyCommentListLoaded?: boolean;
+  mypageTabsNum?: number;
 }
 
 const initialState: mypageType = {
@@ -46,6 +50,7 @@ const initialState: mypageType = {
   isListLikedLoaded: false,
   isListMyActivityLoaded: false,
   isMyCommentListLoaded: false,
+  mypageTabsNum: 0,
 };
 
 // 유저 즐겨찾기, 좋아요, 게시글 카운트 set
@@ -73,8 +78,6 @@ export const getPostsLikedDB = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       await likeApis.getPostsLiked().then((res) => {
-        // console.log(res);
-        // console.log(res.data.data.content);
         const newList: Array<PostsItemDataParams> = [];
         res.data.data.content.map((post: any) => {
           let newTagStr = [];
@@ -110,17 +113,20 @@ export const getPostListMine = createAsyncThunk(
         res.data.data.content.map((post: any) => {
           let newTagStr = [];
           if (post.tag_name !== null) {
-            const tagStr = post.tag_name.slice(1, post.tag_name.length - 1);
-            newTagStr = tagStr.split(',');
+            newTagStr = post.tag_name.split(',');
           }
+
+          const newDate = dateCalculator(post.modified_at);
+
           newList.push({
             postsId: post.posts_id,
             nickname: post.nickname,
+            profileUrl: post.profile_url,
             postsImage: post.posts_image,
             title: post.title,
             content: post.content,
             createdAt: post.created_at,
-            modifiedAt: post.modified_at,
+            modifiedAt: newDate,
             tagName: newTagStr,
             isLikes: post.isLikes,
             likesCount: post.likes_count,
@@ -142,10 +148,14 @@ export const getMyCommentDB = createAsyncThunk(
       await commentApis.getMyComment().then((res) => {
         const newList: Array<CommentItemDataParams> = [];
         res.data.data.content.map((comment: any) => {
+          // 날짜 계산
+          const newDate = dateCalculator(comment.created_at);
+
           newList.push({
+            postsId: comment.posts_id,
             commentsId: comment.comments_id,
             content: comment.content,
-            createdAt: comment.createdAt,
+            createdAt: newDate,
           });
         });
         thunkAPI.dispatch(setMyCommentList(newList));
@@ -221,6 +231,38 @@ export const mypageSlice = createSlice({
       });
       return { ...state, myCommentList: newCommentList };
     },
+    deleteListLiked: (state, action: PayloadAction<number>) => {
+      const newList = state.listLiked.filter((post) => {
+        return post.postsId !== action.payload;
+      });
+      state.listLiked = newList;
+    },
+    deleteMyCommentList: (state, action: PayloadAction<number>) => {
+      const newList = state.myCommentList.filter((post) => {
+        return post.postsId !== action.payload;
+      });
+      state.myCommentList = newList;
+    },
+    changeStatusLike: (state, action: PayloadAction<number>) => {
+      state.listMyActivity.map((post) => {
+        if (post.postsId === action.payload) {
+          post.isLikes = 10;
+        }
+      });
+    },
+    changeStatusDislike: (state, action: PayloadAction<number>) => {
+      state.listMyActivity.map((post) => {
+        if (post.postsId === action.payload) {
+          post.isLikes = null;
+        }
+      });
+    },
+    changeMypageTabsNum: (state, action: PayloadAction<number>) => {
+      state.mypageTabsNum = action.payload;
+    },
+    deleteMyActivityCount: (state) => {
+      --state.activity;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getPostsLikedDB.fulfilled, (state, action) => {
@@ -253,6 +295,12 @@ export const {
   setIsMyCommentListLoaded,
   deleteMyPost,
   deleteMyComment,
+  changeStatusLike,
+  changeStatusDislike,
+  deleteListLiked,
+  deleteMyCommentList,
+  changeMypageTabsNum,
+  deleteMyActivityCount,
 } = mypageSlice.actions;
 
 const mypageActionCreators = {

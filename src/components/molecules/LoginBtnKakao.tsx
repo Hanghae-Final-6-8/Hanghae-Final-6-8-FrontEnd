@@ -2,6 +2,7 @@ import { kakao } from '../../assets/icons';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/configureStore';
 import { getKakaoURL } from '../../redux/modules/user';
+import { Button } from '../atoms';
 
 const LoginBtnKakao = () => {
   const navigate = useNavigate();
@@ -13,12 +14,9 @@ const LoginBtnKakao = () => {
 
   return (
     <>
-      <button
-        className='w-50px h-50px mr-7 rounded-full bg-white shadow-loginBtn'
-        onClick={handleLoginKakao}
-      >
+      <Button type='loginBtn' onClick={handleLoginKakao}>
         <img className='mx-auto' src={kakao} />
-      </button>
+      </Button>
     </>
   );
 };

@@ -59,6 +59,8 @@ export const postTasteSurvey = createAsyncThunk(
           return;
         });
     } catch (err: any) {
+      console.log('에러');
+      tasteList.navigate('/main');
       return thunkAPI.rejectWithValue(err.response.data);
     }
   }
@@ -106,16 +108,16 @@ export const tasteSlice = createSlice({
       return state;
     },
   },
-  extraReducers: (builder) => {
-    // getSimilarBeans API 재요청을 막기 위함입니다.
-    builder.addCase(getSimilarBeans.fulfilled, (state, action) => {
-      state.isSimilarLoaded = true;
-    });
-    // 다시 취향조사를 하게되면 시작됩니다.
-    builder.addCase(postTasteSurvey.pending, (state, action) => {
-      state.isSimilarLoaded = false;
-    });
-  },
+  // extraReducers: (builder) => {
+  //   // getSimilarBeans API 재요청을 막기 위함입니다.
+  //   builder.addCase(getSimilarBeans.fulfilled, (state, action) => {
+  //     state.isSimilarLoaded = true;
+  //   });
+  //   // 다시 취향조사를 하게되면 시작됩니다.
+  //   builder.addCase(postTasteSurvey.pending, (state, action) => {
+  //     state.isSimilarLoaded = false;
+  //   });
+  // },
 });
 
 export const { saveTasteList, saveSimilarList } = tasteSlice.actions;

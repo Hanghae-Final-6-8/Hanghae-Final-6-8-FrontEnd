@@ -1,11 +1,18 @@
 import { useNavigate } from 'react-router-dom';
-
 import { Button } from '../../components/atoms';
 import { logoCopick, pickYourCoffee } from '../../assets/logo';
 import { LoginBtnGroup } from '../../components/organisms';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/configureStore';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { isLogin } = useSelector((state: RootState) => state.user);
+
+  useEffect(() => {
+    isLogin && navigate('/main');
+  }, [isLogin, navigate]);
 
   const handleToMain = () => {
     navigate('../main');
@@ -22,7 +29,7 @@ const Login = () => {
         </div>
         <LoginBtnGroup className='pt-3' />
         <Button
-          className='mt-10 bg-brownP text-white font-500 text-sub2'
+          className='mt-10 bg-brownP text-white font-500 text-sub2  hover:brightness-75 active:brightness-75 shadow-tasteBrown  transition ease-in'
           onClick={handleToMain}
         >
           둘러보기

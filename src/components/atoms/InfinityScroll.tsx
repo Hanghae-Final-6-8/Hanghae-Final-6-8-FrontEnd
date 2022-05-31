@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import _ from 'lodash';
+import { isMobile } from 'react-device-detect';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -9,6 +10,7 @@ interface LayoutProps {
 }
 
 const domEl = document.getElementsByClassName('infinityScroll');
+const l_docElement = document.documentElement;
 
 const InfinityScroll: React.FC<LayoutProps> = (props) => {
   const { callNext, isNext, loading } = props;
@@ -23,9 +25,19 @@ const InfinityScroll: React.FC<LayoutProps> = (props) => {
 
     const scrollTop = domEl[0].scrollTop;
 
-    if (scrollHeight - clientHeight - scrollTop < 200) {
-      console.log('!callNext!');
-      callNext();
+    if (isMobile) {
+      if (
+        l_docElement.scrollHeight -
+          l_docElement.clientHeight -
+          l_docElement.scrollTop <
+        200
+      ) {
+        callNext();
+      }
+    } else {
+      if (scrollHeight - clientHeight - scrollTop < 200) {
+        callNext();
+      }
     }
   }, 300);
 
@@ -38,11 +50,16 @@ const InfinityScroll: React.FC<LayoutProps> = (props) => {
 
     if (isNext) {
       domEl[0].addEventListener('scroll', handleScroll);
+      l_docElement.addEventListener('touchmove', handleScroll);
     } else {
       domEl[0].removeEventListener('scroll', handleScroll);
+      l_docElement.removeEventListener('touchmove', handleScroll);
     }
 
-    return () => domEl[0].removeEventListener('scroll', handleScroll);
+    return () => {
+      domEl[0].removeEventListener('scroll', handleScroll);
+      l_docElement.removeEventListener('touchmove', handleScroll);
+    };
   }, [isNext, loading]);
 
   return <>{props.children}</>;

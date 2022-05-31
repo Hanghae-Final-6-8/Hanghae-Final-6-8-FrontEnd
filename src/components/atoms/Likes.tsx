@@ -28,7 +28,7 @@ const Likes = (props: likesProps) => {
     appDispatch(deleteLikeDB(postsId));
   };
   return (
-    <div className='flex mt-3 mb-3'>
+    <div className='relative p-4 flex text-caption leading-6'>
       {post?.isLikes === null ? (
         <button onClick={handleAddLikes}>
           <img src={heart} />
@@ -39,10 +39,7 @@ const Likes = (props: likesProps) => {
         </button>
       )}
 
-      <span className='ml-2'>
-        {' '}
-        {post?.likesCount ? post.likesCount : '0'}개
-      </span>
+      <span className='ml-2'>{post?.likesCount ? post.likesCount : '0'}개</span>
     </div>
   );
 };

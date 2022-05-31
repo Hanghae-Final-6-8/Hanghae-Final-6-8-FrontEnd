@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { right } from '../../assets/icons';
 import { useNavigate } from 'react-router-dom';
+import { detailBeans } from '../../redux/modules/beans';
 
 const MainMidCarousel = () => {
   const appDispatch = useAppDispatch();
@@ -34,6 +35,16 @@ const MainMidCarousel = () => {
     navigate('/survey/main');
   };
 
+  const handleToClickBeans = (e: {
+    currentTarget: { getAttribute: (arg0: string) => void };
+  }) => {
+    const currentTargetValue = Number(
+      e.currentTarget.getAttribute('data-beanid')
+    );
+    appDispatch(detailBeans(currentTargetValue));
+    navigate(`/beans/${currentTargetValue}`);
+  };
+
   return (
     <>
       {/* <div className='flex mt-5'>
@@ -47,15 +58,19 @@ const MainMidCarousel = () => {
       <div className='flex'>
         <Swiper
           modules={[Navigation, Pagination, Scrollbar, A11y]}
-          effect={'cards'}
           grabCursor={true}
           slidesPerView={2}
-          spaceBetween={20}
+          spaceBetween={15}
           className='mySwiper px-7 py-7'
         >
           {beansByTypeFormdata.map((item) => (
             <SwiperSlide key={item.beanId}>
-              <RoundBox type='mainRoundBox' className='w-40'>
+              <RoundBox
+                type='mainRoundBox'
+                className='w-40 transition hover:bg-brownS03 active:bg-brownS03 ease-in'
+                onClick={handleToClickBeans}
+                data={item.beanId}
+              >
                 <div className='mx-auto h-[180px] select-none flex flex-col justify-center'>
                   <img
                     className='h-90px mx-auto'

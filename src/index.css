@@ -41,6 +41,9 @@
   font-display: swap;
   unicode-range: U+0041-005A, U+0061-007A, U+0030-0039;
 }
+* {
+  -webkit-tap-highlight-color: transparent;
+}
 
 html,
 body {
@@ -96,4 +99,12 @@ body::-webkit-scrollbar {
 .filter-gray30 {
   filter: invert(73%) sepia(71%) saturate(1%) hue-rotate(7deg) brightness(110%)
     contrast(86%);
+}
+
+/* 카카오 맵 */
+.kakaoMapShowInfo {
+  white-space: nowrap;
+  padding: 25px;
+  font-weight: 500;
+  font-size: 18px;
 }

@@ -85,11 +85,6 @@ module.exports = {
         brownS01: "url('/src/assets/backgrounds/brownS01.svg')",
         brownS01bg: "url('/src/assets/backgrounds/beigeNoise.jpg')",
         basicBg: "url('/src/assets/backgrounds/basicBg.svg')",
-        defaultBg01: "url('/src/assets/backgrounds/default_back01.jpg')",
-        defaultBg02: "url('/src/assets/backgrounds/default_back02.jpg')",
-        defaultBg03: "url('/src/assets/backgrounds/default_back03.jpg')",
-        defaultBg04: "url('/src/assets/backgrounds/default_back04.jpg')",
-        defaultBg05: "url('/src/assets/backgrounds/default_back05.jpg')",
         mainBrownBg: "url('/src/assets/backgrounds/mainBrownBg.svg')",
         cardImg01: "url('/src/assets/images/cardImg001.png')",
         cardImg02: "url('/src/assets/images/cardImg002.png')",
@@ -97,6 +92,36 @@ module.exports = {
       },
       brightness: {
         bg: '.40',
+      },
+      animation: {
+        fadeIn: 'fadeIn 0.8s',
+        scrollUp: 'scrollUp 0.6s',
+        scrollUp3: 'scrollUp3 0.6s',
+        fadeInZeroTo60: 'fadeInZeroTo60 0.6s',
+        moveHorizontal: 'moveHorizontal 2s infinite',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: 0.8, transform: 'translate3d(0, 20%, 0)' },
+          '100%': { opacity: 1, transform: 'translateZ(0)' },
+        },
+        scrollUp: {
+          '0%': { opacity: 1, transform: 'translate3d(0, 100%, 0)' },
+          '100%': { opacity: 1, transform: 'translateZ(0)' },
+        },
+        scrollUp3: {
+          '0%': { opacity: 1, transform: 'translate3d(0, 3%, 0)' },
+          '100%': { opacity: 1, transform: 'translateZ(0)' },
+        },
+        fadeInZeroTo60: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 0.6 },
+        },
+        moveHorizontal: {
+          '0%': { transform: 'translateZ(0)' },
+          '50%': { transform: 'translate3d(3%, 0, 0)' },
+          '100%': { transform: 'translateZ(0)' },
+        },
       },
     },
   },

@@ -4,8 +4,8 @@ import { useAppDispatch } from '../../redux/configureStore';
 import { RootState } from '../../redux/configureStore';
 import { getPostListMine } from '../../redux/modules/mypage';
 import { getMyCommentDB } from '../../redux/modules/mypage';
-import { useNavigate } from 'react-router-dom';
-import { right } from '../../assets/icons';
+import { useNavigate, Link } from 'react-router-dom';
+import { right, heart, heart_full, more } from '../../assets/icons';
 import { RoundBox, Text, Button } from '../atoms';
 import { commentActionCreators } from '../../redux/modules/comment';
 
@@ -43,6 +43,11 @@ const MyActivity = () => {
 
   const handleDeleteComment = () => {
     appDispatch(commentActionCreators.deleteCommentDB(commentsId));
+    setToggle(false);
+  };
+
+  const handleMoveToDetailFromComment = (postsId: number) => {
+    navigate(`/posts/${postsId}`);
   };
 
   return (
@@ -63,7 +68,7 @@ const MyActivity = () => {
         {listMyActivity.map((post, index) => {
           return (
             <div
-              className='m-2 flex'
+              className='m-2 p-1 flex items-center shadow-md rounded-xl cursor-pointer transition hover:scale-[1.02] active:scale-[1.02] ease-in'
               key={index}
               onClick={() => {
                 handleMoveToDetailPage(post.postsId!);
@@ -78,7 +83,26 @@ const MyActivity = () => {
                 }
               />
               <div>
-                <p>{post.content}</p>
+                <p className='mb-1'>
+                  {post.content.length > 20
+                    ? post.content.substring(0, 15) + '...'
+                    : post.content}
+                </p>
+                <Text className='mt-0' type='caption'>
+                  {post.modifiedAt}
+                </Text>
+                <p>
+                  {' '}
+                  {post.isLikes === null ? (
+                    <button>
+                      <img src={heart} />
+                    </button>
+                  ) : (
+                    <button>
+                      <img src={heart_full} />
+                    </button>
+                  )}
+                </p>
               </div>
             </div>
           );
@@ -100,15 +124,27 @@ const MyActivity = () => {
         </div>
         {myCommentList.map((comment, index) => {
           return (
-            <div className='m-2 flex pb-4 border-b-2' key={index}>
+            <div
+              key={index}
+              className='m-2 flex pt-2 pb-2 pl-1 pr-1 drop-shadow-xl rounded-md transition hover:scale-[1.02] active:scale-[1.02] ease-in cursor-pointer'
+              onClick={() => {
+                handleMoveToDetailFromComment(comment.postsId);
+              }}
+            >
               <div className='flex justify-between w-full'>
-                <p>{comment.content}</p>
+                <div>
+                  <p>{comment.content}</p>
+                  <Text className='mt-0' type='caption'>
+                    {comment.createdAt}
+                  </Text>
+                </div>
                 <button
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation();
                     handleToggle(comment.commentsId);
                   }}
                 >
-                  ···
+                  <img src={more} />
                 </button>
               </div>
             </div>
@@ -116,13 +152,17 @@ const MyActivity = () => {
         })}
         {toggle === true ? (
           <div className='fixed z-10 touch-none top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.3)]'>
-            <RoundBox round='mainModal' className='flex flex-col pb-36 mt-80'>
+            <RoundBox
+              round='mainModal'
+              className='flex flex-col pb-36 mt-80 animate-fadeIn'
+              onClick={handleToggle}
+            >
               <Text className='text-subH33 font-500'>
                 어떤 작업을 하시겠어요?
               </Text>
               <Button
                 className='text-white font-500 text-body'
-                type='brownPType'
+                type='bgBrownP'
                 onClick={handleDeleteComment}
               >
                 삭제하기

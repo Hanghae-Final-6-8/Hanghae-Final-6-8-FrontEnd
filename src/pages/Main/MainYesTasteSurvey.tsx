@@ -2,10 +2,8 @@ import {
   bookmark,
   down,
   up,
-  share,
   beans,
   right,
-  left,
   bookmark_full,
 } from '../../assets/icons/';
 import { coffee_default } from '../../assets/images';
@@ -28,6 +26,13 @@ import { detailBeans } from '../../redux/modules/beans';
 import { useEffect, useState } from 'react';
 import { logoCopickSquare, copick } from '../../assets/logo';
 import { addFavoriteList } from '../../redux/modules/favorite';
+import {
+  defaultBg01,
+  defaultBg02,
+  defaultBg03,
+  defaultBg04,
+  defaultBg05,
+} from '../../assets/backgrounds';
 
 const MainYesTasteSurvey = () => {
   const navigate = useNavigate();
@@ -47,22 +52,24 @@ const MainYesTasteSurvey = () => {
   }, [setRandomBg]);
   const selectRandomBg = (num: number) => {
     const bgList = [
-      'bg-defaultBg01',
-      'bg-defaultBg02',
-      'bg-defaultBg03',
-      'bg-defaultBg04',
-      'bg-defaultBg05',
+      defaultBg01,
+      defaultBg02,
+      defaultBg03,
+      defaultBg04,
+      defaultBg05,
     ];
     return bgList[num];
   };
 
   useEffect(() => {
     // 리덕스에 데이터가 null일 경우 API를 요청합니다.
-    user.isLogin && !tasteList.beanName && appDispatch(getTasteSurvey());
+    user.isLogin && appDispatch(getTasteSurvey());
+    // 즐겨찾기부분 오류 때문에 '&& !tasteList.beanName'을 뺐습니다.
+
     if (!beanId) {
       appDispatch(getSimilarBeans());
     }
-  }, [tasteList.beanName, beanId, tasteList.isSimilarLoaded, appDispatch]);
+  }, [tasteList.beanName, beanId, appDispatch]);
 
   useEffect(() => {
     if (tasteList.favoritesId) {
@@ -145,7 +152,7 @@ const MainYesTasteSurvey = () => {
     type: number;
   }[] = [];
   if (tasteList.similar) {
-    tasteList.similar.forEach((el) => {
+    tasteList.similar.forEach((el: any) => {
       recommendFormdata.push(el);
     });
   }
@@ -153,28 +160,32 @@ const MainYesTasteSurvey = () => {
   return (
     <>
       <main
-        className={`relative px-6 py-12 bg-brownS02 ${selectRandomBg(
-          randomBg
-        )} bg-contain bg-no-repeat bg-fixed w-full h-full`}
+        className={`relative px-6 py-12 bg-brownS02 bg-contain bg-no-repeat bg-fixed w-full h-full`}
       >
+        <img
+          className='absolute left-0 top-0 w-full'
+          src={selectRandomBg(randomBg)}
+        />
         <header className={!beanId ? 'relative pt-2' : 'relative'}>
           {!beanId ? (
             <img className='h-3.5' src={copick} />
           ) : (
             <PrevBtn className='filter-gray30' />
           )}
-          <button
-            className='absolute top-0 right-0 w-8'
-            onClick={handleAddBookmark}
-            data-beanid={tasteList.beanId}
-          >
-            <img
-              className='w-full '
-              src={isFavorite ? bookmark_full : bookmark}
-            />
-          </button>
+          {user.isLogin ? (
+            <button
+              className='absolute top-0 right-0 w-8'
+              onClick={handleAddBookmark}
+              data-beanid={tasteList.beanId}
+            >
+              <img
+                className='w-full '
+                src={isFavorite ? bookmark_full : bookmark}
+              />
+            </button>
+          ) : null}
         </header>
-        <div className='absolute px-6 pb-6 left-0 top-56 rounded-t-40px bg-white w-full shadow-main'>
+        <div className='absolute px-6 pb-6 left-0 top-56 rounded-t-40px bg-white w-full shadow-main animate-scrollUp3'>
           <article className='relative -top-28'>
             <figure className='relative'>
               <div>
@@ -234,7 +245,7 @@ const MainYesTasteSurvey = () => {
               </Text>
               <Text type='mainBodyTitle'>맛볼 수 있는 카페는?</Text>
               <RoundBox
-                className='text-center relative overflow-hidden mt-5'
+                className='text-center relative overflow-hidden mt-5 transition hover:scale-[1.02] active:scale-[1.02] ease-in'
                 type='mainRoundBox'
                 cafeId={tasteList.cafeId}
                 onClick={() => {
@@ -281,6 +292,7 @@ const MainYesTasteSurvey = () => {
                     {recommendFormdata.map((item) => (
                       <RoundBox
                         key={item.beanId}
+                        className='transition hover:bg-brownS03 active:bg-brownS03 ease-in'
                         type='mainRoundBox'
                         onClick={handleToClickBeans}
                         data={item.beanId}
@@ -302,7 +314,7 @@ const MainYesTasteSurvey = () => {
                 </GridBox>
                 <Button
                   className='text-white font-500 text-sub2 mt-12'
-                  type='brownPType'
+                  type='bgBrownP'
                   onClick={handleToTasteSurvay}
                 >
                   테스트 다시하기

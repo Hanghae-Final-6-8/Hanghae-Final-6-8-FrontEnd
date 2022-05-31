@@ -2,12 +2,13 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/configureStore';
 import { useNavigate } from 'react-router-dom';
-import { postActionCreators } from '../../redux/modules/posts';
 import { useAppDispatch } from '../../redux/configureStore';
 import { EditDelToastModal } from '../../components/molecules/index';
 import { mypageActionCreators } from '../../redux/modules/mypage';
-import { heart, heart_full } from '../../assets/icons';
+import { heart, heart_full, more } from '../../assets/icons';
 import { setModalToggle } from '../../redux/modules/modalToggle';
+import { Text } from '../atoms';
+import { logoCopickSquare } from '../../assets/logo';
 
 const MyPostEdit = () => {
   const navigate = useNavigate();
@@ -43,37 +44,44 @@ const MyPostEdit = () => {
       {listMyActivity.map((post, idx) => {
         return (
           <div
-            className='bg-white w-full mb-3 shadow-lg rounded-30px'
+            className='bg-white w-full cursor-pointer mb-3 shadow-contents rounded-30px pt-5 transition hover:scale-[1.02] active:scale-[1.02] ease-in'
             key={idx}
+            onClick={() => {
+              handleMoveToDetailPage(post.postsId!);
+            }}
           >
-            <div className='flex justify-between p-1'>
+            <div className='relative flex justify-between p-1'>
               <div className='flex items-center mb-4'>
-                <div className='h-14 w-14 rounded-full bg-brownS03 mr-4 text-center leading-[56px] text-[28px]'>
-                  {post.nickname?.substring(0, 1)}
+                <img
+                  className='relative h-12 w-12 ml-[19px] rounded-full mr-3.5 text-center leading-[48px] text-head'
+                  src={post.profileUrl ? post.profileUrl : logoCopickSquare}
+                />
+                <div>
+                  <Text type='mainSubTitle'>{post.nickname}</Text>
+                  <Text className='mt-0' type='caption'>
+                    {post?.modifiedAt}
+                  </Text>
                 </div>
-                <span>{post.nickname}</span>
+                <button
+                  className='p-4'
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    getSetToastFrom(post.postsId!);
+                  }}
+                >
+                  <img className='absolute right-[19px]' src={more} />
+                </button>
               </div>
-              <button
-                className='p-4'
-                onClick={() => {
-                  getSetToastFrom(post.postsId!);
-                }}
-              >
-                ···
-              </button>
             </div>
             <img
-              className='w-full'
+              className='w-full h-80 object-cover'
               src={
                 post.postsImage
                   ? post.postsImage.toString()
                   : 'https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814052__340.png'
               }
-              onClick={() => {
-                handleMoveToDetailPage(post.postsId!);
-              }}
             />
-            <div className='p-4 flex items-center'>
+            <div className='relative p-4 flex gap-1 text-caption leading-6'>
               {post.isLikes === null ? (
                 <button>
                   <img src={heart} />
@@ -84,12 +92,15 @@ const MyPostEdit = () => {
                 </button>
               )}
 
-              <span>{post.likesCount !== null ? post.likesCount : '0'}개</span>
+              <p>{post.likesCount !== null ? post.likesCount : '0'}개</p>
+              <Text className='absolute text-caption right-6'>더 보기...</Text>
             </div>
           </div>
         );
       })}
-      {toggle && <EditDelToastModal postsId={clickedPostId} />}
+      {toggle && (
+        <EditDelToastModal postsId={clickedPostId} fromMyPostEdit={true} />
+      )}
     </div>
   );
 };
