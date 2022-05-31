@@ -21,7 +21,7 @@ import {
   TasteSurveyLoading,
   TasteSurveyNeedLogin,
 } from './pages/TasteSurvey';
-import { GoogleVerification, NotFound } from './pages/System';
+import { NotFound } from './pages/System';
 import { RootLayout } from './components/templates';
 
 import { useAppDispatch } from './redux/configureStore';
@@ -115,10 +115,6 @@ function App() {
           </Route>
 
           <Route path='*' element={<NotFound />} />
-          <Route
-            path='googlead580a56bdace850.html'
-            element={<GoogleVerification />}
-          />
         </Routes>
       </Suspense>
     </>
