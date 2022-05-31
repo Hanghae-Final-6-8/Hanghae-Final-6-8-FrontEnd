@@ -4,7 +4,7 @@ import { useAppDispatch } from '../../redux/configureStore';
 import { RootState } from '../../redux/configureStore';
 import { getPostListMine } from '../../redux/modules/mypage';
 import { getMyCommentDB } from '../../redux/modules/mypage';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { right, heart, heart_full, more } from '../../assets/icons';
 import { RoundBox, Text, Button } from '../atoms';
 import { commentActionCreators } from '../../redux/modules/comment';
@@ -13,15 +13,15 @@ const MyActivity = () => {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
   useEffect(() => {
-    !isListMyActivityLoaded && appDispatch(getPostListMine());
-    !isMyCommentListLoaded && appDispatch(getMyCommentDB());
+    appDispatch(getPostListMine());
+    appDispatch(getMyCommentDB());
   }, []);
 
   const {
     listMyActivity,
-    isListMyActivityLoaded,
+    // isListMyActivityLoaded,
     myCommentList,
-    isMyCommentListLoaded,
+    // isMyCommentListLoaded,
   } = useSelector((store: RootState) => store.mypage);
 
   const [toggle, setToggle] = useState(false);
