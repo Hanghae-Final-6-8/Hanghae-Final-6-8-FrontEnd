@@ -260,6 +260,9 @@ export const mypageSlice = createSlice({
     changeMypageTabsNum: (state, action: PayloadAction<number>) => {
       state.mypageTabsNum = action.payload;
     },
+    deleteMyActivityCount: (state) => {
+      --state.activity;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getPostsLikedDB.fulfilled, (state, action) => {
@@ -297,6 +300,7 @@ export const {
   deleteListLiked,
   deleteMyCommentList,
   changeMypageTabsNum,
+  deleteMyActivityCount,
 } = mypageSlice.actions;
 
 const mypageActionCreators = {

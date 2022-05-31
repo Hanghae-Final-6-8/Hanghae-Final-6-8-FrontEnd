@@ -9,6 +9,7 @@ import {
   changeStatusLike,
   deleteListLiked,
   deleteMyCommentList,
+  deleteMyActivityCount,
 } from './mypage';
 import dateCalculator from '../../utils/dateCalculator';
 
@@ -277,6 +278,7 @@ export const deletePostDB = createAsyncThunk(
         thunkAPI.dispatch(deleteMyPost(data));
         thunkAPI.dispatch(deleteMyCommentList(data));
         thunkAPI.dispatch(deleteListLiked(data));
+        thunkAPI.dispatch(deleteMyActivityCount());
       });
     } catch (error) {
       console.log(error);
