@@ -37,6 +37,7 @@ interface mypageType {
   isListLikedLoaded?: boolean;
   isListMyActivityLoaded?: boolean;
   isMyCommentListLoaded?: boolean;
+  mypageTabsNum?: number;
 }
 
 const initialState: mypageType = {
@@ -49,6 +50,7 @@ const initialState: mypageType = {
   isListLikedLoaded: false,
   isListMyActivityLoaded: false,
   isMyCommentListLoaded: false,
+  mypageTabsNum: 0,
 };
 
 // 유저 즐겨찾기, 좋아요, 게시글 카운트 set
@@ -255,6 +257,9 @@ export const mypageSlice = createSlice({
         }
       });
     },
+    changeMypageTabsNum: (state, action: PayloadAction<number>) => {
+      state.mypageTabsNum = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getPostsLikedDB.fulfilled, (state, action) => {
@@ -291,6 +296,7 @@ export const {
   changeStatusDislike,
   deleteListLiked,
   deleteMyCommentList,
+  changeMypageTabsNum,
 } = mypageSlice.actions;
 
 const mypageActionCreators = {
