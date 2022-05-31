@@ -8,6 +8,7 @@ import {
   changeStatusDislike,
   changeStatusLike,
   deleteListLiked,
+  deleteMyCommentList,
 } from './mypage';
 import dateCalculator from '../../utils/dateCalculator';
 
@@ -274,6 +275,7 @@ export const deletePostDB = createAsyncThunk(
         thunkAPI.dispatch(deletePost(data));
         thunkAPI.dispatch(setIsListMyActivityLoaded(false));
         thunkAPI.dispatch(deleteMyPost(data));
+        thunkAPI.dispatch(deleteMyCommentList(data));
         thunkAPI.dispatch(deleteListLiked(data));
       });
     } catch (error) {
@@ -304,7 +306,6 @@ export const deleteLikeDB = createAsyncThunk(
   'postsReducer/deleteLikeDB',
   async (data: number, thunkAPI) => {
     try {
-      console.log(data);
       await likeApis.deleteLike(data).then((res) => {
         thunkAPI.dispatch(deleteLike(data));
         // 좋아요누른 게시물 재랜더링위해

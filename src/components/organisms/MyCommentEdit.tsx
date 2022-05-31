@@ -41,7 +41,7 @@ const MyCommentEdit = () => {
       {myCommentList.map((comment, index) => {
         return (
           <div
-            className='m-2 flex pt-2 pb-2 pl-1 pr-1 drop-shadow-xl rounded-md transition hover:scale-[1.02] active:scale-[1.02] ease-in'
+            className='m-2 flex pt-2 pb-2 pl-1 pr-1 drop-shadow-xl rounded-md transition hover:scale-[1.02] active:scale-[1.02] ease-in cursor-pointer'
             key={index}
             onClick={() => {
               handleMoveToDetailFromComment(comment.postsId);

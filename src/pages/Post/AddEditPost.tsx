@@ -9,6 +9,7 @@ import { RootState } from '../../redux/configureStore';
 import { Button } from '../../components/atoms';
 import { setMoveToLogin } from '../../utils/setMoveToLogin';
 import classnames from 'classnames';
+import fileCheck from '../../utils/fileCheck';
 
 const AddEditPost = () => {
   const { isLogin } = useSelector((state: RootState) => state.user);
@@ -29,9 +30,17 @@ const AddEditPost = () => {
   // 이미지 미리보기용
   const [previewImage, setPreviewImage] = useState<any>();
 
+  // 파일 set
   const getOnLoadFileFrom = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFile([]);
     const file = e.currentTarget.files;
     if (file && file.length) {
+      const result = fileCheck(file[0]);
+
+      if (!result) {
+        alert('8MB이하의 이미지 파일을 선택해 주세요');
+        return;
+      }
       setFile((existing) => existing.concat(Array.from(file)));
     }
 
@@ -68,6 +77,15 @@ const AddEditPost = () => {
     const text = document.getElementById('tagName') as HTMLInputElement;
     if (text.value === '') {
       alert('태그 내용을 입력해주세요');
+      return;
+    }
+    if (tagName.length > 9) {
+      alert('태그는 10개까지 작성 가능합니다');
+      return;
+    }
+    // 태그 중복체크
+    if (tagName.find((t) => t === text.value)) {
+      alert('이미 입력한 태그입니다.');
       return;
     }
     setInputTag(text.value);
@@ -201,6 +219,7 @@ const AddEditPost = () => {
                 placeholder='태그 입력 후 추가버튼'
                 onChange={getInputTagNameFrom}
                 value={inputTag}
+                maxLength={10}
               />
               <button
                 className='p-3 rounded-xl shadow-xl whitespace-nowrap'

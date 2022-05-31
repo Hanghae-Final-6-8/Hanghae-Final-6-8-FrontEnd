@@ -21,9 +21,7 @@ const Comment = (props: postsIdProps) => {
 
   // 코멘트 리스트 리덕스에서 불러오기
   const commentList = useSelector((store: RootState) => store.comment.list);
-  // const postComentList = commentList.filter((comment) => {
-  //   return comment.postsId === Number(postsId);
-  // });
+
   const user = useSelector((state: RootState) => state.user);
 
   // 댓글 삭제

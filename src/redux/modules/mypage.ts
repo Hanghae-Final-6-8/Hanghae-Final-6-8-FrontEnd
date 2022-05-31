@@ -37,6 +37,7 @@ interface mypageType {
   isListLikedLoaded?: boolean;
   isListMyActivityLoaded?: boolean;
   isMyCommentListLoaded?: boolean;
+  mypageTabsNum?: number;
 }
 
 const initialState: mypageType = {
@@ -49,6 +50,7 @@ const initialState: mypageType = {
   isListLikedLoaded: false,
   isListMyActivityLoaded: false,
   isMyCommentListLoaded: false,
+  mypageTabsNum: 0,
 };
 
 // 유저 즐겨찾기, 좋아요, 게시글 카운트 set
@@ -235,6 +237,12 @@ export const mypageSlice = createSlice({
       });
       state.listLiked = newList;
     },
+    deleteMyCommentList: (state, action: PayloadAction<number>) => {
+      const newList = state.myCommentList.filter((post) => {
+        return post.postsId !== action.payload;
+      });
+      state.myCommentList = newList;
+    },
     changeStatusLike: (state, action: PayloadAction<number>) => {
       state.listMyActivity.map((post) => {
         if (post.postsId === action.payload) {
@@ -248,6 +256,9 @@ export const mypageSlice = createSlice({
           post.isLikes = null;
         }
       });
+    },
+    changeMypageTabsNum: (state, action: PayloadAction<number>) => {
+      state.mypageTabsNum = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -284,6 +295,8 @@ export const {
   changeStatusLike,
   changeStatusDislike,
   deleteListLiked,
+  deleteMyCommentList,
+  changeMypageTabsNum,
 } = mypageSlice.actions;
 
 const mypageActionCreators = {

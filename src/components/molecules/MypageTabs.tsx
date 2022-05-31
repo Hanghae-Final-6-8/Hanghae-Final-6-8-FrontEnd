@@ -1,56 +1,70 @@
 import { useState } from 'react';
+import { RootState } from '../../redux/configureStore';
+import { changeMypageTabsNum } from '../../redux/modules/mypage';
+import { useAppDispatch } from '../../redux/configureStore';
+import { useSelector } from 'react-redux';
 import { Text } from '../atoms';
 import { MyFavorites } from '../organisms';
 import { MyLikes } from '../organisms';
 import { MyActivity } from '../organisms';
 
 const MypageTabs = () => {
-  const [toggleValue, setToggleValue] = useState<number>(0);
+  const appDispatch = useAppDispatch();
+  const tabNum = useSelector((store: RootState) => store.mypage.mypageTabsNum);
 
-  const handleToFacorites = () => {
-    setToggleValue(0);
-  };
-  const handleToMyLikes = () => {
-    setToggleValue(1);
-  };
-  const handleToMyActivity = () => {
-    setToggleValue(2);
+  const handleTabNumber = (tabNumber: number) => {
+    appDispatch(changeMypageTabsNum(tabNumber));
   };
 
   return (
     <div>
       <div className='tabs flex justify-around w-full h-full pb-6'>
-        <div className='cursor-pointer' onClick={handleToFacorites}>
+        <div
+          className='cursor-pointer'
+          onClick={() => {
+            handleTabNumber(0);
+          }}
+        >
           <Text
             className='block h-full leading-[46px]'
-            type={toggleValue === 0 ? 'beansNavClicked' : 'beansNav'}
+            type={tabNum === 0 ? 'beansNavClicked' : 'beansNav'}
           >
             즐겨찾기
           </Text>
         </div>
-        <div className='cursor-pointer' onClick={handleToMyLikes}>
+        <div
+          className='cursor-pointer'
+          onClick={() => {
+            handleTabNumber(1);
+          }}
+        >
           <Text
             className='block h-full leading-[46px]'
-            type={toggleValue === 1 ? 'beansNavClicked' : 'beansNav'}
+            type={tabNum === 1 ? 'beansNavClicked' : 'beansNav'}
           >
             좋아요
           </Text>
         </div>
-        <div className='cursor-pointer' onClick={handleToMyActivity}>
+        <div
+          className='cursor-pointer'
+          onClick={() => {
+            handleTabNumber(2);
+          }}
+        >
           <Text
             className='block h-full leading-[46px]'
-            type={toggleValue === 2 ? 'beansNavClicked' : 'beansNav'}
+            type={tabNum === 2 ? 'beansNavClicked' : 'beansNav'}
           >
             내활동
           </Text>
         </div>
       </div>
       <div>
-        {toggleValue === 0 ? (
+        {tabNum === 0 ? (
           <MyFavorites />
-        ) : toggleValue === 1 ? (
+        ) : tabNum === 1 ? (
           <MyLikes />
-        ) : toggleValue === 2 ? (
+        ) : tabNum === 2 ? (
           <MyActivity />
         ) : (
           <></>
