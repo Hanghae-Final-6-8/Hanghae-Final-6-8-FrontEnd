@@ -34,7 +34,7 @@ const AddEditPost = () => {
   const getOnLoadFileFrom = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFile([]);
     const file = e.currentTarget.files;
-    if (file && file.length) {
+    if (file) {
       const result = fileCheck(file[0]);
 
       if (!result) {
