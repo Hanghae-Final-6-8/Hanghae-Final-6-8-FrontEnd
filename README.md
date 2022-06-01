@@ -1,7 +1,7 @@
 # <img src="https://velog.velcdn.com/images/leejuhwan/post/f2763664-0065-4375-9f36-4d30f93bee50/image.png" align=left width=50 /> FRONT REPOSITORY
 ##  COPICK (커픽)
 ### ☕ 유저 취향에 맞는 프랜차이즈 커피 추천 서비스
-<img src="https://velog.velcdn.com/images/leejuhwan/post/8b6068de-0b93-410a-90c1-ea41802dd012/image.png" />
+<img src="https://velog.velcdn.com/images/leejuhwan/post/da4a8459-7475-4763-b5db-2ecde8228efe/image.png" />
 
 ☕ [COPICK 서비스 바로가기](https://copick.site)
 
