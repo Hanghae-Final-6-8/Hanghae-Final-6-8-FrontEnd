@@ -66,6 +66,7 @@ const MainYesTasteSurvey = () => {
     user.isLogin && appDispatch(getTasteSurvey());
     // 즐겨찾기부분 오류 때문에 '&& !tasteList.beanName'을 뺐습니다.
 
+    const { beanId } = useParams();
     if (!beanId) {
       appDispatch(getSimilarBeans());
     }
