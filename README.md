@@ -1,10 +1,25 @@
-# FrontEnd
+# <img src="https://velog.velcdn.com/images/leejuhwan/post/f2763664-0065-4375-9f36-4d30f93bee50/image.png" align=left width=50 /> FRONT REPOSITORY
+##  COPICK (커픽)
+### ☕ 유저 취향에 맞는 프랜차이즈 커피 추천 서비스
+<img src="https://velog.velcdn.com/images/leejuhwan/post/8b6068de-0b93-410a-90c1-ea41802dd012/image.png" />
 
-항해 6기 D반 8조 실전프로젝트
+☕ [COPICK 서비스 바로가기](https://copick.site)
 
-<br>
+🎬 [시연 영상](https://youtu.be/WImMtgfxUvo)
 
-## 🏄‍♂️팀원
+🧑‍💻 [발표 영상]()
+
+📝 <a href='https://sparkling-glasses-136.notion.site/8-2eef73a6efd549118a88dfd258491915' target='_blank'>팀 노션 바로가기</a>
+
+🔗 [COPICK 원페이지 브로셔](https://sparkling-glasses-136.notion.site/COPICK-d87f9034974844ec8bef83d0683cbb87)
+
+## ❓ 기획 의도
+나와 어울리는 커피전문점 찾기 힘드셨죠?<br/>
+**COPICK**에서 해결해 드립니다!<br/>
+#### 나와 잘 어울리는 원두를 찾고 친구에게 공유도 해보세요!<br/><br/>
+2020년 기준 브랜드 평판 TOP 30 프랜차이즈 카페의 원두 111개를 모두 담아왔습니다
+
+## ✨ FRONT_END
 
 <table>
   <tr>
@@ -26,6 +41,35 @@
     <td align="center"><a href="https://github.com/cpk0709" target='_blank'>github</a></td>
   </tr>
 </table>
+
+## 🗓 프로젝트 기간
+- 2022년 4월 29일 ~ 2022년 6월 3일 (5주)
+- 배포 : 2022년 5월 31일
+
+## ☑️ Service Architecture
+<img src="https://velog.velcdn.com/images/leejuhwan/post/ca8b9a82-3059-4c2c-80d6-7054726b9110/image.png" />
+
+## 🛠️ Tech Stack
+#### ✨Frontend Tech Stack
+<div align='left'>
+  <img src="https://img.shields.io/badge/react-282C34?style=for-the-badge&logo=react&logoColor=61DAFB">
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white">
+  <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
+  <img src="https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=CSS3&logoColor=white">
+  <img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=redux&logoColor=white">
+  <img src="https://img.shields.io/badge/TailwindCSS-0B1120?style=for-the-badge&logo=TailwindCSS&logoColor=38BDF8">
+  <img src="https://img.shields.io/badge/axios-671DDF?style=for-the-badge&logo=axios&logoColor=FFFFFF">
+  <img src="https://img.shields.io/badge/GitHub%20Actions-0D1117?style=for-the-badge&logo=GitHubActions&logoColor=2088FF"/>
+  <img src="https://img.shields.io/badge/AWS%20S3-232F3E?style=for-the-badge&logo=AmazonAWS&logoColor=FF9A00"/>
+  <img src="https://img.shields.io/badge/AWS%20CloudFront-232F3E?style=for-the-badge&logo=AmazonAWS&logoColor=FF9A00"/>
+  <img src="https://img.shields.io/badge/AWS%20Route%2053-232F3E?style=for-the-badge&logo=AmazonAWS&logoColor=FF9A00"/>
+  <img src="https://img.shields.io/badge/PWA-5A0FC8?style=for-the-badge&logo=PWA&logoColor=white"/>
+</div>
+
+
+
+<br>
+
 
 ### 📬커밋 종류
 
@@ -80,7 +124,6 @@
 
 - 'dev' -> 'main' 브랜치에만 PULL REQUEST 한다.
 - 팀원과 협의 후 PR을 작성하며 독자적으로 PR 생성 후 merge하지 않는다.
-- 간단하게나마 코드리뷰를 진행한다.
 
 ### Issue
 
