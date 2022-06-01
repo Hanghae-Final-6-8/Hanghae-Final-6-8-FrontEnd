@@ -7,8 +7,7 @@ const fileCheck = (file: File) => {
     'jpg',
     'jpeg',
     'png',
-    // 'heic',
-    // 'heif',
+    'webp',
     'tiff',
     'exif',
     'svg',
@@ -24,6 +23,7 @@ const fileCheck = (file: File) => {
   const result = imgExtArray.find((ext) => {
     return ext === fileExt;
   });
+
   if (result === undefined) {
     alert('지원하지않는 파일입니다.');
     return false;
