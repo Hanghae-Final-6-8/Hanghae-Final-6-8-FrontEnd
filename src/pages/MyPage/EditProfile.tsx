@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/configureStore';
 import { auth, update } from '../../redux/modules/user';
+import fileCheck from '../../utils/fileCheck';
 
 const EditProfile = () => {
   const appDispatch = useAppDispatch();
@@ -29,10 +30,14 @@ const EditProfile = () => {
     setFile([]);
     const file = e.currentTarget.files;
 
-    if (file && file.length) {
+    if (file) {
+      const selectFile = file[0];
+
+      if (!fileCheck(selectFile)) {
+        return;
+      }
       setFile((exist) => exist.concat(Array.from(file)));
 
-      const selectFile = file[0];
       setPreviewImgByFileReader(selectFile);
     }
   };

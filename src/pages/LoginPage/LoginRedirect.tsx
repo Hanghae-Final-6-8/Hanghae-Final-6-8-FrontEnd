@@ -24,7 +24,7 @@ const LoginRedirect = () => {
         }
         navigate('/main', { replace: true });
       } catch (err) {
-        console.log(err);
+        return;
       }
     };
     const naverDispatch = async () => {
@@ -36,7 +36,7 @@ const LoginRedirect = () => {
         }
         navigate('/main', { replace: true });
       } catch (err) {
-        console.log(err);
+        return;
       }
     };
     const googleDispatch = async () => {
@@ -48,7 +48,7 @@ const LoginRedirect = () => {
         }
         navigate('/main', { replace: true });
       } catch (err) {
-        console.log(err);
+        return;
       }
     };
     pathChecker === 'kakao' ? kakaoDispatch() : null;
