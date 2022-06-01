@@ -8,8 +8,8 @@ const LoginBtnNaver = () => {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
   const handleLoginNaver = async () => {
-    await appDispatch(getNaverURL());
     navigate('/api/user/login/naver/callback', { replace: true });
+    await appDispatch(getNaverURL());
   };
   return (
     <Button type='loginBtn' onClick={handleLoginNaver}>

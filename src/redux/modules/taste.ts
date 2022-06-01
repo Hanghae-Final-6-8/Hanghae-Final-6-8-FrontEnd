@@ -55,11 +55,11 @@ export const postTasteSurvey = createAsyncThunk(
           // 일부러 시간을 끄는 용도로 사용했습니다.
           setTimeout(() => {
             tasteList.navigate('/main');
-          }, 1500);
+          }, 1000);
           return;
         });
     } catch (err: any) {
-      console.log('에러');
+      removeLocalStorage('surveyResult');
       tasteList.navigate('/main');
       return thunkAPI.rejectWithValue(err.response.data);
     }
