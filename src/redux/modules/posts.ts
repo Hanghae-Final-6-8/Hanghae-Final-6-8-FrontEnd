@@ -418,23 +418,15 @@ export const postsSlice = createSlice({
       return { ...state, list: new_list };
     },
     addLike: (state, action: PayloadAction<number>) => {
-      const idx = state.list.findIndex((post) => {
-        return post.postsId === action.payload;
-      });
-      state.list[idx].isLikes = 1;
-      // 다음과 같이 likesCount값을 cnt에 재정의한 원인: likesCount를 null로 초기화했기때문
-      const likesCnt = state.list[idx].likesCount;
-      const cnt = likesCnt === null ? 0 : likesCnt;
-      state.list[idx].likesCount = cnt! + 1;
+      state.post!.isLikes = 1;
+      state.post!.likesCount! += 1;
     },
     deleteLike: (state, action: PayloadAction<number>) => {
-      const idx = state.list.findIndex((post) => {
-        return post.postsId === action.payload;
-      });
-      state.list[idx].isLikes = null;
-      const likesCnt = state.list[idx].likesCount;
-      const cnt = likesCnt === null ? 0 : likesCnt;
-      state.list[idx].likesCount = cnt! - 1;
+      state.post!.isLikes = null;
+      state.post!.likesCount! -= 1;
+    },
+    setLikeCount: (state, action: PayloadAction<number>) => {
+      state.post!.likesCount = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -457,6 +449,7 @@ export const {
   isLoading,
   addLike,
   deleteLike,
+  setLikeCount,
 } = postsSlice.actions;
 
 export default postsSlice;
