@@ -127,7 +127,10 @@ const PostDetail = () => {
                   : 'https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814052__340.png'
               }
             />
-            <Likes postsId={Number(postsId)} />
+            <Likes
+              postsId={Number(postsId)}
+              likeCount={Number(post!.likesCount)}
+            />
             <div className='px-5'>
               <p className='text-body font-500'>{post?.content}</p>
               {post?.tagName.length !== 0
