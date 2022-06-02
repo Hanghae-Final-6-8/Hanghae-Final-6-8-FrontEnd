@@ -4,18 +4,15 @@ import { useAppDispatch } from '../../redux/configureStore';
 import { RootState } from '../../redux/configureStore';
 import { getPostsLikedDB } from '../../redux/modules/mypage';
 import { useNavigate } from 'react-router-dom';
-import { heart, heart_full } from '../../assets/icons';
 
 const MyLikes = () => {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
   useEffect(() => {
-    !isListLikedLoaded && appDispatch(getPostsLikedDB());
+    appDispatch(getPostsLikedDB());
   }, []);
 
-  const { listLiked, isListLikedLoaded } = useSelector(
-    (store: RootState) => store.mypage
-  );
+  const { listLiked } = useSelector((store: RootState) => store.mypage);
 
   // 커뮤니티 상세페이지로 이동
   const handleMoveToDetailPage = (postsId: number) => {

@@ -13,18 +13,12 @@ const TasteSurveyLoading = () => {
   const surveyResult = getObjLocalStorage('surveyResult');
 
   useEffect(() => {
-    appDispatch(postTasteSurvey({ surveyResult, navigate }));
+    setTimeout(() => {
+      appDispatch(postTasteSurvey({ surveyResult, navigate }));
+    }, 2000);
+
     // user tasteId를 변경하기 위해 재요청
   }, [appDispatch]);
-  //console.log(surveyResult);
-  // setTimeout(() => {
-  //   appDispatch(postTasteSurvey({ surveyResult, navigate }));
-  // }, 1500);
-
-  // const navigate = useNavigate();
-  // const location = useLocation();
-  // const tasteList = location.state;
-  // console.log(tasteList);
 
   return (
     <>

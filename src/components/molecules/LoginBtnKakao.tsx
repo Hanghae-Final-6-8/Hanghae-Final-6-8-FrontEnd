@@ -8,8 +8,8 @@ const LoginBtnKakao = () => {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
   const handleLoginKakao = async () => {
-    await appDispatch(getKakaoURL());
     navigate('/api/user/login/kakao/callback', { replace: true });
+    await appDispatch(getKakaoURL());
   };
 
   return (

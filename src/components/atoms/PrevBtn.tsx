@@ -16,13 +16,13 @@ const PrevBtn = (props: PrevBtnProps) => {
   const scrollYValue = scrollY !== null ? scrollY.scroll : null;
 
   const handleToPrevPage = () => {
-    scrollYValue
-      ? navigate('/beans', { state: { scroll: scrollYValue } })
-      : navigate(-1);
+    !scrollYValue
+      ? navigate(-1)
+      : navigate('/beans', { state: { scroll: scrollYValue } });
 
-    if (document.referrer) {
-      navigate('/beans');
-    }
+    // if (document.referrer) {
+    //   navigate('/beans');
+    // }
   };
 
   return (

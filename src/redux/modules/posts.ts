@@ -293,7 +293,8 @@ export const addLikeDB = createAsyncThunk(
   async (data: number, thunkAPI) => {
     try {
       await likeApis.addLike(data).then((res) => {
-        thunkAPI.dispatch(addLike(data));
+        thunkAPI.dispatch(addLike());
+        thunkAPI.dispatch(addLikeInList(data));
         // 좋아요누른 게시물 재랜더링위해
         thunkAPI.dispatch(setIsListLikedLoaded(false));
         thunkAPI.dispatch(changeStatusLike(data));
@@ -309,7 +310,8 @@ export const deleteLikeDB = createAsyncThunk(
   async (data: number, thunkAPI) => {
     try {
       await likeApis.deleteLike(data).then((res) => {
-        thunkAPI.dispatch(deleteLike(data));
+        thunkAPI.dispatch(deleteLike());
+        thunkAPI.dispatch(deleteLikeInList(data));
         // 좋아요누른 게시물 재랜더링위해
         thunkAPI.dispatch(setIsListLikedLoaded(false));
         thunkAPI.dispatch(changeStatusDislike(data));
@@ -401,7 +403,6 @@ export const postsSlice = createSlice({
         isLikes: action.payload.isLikes,
         likesCount: action.payload.likesCount,
       };
-
       // 라우팅처리
       // action.payload.navi('/posts');
       action.payload.navi('/posts');
@@ -417,24 +418,30 @@ export const postsSlice = createSlice({
       });
       return { ...state, list: new_list };
     },
-    addLike: (state, action: PayloadAction<number>) => {
+    addLike: (state) => {
+      state.post!.isLikes = 1;
+      state.post!.likesCount! += 1;
+    },
+    deleteLike: (state) => {
+      state.post!.isLikes = null;
+      state.post!.likesCount! -= 1;
+    },
+    addLikeInList: (state, action: PayloadAction<number>) => {
       const idx = state.list.findIndex((post) => {
         return post.postsId === action.payload;
       });
       state.list[idx].isLikes = 1;
-      // 다음과 같이 likesCount값을 cnt에 재정의한 원인: likesCount를 null로 초기화했기때문
-      const likesCnt = state.list[idx].likesCount;
-      const cnt = likesCnt === null ? 0 : likesCnt;
-      state.list[idx].likesCount = cnt! + 1;
+      state.list[idx].likesCount! += 1;
     },
-    deleteLike: (state, action: PayloadAction<number>) => {
+    deleteLikeInList: (state, action: PayloadAction<number>) => {
       const idx = state.list.findIndex((post) => {
         return post.postsId === action.payload;
       });
       state.list[idx].isLikes = null;
-      const likesCnt = state.list[idx].likesCount;
-      const cnt = likesCnt === null ? 0 : likesCnt;
-      state.list[idx].likesCount = cnt! - 1;
+      state.list[idx].likesCount! -= 1;
+    },
+    setLikeCount: (state, action: PayloadAction<number>) => {
+      state.post!.likesCount = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -457,6 +464,9 @@ export const {
   isLoading,
   addLike,
   deleteLike,
+  setLikeCount,
+  addLikeInList,
+  deleteLikeInList,
 } = postsSlice.actions;
 
 export default postsSlice;

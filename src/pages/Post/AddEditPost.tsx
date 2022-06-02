@@ -34,11 +34,10 @@ const AddEditPost = () => {
   const getOnLoadFileFrom = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFile([]);
     const file = e.currentTarget.files;
-    if (file && file.length) {
+    if (file) {
       const result = fileCheck(file[0]);
 
       if (!result) {
-        alert('8MB이하의 이미지 파일을 선택해 주세요');
         return;
       }
       setFile((existing) => existing.concat(Array.from(file)));
@@ -84,11 +83,13 @@ const AddEditPost = () => {
       return;
     }
     // 태그 중복체크
-    if (tagName.find((t) => t === text.value)) {
+    const tagText = text.value;
+    const newText = tagText.replace(/(\s*)/g, '');
+    if (tagName.find((t) => t === newText)) {
       alert('이미 입력한 태그입니다.');
       return;
     }
-    setInputTag(text.value);
+    setInputTag(newText);
     setTagName([inputTag, ...tagName]);
     setInputTag('');
   };

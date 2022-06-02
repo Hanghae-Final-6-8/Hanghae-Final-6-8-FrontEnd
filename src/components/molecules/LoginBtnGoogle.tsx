@@ -8,8 +8,8 @@ const LoginBtnGoogle = () => {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
   const handleLoginGoogle = async () => {
-    await appDispatch(getGoogleURL());
     navigate('/api/user/login/google/callback', { replace: true });
+    await appDispatch(getGoogleURL());
   };
 
   return (
