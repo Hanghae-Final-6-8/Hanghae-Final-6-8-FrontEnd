@@ -7,7 +7,7 @@
 
 🎬 [시연 영상](https://youtu.be/WImMtgfxUvo)
 
-🧑‍💻 [발표 영상]()
+🧑‍💻 [발표 영상](https://www.youtube.com/watch?v=USRrd1Dz3ME)
 
 📝 <a href='https://sparkling-glasses-136.notion.site/8-2eef73a6efd549118a88dfd258491915' target='_blank'>팀 노션 바로가기</a>
 
