@@ -1,6 +1,5 @@
 import { isMobile } from 'react-device-detect';
 import { BgWeb, BgWebFixed } from '../components/molecules';
-import { MobileBanner } from '../components/atoms';
 import BottomNav from '../components/BottomNav';
 
 interface Children {
@@ -12,7 +11,6 @@ function DeviceDetect({ children }: Children) {
     <div className='relative w-full h-full infinityScroll'>
       {children}
       <BottomNav />
-      <MobileBanner />
     </div>
   ) : (
     <>
@@ -24,7 +22,6 @@ function DeviceDetect({ children }: Children) {
             <div className='absoulte w-full h-full overflow-scroll no-scrollbar infinityScroll'>
               {children}
             </div>
-            <MobileBanner />
             <BottomNav />
           </div>
         </div>

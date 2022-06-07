@@ -1,6 +1,6 @@
 import { BgVideo } from '../atoms';
 import { copickIcon, copick } from '../../assets/logo';
-import { bean02, bean03, bean05, bean06, webBanner } from '../../assets/images';
+import { bean02, bean03, bean05, bean06 } from '../../assets/images';
 
 const BgWeb = () => {
   return (
@@ -19,7 +19,7 @@ const BgWeb = () => {
         <img className='absolute w-[8vw] right-[28%] top-[60%]' src={bean05} />
         <img className='absolute w-[6.5vw] left-[16%] top-[1%]' src={bean06} />
       </div>
-      <a
+      {/* <a
         href='https://forms.gle/Qh9x2FM1dU92RWKBA'
         target='_blank'
         rel='noopener noreferrer'
@@ -28,7 +28,7 @@ const BgWeb = () => {
           className='absolute z-10 w-96 bottom-10 left-7 cursor-pointer 2xl:bottom-36 2xl:w-auto animate-moveHorizontal'
           src={webBanner}
         />
-      </a>
+      </a> */}
       <BgVideo />
     </>
   );
